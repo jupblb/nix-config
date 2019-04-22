@@ -1,0 +1,17 @@
+Host ghost.traveltimeapp.com
+    HostName ghost.traveltimeapp.com
+    User mapupdate
+
+Host battuta.traveltimeapp.com
+    HostName battuta.traveltimeapp.com
+    User mapupdate
+
+Host kraken.traveltimeapp.com
+    HostName kraken.traveltimeapp.com
+    User mapupdate
+
+Host *.traveltimeapp.com
+    User traveltime
+
+Host *.bitbucket.org
+    AddressFamily inet

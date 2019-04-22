@@ -1,0 +1,6 @@
+[submodule "nano/syntax"]
+	path = nano/syntax
+	url = git@github.com:scopatz/nanorc.git
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+	url = git@github.com:robbyrussell/oh-my-zsh.git

@@ -1,0 +1,8 @@
+output=DP-3
+font=Iosevka 20
+background-color=#282828
+text-color=#98971a
+width=600
+height=200
+border-color=#d79921
+default-timeout=5000

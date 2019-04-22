@@ -1,0 +1,35 @@
+general {
+  colors = true
+  interval = 1
+}
+
+order += "volume master"
+order += "load"
+order += "tztime local"
+
+volume master {
+  format = "♪ %volume"
+  format_muted = "♪ off"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
+
+ethernet _first_ {
+        # if you use %speed, i3status requires root privileges
+        format_up = "E: %ip (%speed)"
+        format_down = "E: down"
+}
+
+tztime local {
+        format = "%Y-%m-%d %H:%M:%S "
+}
+
+load {
+  format = "%1min %5min %15min"
+  max_threshold = 12
+}
+
+disk "/" {
+        format = "%avail"
+}

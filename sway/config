@@ -1,0 +1,238 @@
+# Read `man 5 sway` for a complete reference.
+
+exec mako
+exec pcloud
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+### Variables
+set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $term kitty
+
+set $white #ffffff
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+
+set $menu dmenu_path | dmenu -fn 'Iosevka:bold:pixelsize=30' -nb '$bg' -nf '$green' -sb '$green' -sf '$bg' | xargs swaymsg exec
+
+### Output configuration
+
+output DP-3 {
+  position 1920 0
+  resolution 3840x2160
+  background /home/jupblb/Pictures/Wallpapers/xkcd.jpg fill 
+}
+
+output HDMI-A-1 {
+  position 0 0
+  resolution 1920x1080
+  background /home/jupblb/Pictures/Wallpapers/vim2.png fill 
+}
+
+workspace 1 output HDMI-A-1
+workspace 2 output DP-3
+
+font pango:Iosevka 20
+
+input "9456:320:Metadot_-_Das_Keyboard_Das_Keyboard" {
+  xkb_layout pl
+  xkb_numlock enabled
+  xkb_options caps:escape
+}
+
+input "1133:16495:Logitech_MX_Ergo" {
+  pointer_accel 1
+}
+
+input "1133:45085:MX_Ergo_Mouse" {
+  pointer_accel 1
+}
+
+### Key bindings
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec $menu
+bindsym $mod+p exec swaylock
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+#bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+e exit
+
+# Moving around:
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Workspaces:
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Layout stuff:
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+
+# move focus to the parent container
+bindsym $mod+a focus parent
+
+# Scratchpad:
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# Resizing containers:
+mode "resize" {
+    bindsym $right resize shrink width 20px
+    bindsym $up resize grow height 20px
+    bindsym $down resize shrink height 20px
+    bindsym $left resize grow width 20px
+
+    # ditto, with arrow keys
+    bindsym Right resize shrink width 20px
+    bindsym Up resize grow height 20px
+    bindsym Down resize shrink height 20px
+    bindsym Left resize grow width 20px
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Pulse Audio controls
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Screenshot
+bindsym Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $(xdg-user-dir PICTURES)/Screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
+bindsym $mod+Print exec grim -g "$(slurp)" $(xdg-user-dir PICTURES)/Screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
+
+# Status Bar. Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+    mode hide
+    modifier Mod4
+    output DP-3
+
+    #status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 5; done
+    status_command i3status
+
+    separator_symbol " | "
+    font pango:Iosevka 20
+
+    colors {
+        # bar background color
+        background $bg
+        # text color used for blocks that do not have a color specified.
+        statusline $green
+        # workspaces section            
+        #                    border    background text
+        focused_workspace    $yellow   $green     $darkgray
+        inactive_workspace   $darkgray $darkgray  $yellow
+        active_workspace     $darkgray $darkgray  $yellow
+        urgent_workspace     $red      $red       $darkgray
+    }
+
+#  swaybar_command waybar
+}
+
+# Colours
+# class                 border    backgr    text      indicator child_border
+client.focused          $green    $green    $bg       $purple   $darkgray
+client.focused_inactive $darkgray $darkgray $green    $purple   $darkgray
+client.unfocused        $darkgray $darkgray $green    $purple   $darkgray
+client.urgent           $red      $red      $white    $red      $red
+
+#popup_during_fullscreen leave_fullscreen
+
+#for_window [title=".*Steam.*"] floating enable
+#for_window [title=".*IntelliJ.*"] floating enable
+for_window [title=".*Slack.*"] layout tabbed
+no_focus [title=".*Slack.*"] 
+assign [title=".*Slack.*"]  1
+assign [title=".*Spotify.*"]  1
+
+default_border none
+#focus_follows_mouse no
+
+include /etc/sway/config.d/*
