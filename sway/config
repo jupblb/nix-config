@@ -123,6 +123,9 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
 # Layout stuff:
 bindsym $mod+b splith
 bindsym $mod+v splitv
