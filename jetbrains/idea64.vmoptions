@@ -4,8 +4,8 @@
 -ea
 -Xss4m
 -Xms2G
--Xmx6G
--XX:ReservedCodeCacheSize=512m
+-Xmx8G
+-XX:ReservedCodeCacheSize=1024m
 -XX:SoftRefLRUPolicyMSPerMB=50
 -Dsun.io.useCanonCaches=false
 -Djava.net.preferIPv4Stack=true
