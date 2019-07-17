@@ -228,11 +228,8 @@ client.urgent           $red      $red      $white    $red      $red
 
 #popup_during_fullscreen leave_fullscreen
 
-#for_window [title=".*Steam.*"] floating enable
-#for_window [title=".*IntelliJ.*"] floating enable
-for_window [title=".*Slack.*"] layout tabbed
-no_focus [title=".*Slack.*"] 
-assign [title=".*Slack.*"]  1
+no_focus [title=".*Franz.*"] 
+assign [title=".*Franz.*"]  1
 assign [title=".*Spotify.*"]  1
 
 default_border none

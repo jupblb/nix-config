@@ -13,5 +13,10 @@ Host kraken.traveltimeapp.com
 Host *.traveltimeapp.com
     User traveltime
 
+Host *.amazonaws.com
+    User ubuntu
+    IdentityFile ~/.ssh/igeolise.pem
+    StrictHostKeyChecking no
+
 Host *.bitbucket.org
     AddressFamily inet
