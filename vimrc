@@ -41,7 +41,7 @@ set notimeout
 
 call plug#begin('~/.vim/pack')
 
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -49,6 +49,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 

@@ -12,6 +12,7 @@ Host kraken.traveltimeapp.com
 
 Host *.traveltimeapp.com
     User traveltime
+    StrictHostKeyChecking no
 
 Host *.amazonaws.com
     User ubuntu

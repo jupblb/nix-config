@@ -91,4 +91,6 @@ alias kdiff="kitty +kitten diff"
 alias pulse-pci="pacmd set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo"
 alias pulse-bluez="pacmd set-default-sink bluez_sink.00_1B_66_7F_A7_23.a2dp_sink"
 
+alias 1password="op signin my"
+
 alias rm="trash"
