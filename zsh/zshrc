@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=/home/jupblb/.local/bin:$PATH
+export PATH=$PATH
 
 if [ "$(tty)" = "/dev/tty1" ]; then
 #  export KITTY_ENABLE_WAYLAND=1

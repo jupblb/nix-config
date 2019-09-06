@@ -30,19 +30,12 @@ set $menu dmenu_path | dmenu -fn 'Iosevka:bold:pixelsize=30' -nb '$bg' -nf '$gre
 ### Output configuration
 
 output DP-3 {
-  position 1920 0
+  position 0 0
   resolution 3840x2160@60Hz
   background /home/jupblb/pictures/wallpapers/xkcd.jpg fill 
 }
 
-output HDMI-A-1 {
-  position 0 0
-  resolution 1920x1080
-  background /home/jupblb/pictures/wallpapers/vim2.png fill 
-}
-
-workspace 1 output HDMI-A-1
-workspace 2 output DP-3
+output HDMI-A-1 disable
 
 font pango:Iosevka 20
 
