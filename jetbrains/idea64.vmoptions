@@ -1,5 +1,3 @@
-# custom IntelliJ IDEA VM options
-
 -server
 -ea
 -Xss4m
@@ -14,4 +12,4 @@
 -XX:-OmitStackTraceInFastThrow
 -Dawt.useSystemAAFontSettings=on
 -Dsun.java2d.renderer=sun.java2d.marlin.MarlinRenderingEngine
--Djdk.gtk.version=2 
+-Djdk.gtk.version=2
