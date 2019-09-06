@@ -7,22 +7,22 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 ### Variables
 set $mod Mod4
 
-set $left h
-set $down j
-set $up k
+set $left  h
+set $down  j
+set $up    k
 set $right l
 
 set $term kitty
 
-set $white #ffffff
-set $bg #282828
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $purple #b16286
-set $aqua #689d68
-set $gray #a89984
+set $white    #ffffff
+set $bg       #282828
+set $red      #cc241d
+set $green    #98971a
+set $yellow   #d79921
+set $blue     #458588
+set $purple   #b16286
+set $aqua     #689d68
+set $gray     #a89984
 set $darkgray #1d2021
 
 set $menu dmenu_path | dmenu -fn 'Iosevka:bold:pixelsize=30' -nb '$bg' -nf '$green' -sb '$green' -sf '$bg' | xargs swaymsg exec
@@ -225,7 +225,7 @@ no_focus [title=".*Franz.*"]
 assign [title=".*Franz.*"]  10
 assign [title=".*Spotify.*"]  9
 
-default_border none
-#focus_follows_mouse no
+default_border pixel 10
+smart_borders on
 
 include /etc/sway/config.d/*
