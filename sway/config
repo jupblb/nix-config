@@ -209,7 +209,7 @@ bar {
         urgent_workspace     $red      $red       $darkgray
     }
 
-#  swaybar_command waybar
+    tray_padding 10
 }
 
 # Colours
