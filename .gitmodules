@@ -5,5 +5,5 @@
 	path = zsh/oh-my-zsh
 	url = git@github.com:robbyrussell/oh-my-zsh.git
 [submodule "fish/omf"]
-	path = fish/omf
+	path = fish/omf/omf
 	url = https://github.com/oh-my-fish/oh-my-fish.git
