@@ -10,3 +10,7 @@
 	path = fish/omf/omf
 	url = https://github.com/oh-my-fish/oh-my-fish.git
 	branch = master
+[submodule "fish/nix-env.fish"]
+	path = fish/nix-env.fish
+	url = https://github.com/lilyball/nix-env.fish.git
+	branch = master
