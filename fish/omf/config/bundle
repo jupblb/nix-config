@@ -1,4 +1,5 @@
 package autovenv
+package bass
 package colored-man-pages
 package extract
 package fzf
