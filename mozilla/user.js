@@ -9,4 +9,3 @@ user_pref("gfx.webrender.all", true);
 user_pref("full-screen-api.warning.timeout", 0);
 
 user_pref("network.protocol-handler.expose.magnet", false);
-
