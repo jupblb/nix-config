@@ -41,6 +41,7 @@ set notimeout
 
 call plug#begin('~/.vim/pack')
 
+Plug 'LnL7/vim-nix'
 Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree'
