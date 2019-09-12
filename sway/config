@@ -3,7 +3,7 @@
 exec mako
 exec dropbox
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec redshift
+exec redshift -m wayland
 
 ### Variables
 set $mod Mod4
