@@ -20,7 +20,7 @@ set $term kitty
 output DP-3 {
   position 0 0
   resolution 3840x2160@60Hz
-  background /home/jupblb/pictures/wallpapers/xkcd-light.png fill 
+  background ~/.dotfiles/sway/xkcd-light.png fill 
 }
 
 output HDMI-A-1 disable
@@ -185,11 +185,10 @@ bar {
     mode hide
     output DP-3
 
-    status_command exec i3status #/home/jupblb/.config/i3status/net-speed.sh
+    status_command exec i3status
 
     separator_symbol " | "
     font pango:Iosevka 30
-    status_edge_padding 8
 
     colors {
         background $bg
@@ -201,15 +200,15 @@ bar {
         urgent_workspace     $bg       $red       $fg
     }
 
-    tray_padding 10
+    tray_padding 20
     tray_output DP-3
 }
 
 # class                 border    backgr    text      indicator child_border
-client.focused          $yellow   $dummy    $dummy    $green    $yellow
-client.focused_inactive $green    $dummy    $dummy    $yellow   $green
-client.unfocused        $green    $dummy    $dummy    $yellow   $green
-client.urgent           $red      $dummy    $dummy    $red      $red
+client.focused          $yellow   $bg       $fg       $green    $yellow
+client.focused_inactive $green    $bg       $fg       $yellow   $green
+client.unfocused        $green    $bg       $fg       $yellow   $green
+client.urgent           $red      $bg       $fg       $red      $red
 
 no_focus [title=".*Franz.*"] 
 assign [title=".*Franz.*"]  10
