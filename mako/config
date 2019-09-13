@@ -1,7 +1,16 @@
-font             = Iosevka 20
-background-color = #282828
-text-color       = #98971a
-width            = 600
-height           = 200
-border-color     = #d79921
-default-timeout  = 5000
+font=Iosevka 20
+width=600
+height=200
+border-size=16
+border-color=#458588
+background-color=#f9f5d7
+text-color=#282828
+default-timeout=5000
+margin=64,64
+
+[urgency=low]
+border-color=#98971a
+[urgency=normal]
+border-color=#d79921
+[urgency=high]
+border-color=#cc241d

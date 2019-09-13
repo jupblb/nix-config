@@ -15,36 +15,17 @@ set $right l
 
 set $term kitty
 
-set $white    #ffffff
-set $bg       #282828
-set $red      #cc241d
-set $green    #98971a
-set $yellow   #d79921
-set $blue     #458588
-set $purple   #b16286
-set $aqua     #689d68
-set $gray     #a89984
-set $darkgray #1d2021
-
-set $menu dmenu_path | dmenu -fn 'Iosevka:bold:pixelsize=30' -nb '$bg' -nf '$green' -sb '$green' -sf '$bg' | xargs swaymsg exec
-
 ### Output configuration
 
 output DP-3 {
   position 0 0
   resolution 3840x2160@60Hz
-  background /home/jupblb/pictures/wallpapers/xkcd-dark.png fill 
+  background /home/jupblb/pictures/wallpapers/xkcd-light.png fill 
 }
 
 output HDMI-A-1 disable
 
 font pango:Iosevka 20
-
-input "9456:320:Metadot_-_Das_Keyboard_Das_Keyboard" {
-  xkb_layout pl
-  xkb_numlock enabled
-  xkb_options caps:escape
-}
 
 input "1133:16495:Logitech_MX_Ergo" {
   pointer_accel 1
@@ -152,16 +133,16 @@ bindsym $mod+minus scratchpad show
 
 # Resizing containers:
 mode "resize" {
-    bindsym $right resize shrink width 20px
-    bindsym $up resize grow height 20px
-    bindsym $down resize shrink height 20px
-    bindsym $left resize grow width 20px
+    bindsym $right resize shrink width 40px
+    bindsym $up resize grow height 40px
+    bindsym $down resize shrink height 40px
+    bindsym $left resize grow width 40px
 
     # ditto, with arrow keys
-    bindsym Right resize shrink width 20px
-    bindsym Up resize grow height 20px
-    bindsym Down resize shrink height 20px
-    bindsym Left resize grow width 20px
+    bindsym Right resize shrink width 40px
+    bindsym Up resize grow height 40px
+    bindsym Down resize shrink height 40px
+    bindsym Left resize grow width 40px
 
     # return to default mode
     bindsym Return mode "default"
@@ -184,47 +165,54 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $(xdg-user-dir PICTURES)/screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
 bindsym $mod+Print exec grim -g "$(slurp)" $(xdg-user-dir PICTURES)/screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
 
+set $bg       #282828
+set $fg       #f9f5d7
+set $red      #cc241d
+set $green    #98971a
+set $yellow   #d79921
+set $blue     #458588
+set $purple   #b16286
+set $aqua     #689d68
+set $gray     #7c6f64
+set $darkgray #1d2021
+set $dummy    #ffffff
+
+set $menu dmenu_path | dmenu -fn 'Iosevka:bold:pixelsize=42' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg' | xargs swaymsg exec
+
 # Status Bar. Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
     mode hide
-    modifier Mod4
     output DP-3
 
-    #status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 5; done
-    status_command exec /home/jupblb/.config/i3status/net-speed.sh
+    status_command exec i3status #/home/jupblb/.config/i3status/net-speed.sh
 
     separator_symbol " | "
-    font pango:Iosevka 20
+    font pango:Iosevka 30
+    status_edge_padding 8
 
     colors {
-        # bar background color
         background $bg
-        # text color used for blocks that do not have a color specified.
-        statusline $green
-        # workspaces section            
-        #                    border    background text
-        focused_workspace    $yellow   $green     $darkgray
-        inactive_workspace   $darkgray $darkgray  $yellow
-        active_workspace     $darkgray $darkgray  $yellow
-        urgent_workspace     $red      $red       $darkgray
+        statusline $fg
+
+        # workspaces section border    background text
+        focused_workspace    $green    $green     $fg
+        inactive_workspace   $bg       $gray      $fg
+        urgent_workspace     $bg       $red       $fg
     }
 
     tray_padding 10
+    tray_output DP-3
 }
 
-# Colours
 # class                 border    backgr    text      indicator child_border
-client.focused          $green    $green    $bg       $purple   $darkgray
-client.focused_inactive $darkgray $darkgray $green    $purple   $darkgray
-client.unfocused        $darkgray $darkgray $green    $purple   $darkgray
-client.urgent           $red      $red      $white    $red      $red
-
-#popup_during_fullscreen leave_fullscreen
+client.focused          $yellow   $dummy    $dummy    $green    $yellow
+client.focused_inactive $green    $dummy    $dummy    $yellow   $green
+client.unfocused        $green    $dummy    $dummy    $yellow   $green
+client.urgent           $red      $dummy    $dummy    $red      $red
 
 no_focus [title=".*Franz.*"] 
 assign [title=".*Franz.*"]  10
-assign [title=".*Spotify.*"]  9
 
 default_border pixel 10
 smart_borders on
