@@ -10,7 +10,6 @@ Geronimo
 GlassFish
 Heroku
 HtmlTools
-IdeaVIM
 JBoss
 JSIntentionPowerPack
 JSR45Plugin
