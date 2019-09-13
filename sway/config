@@ -33,7 +33,7 @@ set $menu dmenu_path | dmenu -fn 'Iosevka:bold:pixelsize=30' -nb '$bg' -nf '$gre
 output DP-3 {
   position 0 0
   resolution 3840x2160@60Hz
-  background /home/jupblb/pictures/wallpapers/xkcd.jpg fill 
+  background /home/jupblb/pictures/wallpapers/xkcd-dark.png fill 
 }
 
 output HDMI-A-1 disable
