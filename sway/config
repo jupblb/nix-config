@@ -196,7 +196,7 @@ bar {
 
         # workspaces section border    background text
         focused_workspace    $green    $green     $fg
-        inactive_workspace   $bg       $gray      $fg
+        inactive_workspace   $bg       $fg        $bg
         urgent_workspace     $bg       $red       $fg
     }
 
