@@ -185,7 +185,8 @@ bar {
     mode hide
     output DP-3
 
-    status_command exec i3status
+#    status_command exec i3status
+     status_command exec /home/jupblb/.config/i3status/net-speed.sh
 
     separator_symbol " | "
     font pango:Iosevka 30
