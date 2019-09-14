@@ -55,8 +55,8 @@ Plug 'junegunn/goyo.vim'
 call plug#end()
 
 " gruvbox
-"let g:gruvbox_contrast_dark = 'hard'
-set background=dark
+let &t_ut=''
+let g:gruvbox_contrast_light = 'hard'
 let g:gruvbox_bold = '0'
 let g:gruvbox_italic = '0'
 colorscheme gruvbox

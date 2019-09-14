@@ -8,7 +8,7 @@ set -g sudope_sequence \e\e
 kitty + complete setup fish | source
 
 # Theme settings (bobthefish)
-set -g theme_color_scheme           gruvbox
+set -g theme_color_scheme           solarized-light
 set -g theme_display_vagrant        yes
 set -g theme_display_docker_machine yes
 set -g theme_display_virtualenv     yes
