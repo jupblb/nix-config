@@ -1,7 +1,3 @@
-[submodule "nano/syntax"]
-	path = nano/syntax
-	url = git@github.com:scopatz/nanorc.git
-	branch = master
 [submodule "oh-my-zsh"]
 	path = zsh/oh-my-zsh
 	url = git@github.com:robbyrussell/oh-my-zsh.git
