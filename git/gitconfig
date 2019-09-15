@@ -1,12 +1,22 @@
-[user]
-	email = mpkielbowicz@gmail.com
-	name = jupblb
+[include]
+	path = .gitconfig.local
+[color]
+	ui = true
 [core]
+	editor = vim
 	excludesfile = /home/jupblb/.dotfiles/git/gitignore
-[pager]
-	diff = diff-so-fancy | less --tabs=1,5 -RFX
-	show = diff-so-fancy | less --tabs=1,5 -RFX
 [diff]
 	tool = vimdiff
 [difftool]
 	prompt = false
+[fetch]
+	prune = true
+[merge]
+	tool = vscode
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+[pager]
+	diff = diff-so-fancy | less --tabs=1,5 -RFX
+	show = diff-so-fancy | less --tabs=1,5 -RFX
+[push]
+	default = upstream
