@@ -12,16 +12,12 @@ set wildmenu
 " Show partial commands in the last line of the screen
 set showcmd
  
-" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
-" mapping of <C-L> below)
+" Highlight searches
 set hlsearch
 
 " Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
-
-" Allow backspacing over autoindent, line breaks and start of insert action
-set backspace=indent,eol,start
 
 " When opening a new line and no filetype-specific indenting is enabled, keep
 " the same indent as the line you're currently on. Useful for READMEs, etc.
@@ -29,9 +25,6 @@ set autoindent
 
 " Always display the status line, even if only one window is displayed
 set laststatus=2
-
-" Enable use of the mouse for all modes
-"set mouse=a
 
 " Display line numbers on the left
 set number
@@ -41,7 +34,6 @@ set notimeout
 
 call plug#begin('~/.vim/pack')
 
-Plug 'LnL7/vim-nix'
 Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree'
@@ -50,7 +42,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
-Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
@@ -77,23 +68,9 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 
-" vim-indent-guides
-let g:indent_guides_enable_on_vim_startup = 1
-
 " vim-easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
-" Jump to anywhere you want with minimal keystrokes, with just one key binding.
-" `s{char}{label}`
-nmap s <Plug>(easymotion-overwin-f)
-" or
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
-
-" Turn on case-insensitive feature
 let g:EasyMotion_smartcase = 1
-
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
+map <C-f> <Plug>(easymotion-overwin-f2)
+map <C-j> <Plug>(easymotion-j)
+map <C-k> <Plug>(easymotion-k)
