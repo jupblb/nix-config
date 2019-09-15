@@ -15,6 +15,8 @@ set $right l
 
 set $term kitty
 
+font pango:Iosevka 20
+
 ### Output configuration
 
 output DP-3 {
@@ -24,8 +26,6 @@ output DP-3 {
 }
 
 output HDMI-A-1 disable
-
-font pango:Iosevka 20
 
 input "1133:16495:Logitech_MX_Ergo" {
   pointer_accel 1
@@ -39,7 +39,7 @@ input "1133:45085:MX_Ergo_Mouse" {
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
-bindsym $mod+p exec swaylock
+bindsym $mod+l exec swaylock
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -51,7 +51,7 @@ floating_modifier $mod normal
 # reload the configuration file
 bindsym $mod+Shift+c reload
 
-#bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+# exit sway
 bindsym $mod+Shift+e exit
 
 # Moving around:
@@ -60,20 +60,10 @@ bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
 
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
-
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
 
 # Workspaces:
 bindsym $mod+1 workspace 1
@@ -102,11 +92,11 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 
 # Layout stuff:
-bindsym $mod+b splith
+bindsym $mod+h splith
 bindsym $mod+v splitv
 
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
 bindsym $mod+f fullscreen
@@ -137,12 +127,6 @@ mode "resize" {
     bindsym $up resize grow height 40px
     bindsym $down resize shrink height 40px
     bindsym $left resize grow width 40px
-
-    # ditto, with arrow keys
-    bindsym Right resize shrink width 40px
-    bindsym Up resize grow height 40px
-    bindsym Down resize shrink height 40px
-    bindsym Left resize grow width 40px
 
     # return to default mode
     bindsym Return mode "default"
@@ -185,8 +169,7 @@ bar {
     mode hide
     output DP-3
 
-#    status_command exec i3status
-     status_command exec /home/jupblb/.config/i3status/net-speed.sh
+    status_command exec /home/jupblb/.config/i3status/net-speed.sh
 
     separator_symbol " | "
     font pango:Iosevka 30
