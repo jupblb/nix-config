@@ -22,7 +22,7 @@ set -x EDITOR             vim
 set -x GIT_MERGE_AUTOEDIT no
 set -x SBT_OPTS           "-Xms2G -Xmx8G -Xss4m"
 set -x COURSIER_CACHE     "/home/jupblb/.cache/coursier"
-set -x BAT_THEME          "OneHalfDark"
+set -x BAT_THEME          "OneHalfLight"
 
 # Load /etc/profile
 bass source /etc/profile
