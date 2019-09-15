@@ -7,12 +7,12 @@
 
 alias ls='ls --color=auto'
 
-PS1="\[\e[0;32m\]\u@\h \[\e[39m\]\[\e[0;37m\]\w\[\e[39m\]\[\e[0;34m\] →\[\e[34;1m\] \[\e[39m\] \[\e[0m\]";
+PS1="\[\e[0;32m\]\u@\h \[\e[39m\]\[\e[0;37m\]\w\[\e[39m\]\[\e[0;34m\] $\[\e[34;1m\] \[\e[39m\]\[\e[0m\]";
 
 # Avoid duplicate entries
 HISTCONTROL="erasedups:ignoreboth"
 # Don't record some commands
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history"
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:man"
 # Useful timestamp format
 HISTTIMEFORMAT='%F %T '
 
