@@ -39,7 +39,7 @@ input "1133:45085:MX_Ergo_Mouse" {
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
-bindsym $mod+l exec swaylock
+bindsym $mod+p exec swaylock
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -92,7 +92,7 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 
 # Layout stuff:
-bindsym $mod+h splith
+bindsym $mod+b splith
 bindsym $mod+v splitv
 
 bindsym $mod+s layout stacking
