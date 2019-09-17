@@ -19,13 +19,11 @@ font pango:Iosevka 20
 
 ### Output configuration
 
-output DP-3 {
+output HDMI-A-1 {
   position 0 0
   resolution 3840x2160@60Hz
   background ~/.dotfiles/sway/xkcd-light.png fill 
 }
-
-output HDMI-A-1 disable
 
 input "1133:16495:Logitech_MX_Ergo" {
   pointer_accel 1
@@ -167,7 +165,6 @@ set $menu dmenu_path | dmenu -fn 'Iosevka:bold:pixelsize=42' -nb '$bg' -nf '$fg'
 bar {
     position top
     mode hide
-    output DP-3
 
     status_command exec /home/jupblb/.config/i3status/net-speed.sh
 
@@ -185,7 +182,6 @@ bar {
     }
 
     tray_padding 20
-    tray_output DP-3
 }
 
 # class                 border    backgr    text      indicator child_border
