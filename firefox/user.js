@@ -12,10 +12,6 @@ user_pref("network.protocol-handler.expose.magnet", false);
 
 user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
 
-user_pref("font.name.monospace.x-western", "PragmataPro Mono Liga");
-user_pref("font.name.sans-serif.x-western", "Roboto");
-user_pref("font.name.serif.x-western", "Roboto");
-
 user_pref("general.warnOnAboutConfig", false);
 
 user_pref("permissions.default.desktop-notification", 2);

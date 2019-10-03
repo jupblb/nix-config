@@ -1,0 +1,6 @@
+@-moz-document url-prefix("http://"), url-prefix("https://") {
+  @font-face {
+    font-family: "Consolas";
+    src: local("PragmataPro Mono Liga"), local("Iosevka");
+  }
+}
