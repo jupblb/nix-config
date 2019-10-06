@@ -1,6 +1,15 @@
-@-moz-document url-prefix("http://"), url-prefix("https://") {
-  @font-face {
-    font-family: "Consolas";
-    src: local("PragmataPro Mono Liga"), local("Iosevka");
+@-moz-document domain(github.com) {
+  .blob-code, .blob-code-inner {
+    font-family: "PragmataPro Mono Liga" !important;
   }
+}
+
+@-moz-document domain(bitbucket.org) {
+  .source, .page, .view-line, pre {
+    font-family: "PragmataPro Mono Liga" !important;
+  }
+}
+
+code {
+  font-family: "PragmataPro Mono Liga" !important;
 }
