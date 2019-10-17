@@ -4,7 +4,8 @@
 	ui = true
 [core]
 	editor = vim
-	excludesfile = /home/jupblb/.dotfiles/git/gitignore
+	excludesfile = ~/.dotfiles/git/gitignore
+	mergeoptions = --no-edit
 [diff]
 	tool = vimdiff
 [difftool]

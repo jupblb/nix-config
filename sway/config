@@ -1,8 +1,7 @@
 # Read `man 5 sway` for a complete reference.
 
 exec mako
-exec dropbox
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec systemctl --user start dropbox
 exec redshift -m wayland -l 51.12:17.05
 
 ### Variables
@@ -19,18 +18,10 @@ font pango:Iosevka 20
 
 ### Output configuration
 
-output HDMI-A-1 {
+output DP-1 {
   position 0 0
   resolution 3840x2160@60Hz
   background ~/.dotfiles/sway/xkcd-light.png fill 
-}
-
-input "1133:16495:Logitech_MX_Ergo" {
-  pointer_accel 1
-}
-
-input "1133:45085:MX_Ergo_Mouse" {
-  pointer_accel 1
 }
 
 ### Key bindings
@@ -181,7 +172,7 @@ bar {
         urgent_workspace     $bg       $red       $fg
     }
 
-    tray_padding 20
+    tray_output none
 }
 
 # class                 border    backgr    text      indicator child_border
@@ -195,5 +186,13 @@ assign [title=".*Franz.*"]  10
 
 default_border pixel 10
 smart_borders on
+
+input * {
+    xkb_layout pl
+    pointer_accel 1
+}
+
+seat * hide_cursor 5000
+seat * xcursor_theme Paper 36
 
 include /etc/sway/config.d/*

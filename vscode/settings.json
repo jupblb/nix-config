@@ -1,6 +1,5 @@
 {
-    "window.zoomLevel": 4,
-    "workbench.colorTheme": "Gruvbox Light Hard",
+    "workbench.colorTheme": "Gruvbox Material Hard Light",
     "window.menuBarVisibility": "toggle",
     "editor.fontLigatures": true,
     "editor.fontFamily": "'PragmataPro Mono Liga'",
@@ -27,3 +26,4 @@
     "markdown.preview.fontSize": 16,
     "terminal.external.linuxExec": "kitty"
 }
+
