@@ -41,8 +41,6 @@
 
   nix.maxJobs = 12;
 
-  powerManagement.powertop.enable = true;
-
   services.apcupsd.enable          = true;
   services.apcupsd.configText      = ''
     UPSCABLE usb

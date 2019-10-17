@@ -85,8 +85,6 @@
   programs.fish.interactiveShellInit    = "${pkgs.fortune}/bin/fortune -sa";
   programs.gnupg.agent.enable           = true;
   programs.gnupg.agent.enableSSHSupport = true;
-  programs.java.enable                  = true;
-  programs.java.package                 = pkgs.jdk8;
   programs.less.enable                  = false;
   programs.nano.nanorc                  = builtins.readFile(./scripts/nanorc);
   programs.sway.enable                  = true;
@@ -113,6 +111,13 @@
     ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
     mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2
   '';
+  system.extraSystemBuilderCmds = with pkgs; ''
+    mkdir -p $out/pkgs
+    ln -s ${openjdk8 } $out/pkgs/openjdk8
+    ln -s ${openjdk11} $out/pkgs/openjdk11
+    ln -s ${openjdk  } $out/pkgs/openjdk
+    ln -s ${graalvm8 } $out/pkgs/graalvm8-ce
+  '';
 
   systemd.user.services.dropbox = {
     description = "Dropbox";
@@ -124,7 +129,7 @@
     serviceConfig = {
       ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
       ExecReload = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
-      KillMode = "control-group"; # upstream recommends process
+      KillMode = "control-group";
       Restart = "on-failure";
       PrivateTmp = true;
       ProtectSystem = "full";
