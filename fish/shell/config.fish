@@ -16,4 +16,4 @@ set -g theme_display_hostname       ssh
 
 # General env variables
 set -x SBT_OPTS           "-Xms2G -Xmx8G -Xss4m"
-set -x COURSIER_CACHE     "~/.cache/coursier"
+set -x COURSIER_CACHE     "/home/jupblb/.cache/coursier"
