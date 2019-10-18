@@ -24,6 +24,10 @@
     "git.allowForcePush": true,
     "markdown.preview.fontFamily": "-apple-system, Iosevka, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif",
     "markdown.preview.fontSize": 16,
-    "terminal.external.linuxExec": "kitty"
+    "terminal.external.linuxExec": "kitty",
+    "metals.javaHome": "/run/current-system/pkgs/graalvm8-ce",
+    "metals.sbtScript": "/run/current-system/sw/bin/sbt",
+    "git.fetchOnPull": true,
+    "languageServerHaskell.hieExecutablePath": "/run/current-system/sw/bin/hie"
 }
 

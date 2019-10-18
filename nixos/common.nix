@@ -111,10 +111,9 @@
     ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
     mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2
   '';
-  system.extraSystemBuilderCmds = with pkgs; ''
+  system.extraSystemBuilderCmds     = with pkgs; ''
     mkdir -p $out/pkgs
     ln -s ${openjdk8 } $out/pkgs/openjdk8
-    ln -s ${openjdk11} $out/pkgs/openjdk11
     ln -s ${openjdk  } $out/pkgs/openjdk
     ln -s ${graalvm8 } $out/pkgs/graalvm8-ce
   '';
