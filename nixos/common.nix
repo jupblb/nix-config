@@ -1,10 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams   = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
-  boot.loader.timeout = 1;
-  boot.tmpOnTmpfs     = true;
+  boot.earlyVconsoleSetup = true;
+  boot.kernelPackages     = pkgs.linuxPackages_latest;
+  boot.kernelParams       = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
+  boot.loader.timeout     = 1;
+  boot.tmpOnTmpfs         = true;
 
   environment.shells         = with pkgs; [ fish bashInteractive ];
   environment.systemPackages = with pkgs.unstable; [
