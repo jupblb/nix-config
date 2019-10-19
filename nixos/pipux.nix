@@ -49,7 +49,9 @@
   '';
   services.fstrim.enable         = true;
   services.nfs.server.enable     = true;
-  services.nfs.server.exports    = "/data/nfs 192.168.1.2/24(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)";
+  services.nfs.server.exports    = ''
+    /data/nfs 192.168.1.2/24(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)
+  '';
   services.transmission.enable   = true;
   services.transmission.group    = "data";
   services.transmission.settings = { 
