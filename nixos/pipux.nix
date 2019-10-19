@@ -4,8 +4,8 @@
   imports = [ ./common.nix ];
 
   boot.kernelModules                   = [ "kvm-intel" ];
-  boot.kernelParams                    = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
-  boot.initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.kernelParams                    = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" "i915" ];
+  boot.initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "i915" ];
   boot.kernel.sysctl                   = { "fs.inotify.max_user_watches" = 524288; "vm.swappiness" = 20; };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.enable              = false;
@@ -31,7 +31,8 @@
   ];
   hardware.pulseaudio.enable         = true;
 
-  i18n.consoleFont = "${pkgs.terminus_font}/share/consolefonts/ter-232n.psf.gz";
+  i18n.consoleFont     = "ter-232n";
+  i18n.consolePackages = [ pkgs.terminus_font ];
 
   networking.defaultGateway                      = "192.168.1.1";
   networking.firewall.enable                     = false;
