@@ -21,6 +21,7 @@
     htop
     idea-ultimate'
     imv
+    jq
     kitty
     mpv
     pciutils
@@ -84,6 +85,7 @@
   programs.evince.enable                = true;
   programs.fish.enable                  = true;
   programs.fish.interactiveShellInit    = "${pkgs.fortune}/bin/fortune -sa";
+  programs.fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
   programs.gnupg.agent.enable           = true;
   programs.gnupg.agent.enableSSHSupport = true;
   programs.less.enable                  = false;
@@ -91,11 +93,14 @@
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
     dmenu
+    grim
     i3status
     mako
     paper-icon-theme
     redshift-wayland'
     swaylock
+    slurp
+    xdg-user-dirs
     xwayland
   ];
   programs.sway.extraSessionCommands    = builtins.readFile(./scripts/swayrc);
