@@ -38,7 +38,6 @@
   fonts.fonts                             = with pkgs.unstable; [ iosevka-bin vistafonts ];
 
   hardware.enableRedistributableFirmware = true;
-  hardware.enableAllFirmware             = true;
 
   i18n.consoleColors    = [ 
     "bdae93"
