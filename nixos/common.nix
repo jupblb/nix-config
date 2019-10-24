@@ -28,6 +28,7 @@
     python
     ranger
     sbt'
+    spotify
     unzip
     vim'
     vscode

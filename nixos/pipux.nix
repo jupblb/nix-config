@@ -16,15 +16,15 @@
   boot.loader.systemd-boot.enable      = true;
 
   fileSystems."/"     = { 
-    device = "/dev/disk/by-uuid/ddab3afa-579c-4742-ac66-7645aaf4669a";
+    device = "/dev/disk/by-label/nixos";
     fsType = "f2fs";
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/2E0E-8F9D";
+    device = "/dev/disk/by-label/boot";
     fsType = "vfat";
   };
   fileSystems."/data" = {
-    device = "/dev/disk/by-uuid/388c2c36-0f5f-45f9-b0cd-b5b9e8fe8211";
+    device = "/dev/disk/by-label/data";
     fsType = "ext4";
   };
 
@@ -68,7 +68,7 @@
 
   sound.enable = true;
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/7a705c18-3066-4c7b-a989-3b0cc114934e"; } ];
+  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   system.stateVersion = "19.09";
 
