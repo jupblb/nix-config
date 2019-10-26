@@ -38,11 +38,11 @@
   i18n.consoleFont     = "ter-232n";
   i18n.consolePackages = [ pkgs.terminus_font ];
 
-  networking.defaultGateway                      = "192.168.1.1";
-  networking.firewall.enable                     = false;
-  networking.hostName                            = "pipux";
-  networking.interfaces.enp0s31f6.ipv4.addresses = [ { address = "192.168.1.2"; prefixLength = 24; } ];
-  networking.wireless.enable                     = false;
+  networking.defaultGateway                 = "192.168.1.1";
+  networking.firewall.enable                = false;
+  networking.hostName                       = "pipux";
+  networking.interfaces.eno2.ipv4.addresses = [ { address = "192.168.1.2"; prefixLength = 24; } ];
+  networking.wireless.enable                = false;
 
   nix.maxJobs = 12;
 
