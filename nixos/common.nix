@@ -3,7 +3,7 @@
 {
   boot.earlyVconsoleSetup = true;
   boot.kernelPackages     = pkgs.linuxPackages_latest;
-  boot.kernelParams       = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
+  boot.kernelParams       = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" "nowatchdog" ];
   boot.loader.timeout     = 1;
   boot.tmpOnTmpfs         = true;
 
@@ -15,11 +15,9 @@
     dropbox-cli
     file
     firefox
-    franz
     fzf
     git
     htop
-    idea-ultimate'
     imv
     jq
     kitty
@@ -32,7 +30,6 @@
     unzip
     vim'
     vscode
-    zoom-us
   ];
 
   fonts.fontconfig.defaultFonts.monospace = [ "Iosevka" ];
@@ -78,6 +75,9 @@
   };
   nixpkgs.overlays                = [ (import ./overlays) ];
 
+  powerManagement.cpuFreqGovernor = "powersave";
+  powerManagement.powertop.enable = true;
+
   programs.adb.enable                   = true;
   programs.bash.enableCompletion        = true;
   programs.bash.promptInit              = builtins.readFile(./scripts/bashrc);
@@ -93,8 +93,10 @@
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
     dmenu
+    franz
     grim
     i3status
+    idea-ultimate'
     mako
     paper-icon-theme
     redshift-wayland'
@@ -102,6 +104,7 @@
     slurp
     xdg-user-dirs
     xwayland
+    zoom-us
   ];
   programs.sway.extraSessionCommands    = builtins.readFile(./scripts/swayrc);
   programs.vim.defaultEditor            = true;

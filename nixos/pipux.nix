@@ -3,13 +3,20 @@
 {
   imports = [ ./common.nix ];
 
-  boot.kernelModules                   = [ "kvm-intel" ];
-  boot.kernelParams                    = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" "i915" ];
+  boot.blacklistedKernelModules        = [ "snd_hda_codec_hdmi" ];
+  boot.kernelModules                   = [ "i915" ];
+  boot.extraModprobeConfig             = ''
+    options i915 enable_guc=2
+    options i915 enable_gvt=0
+    options i915 enable_fbc=1
+    options snd_hda_intel power_save=1
+  '';
   boot.initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "i915" ];
   boot.kernel.sysctl                   = { 
     "fs.inotify.max_user_watches" = 524288;
     "vm.swappiness"               = 20; 
     "kernel.panic"                = 5;
+    "kernel.nmi_watchdog"         = 0;
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.enable              = false;
@@ -73,18 +80,4 @@
   system.stateVersion = "19.09";
 
   users.groups.data.members = [ "jupblb" ];
-
-  virtualisation.libvirtd.enable             = false;
-  virtualisation.libvirtd.extraConfig        = ''
-    listen_tls = 0
-    listen_tcp = 1
-    auth_tcp   = "none"
-  '';
-  virtualisation.libvirtd.onBoot             = "ignore";
-  virtualisation.libvirtd.onShutdown         = "shutdown";
-  virtualisation.libvirtd.qemuOvmf           = true;
-  virtualisation.libvirtd.qemuPackage        = pkgs.qemu_kvm;
-  virtualisation.libvirtd.qemuVerbatimConfig = ''
-    nvram = [ "${pkgs.OVMF}/FV/OVMF.fd:${pkgs.OVMF}/FV/OVMF_VARS.fd" ]
-  '';
 }
