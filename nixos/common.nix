@@ -3,7 +3,6 @@
 {
   boot.earlyVconsoleSetup = true;
   boot.kernelPackages     = pkgs.linuxPackages_latest;
-  boot.kernelParams       = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" "nowatchdog" ];
   boot.loader.timeout     = 1;
   boot.tmpOnTmpfs         = true;
 
@@ -76,7 +75,6 @@
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   powerManagement.cpuFreqGovernor = "powersave";
-  powerManagement.powertop.enable = true;
 
   programs.adb.enable                   = true;
   programs.bash.enableCompletion        = true;

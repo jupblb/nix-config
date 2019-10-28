@@ -5,6 +5,17 @@
 
   boot.blacklistedKernelModules        = [ "snd_hda_codec_hdmi" ];
   boot.kernelModules                   = [ "i915" ];
+  boot.kernelParams                    = [
+    "intel_iommu=on"
+    "iommu=pt"
+    "mitigations=off"
+    "no_stf_barrier"
+    "noibpb"
+    "noibrs"
+    "nowatchog"
+    "pcie_acs_override=id:8086:a370"
+  ];
+  boot.kernelPatches                   = [ { name = "add-acs-overrides"; patch = ./scripts/add-acs-overrides.patch; } ];
   boot.extraModprobeConfig             = ''
     options i915 enable_guc=2
     options i915 enable_gvt=0
