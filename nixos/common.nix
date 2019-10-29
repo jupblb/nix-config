@@ -36,27 +36,29 @@
 
   hardware.enableRedistributableFirmware = true;
 
-  i18n.consoleColors    = [ 
-    "bdae93"
-    "c74545"
-    "6c782e"
-    "c55b03"
-    "47747e"
-    "945e80"
-    "4c7a5d"
-    "764e37"
-    "928374"
-    "c74545"
-    "6c782e"
-    "b47109"
-    "47747e"
-    "945e80"
-    "4c7a5d"
-    "764e37"
-  ];
-  i18n.consoleKeyMap    = "pl";
-  i18n.defaultLocale    = "en_US.UTF-8";
-  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
+  i18n = {
+    consoleColors    = [
+      "bdae93"
+      "c74545"
+      "6c782e"
+      "c55b03"
+      "47747e"
+      "945e80"
+      "4c7a5d"
+      "764e37"
+      "928374"
+      "c74545"
+      "6c782e"
+      "b47109"
+      "47747e"
+      "945e80"
+      "4c7a5d"
+      "764e37"
+    ];
+    consoleKeyMap    = "pl";
+    defaultLocale    = "en_US.UTF-8";
+    supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
+  };
 
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
   networking.useDHCP     = false;
@@ -126,20 +128,18 @@
   '';
 
   systemd.user.services.dropbox = {
-    description = "Dropbox";
-    wantedBy    = [ "default.target" ];
-    environment = {
-      QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
-      QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
-    };
-    serviceConfig = {
-      ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
-      ExecReload = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
-      KillMode = "control-group";
-      Restart = "on-failure";
-      PrivateTmp = true;
+    description                  = "Dropbox";
+    wantedBy                     = [ "default.target" ];
+    environment.QT_PLUGIN_PATH   = "/run/current-system/sw/${pkgs.qt5.qtbase.qtPluginPrefix}";
+    environment.QML2_IMPORT_PATH = "/run/current-system/sw/${pkgs.qt5.qtbase.qtQmlPrefix}";
+    serviceConfig                = {
+      ExecStart     = "${pkgs.dropbox.out}/bin/dropbox";
+      ExecReload    = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
+      KillMode      = "control-group";
+      Restart       = "on-failure";
+      PrivateTmp    = true;
       ProtectSystem = "full";
-      Nice = 10;
+      Nice          = 10;
     };
   };
 

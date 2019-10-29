@@ -3,48 +3,43 @@
 {
   imports = [ ./common.nix ];
 
-  boot.blacklistedKernelModules        = [ "snd_hda_codec_hdmi" "iwlwifi" ];
-  boot.kernelModules                   = [ "i915" ];
-  boot.kernelParams                    = [
-    "intel_iommu=on"
-    "iommu=pt"
-    "mitigations=off"
-    "no_stf_barrier"
-    "noibpb"
-    "noibrs"
-    "nowatchog"
-    "pcie_acs_override=id:8086:a370"
-  ];
-  boot.kernelPatches                   = [ { name = "add-acs-overrides"; patch = ./scripts/add-acs-overrides.patch; } ];
-  boot.extraModprobeConfig             = ''
-    options i915 enable_guc=2
-    options i915 enable_gvt=0
-    options i915 enable_fbc=1
-    options snd_hda_intel power_save=1
-  '';
-  boot.initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "i915" ];
-  boot.kernel.sysctl                   = { 
-    "fs.inotify.max_user_watches" = 524288;
-    "vm.swappiness"               = 20; 
-    "kernel.panic"                = 5;
-    "kernel.nmi_watchdog"         = 0;
+  boot = {
+    blacklistedKernelModules        = [ "snd_hda_codec_hdmi" "iwlwifi" ];
+    extraModprobeConfig             = ''
+      options i915 enable_guc=2
+      options i915 enable_gvt=0
+      options i915 enable_fbc=1
+      options snd_hda_intel power_save=1
+    '';
+    initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "i915" ];
+    kernel.sysctl                   = { 
+      "fs.inotify.max_user_watches" = 524288;
+      "vm.swappiness"               = 20; 
+      "kernel.panic"                = 5;
+      "kernel.nmi_watchdog"         = 0;
+    };
+    kernelParams                    = [
+      "intel_iommu=on"
+      "iommu=pt"
+      "mitigations=off"
+      "no_stf_barrier"
+      "noibpb"
+      "noibrs"
+      "nowatchog"
+      "pcie_acs_override=id:8086:a370"
+    ];
+    kernelPatches                   = [ { name = "add-acs-overrides"; patch = ./scripts/add-acs-overrides.patch; } ];
+    loader.efi.canTouchEfiVariables = true;
+    loader.grub.enable              = false;
+    loader.systemd-boot.enable      = true;
   };
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.enable              = false;
-  boot.loader.systemd-boot.enable      = true;
 
-  fileSystems."/"     = { 
-    device = "/dev/disk/by-label/nixos";
-    fsType = "f2fs";
-  };
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "vfat";
-  };
-  fileSystems."/data" = {
-    device = "/dev/disk/by-label/data";
-    fsType = "ext4";
-  };
+  fileSystems."/".device     = "/dev/disk/by-label/nixos";
+  fileSystems."/".fsType     = "f2fs";
+  fileSystems."/boot".device = "/dev/disk/by-label/boot";
+  fileSystems."/boot".fsType = "vfat";
+  fileSystems."/data".device = "/dev/disk/by-label/data";
+  fileSystems."/data".fsType = "ext4";
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.opengl.enable             = true;

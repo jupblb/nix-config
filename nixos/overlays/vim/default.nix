@@ -1,12 +1,13 @@
 { buildVimPluginFrom2Nix, fetchFromGitHub, vim_configurable, vimPlugins }:
+
 let
   gruvbox-material = buildVimPluginFrom2Nix {
     name = "gruvbox-material";
-    src = fetchFromGitHub {
-      owner = "sainnhe";
-      repo = "gruvbox-material";
-      rev = "f4375648cb1bfc548b72bb7ba2c5b9c38ec4684e";
-      sha256 = "169zrgjn8imn5s4k4zhz0qc88gv9gkac5yhlcdpwkv329h5g9kn4";
+    src  = fetchFromGitHub {
+      owner  = "sainnhe";
+      repo   = "gruvbox-material";
+      rev    = "0a0e6b00f78d7808989143fad77b19a6f3676e0e";
+      sha256 = "1a7kvx9jb7nkbbs7rv0x10lzfq1h4sk5l0dljnnps6f31ynnqwxm";
     };
   };
 in vim_configurable.customize {
