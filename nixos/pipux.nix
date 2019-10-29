@@ -3,7 +3,7 @@
 {
   imports = [ ./common.nix ];
 
-  boot.blacklistedKernelModules        = [ "snd_hda_codec_hdmi" ];
+  boot.blacklistedKernelModules        = [ "snd_hda_codec_hdmi" "iwlwifi" ];
   boot.kernelModules                   = [ "i915" ];
   boot.kernelParams                    = [
     "intel_iommu=on"
