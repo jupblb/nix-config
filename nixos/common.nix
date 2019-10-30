@@ -20,6 +20,7 @@
     imv
     jq
     kitty
+    ltunify
     mpv
     pciutils
     python
