@@ -77,6 +77,7 @@
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   powerManagement.cpuFreqGovernor = "powersave";
+  powerManagement.scsiLinkPolicy  = "min_power";
 
   programs.adb.enable                   = true;
   programs.bash.enableCompletion        = true;
