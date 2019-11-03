@@ -13,6 +13,7 @@ set -g theme_title_display_process  yes
 set -g default_user                 jupblb
 set -g theme_display_user           ssh
 set -g theme_display_hostname       ssh
+set -g theme_display_date           no
 
 # General env variables
 set -x SBT_OPTS           "-Xms2G -Xmx8G -Xss4m"

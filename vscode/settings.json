@@ -26,6 +26,14 @@
     "metals.javaHome": "/run/current-system/pkgs/graalvm8-ce",
     "metals.sbtScript": "/run/current-system/sw/bin/sbt",
     "git.fetchOnPull": true,
-    "languageServerHaskell.hieExecutablePath": "/run/current-system/sw/bin/hie"
+    "languageServerHaskell.hieExecutablePath": "/run/current-system/sw/bin/hie",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.olean": true
+    }
 }
 
