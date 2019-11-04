@@ -93,6 +93,7 @@
   programs.gnupg.agent.enableSSHSupport = true;
   programs.less.enable                  = false;
   programs.nano.nanorc                  = builtins.readFile(./scripts/nanorc);
+  programs.ssh.forwardX11               = true;
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
     dmenu
@@ -105,6 +106,7 @@
     redshift-wayland'
     swaylock
     slurp
+    waypipe
     xdg-user-dirs
     xwayland
     zoom-us
@@ -114,6 +116,7 @@
 
   services.mingetty.autologinUser  = "jupblb";
   services.openssh.enable          = true;
+  services.openssh.forwardX11      = true;
   services.openssh.permitRootLogin = "no";
   services.printing.drivers        = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
   services.printing.enable         = true;
