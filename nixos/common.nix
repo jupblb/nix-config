@@ -18,12 +18,10 @@
     git
     htop
     imv
-    jq
     kitty
     ltunify
     mpv
     pciutils
-    python
     ranger
     sbt'
     spotify
