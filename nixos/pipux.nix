@@ -113,7 +113,8 @@
       "/dev/rtc",
       "/dev/urandom",
       "/dev/zero",
-      "/dev/input/by-id/usb-Ultimate_Gadget_Laboratories_Ultimate_Hacking_Keyboard-if01-event-kbd"
+      "/dev/input/by-id/usb-Ultimate_Gadget_Laboratories_Ultimate_Hacking_Keyboard-if01-event-kbd",
+      "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse"
     ]
     nvram = [ "${pkgs.OVMF}/FV/OVMF.fd:${pkgs.OVMF}/FV/OVMF_VARS.fd" ]
   '';
