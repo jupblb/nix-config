@@ -14,6 +14,7 @@
       options vfio-pci ids=8086:a370,1002:67df,1002:aaf0
     '';
     initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "i915" ];
+    initrd.checkJournalingFS        = false;
     kernel.sysctl                   = { 
       "fs.inotify.max_user_watches" = 524288;
       "vm.swappiness"               = 20; 
