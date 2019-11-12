@@ -19,7 +19,6 @@
     htop
     imv
     kitty
-    ltunify
     mpv
     pciutils
     ranger
