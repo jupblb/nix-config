@@ -5,6 +5,7 @@
 
   boot = {
     blacklistedKernelModules        = [ "amdgpu" "snd_hda_codec_hdmi" "iwlwifi" ];
+    crashDump.enable                = true;
     extraModprobeConfig             = ''
       options i915 enable_guc=2
       options i915 enable_gvt=0
@@ -16,8 +17,6 @@
     kernel.sysctl                   = { 
       "fs.inotify.max_user_watches" = 524288;
       "vm.swappiness"               = 20; 
-      "kernel.panic"                = 5;
-      "kernel.nmi_watchdog"         = 0;
     };
     kernelModules                   = [ "kvm-intel" "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
     kernelParams                    = [
@@ -27,9 +26,7 @@
       "no_stf_barrier"
       "noibpb"
       "noibrs"
-      "nowatchog"
       "pcie_acs_override=id:8086:a370"
-      "autosuspend=-1"
     ];
     kernelPatches                   = [ { name = "add-acs-overrides"; patch = ./scripts/add-acs-overrides.patch; } ];
     loader.efi.canTouchEfiVariables = true;
@@ -82,9 +79,6 @@
     incomplete-dir-enabled = true;
     rpc-whitelist          = "127.0.0.1,192.168.*.*";
   };
-  services.udev.extraRules       = ''
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{idVendor}=="8087", ATTR{idProduct}=="0aaa", ATTR{power/control}="on"
-  '';
 
   sound.enable = true;
 

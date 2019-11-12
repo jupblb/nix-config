@@ -3,7 +3,7 @@
 {
   boot.earlyVconsoleSetup = true;
   boot.kernelPackages     = pkgs.linuxPackages_latest;
-  boot.loader.timeout     = 1;
+  boot.loader.timeout     = 3;
   boot.tmpOnTmpfs         = true;
 
   environment.shells         = with pkgs; [ fish bashInteractive ];
