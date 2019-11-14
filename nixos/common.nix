@@ -1,10 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.earlyVconsoleSetup = true;
-  boot.kernelPackages     = pkgs.linuxPackages_latest;
-  boot.loader.timeout     = 3;
-  boot.tmpOnTmpfs         = true;
+  boot.earlyVconsoleSetup                   = true;
+  boot.kernelPackages                       = pkgs.linuxPackages_latest;
+  boot.loader.systemd-boot.memtest86.enable = true;
+  boot.loader.timeout                       = 3;
+  boot.tmpOnTmpfs                           = true;
 
   environment.shells         = with pkgs; [ fish bashInteractive ];
   environment.systemPackages = with pkgs.unstable; [
