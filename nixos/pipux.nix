@@ -4,17 +4,11 @@
   imports = [ ./common.nix ];
 
   boot = {
-    blacklistedKernelModules        = [ "amdgpu" "snd_hda_codec_hdmi" "iwlwifi" ];
-    crashDump.enable                = true;
     extraModprobeConfig             = ''
-      options i915 enable_guc=2
-      options i915 enable_gvt=0
-      options i915 enable_fbc=1
       options snd_hda_intel power_save=1
       options vfio-pci ids=8086:a370,1002:67df,1002:aaf0
     '';
     initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "i915" ];
-    initrd.checkJournalingFS        = false;
     kernel.sysctl                   = { 
       "fs.inotify.max_user_watches" = 524288;
       "vm.swappiness"               = 20; 
@@ -31,18 +25,16 @@
     ];
     kernelPatches                   = [ { name = "add-acs-overrides"; patch = ./scripts/add-acs-overrides.patch; } ];
     loader.efi.canTouchEfiVariables = true;
-    loader.grub.enable              = false;
     loader.systemd-boot.enable      = true;
   };
 
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
-  fileSystems."/".fsType     = "f2fs";
+  fileSystems."/".fsType     = "xfs";
   fileSystems."/boot".device = "/dev/disk/by-label/boot";
   fileSystems."/boot".fsType = "vfat";
   fileSystems."/data".device = "/dev/disk/by-label/data";
   fileSystems."/data".fsType = "ext4";
 
-  hardware.bluetooth.enable          = false;
   hardware.cpu.intel.updateMicrocode = true;
   hardware.opengl.enable             = true;
   hardware.opengl.extraPackages      = with pkgs; [

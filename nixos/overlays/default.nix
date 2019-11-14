@@ -1,9 +1,9 @@
 self: pkgs:
 
 let
-  all-hies-import = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
+  all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
 in { 
-  all-hies'         = all-hies-import.unstableFallback.selection { selector = p: p; };
+  all-hies'         = all-hies.selection { selector = p: p; };
   diff-so-fancy'    = pkgs.gitAndTools.diff-so-fancy;
   idea-ultimate'    = pkgs.jetbrains.idea-ultimate.override { jdk = pkgs.jetbrains.jdk; };
   redshift-wayland' = pkgs.callPackage ./redshift-wayland {
