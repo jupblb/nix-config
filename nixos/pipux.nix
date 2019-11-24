@@ -79,6 +79,9 @@
 
   system.stateVersion = "19.09";
 
+  time.hardwareClockInLocalTime = true;
+  time.timeZone                 = "Europe/Warsaw";
+
   users.groups.data.members     = [ "jupblb" ];
   users.groups.input.members    = [ "jupblb" ];
   users.groups.libvirtd.members = [ "root" "jupblb"];
