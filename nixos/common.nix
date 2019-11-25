@@ -76,12 +76,10 @@
   };
   nixpkgs.overlays                = [ (import ./overlays) ];
 
-# powerManagement.cpuFreqGovernor = "powersave";
-# powerManagement.scsiLinkPolicy  = "min_power";
-
   programs.bash.enableCompletion        = true;
   programs.bash.promptInit              = builtins.readFile(./scripts/bashrc);
   programs.bash.shellAliases            = { ls = "ls --color=auto"; };
+  programs.dconf.enable                 = true;
   programs.evince.enable                = true;
   programs.fish.enable                  = true;
   programs.fish.interactiveShellInit    = "${pkgs.fortune}/bin/fortune -sa";
@@ -90,30 +88,31 @@
   programs.gnupg.agent.enableSSHSupport = true;
   programs.less.enable                  = false;
   programs.nano.nanorc                  = builtins.readFile(./scripts/nanorc);
-  programs.sway.enable                  = true;
-  programs.sway.extraPackages           = with pkgs.unstable; [
+  programs.vim.defaultEditor            = true;
+  
+  services.dbus.packages                    = [ pkgs.gnome3.dconf ];
+  services.openssh.enable                   = true;
+  services.openssh.permitRootLogin          = "no";
+  services.printing.drivers                 = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
+  services.printing.enable                  = true;
+  services.xserver.desktopManager.default   = "none";
+  services.xserver.dpi                      = 220;
+  services.xserver.windowManager.default    = "i3";
+  services.xserver.windowManager.i3.enable  = true;
+  services.xserver.windowManager.i3.extraPackages = with pkgs.unstable; [
     dmenu
+    dunst
+    gnome-screenshot'
     franz
-    grim
     i3status
     idea-ultimate'
-    mako
     paper-icon-theme
-    redshift-wayland'
-    swaylock
-    slurp
+    redshift
     xdg-user-dirs
-    xwayland
     zoom-us
   ];
-  programs.sway.extraSessionCommands    = builtins.readFile(./scripts/swayrc);
-  programs.vim.defaultEditor            = true;
-
-  services.mingetty.autologinUser  = "jupblb";
-  services.openssh.enable          = true;
-  services.openssh.permitRootLogin = "no";
-  services.printing.drivers        = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
-  services.printing.enable         = true;
+  services.xserver.windowManager.i3.package = pkgs.unstable.i3-gaps;
+  services.xserver.layout                   = "pl";
 
   system.activationScripts.ld-linux = lib.stringAfter [ "usrbinenv" ] ''                       
     mkdir -m 0755 -p /lib64

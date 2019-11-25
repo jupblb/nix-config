@@ -72,6 +72,9 @@
     incomplete-dir-enabled = true;
     rpc-whitelist          = "127.0.0.1,192.168.*.*";
   };
+  services.xserver.displayManager.auto.enable = true;
+  services.xserver.displayManager.auto.user   = "jupblb";
+  services.xserver.enable                     = true; 
 
   sound.enable = true;
 
