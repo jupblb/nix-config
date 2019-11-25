@@ -12,4 +12,3 @@
 -XX:-OmitStackTraceInFastThrow
 -Dawt.useSystemAAFontSettings=on
 -Dsun.java2d.renderer=sun.java2d.marlin.MarlinRenderingEngine
--Djdk.gtk.version=2

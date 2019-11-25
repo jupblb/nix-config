@@ -86,7 +86,6 @@
   programs.fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
   programs.gnupg.agent.enable           = true;
   programs.gnupg.agent.enableSSHSupport = true;
-  programs.less.enable                  = false;
   programs.nano.nanorc                  = builtins.readFile(./scripts/nanorc);
   programs.vim.defaultEditor            = true;
   
@@ -95,24 +94,19 @@
   services.openssh.permitRootLogin          = "no";
   services.printing.drivers                 = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
   services.printing.enable                  = true;
-  services.xserver.desktopManager.default   = "none";
-  services.xserver.dpi                      = 220;
-  services.xserver.windowManager.default    = "i3";
-  services.xserver.windowManager.i3.enable  = true;
-  services.xserver.windowManager.i3.extraPackages = with pkgs.unstable; [
-    dmenu
-    dunst
-    gnome-screenshot'
-    franz
-    i3status
-    idea-ultimate'
-    paper-icon-theme
-    redshift
-    xdg-user-dirs
-    zoom-us
-  ];
-  services.xserver.windowManager.i3.package = pkgs.unstable.i3-gaps;
-  services.xserver.layout                   = "pl";
+  services.xserver = {
+    desktopManager.default = "none";
+    dpi                    = 220;
+    layout                 = "pl";
+    windowManager          = {
+      default          = "i3";
+      i3.enable        = true;
+      i3.extraPackages = with pkgs.unstable; [
+        dmenu dunst gnome-screenshot' franz i3status idea-ultimate' paper-icon-theme redshift xdg-user-dirs zoom-us
+      ];
+      i3.package       = pkgs.unstable.i3-gaps;
+    };
+  };
 
   system.activationScripts.ld-linux = lib.stringAfter [ "usrbinenv" ] ''                       
     mkdir -m 0755 -p /lib64

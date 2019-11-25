@@ -5,6 +5,7 @@
 
 exec --no-startup-id dunst
 exec --no-startup-id systemctl --user start dropbox
+exec --no-startup-id xset m 4/2 0
 exec redshift -l 51.12:17.05
 
 set $mod Mod4
@@ -23,9 +24,6 @@ set $gray     #7c6f64
 set $darkgray #1d2021
 set $dummy    #ffffff
 
-exec --no-startup-id xset m 4/2 0
-# exec --no-startup-id xsetroot -solid '$fg'
-
 bindsym Print exec gnome-screenshot -i
 
 # Use pactl to adjust volume in PulseAudio.
@@ -41,10 +39,6 @@ floating_modifier $mod
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec dmenu_path | dmenu_run -fn 'Iosevka:bold:pixelsize=43' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg'
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down

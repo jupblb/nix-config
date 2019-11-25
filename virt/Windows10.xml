@@ -61,6 +61,14 @@ or other application using the libvirt API.
   </pm>
   <devices>
     <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/data/virt/Win10_1909_Polish_x64.iso'/>
+      <target dev='sda' bus='sata'/>
+      <readonly/>
+      <boot order='1'/>
+      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+    </disk>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native'/>
       <source dev='/dev/disk/by-id/ata-WDC_WD20EARX-00ZUDB0_WD-WCC1H1008665'/>
@@ -69,10 +77,10 @@ or other application using the libvirt API.
     </disk>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native'/>
-      <source dev='/dev/disk/by-id/ata-KINGSTON_SV300S37A120G_50026B7746036D54'/>
+      <source dev='/dev/disk/by-id/nvme-TS256GMTE220S_C42113C0F279663E0084'/>
       <target dev='hdc' bus='sata'/>
-      <boot order='1'/>
-      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+      <boot order='2'/>
+      <address type='drive' controller='0' bus='0' target='0' unit='2'/>
     </disk>
     <controller type='usb' index='0' model='qemu-xhci' ports='15'>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>

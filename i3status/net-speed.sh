@@ -3,28 +3,9 @@
 # Authors:
 # - Moritz Warning <moritzwarning@web.de> (2016)
 # - Zhong Jianxin <azuwis@gmail.com> (2014)
-#
-# See file LICENSE at the project root directory for license information.
-#
-# i3status.conf should contain:
-# general {
-#   output_format = i3bar
-# }
-#
-# i3 config looks like this:
-# bar {
-#   status_command exec /usr/share/doc/i3status/contrib/net-speed.sh
-# }
-#
-# Single interface:
-# ifaces="eth0"
-#
-# Multiple interfaces:
-# ifaces="eth0 wlan0"
-#
 
 # Auto detect interfaces
-ifaces=$(ls /sys/class/net | grep -E '^(eth|wlan|enp|wlp)')
+ifaces=$(ls /sys/class/net | grep -E '^(eth|wlan|enp|wlp|eno)')
 
 last_time=0
 last_rx=0
