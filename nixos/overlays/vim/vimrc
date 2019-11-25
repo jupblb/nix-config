@@ -35,9 +35,6 @@ set updatetime=100
 " Enable backspace
 set backspace=indent,eol,start
 
-" Airline
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-
 " Ctrl-P
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -45,10 +42,11 @@ let g:ctrlp_working_path_mode = 'ra'
 
 " gruvbox
 let &t_ut=''
-set termguicolors
-set background=light
-colorscheme gruvbox-material
-let g:airline_theme = 'gruvbox_material'
+let g:airline_theme = 'gruvbox'
+let g:gruvbox_bold = 0
+let g:gruvbox_contrast_light = 'hard'
+let g:gruvbox_italic = 0
+colorscheme gruvbox
 
 " vim-easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings

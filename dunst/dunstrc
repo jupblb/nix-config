@@ -3,7 +3,7 @@
     format = "<b>%s</b>\n%b"
     alignment = center
     word_wrap = yes
-    geometry = "400x10-60+60"
+    geometry = "800x40-60+60"
     padding = 10
     horizontal_padding = 10
 
@@ -12,19 +12,19 @@
     color = "#282828"
 
 [urgency_low]
-    foreground = "#282828"
+    foreground = "#3c3836"
     frame_color = "#98971a"
-    background = "#f9f5d7"
+    background = "#fbf1c7"
     timeout = 5
 
 [urgency_normal]
-    foreground = "#282828"
+    foreground = "#3c3836"
     frame_color = "#d79921"
-    background = "#f9f5d7"
+    background = "#fbf1c7"
     timeout = 20
 
 [urgency_critical]
-    foreground = "#282828"
+    foreground = "#3c3836"
     frame_color = "#cc241d"
-    background = "#f9f5d7"
+    background = "#fbf1c7"
     timeout = 0
