@@ -6,7 +6,7 @@
 exec --no-startup-id dunst
 exec --no-startup-id systemctl --user start dropbox
 exec --no-startup-id xset m 4/2 0
-exec redshift -l 51.12:17.05
+exec --no-startup-id redshift -l 51.12:17.05
 
 set $mod Mod4
 
@@ -149,5 +149,5 @@ client.urgent           $red      $bg       $fg       $red      $red
 no_focus [title=".*Franz.*"]
 assign [title=".*Franz.*"] 10
 
-default_border pixel 10
+default_border pixel 5
 smart_borders on
