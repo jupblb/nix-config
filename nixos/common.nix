@@ -16,6 +16,7 @@
     file
     firefox
     fzf
+    ghc
     git
     htop
     imv
