@@ -30,6 +30,7 @@
     vim'
     virt-manager
     vscode
+    xdg-user-dirs
   ];
 
   fonts.fontconfig.defaultFonts.monospace = [ "Iosevka" ];
@@ -95,7 +96,7 @@
   services.openssh.permitRootLogin          = "no";
   services.printing.drivers                 = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
   services.printing.enable                  = true;
-  services.xserver = {
+  services.xserver                          = {
     desktopManager.default = "none";
     dpi                    = 220;
     layout                 = "pl";
@@ -103,19 +104,19 @@
       default          = "i3";
       i3.enable        = true;
       i3.extraPackages = with pkgs.unstable; [
-        dmenu dunst gnome-screenshot' franz i3status idea-ultimate' paper-icon-theme redshift xdg-user-dirs zoom-us
+        dmenu dunst gnome-screenshot' franz i3status idea-ultimate' paper-icon-theme redshift zoom-us
       ];
       i3.package       = pkgs.unstable.i3-gaps;
     };
   };
 
+  system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
+    ln -sf ${pkgs.bashInteractive}/bin/bash /bin/bash
+  '';
   system.activationScripts.ld-linux = lib.stringAfter [ "usrbinenv" ] ''                       
     mkdir -m 0755 -p /lib64
     ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
     mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2
-  '';
-  system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
-    ln -sf /run/current-system/sw/bin/bash /bin/bash
   '';
   system.extraSystemBuilderCmds     = with pkgs; ''
     mkdir -p $out/pkgs

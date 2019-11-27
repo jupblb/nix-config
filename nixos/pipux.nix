@@ -48,7 +48,7 @@
   networking.defaultGateway                 = "192.168.1.1";
   networking.firewall.enable                = false;
   networking.hostName                       = "pipux";
-  networking.interfaces.eno2.ipv4.addresses = [ { address = "192.168.1.2"; prefixLength = 24; } ];
+  networking.interfaces.ethusb.ipv4.addresses = [ { address = "192.168.1.10"; prefixLength = 24; } ];
   networking.wireless.enable                = false;
 
   nix.maxJobs = 12;
@@ -72,6 +72,10 @@
     incomplete-dir-enabled = true;
     rpc-whitelist          = "127.0.0.1,192.168.*.*";
   };
+  services.udev.extraRules                    = ''
+    ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
+    ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="34:29:8f:73:aa:fd", NAME="ethusb"
+  '';
   services.xserver.displayManager.auto.enable = true;
   services.xserver.displayManager.auto.user   = "jupblb";
   services.xserver.enable                     = true; 
