@@ -31,8 +31,7 @@
     xdg-user-dirs
   ];
 
-  fonts.fontconfig.defaultFonts.monospace = [ "Iosevka" ];
-  fonts.fonts                             = with pkgs.unstable; [ iosevka-bin vistafonts ];
+  fonts.fonts = with pkgs.unstable; [ vistafonts ];
 
   hardware.enableRedistributableFirmware = true;
 

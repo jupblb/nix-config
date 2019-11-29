@@ -10,7 +10,7 @@ exec --no-startup-id redshift -l 51.12:17.05
 
 set $mod Mod4
 
-font pango:Iosevka 10
+font pango:PragmataPro Mono Liga 10
 
 set $bg       #3c3836
 set $fg       #f9f5d7
@@ -36,7 +36,7 @@ floating_modifier $mod
 
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
-bindsym $mod+d exec dmenu_path | dmenu_run -fn 'Iosevka:bold:pixelsize=43' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg'
+bindsym $mod+d exec dmenu_path | dmenu_run -fn 'PragmataPro Mono Liga:bold:pixelsize=43' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg'
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -126,7 +126,7 @@ bar {
    status_command exec /home/jupblb/.config/i3status/net-speed.sh
 
    separator_symbol " | "
-   font pango:Iosevka 11
+   font pango:PragmataPro Mono Liga 11
 
    colors {
        background $bg
