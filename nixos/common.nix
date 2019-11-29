@@ -1,11 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.earlyVconsoleSetup                   = true;
-  boot.kernelPackages                       = pkgs.linuxPackages_latest;
-  boot.loader.systemd-boot.memtest86.enable = true;
-  boot.loader.timeout                       = 3;
-  boot.tmpOnTmpfs                           = true;
+  boot                                      = {
+    earlyVconsoleSetup                   = true;
+    kernelPackages                       = pkgs.linuxPackages_latest;
+    loader.systemd-boot.memtest86.enable = true;
+    loader.timeout                       = 3;
+    supportedFilesystems                 = [ "ntfs" ];
+    tmpOnTmpfs                           = true;
+  };
 
   environment.shells         = with pkgs; [ fish bashInteractive ];
   environment.systemPackages = with pkgs.unstable; [
@@ -14,22 +17,17 @@
     diff-so-fancy'
     dropbox-cli
     file
-    firefox
     fzf
     ghc
     git
     htop
-    imv
     kitty
-    mpv
+    lm_sensors
     pciutils
     ranger
     sbt'
-    spotify
     unzip
     vim'
-    virt-manager
-    vscode
     xdg-user-dirs
   ];
 
@@ -91,24 +89,33 @@
   programs.nano.nanorc                  = builtins.readFile(./scripts/nanorc);
   programs.vim.defaultEditor            = true;
   
-  services.dbus.packages                    = [ pkgs.gnome3.dconf ];
-  services.openssh.enable                   = true;
-  services.openssh.permitRootLogin          = "no";
-  services.printing.drivers                 = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
-  services.printing.enable                  = true;
-  services.xserver                          = {
-    desktopManager.default = "none";
-    dpi                    = 220;
-    layout                 = "pl";
-    windowManager          = {
-      default          = "i3";
-      i3.enable        = true;
-      i3.extraPackages = with pkgs.unstable; [
-        dmenu dunst gnome-screenshot' franz i3status idea-ultimate' paper-icon-theme redshift zoom-us
-      ];
-      i3.package       = pkgs.unstable.i3-gaps;
-    };
-  };
+  services.dbus.packages                          = [ pkgs.gnome3.dconf ];
+  services.openssh.enable                         = true;
+  services.openssh.permitRootLogin                = "no";
+  services.printing.drivers                       = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
+  services.printing.enable                        = true;
+  services.xserver.desktopManager.default         = "none";
+  services.xserver.dpi                            = 220;
+  services.xserver.layout                         = "pl";
+  services.xserver.windowManager.default          = "i3";
+  services.xserver.windowManager.i3.enable        = true;
+  services.xserver.windowManager.i3.extraPackages = with pkgs.unstable; [
+    dmenu
+    dunst
+    firefox
+    franz
+    gnome-screenshot'
+    i3status
+    idea-ultimate'
+    imv
+    mpv
+    paper-icon-theme
+    redshift
+    virt-manager
+    vscode
+    zoom-us
+  ];
+  services.xserver.windowManager.i3.package       = pkgs.unstable.i3-gaps;
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
     ln -sf ${pkgs.bashInteractive}/bin/bash /bin/bash
