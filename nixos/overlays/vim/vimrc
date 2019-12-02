@@ -43,9 +43,7 @@ let g:ctrlp_working_path_mode = 'ra'
 " gruvbox
 let &t_ut=''
 let g:airline_theme = 'gruvbox'
-let g:gruvbox_bold = 0
 let g:gruvbox_contrast_light = 'hard'
-let g:gruvbox_italic = 0
 colorscheme gruvbox
 
 " vim-easymotion
