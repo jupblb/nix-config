@@ -94,7 +94,10 @@
   services.printing.drivers                       = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
   services.printing.enable                        = true;
   services.xserver.desktopManager.default         = "none";
+  services.xserver.displayManager.auto.enable     = true;
+  services.xserver.displayManager.auto.user       = "jupblb";
   services.xserver.dpi                            = 220;
+  services.xserver.enable                         = true;
   services.xserver.layout                         = "pl";
   services.xserver.windowManager.default          = "i3";
   services.xserver.windowManager.i3.enable        = true;

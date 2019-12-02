@@ -76,9 +76,6 @@
     ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
     ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="34:29:8f:73:aa:fd", NAME="ethusb"
   '';
-  services.xserver.displayManager.auto.enable = true;
-  services.xserver.displayManager.auto.user   = "jupblb";
-  services.xserver.enable                     = true; 
 
   sound.enable = true;
 
