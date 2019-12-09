@@ -112,6 +112,7 @@
     imv
     mpv
     paper-icon-theme
+    pavucontrol
     redshift
     virt-manager
     vscode
