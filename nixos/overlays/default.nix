@@ -14,7 +14,7 @@ in {
       sha256 = "0cjmcpsfnrhs2ggv4pa0pyck08xvclwazqp1i1ygdii4qlvkam47";
     };
   });
-  sbt'              = pkgs.sbt.override { jre = pkgs.graalvm8; };
+  sbt'              = pkgs.sbt;#.override { jre = pkgs.graalvm8; };
   vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   vim'              = pkgs.callPackage ./vim { inherit (pkgs.vimUtils) buildVimPluginFrom2Nix; }; 
 }
