@@ -59,8 +59,9 @@
     supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
   };
 
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
-  networking.useDHCP     = false;
+  networking.nameservers           = [ "1.1.1.1" "8.8.8.8" ];
+  networking.networkmanager.enable = true;
+  networking.useDHCP               = false;
 
   nix.autoOptimiseStore = true;
   nix.gc.automatic      = true;
@@ -160,7 +161,7 @@
     home            = "/home/jupblb";
     initialPassword = "changeme";
     isNormalUser    = true;
-    extraGroups     = [ "wheel" "lp" "libvirtd" ];
+    extraGroups     = [ "libvirtd" "lp" "networkmanager" "wheel" ];
     shell           = pkgs.fish;
   };
 }

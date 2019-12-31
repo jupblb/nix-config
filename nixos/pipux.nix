@@ -45,10 +45,8 @@
   i18n.consoleFont     = "ter-232n";
   i18n.consolePackages = [ pkgs.terminus_font ];
 
-  networking.defaultGateway                 = "192.168.1.1";
   networking.firewall.enable                = false;
   networking.hostName                       = "pipux";
-  networking.interfaces.ethusb.ipv4.addresses = [ { address = "192.168.1.10"; prefixLength = 24; } ];
   networking.wireless.enable                = false;
 
   nix.maxJobs = 12;
