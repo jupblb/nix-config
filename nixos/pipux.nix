@@ -51,6 +51,7 @@
 
   nix.maxJobs = 12;
 
+  services.acpid.enable            = true;
   services.apcupsd.enable          = true;
   services.apcupsd.configText      = ''
     UPSCABLE usb

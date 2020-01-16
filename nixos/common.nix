@@ -21,6 +21,7 @@
     ghc
     git
     htop
+    killall
     kitty
     lm_sensors
     pciutils
