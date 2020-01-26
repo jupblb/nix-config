@@ -91,6 +91,8 @@
   programs.vim.defaultEditor            = true;
   
   services.dbus.packages                          = [ pkgs.gnome3.dconf ];
+  services.emacs.enable                           = true;
+  services.emacs.package                          = pkgs.unstable.emacs-nox;
   services.openssh.enable                         = true;
   services.openssh.permitRootLogin                = "no";
   services.printing.drivers                       = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
@@ -130,11 +132,11 @@
     ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
     mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2
   '';
-  system.extraSystemBuilderCmds     = with pkgs; ''
+  system.extraSystemBuilderCmds     = with pkgs.unstable; ''
     mkdir -p $out/pkgs
     ln -s ${openjdk8 } $out/pkgs/openjdk8
     ln -s ${openjdk  } $out/pkgs/openjdk
-#   ln -s ${graalvm8 } $out/pkgs/graalvm8-ce
+    ln -s ${graalvm8 } $out/pkgs/graalvm8-ce
   '';
 
   systemd.user.services.dropbox = {
