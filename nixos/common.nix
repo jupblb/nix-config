@@ -10,6 +10,7 @@
     tmpOnTmpfs                           = true;
   };
 
+# environment.ld-linux       = true;
   environment.shells         = with pkgs; [ fish bashInteractive ];
   environment.systemPackages = with pkgs.unstable; [
     all-hies'
