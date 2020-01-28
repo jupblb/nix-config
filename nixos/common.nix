@@ -91,8 +91,6 @@
   programs.vim.defaultEditor            = true;
   
   services.dbus.packages                          = [ pkgs.gnome3.dconf ];
-  services.emacs.enable                           = true;
-  services.emacs.package                          = pkgs.unstable.emacs-nox;
   services.openssh.enable                         = true;
   services.openssh.permitRootLogin                = "no";
   services.printing.drivers                       = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
