@@ -35,6 +35,10 @@ set updatetime=100
 " Enable backspace
 set backspace=indent,eol,start
 
+" Remap leader key to space
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
 " Ctrl-P
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
