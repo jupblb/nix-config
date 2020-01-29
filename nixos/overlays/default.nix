@@ -10,8 +10,8 @@ in {
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.neovim.override {
     withPython  = false;
-    withPython3 = true;
-    withRuby    = true;
+    withPython3 = false;
+    withRuby    = false;
   };
   sbt'              = pkgs.sbt.override { jre = pkgs.graalvm8; };
   vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };
