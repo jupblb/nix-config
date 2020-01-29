@@ -13,7 +13,6 @@
 # environment.ld-linux       = true;
   environment.shells         = with pkgs; [ fish bashInteractive ];
   environment.systemPackages = with pkgs.unstable; [
-    all-hies'
     ammonite
     diff-so-fancy'
     dropbox-cli
@@ -22,11 +21,10 @@
     ghc
     git
     htop
-    killall
     kitty
     lm_sensors
+    neovim'
     pciutils
-    ranger
     sbt'
     unzip
     vim'
@@ -118,7 +116,6 @@
     pavucontrol
     redshift
     virt-manager
-    vscode
     zoom-us
   ];
   services.xserver.windowManager.i3.package       = pkgs.unstable.i3-gaps;
