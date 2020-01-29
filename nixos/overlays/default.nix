@@ -8,11 +8,7 @@ in {
   gnome-screenshot' = pkgs.gnome3.gnome-screenshot;
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
-  neovim'           = pkgs.neovim.override {
-    withPython  = false;
-    withPython3 = false;
-    withRuby    = false;
-  };
+  neovim'           = pkgs.callPackage ./neovim { };
   sbt'              = pkgs.sbt.override { jre = pkgs.graalvm8; };
   vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   vim'              = pkgs.callPackage ./vim { inherit (pkgs.vimUtils) buildVimPluginFrom2Nix; }; 
