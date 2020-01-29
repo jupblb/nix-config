@@ -21,7 +21,7 @@
     ghc
     git
     htop
-    kitty
+    kitty'
     lm_sensors
     neovim'
     pciutils

@@ -7,6 +7,7 @@ in {
   diff-so-fancy'    = pkgs.gitAndTools.diff-so-fancy;
   gnome-screenshot' = pkgs.gnome3.gnome-screenshot;
   idea-ultimate'    = pkgs.jetbrains.idea-ultimate.override { jdk = pkgs.jetbrains.jdk; };
+  kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.neovim.override {
     withPython  = false;
     withPython3 = true;
