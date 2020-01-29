@@ -6,7 +6,7 @@ in {
   all-hies'         = all-hies.selection { selector = p: p; };
   diff-so-fancy'    = pkgs.gitAndTools.diff-so-fancy;
   gnome-screenshot' = pkgs.gnome3.gnome-screenshot;
-  idea-ultimate'    = pkgs.jetbrains.idea-ultimate.override { jdk = pkgs.jetbrains.jdk; };
+  idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.neovim.override {
     withPython  = false;
