@@ -8,8 +8,6 @@ syntax on
 
 " Better command-line completion
 set wildmenu
-
-" Show partial commands in the last line of the screen
 set showcmd
 
 " Use case insensitive search, except when using capital letters
@@ -20,46 +18,29 @@ set smartcase
 " the same indent as the line you're currently on. Useful for READMEs, etc.
 set autoindent
 
-" Always display the status line, even if only one window is displayed
-set laststatus=2
-
-" Display line numbers on the left
+" Display line numbers
 set number
 
-" Timeout
-set notimeout
+" Disable wrapping
+set nowrap
 
-" gitgutter refresh time
-set updatetime=100
+" Don't litter swp files everywhere
+set backupdir=~/.cache
+set directory=~/.cache
 
 " Enable backspace
 set backspace=indent,eol,start
 
 " Remap leader key to space
-nnoremap <SPACE> <Nop>
-let mapleader=" "
+nnoremap <Space> <Nop>
+let mapleader="\<Space>"
 
-" Ctrl-P
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-
-" gruvbox
+" Gruvbox setup
 let &t_ut=''
 let g:airline_theme = 'gruvbox'
 let g:gruvbox_contrast_light = 'hard'
 colorscheme gruvbox
 
-" vim-easymotion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" Mappings
+nnoremap <Leader>n :set invnumber <CR> :GitGutterToggle <CR>
 
-" Jump to anywhere you want with minimal keystrokes, with just one key binding.
-" `s{char}{label}`
-nmap s <Plug>(easymotion-overwin-f)
-" or
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
-
-" Turn on case-insensitive feature
-let g:EasyMotion_smartcase = 1

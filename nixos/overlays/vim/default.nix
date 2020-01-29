@@ -4,6 +4,6 @@ vim_configurable.customize {
   name                              = "vim";
   vimrcConfig.customRC              = builtins.readFile(./vimrc);
   vimrcConfig.packages.myVimPackage = with vimPlugins; {
-    start = [ airline ctrlp easymotion gitgutter gruvbox-community ];
+    start = [ airline ctrlp gitgutter gruvbox-community ];
   };
 }
