@@ -12,6 +12,7 @@ neovim.override {
 #       coc-json
 #       coc-metals
         coc-nvim
+        easymotion
         fugitive
         gitgutter
         gruvbox-community
