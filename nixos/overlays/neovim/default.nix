@@ -8,6 +8,7 @@ neovim.override {
       start = [
         airline
         ctrlp
+        coc-nvim
         gitgutter
         gruvbox-community
         surround
@@ -15,6 +16,7 @@ neovim.override {
       ];
     };
   };
+  withNodeJs  = true;
   withPython  = false;
   withPython3 = false;
   withRuby    = false;
