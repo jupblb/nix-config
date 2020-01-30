@@ -9,6 +9,11 @@ in {
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.callPackage ./neovim { };
+  neovim''          = pkgs.buildEnv {
+    name        = "nvim";
+    paths       = with self; [ all-hies' neovim' nodePackages.bash-language-server openjdk8 ];
+    pathsToLink = [ "/bin" ];
+  };
   sbt'              = pkgs.sbt.override { jre = pkgs.graalvm8; };
   vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   vim'              = pkgs.callPackage ./vim { inherit (pkgs.vimUtils) buildVimPluginFrom2Nix; }; 

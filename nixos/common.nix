@@ -23,7 +23,7 @@
     htop
     kitty'
     lm_sensors
-    neovim'
+    neovim''
     pciutils
     sbt'
     unzip
