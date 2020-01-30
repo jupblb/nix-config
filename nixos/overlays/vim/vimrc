@@ -54,9 +54,12 @@ colorscheme gruvbox
 let g:airline_powerline_fonts = 0                                                                                             
 let g:airline_symbols_ascii = 1
 
-" Mappings
-nnoremap <Leader>n :set invnumber <CR> :GitGutterToggle <CR>
-
 " CtrlP
 set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 
+" Mappings
+nnoremap <Leader>n :set invnumber <CR> :GitGutterToggle <CR>
+
+nnoremap th :tabnext<CR>
+nnoremap tl :tabprev<CR>
+nnoremap tn :tabnew<CR>

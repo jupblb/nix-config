@@ -8,6 +8,9 @@ set background=light
 " Use bash
 set shell=bash
 
+" Enable mouse
+set mouse=a
+
 " coc.nvim
 set cmdheight=2
 set hidden

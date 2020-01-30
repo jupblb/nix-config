@@ -2,3 +2,4 @@
 .metals
 *.gz
 .idea
+metals.sbt
