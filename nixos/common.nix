@@ -5,7 +5,7 @@
     earlyVconsoleSetup                   = true;
     kernelPackages                       = pkgs.linuxPackages_latest;
     loader.systemd-boot.memtest86.enable = true;
-    loader.timeout                       = 3;
+    loader.timeout                       = 1;
     supportedFilesystems                 = [ "ntfs" "exfat" ];
     tmpOnTmpfs                           = true;
   };
