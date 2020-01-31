@@ -4,7 +4,6 @@ let
   all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
 in { 
   all-hies'         = all-hies.selection { selector = p: p; };
-  diff-so-fancy'    = pkgs.gitAndTools.diff-so-fancy;
   git'              = pkgs.buildEnv {
     name        = "git";
     paths       = with self; [ git gitAndTools.diff-so-fancy ];

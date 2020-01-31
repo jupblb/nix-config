@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot                                      = {
+  boot = {
     earlyVconsoleSetup                   = true;
     kernelPackages                       = pkgs.linuxPackages_latest;
     loader.systemd-boot.memtest86.enable = true;
@@ -10,40 +10,41 @@
     tmpOnTmpfs                           = true;
   };
 
-  environment.etc            = {
-    "xdg/user-dirs.defaults".text = ''
-      DESKTOP=""
-      DOWNLOAD=downloads
-      TEMPLATES=""
-      PUBLICSHARE=public
-      DOCUMENTS=documents
-      MUSIC=music
-      PICTURES=pictures
-      VIDEOS=pictures
-    '';
-  };
-# environment.ld-linux       = true;
-  environment.shells         = with pkgs; [ fish bashInteractive ];
-  environment.systemPackages = with pkgs.unstable; [
-    ammonite
-    dropbox-cli
-    file
-    fzf
-    ghc
-    git'
-    htop
-    kitty'
-    lm_sensors
-    neovim''
-    pciutils
-    sbt'
-    unzip
-    vim'
-    xdg-user-dirs
-  ];
-  environment.variables      = {
-    OMF_CONFIG = builtins.toString ./misc/omf-conf;
-    OMF_PATH   = builtins.toString ./misc/omf;
+  environment = {
+    etc            = {
+      "xdg/user-dirs.defaults".text = ''
+        DESKTOP=""
+        DOWNLOAD=downloads
+        TEMPLATES=""
+        PUBLICSHARE=public
+        DOCUMENTS=documents
+        MUSIC=music
+        PICTURES=pictures
+        VIDEOS=pictures
+      '';
+    };
+#   ld-linux       = true;
+    shells         = with pkgs; [ fish bashInteractive ];
+    systemPackages = with pkgs.unstable; [
+      ammonite
+      dropbox-cli
+      file
+      fzf
+      ghc
+      git'
+      htop
+      kitty'
+      lm_sensors
+      neovim''
+      sbt'
+      unzip
+      vim'
+      xdg-user-dirs
+    ];
+    variables      = {
+      OMF_CONFIG = builtins.toString ./misc/omf-conf;
+      OMF_PATH   = builtins.toString ./misc/omf;
+    };
   };
 
   fonts.fonts = with pkgs.unstable; [ vistafonts ];
@@ -134,7 +135,6 @@
     paper-icon-theme
     pavucontrol
     redshift
-    virt-manager
     zoom-us
   ];
   services.xserver.windowManager.i3.package       = pkgs.unstable.i3-gaps;
