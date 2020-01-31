@@ -75,3 +75,4 @@ __theme_gruvbox_base
 __theme_gruvbox_light
 __theme_gruvbox_palette
 
+function fish_greeting; end
