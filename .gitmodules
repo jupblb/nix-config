@@ -1,4 +1,4 @@
 [submodule "fish/omf"]
-	path = fish/omf/omf
+	path = nixos/misc/omf
 	url = https://github.com/oh-my-fish/oh-my-fish.git
 	branch = master

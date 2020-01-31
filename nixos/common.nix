@@ -10,9 +10,9 @@
     tmpOnTmpfs                           = true;
   };
 
-# environment.ld-linux       = true;
-  environment.shells         = with pkgs; [ fish bashInteractive ];
-  environment.systemPackages = with pkgs.unstable; [
+# environment.ld-linux           = true;
+  environment.shells             = with pkgs; [ fish bashInteractive ];
+  environment.systemPackages     = with pkgs.unstable; [
     ammonite
     diff-so-fancy'
     dropbox-cli
@@ -30,6 +30,7 @@
     vim'
     xdg-user-dirs
   ];
+  environment.variables.OMF_PATH = builtins.toString ./misc/omf;
 
   fonts.fonts = with pkgs.unstable; [ vistafonts ];
 
