@@ -50,7 +50,7 @@
     };
   };
 
-  fonts.fonts = with pkgs; [ nerdfonts vistafonts ];
+  fonts.fonts = with pkgs; [ vistafonts ];
 
   hardware.cpu.intel.updateMicrocode     = true;
   hardware.enableRedistributableFirmware = true;
