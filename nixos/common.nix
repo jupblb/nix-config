@@ -105,10 +105,26 @@
   programs.gnupg.agent.enableSSHSupport = true;
   programs.nano.nanorc                  = builtins.readFile(./misc/scripts/nanorc);
   programs.ssh.extraConfig              = builtins.readFile(./misc/ssh/config);
+  programs.sway.enable                  = true;
+  programs.sway.extraPackages           = [
+    dmenu
+    grim
+    i3status
+    idea-ultimate'
+    imv
+    mako
+    mpv
+    paper-icon-theme
+    pavucontrol
+    slurp
+    zoom-us
+  ];
+  programs.sway.extraSessionCommands    = builtins.readFile(./misc/scripts/sway.sh);
   programs.vim.defaultEditor            = true;
   
   services.acpid.enable                                    = true;
   services.dbus.packages                                   = [ pkgs.gnome3.dconf ];
+  services.mingetty.autologinUser                          = "jupblb";
   services.openssh.enable                                  = true;
   services.openssh.permitRootLogin                         = "no";
   services.printing.drivers                                = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
@@ -137,7 +153,7 @@
     redshift
     zoom-us
   ];
-  services.xserver.windowManager.i3.package       = pkgs.unstable.i3-gaps;
+  services.xserver.windowManager.i3.package                = pkgs.unstable.i3-gaps;
 
   sound.enable = true;
 
