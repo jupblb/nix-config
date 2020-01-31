@@ -2,7 +2,6 @@
 
 {
   boot = {
-    earlyVconsoleSetup                          = true;
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
     kernel.sysctl."vm.swappiness"               = 20;
     kernelPackages                              = pkgs.linuxPackages_latest;
@@ -15,9 +14,30 @@
     tmpOnTmpfs                                  = true;
   };
 
+  console.colors     = [
+    "f9f5d7"
+    "cc241d"
+    "98971a"
+    "d79921"
+    "458588"
+    "b16286"
+    "689d6a"
+    "7c6f64"
+    "928374"
+    "9d0006"
+    "79740e"
+    "b57614"
+    "076678"
+    "8f3f71"
+    "427b58"
+    "3c3836"
+  ];
+  console.earlySetup = true;
+  console.keyMap     = "pl";
+
   environment = {
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/xdg/user-dirs);
-#   ld-linux                          = true;
+    ld-linux                          = true;
     shells                            = with pkgs; [ fish bashInteractive ];
     systemPackages                    = with pkgs.unstable; [
       ammonite
@@ -48,30 +68,8 @@
   hardware.opengl.enable                 = true;
   hardware.pulseaudio.enable             = true;
 
-  i18n = {
-    consoleColors    = [
-      "f9f5d7"
-      "cc241d"
-      "98971a"
-      "d79921"
-      "458588"
-      "b16286"
-      "689d6a"
-      "7c6f64"
-      "928374"
-      "9d0006"
-      "79740e"
-      "b57614"
-      "076678"
-      "8f3f71"
-      "427b58"
-      "3c3836"
-    ];
-    consoleKeyMap    = "pl";
-    defaultLocale    = "en_US.UTF-8";
-    supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
-  };
-
+  i18n.defaultLocale    = "en_US.UTF-8";
+  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
 
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.nameservers              = [ "1.1.1.1" "8.8.8.8" ];
@@ -109,21 +107,22 @@
   programs.ssh.extraConfig              = builtins.readFile(./misc/ssh/config);
   programs.vim.defaultEditor            = true;
   
-  services.acpid.enable                           = true;
-  services.dbus.packages                          = [ pkgs.gnome3.dconf ];
-  services.openssh.enable                         = true;
-  services.openssh.permitRootLogin                = "no";
-  services.printing.drivers                       = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
-  services.printing.enable                        = true;
-  services.xserver.desktopManager.default         = "none";
-  services.xserver.displayManager.auto.enable     = true;
-  services.xserver.displayManager.auto.user       = "jupblb";
-  services.xserver.dpi                            = 220;
-  services.xserver.enable                         = true;
-  services.xserver.layout                         = "pl";
-  services.xserver.windowManager.default          = "i3";
-  services.xserver.windowManager.i3.enable        = true;
-  services.xserver.windowManager.i3.extraPackages = with pkgs.unstable; [
+  services.acpid.enable                                    = true;
+  services.dbus.packages                                   = [ pkgs.gnome3.dconf ];
+  services.openssh.enable                                  = true;
+  services.openssh.permitRootLogin                         = "no";
+  services.printing.drivers                                = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
+  services.printing.enable                                 = true;
+  services.xserver.displayManager.defaultSession           = "none+i3";
+  services.xserver.displayManager.lightdm.enable           = true;
+  services.xserver.displayManager.lightdm.autoLogin.enable = true;
+  services.xserver.displayManager.lightdm.autoLogin.user   = "jupblb";
+  services.xserver.displayManager.lightdm.greeter.enable   = false;
+  services.xserver.dpi                                     = 220;
+  services.xserver.enable                                  = true;
+  services.xserver.layout                                  = "pl";
+  services.xserver.windowManager.i3.enable                 = true;
+  services.xserver.windowManager.i3.extraPackages          = with pkgs.unstable; [
     dmenu
     dunst
     firefox
@@ -144,11 +143,6 @@
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
     ln -sf ${pkgs.bashInteractive}/bin/bash /bin/bash
-  '';
-  system.activationScripts.ld-linux = lib.stringAfter [ "usrbinenv" ] ''                       
-    mkdir -m 0755 -p /lib64
-    ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
-    mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2
   '';
   system.extraSystemBuilderCmds     = with pkgs.unstable; ''
     mkdir -p $out/pkgs

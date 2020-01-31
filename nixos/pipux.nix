@@ -5,6 +5,10 @@
 
   boot.extraModprobeConfig             = "options snd_hda_intel power_save=1";
   boot.initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules            = [ "amdgpu" ];
+
+  console.font     = "ter-232n";
+  console.packages = [ pkgs.terminus_font ];
 
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";
@@ -17,9 +21,6 @@
   hardware.bluetooth.package         = pkgs.bluezFull;
   hardware.opengl.extraPackages      = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
   hardware.pulseaudio.package        = pkgs.pulseaudioFull;
-
-  i18n.consoleFont     = "ter-232n";
-  i18n.consolePackages = [ pkgs.terminus_font ];
 
   networking.hostName = "pipux";
 
