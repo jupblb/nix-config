@@ -85,11 +85,11 @@
   programs.dconf.enable                 = true;
   programs.evince.enable                = true;
   programs.fish.enable                  = true;
-  programs.fish.interactiveShellInit    = ''
-    source $OMF_PATH/init.fish
+  programs.fish.interactiveShellInit    = builtins.readFile(./misc/scripts/init.fish) + ''
     ${pkgs.fortune}/bin/fortune -sa
   '';
   programs.fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
+  programs.fish.shellInit               = "source $OMF_PATH/init.fish";
   programs.gnupg.agent.enable           = true;
   programs.gnupg.agent.enableSSHSupport = true;
   programs.nano.nanorc                  = builtins.readFile(./misc/scripts/nanorc);
