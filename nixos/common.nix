@@ -16,16 +16,7 @@
   };
 
   environment = {
-    etc."xdg/user-dirs.defaults".text = ''
-      DESKTOP=""
-      DOWNLOAD=downloads
-      TEMPLATES=""
-      PUBLICSHARE=public
-      DOCUMENTS=documents
-      MUSIC=music
-      PICTURES=pictures
-      VIDEOS=pictures
-    '';
+    etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/xdg/user-dirs);
 #   ld-linux                          = true;
     shells                            = with pkgs; [ fish bashInteractive ];
     systemPackages                    = with pkgs.unstable; [
