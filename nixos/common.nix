@@ -10,6 +10,18 @@
     tmpOnTmpfs                           = true;
   };
 
+  environment.etc            = {
+    "xdg/user-dirs.defaults".text = ''
+      DESKTOP=""
+      DOWNLOAD=downloads
+      TEMPLATES=""
+      PUBLICSHARE=public
+      DOCUMENTS=documents
+      MUSIC=music
+      PICTURES=pictures
+      VIDEOS=pictures
+    '';
+  };
 # environment.ld-linux       = true;
   environment.shells         = with pkgs; [ fish bashInteractive ];
   environment.systemPackages = with pkgs.unstable; [
