@@ -8,7 +8,6 @@ in {
   git'              = pkgs.buildEnv {
     name        = "git";
     paths       = with self; [ git gitAndTools.diff-so-fancy ];
-    pathsToLink = [ "/bin" ];
   };
   gnome-screenshot' = pkgs.gnome3.gnome-screenshot;
   idea-ultimate'    = pkgs.callPackage ./idea { };
@@ -17,7 +16,6 @@ in {
   neovim''          = pkgs.buildEnv {
     name        = "nvim";
     paths       = with self; [ all-hies' neovim' nodePackages.bash-language-server openjdk8 ];
-    pathsToLink = [ "/bin" ];
   };
   sbt'              = pkgs.sbt.override { jre = pkgs.graalvm8; };
   vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };
