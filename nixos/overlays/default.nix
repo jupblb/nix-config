@@ -5,6 +5,11 @@ let
 in { 
   all-hies'         = all-hies.selection { selector = p: p; };
   diff-so-fancy'    = pkgs.gitAndTools.diff-so-fancy;
+  git'              = pkgs.buildEnv {
+    name        = "git";
+    paths       = with self; [ git gitAndTools.diff-so-fancy ];
+    pathsToLink = [ "/bin" ];
+  };
   gnome-screenshot' = pkgs.gnome3.gnome-screenshot;
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };

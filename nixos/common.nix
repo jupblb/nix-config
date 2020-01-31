@@ -14,12 +14,11 @@
   environment.shells         = with pkgs; [ fish bashInteractive ];
   environment.systemPackages = with pkgs.unstable; [
     ammonite
-    diff-so-fancy'
     dropbox-cli
     file
     fzf
     ghc
-    git
+    git'
     htop
     kitty'
     lm_sensors
