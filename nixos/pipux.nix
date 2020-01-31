@@ -21,8 +21,7 @@
   i18n.consoleFont     = "ter-232n";
   i18n.consolePackages = [ pkgs.terminus_font ];
 
-  networking.firewall.enable                = false;
-  networking.hostName                       = "pipux";
+  networking.hostName = "pipux";
 
   nix.maxJobs = 12;
 

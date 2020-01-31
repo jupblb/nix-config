@@ -81,9 +81,11 @@
     supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
   };
 
-  networking.nameservers           = [ "1.1.1.1" "8.8.8.8" ];
-  networking.networkmanager.enable = true;
-  networking.useDHCP               = false;
+
+  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.nameservers              = [ "1.1.1.1" "8.8.8.8" ];
+  networking.networkmanager.enable    = true;
+  networking.useDHCP                  = false;
 
   nix.autoOptimiseStore = true;
   nix.gc.automatic      = true;
@@ -167,8 +169,8 @@
   systemd.user.services.dropbox = {
     description                  = "Dropbox";
     wantedBy                     = [ "default.target" ];
-    environment.QT_PLUGIN_PATH   = "${qt5.qtbase}${pkgs.qt5.qtbase.qtPluginPrefix}";
-    environment.QML2_IMPORT_PATH = "${qt5.qtbase}${pkgs.qt5.qtbase.qtQmlPrefix}";
+    environment.QT_PLUGIN_PATH   = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtPluginPrefix}";
+    environment.QML2_IMPORT_PATH = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtQmlPrefix}";
     serviceConfig                = {
       ExecStart     = "${pkgs.dropbox.out}/bin/dropbox";
       ExecReload    = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
