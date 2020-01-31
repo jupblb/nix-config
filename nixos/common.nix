@@ -50,7 +50,7 @@
     };
   };
 
-  fonts.fonts = with pkgs.unstable; [ vistafonts ];
+  fonts.fonts = with pkgs; [ nerdfonts vistafonts ];
 
   hardware.cpu.intel.updateMicrocode     = true;
   hardware.enableRedistributableFirmware = true;
@@ -104,7 +104,8 @@
   programs.dconf.enable                 = true;
   programs.evince.enable                = true;
   programs.fish.enable                  = true;
-  programs.fish.interactiveShellInit    = builtins.readFile(./misc/scripts/init.fish) + ''
+  programs.fish.interactiveShellInit    = ''
+    ${builtins.readFile(./misc/scripts/init.fish)}
     ${pkgs.fortune}/bin/fortune -sa
   '';
   programs.fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
@@ -166,8 +167,8 @@
   systemd.user.services.dropbox = {
     description                  = "Dropbox";
     wantedBy                     = [ "default.target" ];
-    environment.QT_PLUGIN_PATH   = "/run/current-system/sw/${pkgs.qt5.qtbase.qtPluginPrefix}";
-    environment.QML2_IMPORT_PATH = "/run/current-system/sw/${pkgs.qt5.qtbase.qtQmlPrefix}";
+    environment.QT_PLUGIN_PATH   = "${qt5.qtbase}${pkgs.qt5.qtbase.qtPluginPrefix}";
+    environment.QML2_IMPORT_PATH = "${qt5.qtbase}${pkgs.qt5.qtbase.qtQmlPrefix}";
     serviceConfig                = {
       ExecStart     = "${pkgs.dropbox.out}/bin/dropbox";
       ExecReload    = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";

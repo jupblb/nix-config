@@ -23,7 +23,6 @@
 
   networking.firewall.enable                = false;
   networking.hostName                       = "pipux";
-  networking.wireless.enable                = false;
 
   nix.maxJobs = 12;
 
