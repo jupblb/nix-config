@@ -81,7 +81,7 @@
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs.bash.enableCompletion        = true;
-  programs.bash.promptInit              = builtins.readFile(./scripts/bashrc);
+  programs.bash.promptInit              = builtins.readFile(./misc/scripts/bashrc);
   programs.bash.shellAliases            = { ls = "ls --color=auto"; };
   programs.dconf.enable                 = true;
   programs.evince.enable                = true;
@@ -93,7 +93,8 @@
   programs.fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
   programs.gnupg.agent.enable           = true;
   programs.gnupg.agent.enableSSHSupport = true;
-  programs.nano.nanorc                  = builtins.readFile(./scripts/nanorc);
+  programs.nano.nanorc                  = builtins.readFile(./misc/scripts/nanorc);
+  programs.ssh.extraConfig              = builtins.readFile(./misc/ssh/config);
   programs.vim.defaultEditor            = true;
   
   services.dbus.packages                          = [ pkgs.gnome3.dconf ];

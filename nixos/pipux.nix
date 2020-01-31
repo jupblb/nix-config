@@ -23,7 +23,7 @@
       "noibrs"
       "pcie_acs_override=id:8086:a370"
     ];
-    kernelPatches                   = [ { name = "add-acs-overrides"; patch = ./scripts/add-acs-overrides.patch; } ];
+    kernelPatches                   = [ { name = "add-acs-overrides"; patch = ./misc/scripts/add-acs-overrides.patch; } ];
     loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot.enable      = true;
   };
