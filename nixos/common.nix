@@ -2,30 +2,33 @@
 
 {
   boot = {
-    earlyVconsoleSetup                   = true;
-    kernelPackages                       = pkgs.linuxPackages_latest;
-    loader.systemd-boot.memtest86.enable = true;
-    loader.timeout                       = 1;
-    supportedFilesystems                 = [ "ntfs" "exfat" ];
-    tmpOnTmpfs                           = true;
+    earlyVconsoleSetup                          = true;
+    kernel.sysctl."fs.inotify.max_user_watches" = 524288;
+    kernel.sysctl."vm.swappiness"               = 20;
+    kernelPackages                              = pkgs.linuxPackages_latest;
+    kernelParams                                = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
+    loader.efi.canTouchEfiVariables             = true;
+    loader.systemd-boot.enable                  = true;
+    loader.systemd-boot.memtest86.enable        = true;
+    loader.timeout                              = 1;
+    supportedFilesystems                        = [ "ntfs" "exfat" ];
+    tmpOnTmpfs                                  = true;
   };
 
   environment = {
-    etc            = {
-      "xdg/user-dirs.defaults".text = ''
-        DESKTOP=""
-        DOWNLOAD=downloads
-        TEMPLATES=""
-        PUBLICSHARE=public
-        DOCUMENTS=documents
-        MUSIC=music
-        PICTURES=pictures
-        VIDEOS=pictures
-      '';
-    };
-#   ld-linux       = true;
-    shells         = with pkgs; [ fish bashInteractive ];
-    systemPackages = with pkgs.unstable; [
+    etc."xdg/user-dirs.defaults".text = ''
+      DESKTOP=""
+      DOWNLOAD=downloads
+      TEMPLATES=""
+      PUBLICSHARE=public
+      DOCUMENTS=documents
+      MUSIC=music
+      PICTURES=pictures
+      VIDEOS=pictures
+    '';
+#   ld-linux                          = true;
+    shells                            = with pkgs; [ fish bashInteractive ];
+    systemPackages                    = with pkgs.unstable; [
       ammonite
       dropbox-cli
       file
@@ -41,7 +44,7 @@
       vim'
       xdg-user-dirs
     ];
-    variables      = {
+    variables                         = {
       OMF_CONFIG = builtins.toString ./misc/omf-conf;
       OMF_PATH   = builtins.toString ./misc/omf;
     };
@@ -49,7 +52,10 @@
 
   fonts.fonts = with pkgs.unstable; [ vistafonts ];
 
+  hardware.cpu.intel.updateMicrocode     = true;
   hardware.enableRedistributableFirmware = true;
+  hardware.opengl.enable                 = true;
+  hardware.pulseaudio.enable             = true;
 
   i18n = {
     consoleColors    = [
@@ -109,6 +115,7 @@
   programs.ssh.extraConfig              = builtins.readFile(./misc/ssh/config);
   programs.vim.defaultEditor            = true;
   
+  services.acpid.enable                           = true;
   services.dbus.packages                          = [ pkgs.gnome3.dconf ];
   services.openssh.enable                         = true;
   services.openssh.permitRootLogin                = "no";
@@ -138,6 +145,8 @@
     zoom-us
   ];
   services.xserver.windowManager.i3.package       = pkgs.unstable.i3-gaps;
+
+  sound.enable = true;
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
     ln -sf ${pkgs.bashInteractive}/bin/bash /bin/bash
@@ -179,7 +188,7 @@
     home            = "/home/jupblb";
     initialPassword = "changeme";
     isNormalUser    = true;
-    extraGroups     = [ "libvirtd" "lp" "networkmanager" "wheel" ];
+    extraGroups     = [ "lp" "networkmanager" "wheel" ];
     shell           = pkgs.fish;
   };
 }

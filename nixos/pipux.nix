@@ -3,17 +3,8 @@
 {
   imports = [ ./common.nix ];
 
-  boot = {
-    extraModprobeConfig             = "options snd_hda_intel power_save=1";
-    initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-    kernel.sysctl                   = { 
-      "fs.inotify.max_user_watches" = 524288;
-      "vm.swappiness"               = 20; 
-    };
-    kernelParams                    = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
-    loader.efi.canTouchEfiVariables = true;
-    loader.systemd-boot.enable      = true;
-  };
+  boot.extraModprobeConfig             = "options snd_hda_intel power_save=1";
+  boot.initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
 
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";
@@ -22,10 +13,10 @@
   fileSystems."/data".device = "/dev/disk/by-label/data";
   fileSystems."/data".fsType = "ext4";
 
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.opengl.enable             = true;
+  hardware.bluetooth.enable          = true;
+  hardware.bluetooth.package         = pkgs.bluezFull;
   hardware.opengl.extraPackages      = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
-  hardware.pulseaudio.enable         = true;
+  hardware.pulseaudio.package        = pkgs.pulseaudioFull;
 
   i18n.consoleFont     = "ter-232n";
   i18n.consolePackages = [ pkgs.terminus_font ];
@@ -36,7 +27,6 @@
 
   nix.maxJobs = 12;
 
-  services.acpid.enable            = true;
   services.apcupsd.enable          = true;
   services.apcupsd.configText      = ''
     UPSCABLE usb
@@ -60,15 +50,11 @@
   '';
   services.xserver.videoDrivers  = [ "amdgpu" ];
 
-  sound.enable = true;
-
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   system.stateVersion = "19.09";
 
   time.hardwareClockInLocalTime = true;
-  time.timeZone                 = "Europe/Warsaw";
 
   users.groups.data.members     = [ "jupblb" ];
-  users.groups.input.members    = [ "jupblb" ];
 }
