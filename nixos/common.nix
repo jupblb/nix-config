@@ -10,9 +10,9 @@
     tmpOnTmpfs                           = true;
   };
 
-# environment.ld-linux           = true;
-  environment.shells             = with pkgs; [ fish bashInteractive ];
-  environment.systemPackages     = with pkgs.unstable; [
+# environment.ld-linux       = true;
+  environment.shells         = with pkgs; [ fish bashInteractive ];
+  environment.systemPackages = with pkgs.unstable; [
     ammonite
     diff-so-fancy'
     dropbox-cli
@@ -30,7 +30,10 @@
     vim'
     xdg-user-dirs
   ];
-  environment.variables.OMF_PATH = builtins.toString ./misc/omf;
+  environment.variables      = {
+    OMF_CONFIG = builtins.toString ./misc/omf-conf;
+    OMF_PATH   = builtins.toString ./misc/omf;
+  };
 
   fonts.fonts = with pkgs.unstable; [ vistafonts ];
 
@@ -83,7 +86,10 @@
   programs.dconf.enable                 = true;
   programs.evince.enable                = true;
   programs.fish.enable                  = true;
-  programs.fish.interactiveShellInit    = "${pkgs.fortune}/bin/fortune -sa";
+  programs.fish.interactiveShellInit    = ''
+    source $OMF_PATH/init.fish
+    ${pkgs.fortune}/bin/fortune -sa
+  '';
   programs.fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
   programs.gnupg.agent.enable           = true;
   programs.gnupg.agent.enableSSHSupport = true;

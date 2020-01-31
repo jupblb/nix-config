@@ -19,9 +19,3 @@ set -g theme_display_date           no
 set -x SBT_OPTS           "-Xms2G -Xmx8G -Xss4m"
 set -x COURSIER_CACHE     "/home/jupblb/.cache/coursier"
 
-set -l GRUVBOX_SCRIPT ~/.config/fish/gruvbox.sh
-if test -f $GRUVBOX_SCRIPT
-  bash $GRUVBOX_SCRIPT
-end
-
-theme_gruvbox light hard
