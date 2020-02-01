@@ -1,3 +1,4 @@
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+feh --bg-scale ~/.background-image
 exec i3
 

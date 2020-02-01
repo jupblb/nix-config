@@ -43,16 +43,16 @@ in
 
   environment = {
     etc."i3/config".text              = with pkgs; ''
-      exec --no-startup-id ${dunst}/bin/dunst
+      exec --no-startup-id ${dunst}/bin/dunst -conf ${builtins.toString ./misc/wm/dunstrc}
       set $browser ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
-      set $menu ${dmenu}/bin/dmenu_path | ${pkgs.dmenu}/bin/dmenu_run \
-        -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg'
+      set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
+        -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
       set $print ${gnome3.gnome-screenshot}/bin/gnome-screenshot -i
       ${builtins.readFile(./misc/wm/common-config)}
       ${builtins.readFile(./misc/wm/i3-config)}
     '';
     etc."sway/config".text            = with pkgs; ''
-      exec ${mako}/bin/mako
+      exec ${mako}/bin/mako -c ${builtins.toString ./misc/wm/mako-config}
       exec ${redshift'}/bin/redshift -m wayland -l 51.12:17.05 
       set $browser ${qutebrowser}/bin/qutebrowser
       set $menu ${bemenu}/bin/bemenu-run \
@@ -161,6 +161,7 @@ in
   services.xserver.layout                                  = "pl";
   services.xserver.windowManager.i3.enable                 = true;
   services.xserver.windowManager.i3.extraPackages          = with pkgs.unstable; [
+    feh
     franz
     i3status
     idea-ultimate'
