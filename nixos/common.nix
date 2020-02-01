@@ -111,7 +111,6 @@
     firefox-wayland
     grim
     i3status
-    idea-ultimate'
     imv
     mako
     mpv
@@ -133,7 +132,6 @@
   services.printing.drivers                                = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
   services.printing.enable                                 = true;
   services.xserver.displayManager.startx.enable            = true;
-  services.xserver.dpi                                     = 220;
   services.xserver.enable                                  = true;
   services.xserver.layout                                  = "pl";
   services.xserver.windowManager.i3.enable                 = true;
@@ -141,7 +139,7 @@
     dmenu
     dunst
     feh
-#   firefox
+    firefox-devedition-bin
     franz
     gnome-screenshot'
     i3status

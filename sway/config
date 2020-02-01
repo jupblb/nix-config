@@ -44,7 +44,7 @@ input * {
 ### Seat configuration
 seat * {
   hide_cursor 5000
-# xcursor_theme Paper 14
+  xcursor_theme Paper 18
 }
 
 ### General configuration
