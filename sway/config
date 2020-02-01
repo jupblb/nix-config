@@ -14,7 +14,7 @@ set $right l
 
 set $term kitty
 
-set $menu dmenu_path | dmenu -fn 'PragmataPro:bold:pixelsize=14' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg' | xargs swaymsg exec --
+set $menu bemenu-run --fn 'PragmataPro 12' -p "" --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg' | xargs swaymsg exec --
 
 set $bg       #282828
 set $fg       #f9f5d7

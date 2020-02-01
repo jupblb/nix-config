@@ -107,7 +107,7 @@
   programs.ssh.extraConfig              = builtins.readFile(./misc/ssh/config);
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
-    dmenu
+    bemenu
     firefox-wayland
     grim
     i3status
