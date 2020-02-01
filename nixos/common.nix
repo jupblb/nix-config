@@ -108,7 +108,6 @@
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
     bemenu
-    firefox-wayland
     grim
     i3status
     imv
@@ -118,7 +117,8 @@
     pavucontrol
     redshift'
     slurp
-    xwayland
+    qutebrowser
+    wob
     zoom-us
   ];
   programs.sway.extraSessionCommands    = builtins.readFile(./misc/scripts/sway.sh);
@@ -140,7 +140,6 @@
     dmenu
     dunst
     feh
-    firefox-devedition-bin
     franz
     gnome-screenshot'
     i3status
@@ -149,6 +148,7 @@
     mpv
     paper-icon-theme
     pavucontrol
+    qutebrowser
     redshift'
     zoom-us
   ];
