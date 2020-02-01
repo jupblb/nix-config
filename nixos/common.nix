@@ -42,7 +42,7 @@ in
   console.keyMap     = "pl";
 
   environment = {
-    etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/xdg/user-dirs);
+    etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
     ld-linux                          = true;
     shells                            = with pkgs; [ fish bashInteractive ];
     systemPackages                    = with pkgs.unstable; [
@@ -64,7 +64,7 @@ in
     ];
     variables                         = {
       NIXPKGS_ALLOW_UNFREE = "1";
-      OMF_CONFIG           = builtins.toString ./misc/omf-conf;
+      OMF_CONFIG           = builtins.toString ./misc/conf/omf;
       OMF_PATH             = builtins.toString ./misc/omf;
     };
   };
@@ -113,7 +113,7 @@ in
   programs.gnupg.agent.enable           = true;
   programs.gnupg.agent.enableSSHSupport = true;
   programs.nano.nanorc                  = builtins.readFile(./misc/scripts/nanorc);
-  programs.ssh.extraConfig              = builtins.readFile(./misc/ssh/config);
+  programs.ssh.extraConfig              = builtins.readFile(./misc/conf/ssh-config);
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
     bemenu
