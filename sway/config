@@ -13,7 +13,7 @@ set $right l
 
 set $term kitty
 
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu dmenu_path | dmenu -fn 'PragmataPro:bold:pixelsize=14' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg' | xargs swaymsg exec --
 
 set $bg       #282828
 set $fg       #f9f5d7
@@ -29,10 +29,10 @@ set $dummy    #ffffff
 
 ### Output configuration
 output * {
-  background ~/.background-image fill
+  background ~/.dotfiles/wallpaper.png fill
   position 0 0
-  resolution 3840x2160@60Hz
   scale 2
+  scale_filter smart 
 }
 
 ### Input configuration
@@ -44,7 +44,7 @@ input * {
 ### Seat configuration
 seat * {
   hide_cursor 5000
-  xcursor_theme Paper 14
+# xcursor_theme Paper 14
 }
 
 ### General configuration
@@ -59,7 +59,7 @@ client.urgent           $red      $bg       $fg       $red      $red
 no_focus [title=".*Franz.*"] 
 assign [title=".*Franz.*"]  10
 
-default_border pixel 10
+default_border pixel 5
 smart_borders on
 
 ### Idle configuration
@@ -139,8 +139,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
 
-bindsym Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $(xdg-user-dir PICTURES)/screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
-bindsym $mod+Print exec grim -g "$(slurp)" $(xdg-user-dir PICTURES)/screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
+bindsym Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $HOME/pictures/screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
+bindsym $mod+Print exec grim -g "$(slurp)" $HOME/pictures/screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
 
 ### Status Bar:
 # Read `man 5 sway-bar` for more information about this section.
@@ -151,7 +151,7 @@ bar {
     status_command exec /home/jupblb/.config/i3status/net-speed.sh
 
     separator_symbol " | "
-    font pango:Iosevka 30
+    font pango:PragmataPro Mono Liga 11
 
     colors {
         background $bg
@@ -166,4 +166,3 @@ bar {
     tray_output none
 }
 
-include @sysconfdir@/sway/config.d/*

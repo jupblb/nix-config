@@ -106,8 +106,9 @@
   programs.nano.nanorc                  = builtins.readFile(./misc/scripts/nanorc);
   programs.ssh.extraConfig              = builtins.readFile(./misc/ssh/config);
   programs.sway.enable                  = true;
-  programs.sway.extraPackages           = [
+  programs.sway.extraPackages           = with pkgs.unstable; [
     dmenu
+    firefox-wayland
     grim
     i3status
     idea-ultimate'
@@ -117,9 +118,11 @@
     paper-icon-theme
     pavucontrol
     slurp
+    xwayland
     zoom-us
   ];
   programs.sway.extraSessionCommands    = builtins.readFile(./misc/scripts/sway.sh);
+  programs.sway.wrapperFeatures.gtk     = true;
   programs.vim.defaultEditor            = true;
   
   services.acpid.enable                                    = true;
@@ -129,11 +132,7 @@
   services.openssh.permitRootLogin                         = "no";
   services.printing.drivers                                = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
   services.printing.enable                                 = true;
-  services.xserver.displayManager.defaultSession           = "none+i3";
-  services.xserver.displayManager.lightdm.enable           = true;
-  services.xserver.displayManager.lightdm.autoLogin.enable = true;
-  services.xserver.displayManager.lightdm.autoLogin.user   = "jupblb";
-  services.xserver.displayManager.lightdm.greeter.enable   = false;
+  services.xserver.displayManager.startx.enable            = true;
   services.xserver.dpi                                     = 220;
   services.xserver.enable                                  = true;
   services.xserver.layout                                  = "pl";
@@ -141,7 +140,8 @@
   services.xserver.windowManager.i3.extraPackages          = with pkgs.unstable; [
     dmenu
     dunst
-    firefox
+    feh
+#   firefox
     franz
     gnome-screenshot'
     i3status
