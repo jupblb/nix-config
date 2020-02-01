@@ -1,11 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  hosts = pkgs.fetchurl {
-    url = "http://sbc.io/hosts/alternates/fakenews-gambling/hosts";
-    sha256 = "sha256:1jjfhdnql44zd47wvvxgw3jwysx5ijmbdy5dnhh7694pq0rl3r9s";
-  };
-in
 {
   boot = {
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
@@ -101,7 +95,6 @@ in
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
 
-  networking.extraHosts               = builtins.readFile hosts;
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.nameservers              = [ "1.1.1.1" "8.8.8.8" ];
   networking.networkmanager.enable    = true;
