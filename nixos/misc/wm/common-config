@@ -76,7 +76,7 @@ bar {
     position top                                                                    
     mode hide                                                                       
                                                                                     
-    status_command exec /home/jupblb/.config/i3status/net-speed.sh                  
+    status_command exec net-speed                  
                                                                                     
     separator_symbol " | "                                                          
     font pango:PragmataPro Mono Liga 11                                             

@@ -16,6 +16,7 @@ in {
     name  = "git";
     paths = with self; [ git gitAndTools.diff-so-fancy ];
   };
+  i3status'         = pkgs.callPackage ./i3status { };
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.callPackage ./neovim { };

@@ -44,6 +44,7 @@ in
   environment = {
     etc."i3/config".text              = with pkgs; ''
       exec --no-startup-id ${dunst}/bin/dunst -conf ${builtins.toString ./misc/wm/dunstrc}
+      exec ${redshift}/bin/redshift -l 51.12:17.05 
       set $browser ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
       set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
         -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
@@ -137,12 +138,13 @@ in
   programs.ssh.extraConfig              = builtins.readFile(./misc/conf/ssh-config);
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
-    i3status
+    i3status'
     imv
     mpv
     paper-icon-theme
     pavucontrol
     wob
+    xwayland
     zoom-us
   ];
   programs.sway.extraSessionCommands    = builtins.readFile(./misc/scripts/sway.sh);
@@ -163,7 +165,7 @@ in
   services.xserver.windowManager.i3.extraPackages          = with pkgs.unstable; [
     feh
     franz
-    i3status
+    i3status'
     idea-ultimate'
     imv
     mpv
