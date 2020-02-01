@@ -13,8 +13,8 @@ set $down j
 set $up k
 set $right l
 
+set $browser qutebrowser
 set $term kitty
-
 set $menu bemenu-run --fn 'PragmataPro 12' -p "" --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg' | xargs swaymsg exec --
 
 set $bg       #282828
@@ -75,6 +75,7 @@ exec swayidle -w \
 ### Key bindings
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
+bindsym $mod+q exec $browser
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaymsg exit

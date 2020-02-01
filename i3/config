@@ -37,6 +37,7 @@ floating_modifier $mod
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec dmenu_path | dmenu_run -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg'
+bindsym $mod+q exec qutebrowser --basedir ~/.config/.qtbrowserx
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
