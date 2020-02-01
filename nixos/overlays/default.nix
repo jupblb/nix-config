@@ -16,7 +16,6 @@ in {
     name  = "git";
     paths = with self; [ git gitAndTools.diff-so-fancy ];
   };
-  gnome-screenshot' = pkgs.gnome3.gnome-screenshot;
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.callPackage ./neovim { };

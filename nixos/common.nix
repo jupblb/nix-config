@@ -42,13 +42,26 @@ in
   console.keyMap     = "pl";
 
   environment = {
-    etc."i3/config".text              = ''
+    etc."i3/config".text              = with pkgs; ''
+      exec --no-startup-id ${dunst}/bin/dunst
+      set $browser ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
+      set $menu ${dmenu}/bin/dmenu_path | ${pkgs.dmenu}/bin/dmenu_run \
+        -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg'
+      set $print ${gnome3.gnome-screenshot}/bin/gnome-screenshot -i
       ${builtins.readFile(./misc/wm/common-config)}
       ${builtins.readFile(./misc/wm/i3-config)}
     '';
-    etc."sway/config".text            = ''
+    etc."sway/config".text            = with pkgs; ''
+      exec ${mako}/bin/mako
+      exec ${redshift'}/bin/redshift -m wayland -l 51.12:17.05 
+      set $browser ${qutebrowser}/bin/qutebrowser
+      set $menu ${bemenu}/bin/bemenu-run \
+        --fn 'PragmataPro 12' -p "" --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
+        --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg' | xargs swaymsg exec --
+      set $print ${grim}/bin/grim $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
       ${builtins.readFile(./misc/wm/common-config)}
       ${builtins.readFile(./misc/wm/sway-config)}
+      bindsym $mod+Print exec ${grim}/bin/grim -g "$(slurp)" $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
     '';
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
     ld-linux                          = true;
@@ -124,17 +137,11 @@ in
   programs.ssh.extraConfig              = builtins.readFile(./misc/conf/ssh-config);
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
-    bemenu
-    grim
     i3status
     imv
-    mako
     mpv
     paper-icon-theme
     pavucontrol
-    redshift'
-    slurp
-    qutebrowser
     wob
     zoom-us
   ];
@@ -154,19 +161,13 @@ in
   services.xserver.layout                                  = "pl";
   services.xserver.windowManager.i3.enable                 = true;
   services.xserver.windowManager.i3.extraPackages          = with pkgs.unstable; [
-    dmenu
-    dunst
-    feh
     franz
-    gnome-screenshot'
     i3status
     idea-ultimate'
     imv
     mpv
     paper-icon-theme
     pavucontrol
-    qutebrowser
-    redshift'
     zoom-us
   ];
   services.xserver.windowManager.i3.package                = pkgs.unstable.i3-gaps;

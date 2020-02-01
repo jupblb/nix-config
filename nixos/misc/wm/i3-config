@@ -1,16 +1,11 @@
 ##### i3 CONFIGURATION #####
 #
 ### Startup
-exec --no-startup-id dunst
 #exec --no-startup-id systemctl --user start dropbox
 exec --no-startup-id xset m 4/2 0
 #exec --no-startup-id redshift -l 51.12:17.05
 
 ### Variables
-set $browser qutebrowser --basedir ~/.config/.qtbrowserx
-set $menu dmenu_path | dmenu_run -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '$bg' -nf '$fg' -sb '$fg' -sf '$bg'
-set $print gnome-screenshot -i
-set $refresh_i3status killall -SIGUSR1 i3status
 set $wmmsg i3-msg
 
 set $ws1 "1"
@@ -31,10 +26,6 @@ no_focus [title=".*Franz.*"]
 assign [title=".*Franz.*"] 10
 
 ### Key bindings
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-
 floating_modifier $mod
 
 bindsym $mod+b split h
@@ -63,4 +54,8 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
