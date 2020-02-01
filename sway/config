@@ -2,6 +2,7 @@
 
 exec mako
 exec systemctl --user start dropbox
+exec redshift -m wayland -l 51.12:17.05
 
 ### Variables
 set $mod Mod4

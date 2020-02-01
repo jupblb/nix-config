@@ -116,6 +116,7 @@
     mpv
     paper-icon-theme
     pavucontrol
+    redshift'
     slurp
     xwayland
     zoom-us
@@ -148,7 +149,7 @@
     mpv
     paper-icon-theme
     pavucontrol
-    redshift
+    redshift'
     zoom-us
   ];
   services.xserver.windowManager.i3.package                = pkgs.unstable.i3-gaps;
