@@ -63,8 +63,9 @@ in
       xdg-user-dirs
     ];
     variables                         = {
-      OMF_CONFIG = builtins.toString ./misc/omf-conf;
-      OMF_PATH   = builtins.toString ./misc/omf;
+      NIXPKGS_ALLOW_UNFREE = "1";
+      OMF_CONFIG           = builtins.toString ./misc/omf-conf;
+      OMF_PATH             = builtins.toString ./misc/omf;
     };
   };
 
