@@ -46,6 +46,7 @@ in
     ld-linux                          = true;
     shells                            = with pkgs; [ fish bashInteractive ];
     systemPackages                    = with pkgs.unstable; [
+      _1password'
       ammonite
       dropbox-cli
       file
