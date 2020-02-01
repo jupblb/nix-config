@@ -144,7 +144,6 @@ in
     paper-icon-theme
     pavucontrol
     wob
-    xwayland
     zoom-us
   ];
   programs.sway.extraSessionCommands    = builtins.readFile(./misc/scripts/sway.sh);
