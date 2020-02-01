@@ -1,0 +1,96 @@
+##### COMMON CONFIGURATION #####
+#
+### Variables
+set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $bg       #282828
+set $fg       #f9f5d7
+set $red      #cc241d
+set $green    #98971a
+set $yellow   #d79921
+set $blue     #458588
+set $purple   #b16286
+set $aqua     #689d68
+set $gray     #7c6f64
+set $darkgray #1d2021
+set $dummy    #ffffff
+
+set $term kitty
+
+### General configuration
+# class                 border    backgr    text      indicator child_border
+client.focused          $yellow   $bg       $fg       $green    $yellow
+client.focused_inactive $green    $bg       $fg       $yellow   $green
+client.unfocused        $green    $bg       $fg       $yellow   $green
+client.urgent           $red      $bg       $fg       $red      $red
+
+default_border pixel 5
+smart_borders on
+
+### Key bindings
+bindsym $mod+Return exec $term                                                      
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec $menu
+bindsym $mod+q exec $browser
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec $wmmsg exit
+
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+mode "resize" {
+    bindsym $left resize shrink width 40px
+    bindsym $down resize grow height 40px
+    bindsym $up resize shrink height 40px
+    bindsym $right resize grow width 40px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+
+bindsym Print exec $print
+
+### Status bar
+bar {                                                                               
+    position top                                                                    
+    mode hide                                                                       
+                                                                                    
+    status_command exec /home/jupblb/.config/i3status/net-speed.sh                  
+                                                                                    
+    separator_symbol " | "                                                          
+    font pango:PragmataPro Mono Liga 11                                             
+                                                                                    
+    colors {                                                                        
+        background $bg                                                              
+        statusline $fg                                                              
+                                                                                    
+        # workspaces section border    background text                              
+        focused_workspace    $green    $green     $fg                               
+        inactive_workspace   $bg       $fg        $bg                               
+        urgent_workspace     $bg       $red       $fg                               
+    }                                                                               
+                                                                                    
+    tray_output none                                                                
+}
+

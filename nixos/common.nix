@@ -42,6 +42,14 @@ in
   console.keyMap     = "pl";
 
   environment = {
+    etc."i3/config".text              = ''
+      ${builtins.readFile(./misc/wm/common-config)}
+      ${builtins.readFile(./misc/wm/i3-config)}
+    '';
+    etc."sway/config".text            = ''
+      ${builtins.readFile(./misc/wm/common-config)}
+      ${builtins.readFile(./misc/wm/sway-config)}
+    '';
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
     ld-linux                          = true;
     shells                            = with pkgs; [ fish bashInteractive ];

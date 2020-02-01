@@ -1,0 +1,78 @@
+##### SWAY CONFIGURATION #####
+#
+### Startup
+exec mako
+exec systemctl --user start dropbox
+exec redshift -m wayland -l 51.12:17.05
+exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
+
+### Variables
+set $browser qutebrowser
+set $menu bemenu-run --fn 'PragmataPro 12' -p "" --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg' | xargs swaymsg exec --
+set $print grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $HOME/pictures/screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
+set $wmmsg swaymsg
+
+### Output configuration
+output * {
+  background ~/.dotfiles/wallpaper.png fill
+  scale 2
+}
+
+### Input configuration
+input * {
+  pointer_accel 1
+  xkb_layout pl
+}
+
+### Seat configuration
+seat * {
+  hide_cursor 5000
+  xcursor_theme Paper 18
+}
+
+### General configuration
+font pango:PragmataPro 10
+
+### Idle configuration
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+exec swayidle -w \
+    timeout 300 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"'
+
+### Key bindings
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% && amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print substr($2, 0, length($2)-1) }' > $SWAYSOCK.wob
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% && amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print substr($2, 0, length($2)-1) }' > $SWAYSOCK.wob
+
+floating_modifier $mod normal
+
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+bindsym $mod+f fullscreen
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+Print exec grim -g "$(slurp)" $HOME/pictures/screenshots/$(date +'%Y-%m-%d-%H%M%S.png')
+
