@@ -131,8 +131,6 @@
   programs.gnupg.agent.enableSSHSupport = true;
   programs.nano.nanorc                  = builtins.readFile(./misc/scripts/nanorc);
   programs.ssh.extraConfig              = builtins.readFile(./misc/conf/ssh-config);
-  programs.ssh.forwardX11               = true;
-  programs.ssh.setXAuthLocation         = true;
   programs.sway.enable                  = true;
   programs.sway.extraPackages           = with pkgs.unstable; [
     i3status'
@@ -150,7 +148,6 @@
   services.acpid.enable                           = true;
   services.dbus.packages                          = [ pkgs.gnome3.dconf ];
   services.mingetty.autologinUser                 = "jupblb";
-  services.openssh.forwardX11                     = true;
   services.openssh.openFirewall                   = true;
   services.openssh.enable                         = true;
   services.openssh.passwordAuthentication         = false;
