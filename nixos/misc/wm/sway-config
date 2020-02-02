@@ -11,6 +11,7 @@ set $wmmsg swaymsg
 input * {
   pointer_accel 1
   xkb_layout pl
+  xkb_options caps:escape
 }
 
 ### Seat configuration
