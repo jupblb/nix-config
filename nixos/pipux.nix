@@ -18,6 +18,7 @@
     Xcursor.theme: Paper
     Xft.dpi: 192
   '';
+  environment.systemPackages                  = with pkgs.unstable; [ neovim'' ];
 
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";

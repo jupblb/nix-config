@@ -76,7 +76,6 @@
       htop
       kitty'
       lm_sensors
-      neovim''
       sbt'
       unzip
       vim'
