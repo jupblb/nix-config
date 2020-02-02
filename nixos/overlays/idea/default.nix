@@ -3,7 +3,7 @@
 symlinkJoin {
   name = "idea";
   buildInputs = [ makeWrapper ];
-  paths = [ jetbrains.idea-ultimate ]; #.override { jdk = jetbrains.jdk; } ];
+  paths = [ jetbrains.idea-ultimate ];
   postBuild = ''
     wrapProgram "$out/bin/idea-ultimate" \
     --set-default IDEA_VM_OPTIONS "${./idea64.vmoptions}" \
