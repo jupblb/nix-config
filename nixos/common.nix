@@ -46,7 +46,7 @@
       ${builtins.readFile(./misc/wm/i3-config)}
     '';
     etc."sway/config".text            = with pkgs; ''
-      output * background ~/.background-image fill
+      output * background ${builtins.toString ./misc/wm/wallpaper.png} fill
       exec ${mako}/bin/mako -c ${builtins.toString ./misc/wm/mako-config}
       exec ${redshift'}/bin/redshift -m wayland -l 51.12:17.05 
       set $browser ${qutebrowser}/bin/qutebrowser
@@ -59,7 +59,7 @@
       bindsym $mod+Print exec ${grim}/bin/grim -g "$(slurp)" $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
     '';
     etc."X11/xinit/xinitrc".text      = ''
-      feh --bg-scale ~/.background-image
+      feh --bg-scale ${builtins.toString ./misc/wm/wallpaper.png}
       exec i3
     '';
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
