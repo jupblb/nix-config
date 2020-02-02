@@ -99,7 +99,6 @@
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
 
-  networking.firewall.allowedTCPPorts = [ 22 ];
   networking.nameservers              = [ "1.1.1.1" "8.8.8.8" ];
   networking.networkmanager.enable    = true;
   networking.useDHCP                  = false;
@@ -150,7 +149,9 @@
   services.acpid.enable                           = true;
   services.dbus.packages                          = [ pkgs.gnome3.dconf ];
   services.mingetty.autologinUser                 = "jupblb";
+  services.openssh.openFirewall                   = true;
   services.openssh.enable                         = true;
+  services.openssh.passwordAuthentication         = false;
   services.openssh.permitRootLogin                = "no";
   services.printing.drivers                       = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
   services.printing.enable                        = true;
