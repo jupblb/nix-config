@@ -41,26 +41,33 @@
     UPSTYPE usb
     DEVICE
   '';
-  services.fstrim.enable         = true;
-  services.nfs.server.enable     = true;
-  services.nfs.server.exports    = "/data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)";
-  services.transmission.enable   = true;
-  services.transmission.group    = "data";
-  services.transmission.settings = { 
+  services.fstrim.enable                   = true;
+  services.nfs.server.enable               = true;
+  services.nfs.server.exports              = "/data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)";
+  services.transmission.enable             = true;
+  services.transmission.group              = "data";
+  services.transmission.settings           = { 
     download-dir           = "/data/transmission";
     incomplete-dir         = "/data/transmission/.incomplete";
     incomplete-dir-enabled = true;
     rpc-whitelist          = "127.0.0.1,192.168.*.*";
   };
-  services.udev.extraRules       = ''
+  services.udev.extraRules                 = ''
     ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
     ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="34:29:8f:73:aa:fd", NAME="ethusb"
   '';
-  services.xserver.videoDrivers  = [ "amdgpu" ];
+  services.xserver.windowManager.i3.enable = true;
+  services.xserver.videoDrivers            = [ "amdgpu" ];
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
-  system.stateVersion = "19.09";
+  system.extraSystemBuilderCmds = with pkgs.unstable; ''
+    mkdir -p $out/pkgs
+    ln -s ${openjdk8 } $out/pkgs/openjdk8
+    ln -s ${openjdk  } $out/pkgs/openjdk
+    ln -s ${graalvm8 } $out/pkgs/graalvm8-ce
+  '';
+  system.stateVersion           = "19.09";
 
   time.hardwareClockInLocalTime = true;
 

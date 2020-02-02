@@ -147,18 +147,17 @@
   programs.sway.wrapperFeatures.gtk     = true;
   programs.vim.defaultEditor            = true;
   
-  services.acpid.enable                                    = true;
-  services.dbus.packages                                   = [ pkgs.gnome3.dconf ];
-  services.mingetty.autologinUser                          = "jupblb";
-  services.openssh.enable                                  = true;
-  services.openssh.permitRootLogin                         = "no";
-  services.printing.drivers                                = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
-  services.printing.enable                                 = true;
-  services.xserver.displayManager.startx.enable            = true;
-  services.xserver.enable                                  = true;
-  services.xserver.layout                                  = "pl";
-  services.xserver.windowManager.i3.enable                 = true;
-  services.xserver.windowManager.i3.extraPackages          = with pkgs.unstable; [
+  services.acpid.enable                           = true;
+  services.dbus.packages                          = [ pkgs.gnome3.dconf ];
+  services.mingetty.autologinUser                 = "jupblb";
+  services.openssh.enable                         = true;
+  services.openssh.permitRootLogin                = "no";
+  services.printing.drivers                       = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
+  services.printing.enable                        = true;
+  services.xserver.displayManager.startx.enable   = true;
+  services.xserver.enable                         = true;
+  services.xserver.layout                         = "pl";
+  services.xserver.windowManager.i3.extraPackages = with pkgs.unstable; [
     franz
     i3status'
     idea-ultimate'
@@ -168,18 +167,12 @@
     pavucontrol
     zoom-us
   ];
-  services.xserver.windowManager.i3.package                = pkgs.i3';
+  services.xserver.windowManager.i3.package       = pkgs.i3';
 
   sound.enable = true;
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
     ln -sf ${pkgs.bashInteractive}/bin/bash /bin/bash
-  '';
-  system.extraSystemBuilderCmds     = with pkgs.unstable; ''
-    mkdir -p $out/pkgs
-    ln -s ${openjdk8 } $out/pkgs/openjdk8
-    ln -s ${openjdk  } $out/pkgs/openjdk
-    ln -s ${graalvm8 } $out/pkgs/graalvm8-ce
   '';
 
   systemd.user.services.dropbox = {
