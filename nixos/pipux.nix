@@ -11,6 +11,8 @@
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
 
+  environment.etc."sway/config".text = "output * scale 2";
+
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";
   fileSystems."/boot".device = "/dev/disk/by-label/boot";

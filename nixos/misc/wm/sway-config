@@ -8,10 +8,7 @@ exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 set $wmmsg swaymsg
 
 ### Output configuration
-output * {
-  background ~/.background-image fill
-  scale 2
-}
+output * background ~/.background-image fill
 
 ### Input configuration
 input * {
