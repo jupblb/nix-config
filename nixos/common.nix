@@ -38,7 +38,7 @@
     etc."i3/config".text              = with pkgs; ''
       exec --no-startup-id ${dunst}/bin/dunst -conf ${builtins.toString ./misc/wm/dunstrc}
       exec ${redshift}/bin/redshift -l 51.12:17.05 
-      set $browser $QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
+      set $browser env QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
       set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
         -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
       set $print ${gnome3.gnome-screenshot}/bin/gnome-screenshot -i
@@ -46,6 +46,7 @@
       ${builtins.readFile(./misc/wm/i3-config)}
     '';
     etc."sway/config".text            = with pkgs; ''
+      output * background ~/.background-image fill
       exec ${mako}/bin/mako -c ${builtins.toString ./misc/wm/mako-config}
       exec ${redshift'}/bin/redshift -m wayland -l 51.12:17.05 
       set $browser ${qutebrowser}/bin/qutebrowser
@@ -56,6 +57,10 @@
       ${builtins.readFile(./misc/wm/common-config)}
       ${builtins.readFile(./misc/wm/sway-config)}
       bindsym $mod+Print exec ${grim}/bin/grim -g "$(slurp)" $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
+    '';
+    etc."X11/xinit/xinitrc".text      = ''
+      feh --bg-scale ~/.background-image
+      exec i3
     '';
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
     ld-linux                          = true;

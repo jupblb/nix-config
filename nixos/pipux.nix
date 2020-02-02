@@ -11,7 +11,13 @@
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
 
-  environment.etc."sway/config".text = "output * scale 2";
+  environment.etc."sway/config".text          = "output * scale 2";
+  environment.etc."X11/xinit/xinitrc".text    = "xrdb -merge -I$HOME /etc/X11/xinit/Xresources";
+  environment.etc."X11/xinit/Xresources".text = ''
+    Xcursor.size: 24
+    Xcursor.theme: Paper
+    Xft.dpi: 192
+  '';
 
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";

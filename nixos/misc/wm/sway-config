@@ -7,9 +7,6 @@ exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 ### Variables
 set $wmmsg swaymsg
 
-### Output configuration
-output * background ~/.background-image fill
-
 ### Input configuration
 input * {
   pointer_accel 1
