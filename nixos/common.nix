@@ -98,9 +98,9 @@
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
 
-  networking.nameservers              = [ "1.1.1.1" "8.8.8.8" ];
-  networking.networkmanager.enable    = true;
-  networking.useDHCP                  = false;
+  networking.nameservers           = [ "1.1.1.1" "8.8.8.8" ];
+  networking.networkmanager.enable = true;
+  networking.useDHCP               = false;
 
   nix.autoOptimiseStore = true;
   nix.gc.automatic      = true;

@@ -3,10 +3,10 @@
 {
   imports = [ ./common.nix ];
 
-  boot.extraModprobeConfig             = "options snd_hda_intel power_save=1";
-  boot.initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules            = [ "amdgpu" ];
-  boot.tmpOnTmpfs                      = true;
+  boot.extraModprobeConfig           = "options snd_hda_intel power_save=1";
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules          = [ "amdgpu" ];
+  boot.tmpOnTmpfs                    = true;
 
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
@@ -27,17 +27,17 @@
   fileSystems."/data".device = "/dev/disk/by-label/data";
   fileSystems."/data".fsType = "ext4";
 
-  hardware.bluetooth.enable          = true;
-  hardware.bluetooth.package         = pkgs.bluezFull;
-  hardware.opengl.extraPackages      = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
-  hardware.pulseaudio.package        = pkgs.pulseaudioFull;
+  hardware.bluetooth.enable     = true;
+  hardware.bluetooth.package    = pkgs.bluezFull;
+  hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
+  hardware.pulseaudio.package   = pkgs.pulseaudioFull;
 
   networking.hostName = "pipux";
 
   nix.maxJobs = 12;
 
-  services.apcupsd.enable          = true;
-  services.apcupsd.configText      = ''
+  services.apcupsd.enable                  = true;
+  services.apcupsd.configText              = ''
     UPSCABLE usb
     UPSTYPE usb
     DEVICE
@@ -72,5 +72,5 @@
 
   time.hardwareClockInLocalTime = true;
 
-  users.groups.data.members     = [ "jupblb" ];
+  users.groups.data.members = [ "jupblb" ];
 }
