@@ -9,7 +9,11 @@ set $wmmsg swaymsg
 
 ### Input configuration
 input * {
+  click_method clickfinger
+  middle_emulation enabled
   pointer_accel 1
+  scroll_factor 2
+  tap enabled
   xkb_layout pl
   xkb_options caps:escape
 }
