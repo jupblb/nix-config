@@ -11,7 +11,6 @@
     loader.systemd-boot.memtest86.enable        = true;
     loader.timeout                              = 1;
     supportedFilesystems                        = [ "ntfs" "exfat" ];
-    tmpOnTmpfs                                  = true;
   };
 
   console.colors     = [
@@ -39,7 +38,7 @@
     etc."i3/config".text              = with pkgs; ''
       exec --no-startup-id ${dunst}/bin/dunst -conf ${builtins.toString ./misc/wm/dunstrc}
       exec ${redshift}/bin/redshift -l 51.12:17.05 
-      set $browser $QT_SCALE_FACTOR=2 {qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
+      set $browser $QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
       set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
         -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
       set $print ${gnome3.gnome-screenshot}/bin/gnome-screenshot -i
