@@ -59,7 +59,7 @@
       bindsym $mod+Print exec ${grim}/bin/grim -g "$(slurp)" $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
     '';
     etc."X11/xinit/xinitrc".text      = ''
-      feh --bg-scale ${builtins.toString ./misc/wm/wallpaper.png}
+      ${pkgs.feh}/bin/feh --bg-scale ${builtins.toString ./misc/wm/wallpaper.png}
       exec i3
     '';
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
@@ -159,7 +159,6 @@
   services.xserver.layout                                  = "pl";
   services.xserver.windowManager.i3.enable                 = true;
   services.xserver.windowManager.i3.extraPackages          = with pkgs.unstable; [
-    feh
     franz
     i3status'
     idea-ultimate'
