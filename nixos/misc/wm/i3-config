@@ -22,9 +22,6 @@ set $ws10 "10"
 ### General configuration
 font pango:PragmataPro Mono Liga 10
 
-no_focus [title=".*Franz.*"]
-assign [title=".*Franz.*"] 10
-
 ### Key bindings
 floating_modifier $mod
 

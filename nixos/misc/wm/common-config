@@ -32,6 +32,9 @@ client.urgent           $red      $bg       $fg       $red      $red
 default_border pixel 5
 smart_borders on
 
+no_focus [title=".*Franz.*"]
+assign [title=".*Franz.*"] 10
+
 ### Key bindings
 bindsym $mod+Return exec $term                                                      
 bindsym $mod+Shift+q kill
