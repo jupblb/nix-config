@@ -17,6 +17,8 @@ settings:
   content.host_blocking.lists:
     global:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
+  content.media_capture:
+    https://www.messenger.com: true
   editor.command:
     global:
     - kitty
