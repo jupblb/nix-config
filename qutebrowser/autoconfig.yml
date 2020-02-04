@@ -8,6 +8,8 @@ config_version: 2
 settings:
   aliases:
     global: null
+  content.autoplay:
+    global: false
   content.default_encoding:
     global: utf-8
   content.geolocation:
@@ -19,6 +21,8 @@ settings:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
   content.media_capture:
     https://www.messenger.com: true
+  content.register_protocol_handler:
+    https://mail.google.com?extsrc=mailto&url=%25s: true
   editor.command:
     global:
     - kitty
@@ -28,6 +32,8 @@ settings:
     - normal {line}G{column0}l
   fonts.monospace:
     global: '"PragmataPro Mono Liga"'
+  tabs.background:
+    global: true
   url.searchengines:
     global:
       DEFAULT: https://google.com/search?q={}

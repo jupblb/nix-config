@@ -19,7 +19,7 @@
 
   hardware.bluetooth.enable     = true;
   hardware.bluetooth.package    = pkgs.bluezFull;
-  hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
+  hardware.opengl.extraPackages = with pkgs; [ vaapiIntel' vaapiVdpau libvdpau-va-gl intel-media-driver];
   hardware.pulseaudio.package   = pkgs.pulseaudioFull;
 
   networking.hostName = "pipek";
