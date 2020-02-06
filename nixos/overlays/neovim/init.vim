@@ -35,7 +35,7 @@ nmap <silent> <Leader>t <Plug>(coc-type-definition)
 nmap <silent> <Leader>i <Plug>(coc-implementation)
 nmap <silent> <Leader>u <Plug>(coc-references)
 
-nnoremap <silent> <Leader>k :call <SID>show_documentation()<CR>
+nnoremap <silent> <Leader>h :call <SID>show_documentation()<CR>
 
 nmap <Leader>r <Plug>(coc-rename)
 nmap <Leader>f :call CocAction('format')<CR>
