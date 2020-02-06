@@ -66,7 +66,6 @@
     mkdir -p $out/pkgs
     ln -s ${openjdk8 } $out/pkgs/openjdk8
     ln -s ${openjdk  } $out/pkgs/openjdk
-    ln -s ${graalvm8 } $out/pkgs/graalvm8-ce
   '';
   system.stateVersion           = "19.09";
 

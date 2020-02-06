@@ -26,7 +26,6 @@ in {
     paths = with self; [ all-hies' neovim' nodePackages.bash-language-server openjdk8 ];
   };
   redshift'         = pkgs.callPackage ./redshift { inherit (pkgs.python3Packages) python pygobject3 pyxdg wrapPython; };
-  sbt'              = pkgs.sbt.override { jre = pkgs.graalvm8; };
   vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   vim'              = pkgs.callPackage ./vim { inherit (pkgs.vimUtils) buildVimPluginFrom2Nix; }; 
 }

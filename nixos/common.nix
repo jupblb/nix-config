@@ -76,7 +76,7 @@
       htop
       kitty'
       lm_sensors
-      sbt'
+      sbt
       unzip
       vim'
       xdg-user-dirs
