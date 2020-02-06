@@ -129,8 +129,6 @@
   programs.fish.shellInit               = "source $OMF_PATH/init.fish";
   programs.gnupg.agent.enable           = true;
   programs.gnupg.agent.enableSSHSupport = true;
-  programs.mosh.enable                  = true;
-  programs.mosh.withUtempter            = true;
   programs.nano.nanorc                  = builtins.readFile(./misc/scripts/nanorc);
   programs.ssh.extraConfig              = builtins.readFile(./misc/conf/ssh-config);
   programs.sway.enable                  = true;
