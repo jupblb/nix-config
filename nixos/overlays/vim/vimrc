@@ -60,6 +60,11 @@ set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 " Mappings
 nnoremap <Leader>n :set invnumber<CR>:GitGutterToggle<CR>
 
-nnoremap th :tabnext<CR>
-nnoremap tl :tabprev<CR>
-nnoremap tn :tabnew<CR>
+" Tab navigation like Firefox.
+nnoremap <C-S-tab> :tabprevious<CR>
+nnoremap <C-tab>   :tabnext<CR>
+nnoremap <C-t>     :tabnew<CR>
+inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+inoremap <C-tab>   <Esc>:tabnext<CR>i
+inoremap <C-t>     <Esc>:tabnew<CR>
+
