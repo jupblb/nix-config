@@ -70,3 +70,9 @@ let g:airline#extensions#tabline#left_sep = ' '
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
 nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
+
+" LimeLight & Goyo
+let g:goyo_width = 100
+nmap <Leader>l :Limelight!!<CR>:Goyo<CR>
+xmap <Leader>l :Limelight!!<CR>:Goyo<CR>
+

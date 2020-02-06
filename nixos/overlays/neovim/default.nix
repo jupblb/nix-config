@@ -15,7 +15,9 @@ neovim.override {
         easymotion
         fugitive
         gitgutter
+        goyo
         gruvbox-community
+        limelight-vim
         surround
         vim-startify
       ];

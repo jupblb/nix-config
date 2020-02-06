@@ -58,7 +58,7 @@ let g:airline_symbols_ascii = 1
 set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 
 " Mappings
-nnoremap <Leader>n :set invnumber <CR> :GitGutterToggle <CR>
+nnoremap <Leader>n :set invnumber<CR>:GitGutterToggle<CR>
 
 nnoremap th :tabnext<CR>
 nnoremap tl :tabprev<CR>
