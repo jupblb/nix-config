@@ -35,9 +35,6 @@ set backspace=indent,eol,start
 nnoremap <Space> <Nop>
 let mapleader="\<Space>"
 
-" Remap : to ;
-:nmap ; :
-
 " Remap split navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
