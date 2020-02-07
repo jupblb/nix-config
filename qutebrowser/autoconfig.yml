@@ -32,6 +32,8 @@ settings:
     - normal {line}G{column0}l
   fonts.monospace:
     global: '"PragmataPro Mono Liga"'
+  statusbar.hide:
+    global: true
   tabs.background:
     global: true
   url.searchengines:
