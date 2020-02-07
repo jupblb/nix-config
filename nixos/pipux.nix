@@ -32,7 +32,9 @@
   hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
   hardware.pulseaudio.package   = pkgs.pulseaudioFull;
 
-  networking.hostName = "pipux";
+  networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 ];
+  networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 ];
+  networking.hostName                 = "pipux";
 
   nix.maxJobs = 12;
 
@@ -45,6 +47,9 @@
   services.fstrim.enable                   = true;
   services.nfs.server.enable               = true;
   services.nfs.server.exports              = "/data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)";
+  services.nfs.server.lockdPort            = 4001;
+  services.nfs.server.mountdPort           = 4002;
+  services.nfs.server.statdPort            = 4000;
   services.transmission.enable             = true;
   services.transmission.group              = "data";
   services.transmission.settings           = { 
