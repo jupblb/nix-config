@@ -19,6 +19,10 @@ settings:
   content.host_blocking.lists:
     global:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
+  content.javascript.enabled:
+    '*://www.gazeta.pl/*': true
+    '*://www.netflix.com/*': true
+    global: false
   content.media_capture:
     https://www.messenger.com: true
   content.register_protocol_handler:
