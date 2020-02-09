@@ -63,7 +63,6 @@
       exec i3
     '';
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
-    ld-linux                          = true;
     shells                            = with pkgs; [ fish bashInteractive ];
     systemPackages                    = with pkgs.unstable; [
       _1password'
@@ -173,6 +172,11 @@
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
     ln -sf ${pkgs.bashInteractive}/bin/bash /bin/bash
+  '';
+  system.activationScripts.ld-linux = lib.stringAfter [ "usrbinenv" ] ''
+    mkdir -m 0755 -p /lib64
+    ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
+    mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2
   '';
 
   systemd.user.services.dropbox = {
