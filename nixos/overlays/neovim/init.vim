@@ -60,6 +60,8 @@ function! s:show_documentation()
   endif
 endfunction
 
+autocmd VimEnter * highlight clear Normal
+
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_symbols_ascii = 0
