@@ -2,7 +2,7 @@
 #
 ### Startup
 exec systemctl --user start dropbox
-exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
+exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 
 ### Variables
 set $wmmsg swaymsg

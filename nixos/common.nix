@@ -37,7 +37,7 @@
   environment = {
     etc."i3/config".text              = with pkgs; ''
       exec --no-startup-id ${dunst}/bin/dunst -conf ${builtins.toString ./misc/wm/dunstrc}
-      exec ${redshift}/bin/redshift -l 51.12:17.05 
+      exec --no-startup-id ${redshift}/bin/redshift -l 51.12:17.05 
       set $browser env QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
       set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
         -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
@@ -47,8 +47,8 @@
     '';
     etc."sway/config".text            = with pkgs; ''
       output * background ${builtins.toString ./misc/wm/wallpaper.png} fill
-      exec ${mako}/bin/mako -c ${builtins.toString ./misc/wm/mako-config}
-      exec ${redshift'}/bin/redshift -m wayland -l 51.12:17.05 
+      exec --no-startup-id ${mako}/bin/mako -c ${builtins.toString ./misc/wm/mako-config}
+      exec --no-startup-id ${redshift'}/bin/redshift -m wayland -l 51.12:17.05 
       set $browser ${qutebrowser}/bin/qutebrowser
       set $menu ${bemenu}/bin/bemenu-run \
         --fn 'PragmataPro 12' -p "" --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
