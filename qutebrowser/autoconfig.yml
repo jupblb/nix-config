@@ -20,8 +20,16 @@ settings:
     global:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
   content.javascript.enabled:
+    '*://*.business.revolut.com/*': true
+    '*://*.mail.google.com/*': true
+    '*://*.my.1password.com/*': true
+    '*://*.www.facebook.com/*': true
+    '*://*.www.ipko.pl/*': true
+    '*://music.youtube.com/*': true
     '*://www.gazeta.pl/*': true
+    '*://www.linkedin.com/*': true
     '*://www.netflix.com/*': true
+    '*://www.youtube.com/*': true
     global: false
   content.media_capture:
     https://www.messenger.com: true
