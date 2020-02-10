@@ -21,13 +21,16 @@ settings:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
   content.javascript.enabled:
     '*://*.business.revolut.com/*': true
-    '*://*.mail.google.com/*': true
-    '*://*.my.1password.com/*': true
     '*://*.facebook.com/*': true
     '*://*.ipko.pl/*': true
+    '*://*.mail.google.com/*': true
+    '*://*.my.1password.com/*': true
+    '*://igeolise.myjetbrains.com/*': true
     '*://music.youtube.com/*': true
+    '*://secure.splitwise.com/*': true
     '*://www.gazeta.pl/*': true
     '*://www.linkedin.com/*': true
+    '*://www.messenger.com/*': true
     '*://www.netflix.com/*': true
     '*://www.youtube.com/*': true
     global: false
@@ -42,8 +45,9 @@ settings:
     - '{file}'
     - -c
     - normal {line}G{column0}l
-  fonts.monospace:
-    global: '"PragmataPro Mono Liga"'
+  fonts.default_family:
+    global:
+    - PragmataPro Mono Liga
   statusbar.hide:
     global: true
   tabs.background:

@@ -54,7 +54,7 @@
         set $browser env QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
         set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
           -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
-        set $print ${gnome3.gnome-screenshot}/bin/gnome-screenshot -i
+        set $print ${gnome3.gnome-screenshot}/bin/gnome-screenshot -i --display=:0
         ${builtins.readFile(./misc/wm/common-config)}
         ${builtins.readFile(./misc/wm/i3-config)}
       '';
@@ -185,7 +185,6 @@
 
   systemd.user.services.dropbox = {
     description                  = "Dropbox";
-    wantedBy                     = [ "default.target" ];
     environment.QT_PLUGIN_PATH   = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtPluginPrefix}";
     environment.QML2_IMPORT_PATH = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtQmlPrefix}";
     serviceConfig                = {
@@ -197,6 +196,7 @@
       ProtectSystem = "full";
       Nice          = 10;
     };
+    wantedBy                     = [ "default.target" ];
   };
 
   time.timeZone = "Europe/Warsaw";
