@@ -1,9 +1,9 @@
-{ jetbrains, makeWrapper, symlinkJoin }:
+{ jetbrains, linuxPackages_latest, makeWrapper, symlinkJoin }:
 
 symlinkJoin {
   buildInputs = [ makeWrapper ];
   name        = "idea";
-  paths       = [ jetbrains.idea-ultimate ];
+  paths       = [ jetbrains.idea-ultimate linuxPackages_latest.perf ];
   postBuild   = ''
     wrapProgram "$out/bin/idea-ultimate" \
     --set-default IDEA_JDK "${jetbrains.jdk}" \

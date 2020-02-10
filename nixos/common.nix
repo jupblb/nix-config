@@ -3,6 +3,8 @@
 {
   boot = {
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
+    kernel.sysctl."kernel.kptr_restrict"        = 0;
+    kernel.sysctl."kernel.perf_event_paranoid"  = 1;
     kernel.sysctl."vm.swappiness"               = 20;
     kernelPackages                              = pkgs.linuxPackages_latest;
     kernelParams                                = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
