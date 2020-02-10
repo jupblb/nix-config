@@ -25,6 +25,7 @@ settings:
     '*://*.ipko.pl/*': true
     '*://*.mail.google.com/*': true
     '*://*.my.1password.com/*': true
+    '*://calendar.google.com/*': true
     '*://igeolise.myjetbrains.com/*': true
     '*://music.youtube.com/*': true
     '*://secure.splitwise.com/*': true
@@ -37,6 +38,7 @@ settings:
   content.media_capture:
     https://www.messenger.com: true
   content.register_protocol_handler:
+    https://calendar.google.com?cid=%25s: true
     https://mail.google.com?extsrc=mailto&url=%25s: true
   editor.command:
     global:
