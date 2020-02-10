@@ -1,0 +1,10 @@
+[include]
+	path = ~/.config/git/gitconfig.local
+[color]
+	ui = true
+[difftool]
+	prompt = false
+[fetch]
+	prune = true
+[push]
+	default = upstream

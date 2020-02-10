@@ -41,6 +41,10 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Set custom location for netrw and viminfo
+let g:netrw_home='~/.cache/vim_netrwhist'
+set viminfo+='1000,n~/.cache/viminfo
+
 " Gruvbox setup
 let &t_ut=''
 let g:airline_theme = 'gruvbox'

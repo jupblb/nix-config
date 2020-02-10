@@ -35,8 +35,20 @@
   console.keyMap     = "pl";
 
   environment = {
+    etc."gitconfig".text              = with pkgs; ''
+      ${builtins.readFile(./misc/conf/gitconfig)}
+      [core]
+      ${"\t"}editor = ${vim'}/bin/vim
+      ${"\t"}excludesfile = ${./misc/conf/gitignore}
+      ${"\t"}mergeoptions = --no-edit
+      [diff]
+      ${"\t"}tool = ${vim'}/bin/vim -d
+      [pager]
+      ${"\t"}diff = ${gitAndTools.diff-so-fancy}/bin/diff-so-fancy | less --tabs=1,5 -RFX
+      ${"\t"}show = ${gitAndTools.diff-so-fancy}/bin/diff-so-fancy | less --tabs=1,5 -RFX
+    '';
     etc."i3/config".text              = with pkgs; ''
-      exec --no-startup-id ${dunst}/bin/dunst -conf ${builtins.toString ./misc/wm/dunstrc}
+      exec --no-startup-id ${dunst}/bin/dunst -conf ${./misc/wm/dunstrc}
       exec --no-startup-id ${redshift}/bin/redshift -l 51.12:17.05 
       set $browser env QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
       set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
@@ -46,8 +58,8 @@
       ${builtins.readFile(./misc/wm/i3-config)}
     '';
     etc."sway/config".text            = with pkgs; ''
-      output * background ${builtins.toString ./misc/wm/wallpaper.png} fill
-      exec --no-startup-id ${mako}/bin/mako -c ${builtins.toString ./misc/wm/mako-config}
+      output * background ${./misc/wm/wallpaper.png} fill
+      exec --no-startup-id ${mako}/bin/mako -c ${./misc/wm/mako-config}
       exec --no-startup-id ${redshift'}/bin/redshift -m wayland -l 51.12:17.05 
       set $browser ${qutebrowser}/bin/qutebrowser
       set $menu ${bemenu}/bin/bemenu-run \
@@ -59,31 +71,37 @@
       bindsym $mod+Print exec ${grim}/bin/grim -g "$(slurp)" $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
     '';
     etc."X11/xinit/xinitrc".text      = ''
-      ${pkgs.feh}/bin/feh --bg-scale ${builtins.toString ./misc/wm/wallpaper.png}
+      ${pkgs.feh}/bin/feh --bg-scale ${./misc/wm/wallpaper.png}
       exec i3
     '';
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
     shells                            = with pkgs; [ fish bashInteractive ];
     systemPackages                    = with pkgs.unstable; [
-      _1password'
-      ammonite
+      ammonite'
       dropbox-cli
       file
       fzf
       ghc
-      git'
+      git
       htop
       kitty'
       lm_sensors
-      sbt
+      sbt'
       unzip
       vim'
       xdg-user-dirs
     ];
     variables                         = {
-      NIXPKGS_ALLOW_UNFREE = "1";
-      OMF_CONFIG           = builtins.toString ./misc/conf/omf;
-      OMF_PATH             = builtins.toString ./misc/omf;
+      _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot="~/.config/java"'';
+      GNUPGHOME             = "~/.local/share/gnupg";
+      HISTFILE              = "~/.cache/bash_history";
+      LESSHISTFILE          = "-";
+      LESSKEY               = "~/.config/lesskey";
+      NIXPKGS_ALLOW_UNFREE  = "1";
+      NPM_CONFIG_USERCONFIG = builtins.toString ./misc/scripts/npmrc;
+      OMF_CONFIG            = builtins.toString ./misc/conf/omf;
+      OMF_PATH              = builtins.toString ./misc/omf;
+      XAUTHORITY            = "/tmp/Xauthority";
     };
   };
 

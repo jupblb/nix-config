@@ -23,8 +23,8 @@ settings:
     '*://*.business.revolut.com/*': true
     '*://*.mail.google.com/*': true
     '*://*.my.1password.com/*': true
-    '*://*.www.facebook.com/*': true
-    '*://*.www.ipko.pl/*': true
+    '*://*.facebook.com/*': true
+    '*://*.ipko.pl/*': true
     '*://music.youtube.com/*': true
     '*://www.gazeta.pl/*': true
     '*://www.linkedin.com/*': true

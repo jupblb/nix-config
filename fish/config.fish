@@ -12,6 +12,3 @@ set -g theme_display_user          ssh
 set -g theme_display_hostname      ssh
 set -g theme_display_date          no
 
-function ops
-  set -gx OP_SESSION_my (op signin --raw)
-end
