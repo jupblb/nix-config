@@ -88,7 +88,7 @@
       LESSHISTFILE          = "-";
       LESSKEY               = "~/.config/lesskey";
       NIXPKGS_ALLOW_UNFREE  = "1";
-      NPM_CONFIG_USERCONFIG = builtins.toString ./misc/scripts/npmrc;
+      NPM_CONFIG_USERCONFIG = builtins.toString ./misc/rc/npmrc;
       OMF_CONFIG            = builtins.toString ./misc/conf/omf;
       OMF_PATH              = builtins.toString ./misc/omf;
       XAUTHORITY            = "/tmp/Xauthority";
@@ -129,13 +129,13 @@
 
   programs = {
     bash.enableCompletion        = true;
-    bash.promptInit              = builtins.readFile(./misc/scripts/bashrc);
+    bash.promptInit              = builtins.readFile(./misc/rc/bashrc);
     bash.shellAliases            = { ls = "ls --color=auto"; };
     dconf.enable                 = true;
     evince.enable                = true;
     fish.enable                  = true;
     fish.interactiveShellInit    = ''
-      ${builtins.readFile(./misc/scripts/init.fish)}
+      ${builtins.readFile(./misc/rc/init.fish)}
       ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
       ${pkgs.fortune}/bin/fortune -sa
     '';
@@ -143,13 +143,13 @@
     fish.shellInit               = "source $OMF_PATH/init.fish";
     gnupg.agent.enable           = true;
     gnupg.agent.enableSSHSupport = true;
-    nano.nanorc                  = builtins.readFile(./misc/scripts/nanorc);
+    nano.nanorc                  = builtins.readFile(./misc/rc/nanorc);
     ssh.extraConfig              = builtins.readFile(./misc/conf/ssh-config);
     sway.enable                  = true;
     sway.extraPackages           = with pkgs.unstable; [
       i3status' imv mpv paper-icon-theme pavucontrol wob zoom-us
     ];
-    sway.extraSessionCommands    = builtins.readFile(./misc/scripts/sway.sh);
+    sway.extraSessionCommands    = builtins.readFile(./misc/rc/sway.sh);
     sway.wrapperFeatures.gtk     = true;
     vim.defaultEditor            = true;
   };
