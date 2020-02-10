@@ -1,8 +1,8 @@
-{ sbt, symlinkJoin, makeWrapper }:
+{ makeWrapper, sbt, symlinkJoin }:
 
 symlinkJoin {
-  name        = "sbt";
   buildInputs = [ makeWrapper ];
+  name        = "sbt";
   paths       = [ sbt ];
   postBuild   = ''
     wrapProgram "$out/bin/sbt" \

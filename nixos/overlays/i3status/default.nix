@@ -1,6 +1,6 @@
-{stdenv, writeScriptBin, i3status}:
+{ i3status, stdenv, writeScriptBin }:
 
-writeScriptBin "net-speed" ''
+writeScriptBin "i3status" ''
 #!${stdenv.shell}
 
 # Authors:
@@ -55,7 +55,7 @@ update_rate() {
   last_tx=$tx
 }
 
-${i3status}/bin/i3status -c ${builtins.toString ./config} | (read line && echo "$line" && read line && echo "$line" && read line && echo "$line" && update_rate && while :
+${i3status}/bin/i3status -c ${./config} | (read line && echo "$line" && read line && echo "$line" && read line && echo "$line" && update_rate && while :
 do
   read line
   update_rate

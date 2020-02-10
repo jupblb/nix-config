@@ -79,7 +79,7 @@ bar {
     position top                                                                    
     mode hide                                                                       
                                                                                     
-    status_command exec net-speed                  
+    status_command exec i3status                  
                                                                                     
     separator_symbol " | "                                                          
     font pango:PragmataPro Mono Liga 11                                             

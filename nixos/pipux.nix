@@ -20,17 +20,16 @@
   '';
   environment.systemPackages                  = with pkgs.unstable; [ neovim'' ];
 
-  fileSystems."/".device     = "/dev/disk/by-label/nixos";
-  fileSystems."/".fsType     = "xfs";
-  fileSystems."/boot".device = "/dev/disk/by-label/boot";
-  fileSystems."/boot".fsType = "vfat";
-  fileSystems."/data".device = "/dev/disk/by-label/data";
-  fileSystems."/data".fsType = "ext4";
+  fileSystems = {
+    "/".device     = "/dev/disk/by-label/nixos";
+    "/".fsType     = "xfs";
+    "/boot".device = "/dev/disk/by-label/boot";
+    "/boot".fsType = "vfat";
+    "/data".device = "/dev/disk/by-label/data";
+    "/data".fsType = "ext4";
+  };
 
-  hardware.bluetooth.enable     = true;
-  hardware.bluetooth.package    = pkgs.bluezFull;
   hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
-  hardware.pulseaudio.package   = pkgs.pulseaudioFull;
 
   networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 ];
   networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 ];
@@ -38,32 +37,37 @@
 
   nix.maxJobs = 12;
 
-  services.apcupsd.enable                  = true;
-  services.apcupsd.configText              = ''
-    UPSCABLE usb
-    UPSTYPE usb
-    DEVICE
-  '';
-  services.fstrim.enable                   = true;
-  services.nfs.server.enable               = true;
-  services.nfs.server.exports              = "/data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)";
-  services.nfs.server.lockdPort            = 4001;
-  services.nfs.server.mountdPort           = 4002;
-  services.nfs.server.statdPort            = 4000;
-  services.transmission.enable             = true;
-  services.transmission.group              = "data";
-  services.transmission.settings           = { 
-    download-dir           = "/data/transmission";
-    incomplete-dir         = "/data/transmission/.incomplete";
-    incomplete-dir-enabled = true;
-    rpc-whitelist          = "127.0.0.1,192.168.*.*";
+  services = {
+    apcupsd.enable                  = true;
+    apcupsd.configText              = ''
+      UPSCABLE usb
+      UPSTYPE usb
+      DEVICE
+    '';
+    fstrim.enable                   = true;
+    mingetty.autologinUser          = "jupblb";
+    nfs                             = {
+      server.enable     = true;
+      server.exports    = "/data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)";
+      server.lockdPort  = 4001;
+      server.mountdPort = 4002;
+      server.statdPort  = 4000;
+    };
+    transmission                    = {
+      enable                          = true;
+      group                           = "data";
+      settings.download-dir           = "/data/transmission";
+      settings.incomplete-dir         = "/data/transmission/.incomplete";
+      settings.incomplete-dir-enabled = true;
+      settings.rpc-whitelist          = "127.0.0.1,192.168.*.*";
+    };
+    udev.extraRules                 = ''
+      ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
+      ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="34:29:8f:73:aa:fd", NAME="ethusb"
+    '';
+    xserver.windowManager.i3.enable = true;
+    xserver.videoDrivers            = [ "amdgpu" ];
   };
-  services.udev.extraRules                 = ''
-    ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
-    ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="34:29:8f:73:aa:fd", NAME="ethusb"
-  '';
-  services.xserver.windowManager.i3.enable = true;
-  services.xserver.videoDrivers            = [ "amdgpu" ];
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 

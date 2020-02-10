@@ -1,4 +1,4 @@
-{ i3-gaps, symlinkJoin, makeWrapper }:
+{ i3-gaps, makeWrapper, symlinkJoin }:
 
 symlinkJoin {
   name        = "i3";

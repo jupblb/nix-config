@@ -1,10 +1,10 @@
-{ jetbrains, symlinkJoin, makeWrapper }:
+{ jetbrains, makeWrapper, symlinkJoin }:
 
 symlinkJoin {
-  name = "idea";
   buildInputs = [ makeWrapper ];
-  paths = [ jetbrains.idea-ultimate ];
-  postBuild = ''
+  name        = "idea";
+  paths       = [ jetbrains.idea-ultimate ];
+  postBuild   = ''
     wrapProgram "$out/bin/idea-ultimate" \
     --set-default IDEA_JDK "${jetbrains.jdk}" \
     --set-default IDEA_PROPERTIES "${./idea.properties}" \
