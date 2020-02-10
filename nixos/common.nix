@@ -82,7 +82,7 @@
       ammonite' dropbox-cli file fzf ghc git htop kitty' lm_sensors sbt' unzip vim'
     ];
     variables      = {
-      _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot="~/.config/java"'';
+      _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot=$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/java'';
       GNUPGHOME             = "~/.local/share/gnupg";
       HISTFILE              = "~/.cache/bash_history";
       LESSHISTFILE          = "-";
