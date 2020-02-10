@@ -69,7 +69,7 @@
         set $print ${grim}/bin/grim $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
         ${builtins.readFile(./misc/wm/common-config)}
         ${builtins.readFile(./misc/wm/sway-config)}
-        bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
+        bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/screenshots/$(date +'%F_%R:%S_grim.png')
       '';
       "X11/xinit/xinitrc".text      = ''
         ${pkgs.feh}/bin/feh --bg-scale ${./misc/wm/wallpaper.png}
