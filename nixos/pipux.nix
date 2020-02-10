@@ -13,7 +13,7 @@
 
   environment.etc."sway/config".text       = "output * scale 2";
   environment.etc."X11/xinit/xinitrc".text = "xrdb -merge ${./misc/wm/Xresources-pipux}";
-  environment.systemPackages               = with pkgs.unstable; [ neovim'' ];
+  environment.systemPackages               = [ pkgs.unstable.neovim'' ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";

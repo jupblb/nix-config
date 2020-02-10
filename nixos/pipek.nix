@@ -8,9 +8,7 @@
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "ums_realtek" "sd_mod" "sr_mod"
   ];
 
-  environment.systemPackages = with pkgs.unstable; [
-    franz neovim' xwayland
-  ];
+  environment.systemPackages = [ pkgs.unstable.neovim' ];
 
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";
@@ -22,6 +20,8 @@
   networking.hostName = "pipek";
 
   nix.maxJobs = 8;
+
+  programs.sway.extraPackages = with pkgs.unstable; [ franz xwayland ];
 
   services.fstrim.enable   = true;
   services.udev.extraRules = ''
