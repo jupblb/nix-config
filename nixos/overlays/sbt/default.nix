@@ -7,8 +7,8 @@ symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/sbt" \
     --add-flags "--color=always" \
-    --add-flags "--ivy $(${xdg-user-dirs}/bin/xdg-user-dir)/.local/share/ivy2" \
+    --add-flags "--ivy ~/.local/share/ivy2" \
     --add-flags "--mem 8192" \
-    --add-flags "--sbt-dir $(${xdg-user-dirs}/bin/xdg-user-dir)/.local/share/sbt"
+    --add-flags "--sbt-dir ~/.local/share/sbt"
   '';
 }
