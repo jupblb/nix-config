@@ -15,7 +15,7 @@ settings:
   content.geolocation:
     global: false
   content.headers.accept_language:
-    global: en-US,en,pl
+    global: en-US
   content.host_blocking.lists:
     global:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts

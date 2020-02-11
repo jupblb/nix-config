@@ -53,7 +53,7 @@
       "i3/config".text              = with pkgs; ''
         exec --no-startup-id ${dunst}/bin/dunst -conf ${./misc/wm/dunstrc}
         exec --no-startup-id ${redshift}/bin/redshift -l 51.12:17.05 
-        set $browser env QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.config/.qtbrowserx
+        set $browser env QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.local/share/qutebrowserx
         set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
           -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
         set $print ${gnome3.gnome-screenshot}/bin/gnome-screenshot -i --display=:0
@@ -85,10 +85,10 @@
     ];
     variables      = {
       _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot=$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/java'';
-      GNUPGHOME             = "~/.local/share/gnupg";
-      HISTFILE              = "~/.cache/bash_history";
+      GNUPGHOME             = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.local/share/gnupg";
+      HISTFILE              = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.cache/bash_history";
       LESSHISTFILE          = "-";
-      LESSKEY               = "~/.config/lesskey";
+      LESSKEY               = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/lesskey";
       NIXPKGS_ALLOW_UNFREE  = "1";
       NPM_CONFIG_USERCONFIG = builtins.toString ./misc/rc/npmrc;
       OMF_CONFIG            = builtins.toString ./misc/conf/omf;
