@@ -20,20 +20,19 @@ settings:
     global:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
   content.javascript.enabled:
-    '*://*.business.revolut.com/*': true
+    '*://*.1password.com/*': true
     '*://*.facebook.com/*': true
     '*://*.ipko.pl/*': true
-    '*://*.mail.google.com/*': true
-    '*://*.my.1password.com/*': true
+    '*://*.revolut.com/*': true
+    '*://*.splitwise.com/*': true
+    '*://*.youtube.com/*': true
     '*://calendar.google.com/*': true
     '*://igeolise.myjetbrains.com/*': true
-    '*://music.youtube.com/*': true
-    '*://secure.splitwise.com/*': true
-    '*://www.gazeta.pl/*': true
+    '*://mail.google.com/*': true
+    '*://maps.google.com/*': true
+    '*://www.gazeta.pl/*': false
     '*://www.linkedin.com/*': true
     '*://www.messenger.com/*': true
-    '*://www.netflix.com/*': true
-    '*://www.youtube.com/*': true
     global: false
   content.media_capture:
     https://www.messenger.com: true
