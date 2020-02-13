@@ -9,11 +9,7 @@ in {
   i3status'         = pkgs.callPackage ./i3status { };
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
-  neovim'           = pkgs.callPackage ./neovim { };
-  neovim''          = pkgs.buildEnv {
-    name  = "nvim";
-    paths = with self; [ all-hies' neovim' nodePackages.bash-language-server openjdk8 ];
-  };
+  neovim'           = pkgs.callPackage ./neovim { inherit (pkgs.nodePackages) bash-language-server; };
   redshift'         = pkgs.callPackage ./redshift { inherit (pkgs.python3Packages) python pygobject3 pyxdg wrapPython; };
   sbt'              = pkgs.callPackage ./sbt { };
   vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };

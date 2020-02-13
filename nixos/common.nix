@@ -81,7 +81,7 @@
     };
     shells         = with pkgs; [ fish bashInteractive ];
     systemPackages = with pkgs.unstable; [
-      ammonite' dropbox-cli file fzf ghc git htop kitty' lm_sensors sbt' unzip vim'
+      ammonite' dropbox-cli file fzf ghc git htop kitty' lm_sensors neovim' sbt' unzip vim'
     ];
     variables      = {
       _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot=$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/java'';

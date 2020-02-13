@@ -8,8 +8,6 @@
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "ums_realtek" "sd_mod" "sr_mod"
   ];
 
-  environment.systemPackages = [ pkgs.unstable.neovim' ];
-
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";
   fileSystems."/boot".device = "/dev/disk/by-label/boot";
