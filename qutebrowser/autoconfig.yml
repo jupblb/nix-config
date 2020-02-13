@@ -23,17 +23,19 @@ settings:
     '*://*.1password.com/*': true
     '*://*.facebook.com/*': true
     '*://*.ipko.pl/*': true
+    '*://*.localhost/*': true
     '*://*.revolut.com/*': true
     '*://*.splitwise.com/*': true
     '*://*.youtube.com/*': true
+    '*://bitbucket.org/*': true
     '*://calendar.google.com/*': true
     '*://igeolise.myjetbrains.com/*': true
     '*://mail.google.com/*': true
     '*://maps.google.com/*': true
-    '*://www.gazeta.pl/*': false
     '*://www.linkedin.com/*': true
     '*://www.messenger.com/*': true
     global: false
+    https://www.gazeta.pl/0,0.html: true
   content.media_capture:
     https://www.messenger.com: true
   content.register_protocol_handler:
