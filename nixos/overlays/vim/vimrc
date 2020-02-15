@@ -52,6 +52,8 @@ let g:airline_powerline_fonts = 0
 let g:airline_symbols_ascii = 1
 
 " CtrlP
+let g:ctrlp_map = '<Leader>p'
+nnoremap <Leader>b :CtrlPBuffer<CR>
 set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 
 " Mappings
