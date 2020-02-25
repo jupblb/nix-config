@@ -3,7 +3,7 @@ self: pkgs:
 let
   all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
 in { 
-  all-hies'         = all-hies.selection { selector = p: p; };
+  all-hies'         = all-hies.selection { selector = p: { inherit (p) ghc882 ghc865 ghc844; }; };
   ammonite'         = pkgs.callPackage ./ammonite { };
   i3'               = pkgs.callPackage ./i3 { };
   i3status'         = pkgs.callPackage ./i3status { };
