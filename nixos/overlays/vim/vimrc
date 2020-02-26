@@ -53,17 +53,19 @@ let g:airline_symbols_ascii = 1
 
 " CtrlP
 let g:ctrlp_map = '<Leader>p'
-nnoremap <Leader>b :CtrlPBuffer<CR>
+nnoremap <Leader>bl :CtrlPBuffer<CR>
 set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 
 " Mappings
 nnoremap <Leader>n :set invnumber<CR>:GitGutterToggle<CR>
+nnoremap <Leader>bd :bd<CR>
 
 " Tab navigation like Firefox.
 nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-tab>   :tabnext<CR>
 nnoremap <C-t>     :tabnew<CR>
+nnoremap <C-w>     :tabclose<CR>
 inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
-
+inoremap <C-t>     <Esc>:tabnew<CR>i
+inoremap <C-w>     <Esc>:tabclose<CR>i
