@@ -8,6 +8,8 @@
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "ums_realtek" "sd_mod" "sr_mod"
   ];
 
+  environment.systemPackages = with pkgs.unstable [ franz sway' xwayland ];
+
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";
   fileSystems."/boot".device = "/dev/disk/by-label/boot";
@@ -18,8 +20,6 @@
   networking.hostName = "pipek";
 
   nix.maxJobs = 8;
-
-  programs.sway.extraPackages = with pkgs.unstable; [ franz xwayland ];
 
   services.fstrim.enable   = true;
   services.udev.extraRules = ''

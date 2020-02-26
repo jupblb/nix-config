@@ -1,6 +1,0 @@
-package colored-man-pages
-package extract
-package fzf
-package sudope
-theme bobthefish
-theme default

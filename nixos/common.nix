@@ -37,67 +37,27 @@
   console.keyMap     = "pl";
 
   environment = {
-    etc            = {
-      "gitconfig".text              = with pkgs; ''
-        ${builtins.readFile(./misc/conf/git/gitconfig)}
-        [core]
-        ${"\t"}editor = ${vim'}/bin/vim
-        ${"\t"}excludesfile = ${./misc/conf/git/gitignore}
-        ${"\t"}mergeoptions = --no-edit
-        [diff]
-        ${"\t"}tool = ${vim'}/bin/vim -d
-        [pager]
-        ${"\t"}diff = ${gitAndTools.diff-so-fancy}/bin/diff-so-fancy | less --tabs=1,5 -RFX
-        ${"\t"}show = ${gitAndTools.diff-so-fancy}/bin/diff-so-fancy | less --tabs=1,5 -RFX
-      '';
-      "i3/config".text              = with pkgs; ''
-        exec --no-startup-id ${dunst}/bin/dunst -conf ${./misc/wm/dunstrc}
-        exec --no-startup-id ${redshift}/bin/redshift -l 51.12:17.05 
-        set $browser env QT_SCALE_FACTOR=2 ${qutebrowser}/bin/qutebrowser --basedir ~/.local/share/qutebrowserx
-        set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
-          -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
-        set $print ${gnome3.gnome-screenshot}/bin/gnome-screenshot -i --display=:0
-        ${builtins.readFile(./misc/wm/common-config)}
-        ${builtins.readFile(./misc/wm/i3-config)}
-      '';
-      "sway/config".text            = with pkgs; ''
-        output * background ${./misc/wm/wallpaper.png} fill
-        exec --no-startup-id ${mako}/bin/mako -c ${./misc/wm/mako-config}
-        exec --no-startup-id ${redshift'}/bin/redshift -m wayland -l 51.12:17.05 
-        set $browser ${qutebrowser}/bin/qutebrowser
-        set $menu ${bemenu}/bin/bemenu-run \
-          --fn 'PragmataPro 12' -p "" --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
-          --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg' | xargs swaymsg exec --
-        set $print ${grim}/bin/grim $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
-        ${builtins.readFile(./misc/wm/common-config)}
-        ${builtins.readFile(./misc/wm/sway-config)}
-        bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/screenshots/$(date +'%F_%R:%S_grim.png')
-      '';
-      "X11/xinit/xinitrc".text      = ''
-        ${pkgs.feh}/bin/feh --bg-scale ${./misc/wm/wallpaper.png}
-        exec i3
-      '';
-      "xdg/user-dirs.defaults".text = builtins.readFile(./misc/conf/user-dirs);
-    };
-    shells         = with pkgs; [ fish bashInteractive ];
-    systemPackages = with pkgs.unstable; [
-      ammonite' dropbox-cli file fzf ghc git htop kitty' lm_sensors neovim' sbt' unzip vim'
+    etc."X11/xinit/xinitrc".text      = ''
+      ${pkgs.feh}/bin/feh --bg-scale ${./overlays/wallpaper.png}
+      exec i3
+    '';
+    etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/user-dirs);
+    systemPackages                    = with pkgs.unstable; [
+      ammonite' dropbox-cli file fzf ghc git' htop kitty' lm_sensors neovim' paper-icon-theme sbt' unzip vim'
     ];
-    variables      = {
+    variables                         = {
       _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot=$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/java'';
       GNUPGHOME             = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.local/share/gnupg";
       HISTFILE              = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.cache/bash_history";
       LESSHISTFILE          = "-";
       LESSKEY               = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/lesskey";
       NIXPKGS_ALLOW_UNFREE  = "1";
-      NPM_CONFIG_USERCONFIG = builtins.toString ./misc/rc/npmrc;
-      OMF_CONFIG            = builtins.toString ./misc/conf/omf;
-      OMF_PATH              = builtins.toString ./misc/omf;
+      NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
       XAUTHORITY            = "/tmp/Xauthority";
     };
   };
 
-  fonts.fonts = with pkgs; [ vistafonts ];
+  fonts.fonts = [ pkgs.vistafonts ];
 
   hardware = {
     bluetooth.enable              = true;
@@ -131,47 +91,31 @@
 
   programs = {
     bash.enableCompletion        = true;
-    bash.promptInit              = builtins.readFile(./misc/rc/bashrc);
+    bash.promptInit              = builtins.readFile(./misc/bashrc);
     bash.shellAliases            = { ls = "ls --color=auto"; };
     dconf.enable                 = true;
     evince.enable                = true;
     fish.enable                  = true;
     fish.interactiveShellInit    = ''
-      ${builtins.readFile(./misc/rc/init.fish)}
+      ${builtins.readFile(./misc/fishrc)}
       ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
       ${pkgs.fortune}/bin/fortune -sa
     '';
     fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
-    fish.shellInit               = "source $OMF_PATH/init.fish";
     gnupg.agent.enable           = true;
     gnupg.agent.enableSSHSupport = true;
-    nano.nanorc                  = builtins.readFile(./misc/rc/nanorc);
-    ssh.extraConfig              = builtins.readFile(./misc/conf/ssh-config);
-    sway.enable                  = true;
-    sway.extraPackages           = with pkgs.unstable; [
-      i3status' imv mpv paper-icon-theme pavucontrol wob zoom-us
-    ];
-    sway.extraSessionCommands    = builtins.readFile(./misc/rc/sway.sh);
-    sway.wrapperFeatures.gtk     = true;
+    ssh.extraConfig              = builtins.readFile(./misc/ssh-config);
     vim.defaultEditor            = true;
   };
 
   services = {
-    acpid.enable                           = true;
-    dbus.packages                          = [ pkgs.gnome3.dconf ];
-    openssh.openFirewall                   = true;
-    openssh.enable                         = true;
-    openssh.passwordAuthentication         = false;
-    openssh.permitRootLogin                = "no";
-    printing.drivers                       = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
-    printing.enable                        = true;
-    xserver.displayManager.startx.enable   = true;
-    xserver.enable                         = true;
-    xserver.layout                         = "pl";
-    xserver.windowManager.i3.extraPackages = with pkgs.unstable; [
-      franz i3status' idea-ultimate' imv mpv paper-icon-theme pavucontrol zoom-us
-    ];
-    xserver.windowManager.i3.package       = pkgs.i3';
+    acpid.enable                         = true;
+    openssh.openFirewall                 = true;
+    openssh.enable                       = true;
+    openssh.passwordAuthentication       = false;
+    openssh.permitRootLogin              = "no";
+    printing.drivers                     = [ pkgs.samsung-unified-linux-driver_1_00_37 ];
+    printing.enable                      = true;
   };
 
   sound.enable = true;
@@ -204,10 +148,7 @@
   time.timeZone = "Europe/Warsaw";
 
   users.users.jupblb = {
-    createHome      = true;
     description     = "Michal Kielbowicz";
-    group           = "users";
-    home            = "/home/jupblb";
     initialPassword = "changeme";
     isNormalUser    = true;
     extraGroups     = [ "lp" "networkmanager" "wheel" ];

@@ -12,7 +12,8 @@
   console.packages = [ pkgs.terminus_font ];
 
   environment.etc."sway/config".text       = "output * scale 2";
-  environment.etc."X11/xinit/xinitrc".text = "xrdb -merge ${./misc/wm/Xresources-pipux}";
+  environment.etc."X11/xinit/xinitrc".text = "xrdb -merge ${./misc/Xresources-pipux}";
+  environment.systemPackages = [ pkgs.unstable.sway-scaled' ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -59,8 +60,12 @@
       ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
       ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="34:29:8f:73:aa:fd", NAME="ethusb"
     '';
-    xserver.windowManager.i3.enable = true;
-    xserver.videoDrivers            = [ "amdgpu" ];
+    xserver.displayManager.startx.enable = true;
+    xserver.enable                       = true;
+    xserver.layout                       = "pl";
+    xserver.windowManager.i3.enable      = true;
+    xserver.windowManager.i3.package     = pkgs.i3';
+    xserver.videoDrivers                 = [ "amdgpu" ];
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
