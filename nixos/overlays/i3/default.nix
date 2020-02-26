@@ -15,7 +15,7 @@ let
       set $menu ${dmenu}/bin/dmenu_path | ${dmenu}/bin/dmenu_run \
         -fn 'PragmataPro Mono Liga:bold:pixelsize=40' -nb '#282828' -nf '#f9f5d7' -sb '#f9f5d7' -sf '#282828'
       set $print ${gnome-screenshot}/bin/gnome-screenshot -i --display=:0
-      ${builtins.readFile(../common-config)}
+      ${builtins.readFile(../common-wm-config)}
       ${builtins.readFile(./i3-config)}
     '';
   };

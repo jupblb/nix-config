@@ -19,10 +19,7 @@ input * {
 }
 
 ### Seat configuration
-seat * {
-  hide_cursor 5000
-  xcursor_theme Paper 18
-}
+seat * hide_cursor 5000
 
 ### General configuration
 font pango:PragmataPro 10

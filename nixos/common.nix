@@ -37,10 +37,6 @@
   console.keyMap     = "pl";
 
   environment = {
-    etc."X11/xinit/xinitrc".text      = ''
-      ${pkgs.feh}/bin/feh --bg-scale ${./overlays/wallpaper.png}
-      exec i3
-    '';
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/user-dirs);
     systemPackages                    = with pkgs.unstable; [
       ammonite' dropbox-cli file fzf ghc git' htop kitty' lm_sensors neovim' paper-icon-theme sbt' unzip vim'
@@ -50,7 +46,6 @@
       GNUPGHOME             = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.local/share/gnupg";
       HISTFILE              = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.cache/bash_history";
       LESSHISTFILE          = "-";
-      LESSKEY               = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/lesskey";
       NIXPKGS_ALLOW_UNFREE  = "1";
       NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
       XAUTHORITY            = "/tmp/Xauthority";
@@ -99,7 +94,9 @@
     fish.interactiveShellInit    = ''
       ${builtins.readFile(./misc/fishrc)}
       ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
-      ${pkgs.fortune}/bin/fortune -sa
+      function fish_greeting
+        ${pkgs.fortune}/bin/fortune -sa
+      end
     '';
     fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
     gnupg.agent.enable           = true;
@@ -110,6 +107,7 @@
 
   services = {
     acpid.enable                         = true;
+    fstrim.enable                        = true;
     openssh.openFirewall                 = true;
     openssh.enable                       = true;
     openssh.passwordAuthentication       = false;
@@ -125,7 +123,7 @@
   '';
   system.activationScripts.ld-linux = lib.stringAfter [ "usrbinenv" ] ''
     mkdir -m 0755 -p /lib64
-    ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
+    ln -sfn ${pkgs.glibc}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
     mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2
   '';
 
@@ -134,8 +132,8 @@
     environment.QT_PLUGIN_PATH   = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtPluginPrefix}";
     environment.QML2_IMPORT_PATH = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtQmlPrefix}";
     serviceConfig                = {
-      ExecStart     = "${pkgs.dropbox.out}/bin/dropbox";
-      ExecReload    = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
+      ExecStart     = "${pkgs.dropbox}/bin/dropbox";
+      ExecReload    = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
       KillMode      = "control-group";
       Restart       = "on-failure";
       PrivateTmp    = true;
