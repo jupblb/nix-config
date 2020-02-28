@@ -13,6 +13,7 @@ let
 #         coc-json
 #         coc-metals
           coc-nvim
+#         coc-rust-analyzer
           easymotion
           fugitive
           gitgutter

@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  sway-scaled = pkgs.sway'.override { withScaling = true; };
+  sway-scaled = pkgs.unstable.sway'.override { withScaling = true; };
   xresources  = pkgs.writeTextFile {
     name = "Xresources";
     text = ''
@@ -17,8 +17,8 @@ in {
   boot.initrd.kernelModules          = [ "amdgpu" ];
   boot.tmpOnTmpfs                    = true;
 
-  console.font     = "ter-232n";
-  console.packages = [ pkgs.terminus_font ];
+# console.font     = "ter-232n";
+# console.packages = [ pkgs.terminus_font ];
 
   environment.etc."X11/xinit/xinitrc".text = ''
     xrdb -merge ${xresources}
@@ -75,7 +75,7 @@ in {
     xserver.enable                       = true;
     xserver.layout                       = "pl";
     xserver.windowManager.i3.enable      = true;
-    xserver.windowManager.i3.package     = pkgs.i3';
+    xserver.windowManager.i3.package     = pkgs.unstable.i3';
     xserver.videoDrivers                 = [ "amdgpu" ];
   };
 

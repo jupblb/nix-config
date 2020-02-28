@@ -3,8 +3,8 @@
 {
   boot = {
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
-    kernel.sysctl."kernel.kptr_restrict"        = 0;
-    kernel.sysctl."kernel.perf_event_paranoid"  = 1;
+#   kernel.sysctl."kernel.kptr_restrict"        = 0;
+#   kernel.sysctl."kernel.perf_event_paranoid"  = 1;
     kernel.sysctl."vm.swappiness"               = 20;
     kernelPackages                              = pkgs.linuxPackages_latest;
     kernelParams                                = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
@@ -15,31 +15,31 @@
     supportedFilesystems                        = [ "ntfs" "exfat" ];
   };
 
-  console.colors     = [
-    "f9f5d7"
-    "cc241d"
-    "98971a"
-    "d79921"
-    "458588"
-    "b16286"
-    "689d6a"
-    "7c6f64"
-    "928374"
-    "9d0006"
-    "79740e"
-    "b57614"
-    "076678"
-    "8f3f71"
-    "427b58"
-    "3c3836"
-  ];
-  console.earlySetup = true;
-  console.keyMap     = "pl";
+# console.colors     = [
+#   "f9f5d7"
+#   "cc241d"
+#   "98971a"
+#   "d79921"
+#   "458588"
+#   "b16286"
+#   "689d6a"
+#   "7c6f64"
+#   "928374"
+#   "9d0006"
+#   "79740e"
+#   "b57614"
+#   "076678"
+#   "8f3f71"
+#   "427b58"
+#   "3c3836"
+# ];
+# console.earlySetup = true;
+# console.keyMap     = "pl";
 
   environment = {
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/user-dirs);
     systemPackages                    = with pkgs.unstable; [
-      ammonite' dropbox-cli file fzf ghc git' htop kitty' lm_sensors neovim' paper-icon-theme sbt' unzip vim'
+      ammonite' dropbox-cli file fzf ghc git' htop kitty' lm_sensors pkgs.neovim' paper-icon-theme sbt' unzip vim'
     ];
     variables                         = {
       _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot=$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/java'';
