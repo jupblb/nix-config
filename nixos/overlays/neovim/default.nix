@@ -24,6 +24,7 @@ let
           gruvbox-community
           limelight-vim
           surround
+	  vim-nix
           vim-startify
         ];
       };
