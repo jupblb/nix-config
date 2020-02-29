@@ -1,10 +1,13 @@
-{ all-hies', bash-language-server, makeWrapper, neovim, openjdk8, symlinkJoin, vimPlugins }:
+{ all-hies', bash-language-server, makeWrapper, neovim, openjdk8, rustc, stdenv, symlinkJoin, vimPlugins }:
 
 let
   neovim' = neovim.override {
     configure   = {
-      customRC = builtins.readFile(../vim/vimrc) + builtins.readFile(./init.vim);
-  
+      customRC = ''
+        ${builtins.readFile(./init.vim)}
+        let $RUST_SRC_PATH = '${rust-std}'
+      '';
+
       packages.myVimPackage = with vimPlugins; {
         opt   = [ ];
         start = [
@@ -25,19 +28,26 @@ let
         ];
       };
     };
+
+    vimAlias = true;
   
     withNodeJs  = true;
     withPython  = false;
     withPython3 = false;
     withRuby    = false;
   };
-in
-  symlinkJoin {
-    buildInputs = [ makeWrapper ];
-    name        = "nvim";
-    paths       = [ neovim' ];
-    postBuild   = ''
-      wrapProgram "$out/bin/nvim" \
-      --prefix PATH ':' ${all-hies'}/bin:${bash-language-server}/bin:${openjdk8}/bin
-    '';
-  }
+  rust-std = stdenv.mkDerivation {
+    inherit (rustc) src;
+    inherit (rustc.src) name;
+    installPhase = "cp -r src $out";
+    phases       = ["unpackPhase" "installPhase"];
+  };
+in symlinkJoin {
+  buildInputs = [ makeWrapper ];
+  name        = "nvim";
+  paths       = [ neovim' ];
+  postBuild   = ''
+    wrapProgram "$out/bin/nvim" \
+    --prefix PATH ':' ${all-hies'}/bin:${bash-language-server}/bin:${openjdk8}/bin
+  '';
+}

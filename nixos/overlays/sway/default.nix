@@ -1,7 +1,7 @@
 {
   bemenu, grim, i3status', imv, lib, 
   makeWrapper, mako, mpv, pavucontrol, qutebrowser,
-  redshift', slurp, symlinkJoin, sway, withScaling ? false,
+  redshift-wayland', slurp, symlinkJoin, sway, withScaling ? false,
   wob, writeTextFile, xdg-user-dirs, zoom-us
 }:
 
@@ -10,7 +10,7 @@ let
     name = "config";
     text = ''
       exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
-      exec --no-startup-id ${redshift'}/bin/redshift -m wayland -l 51.12:17.05
+      exec --no-startup-id ${redshift-wayland'}/bin/redshift -m wayland -l 51.12:17.05
       output * background ${builtins.toString(./wallpaper.png)} fill
       ${lib.optionalString withScaling "output * scale 2"}
       ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}

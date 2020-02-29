@@ -1,15 +1,22 @@
-" Enable true colors
-set t_Co=256
+set background=light
+set ignorecase
+set mouse=a
+set nowrap
+set number
+set shell=bash
+set smartcase
 set termguicolors
 
-" Set background
-set background=light
+" Remap leader key to space
+nnoremap <Space> <Nop>
+let mapleader="\<Space>"
 
-" Use bash
-set shell=bash
-
-" Enable mouse
-set mouse=a
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline_symbols_ascii = 0
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#left_sep = ' '
 
 " coc.nvim
 set cmdheight=2
@@ -62,19 +69,44 @@ endfunction
 
 autocmd VimEnter * highlight clear Normal
 
-" Airline
-let g:airline_powerline_fonts = 1
-let g:airline_symbols_ascii = 0
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#left_sep = ' '
+" CtrlP
+let g:ctrlp_map = '<Leader>p'
+nnoremap <Leader>bl :CtrlPBuffer<CR>
+set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
 nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
 
+" Gruvbox setup
+let &t_ut=''
+let g:airline_theme = 'gruvbox'
+let g:gruvbox_contrast_light = 'hard'
+colorscheme gruvbox
+
 " LimeLight & Goyo
 let g:goyo_width = 100
 nmap <Leader>l :Limelight!!<CR>:Goyo<CR>
 xmap <Leader>l :Limelight!!<CR>:Goyo<CR>
+
+" Remap split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Tab navigation like Firefox.
+nnoremap <C-S-tab> :tabprevious<CR>
+nnoremap <C-tab>   :tabnext<CR>
+nnoremap <C-t>     :tabnew<CR>
+nnoremap <C-w>     :tabclose<CR>
+inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+inoremap <C-tab>   <Esc>:tabnext<CR>i
+inoremap <C-t>     <Esc>:tabnew<CR>i
+inoremap <C-w>     <Esc>:tabclose<CR>i
+
+" Mappings
+nnoremap <Leader>n :set invnumber<CR>:GitGutterToggle<CR>
+nnoremap <Leader>bd :bd<CR>
+nnoremap <Leader>bw :w<CR>
 
