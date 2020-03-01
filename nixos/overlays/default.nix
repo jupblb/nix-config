@@ -11,7 +11,9 @@ in {
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.callPackage ./neovim { inherit (pkgs.nodePackages) bash-language-server; };
-  redshift-wayland' = pkgs.callPackage ./redshift { inherit (pkgs.python3Packages) python pygobject3 pyxdg wrapPython; };
+  redshift-wayland' = pkgs.callPackage ./redshift {
+    inherit (pkgs.python3Packages) pygobject3 python pyxdg wrapPython;
+  };
   sbt'              = pkgs.callPackage ./sbt { };
   sway'             = pkgs.callPackage ./sway { };
   vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };

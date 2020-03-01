@@ -35,12 +35,7 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/sway" \
       --add-flags "-c ${sway-config}" \
-      --prefix PATH ':' ${firefox-wayland}/bin \
-      --prefix PATH ':' ${i3status'}/bin \
-      --prefix PATH ':' ${imv}/bin \
-      --prefix PATH ':' ${mpv}/bin \
-      --prefix PATH ':' ${pavucontrol}/bin \
-      --prefix PATH ':' ${zoom-us}/bin \
+      --prefix PATH : ${lib.makeBinPath [ firefox-wayland i3status' imv mpv pavucontrol zoom-us ]} \
       --set-default _JAVA_AWT_WM_NONREPARENTING 1 \
       --set-default ECORE_EVAS_ENGINE "wayland_egl" \
       --set-default ELM_ENGINE "wayland_egl" \
