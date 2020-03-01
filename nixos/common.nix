@@ -37,7 +37,19 @@
   environment = {
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/user-dirs);
     systemPackages                    = with pkgs.unstable; [
-      ammonite' dropbox-cli file fzf ghc pkgs.git' htop kitty' lm_sensors pkgs.neovim' paper-icon-theme sbt' unzip
+      ammonite'
+      dropbox-cli
+      file
+      fzf
+      ghc
+      pkgs.git'
+      htop kitty'
+      lm_sensors
+      pkgs.neovim'
+      paper-icon-theme
+      rustup
+      sbt'
+      unzip
     ];
     variables                         = {
       _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot=$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/java'';
@@ -98,7 +110,7 @@
     gnupg.agent.enable           = true;
     gnupg.agent.enableSSHSupport = true;
     ssh.extraConfig              = builtins.readFile(./misc/ssh-config);
-#   vim.defaultEditor            = true;
+    vim.defaultEditor            = true;
   };
 
   services = {

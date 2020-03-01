@@ -5,10 +5,10 @@ let
     configure   = {
       customRC = ''
         ${builtins.readFile(./init.vim)}
-        let $RUST_SRC_PATH = '${rust-std}'
       '';
+#       let $RUST_SRC_PATH = '${rust-std}'
 
-      packages.myVimPackage = with vimPlugins; {
+     packages.myVimPackage = with vimPlugins; {
         opt   = [ ];
         start = [
           airline
