@@ -49,10 +49,13 @@ nmap <Leader>lr <Plug>(coc-rename)
 nmap <Leader>lf :call CocAction('format')<CR>
 nmap <leader>lx  <Plug>(coc-fix-current)
 
-nnoremap <silent> <space>lst :<C-u>CocCommand metals.tvp<CR>
-nnoremap <silent> <space>lsb :<C-u>CocCommand metals.tvp metalsBuild<CR>
-nnoremap <silent> <space>lsc :<C-u>CocCommand metals.tvp metalsCompile<CR>
-nnoremap <silent> <space>lsf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+nnoremap <silent> <Leader>lst :<C-u>CocCommand metals.tvp<CR>
+nnoremap <silent> <Leader>lsb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+nnoremap <silent> <Leader>lsc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+nnoremap <silent> <Leader>lsf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+
+nnoremap <silent> <Leader>lrr :CocCommand rust-analyzer.run<CR>
+nnoremap <silent> <Leader>lrs :CocCommand rust-analyzer.runSingle<CR>
 
 nnoremap <silent> <Leader>la :<C-u>CocList diagnostics<CR>
 nnoremap <silent> <Leader>le :<C-u>CocList extensions<cr>
