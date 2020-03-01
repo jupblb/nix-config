@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  sway-scaled = pkgs.unstable.sway'.override { withScaling = true; };
+  sway-scaled = pkgs.sway'.override { qutebrowser = pkgs.unstable.qutebrowser; withScaling = true; };
   xresources  = pkgs.writeTextFile {
     name = "Xresources";
     text = ''

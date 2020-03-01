@@ -1,0 +1,22 @@
+@-moz-document domain(github.com) {
+  .blob-code, .blob-code-inner, .pl-mi {
+    font-family: "PragmataPro Mono Liga" !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+  }
+}
+
+@-moz-document domain(bitbucket.org) {
+  .source, .page, .view-line, pre {
+    font-family: "PragmataPro Mono Liga" !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+  }
+}
+
+code {
+  font-family: "PragmataPro Mono Liga" !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+

@@ -1,8 +1,8 @@
 {
-  bemenu, grim, i3status', imv, lib, 
-  makeWrapper, mako, mpv, pavucontrol, qutebrowser,
-  redshift-wayland', slurp, symlinkJoin, sway, withScaling ? false,
-  wob, writeTextFile, xdg-user-dirs, zoom-us
+  bemenu, firefox-wayland, grim, i3status', imv,
+  lib, makeWrapper, mako, mpv, pavucontrol,
+  qutebrowser, redshift-wayland', slurp, symlinkJoin, sway,
+  withScaling ? false, writeTextFile, xdg-user-dirs, zoom-us
 }:
 
 let
@@ -25,8 +25,8 @@ let
     '';
   };
   sway' = sway.override {
-    extraSessionCommands = builtins.readFile(./sway.sh);
-    withGtkWrapper       = true;
+#   extraSessionCommands = builtins.readFile(./sway.sh);
+#   withGtkWrapper       = true;
   };
 in symlinkJoin {
   name        = "sway";
@@ -35,11 +35,20 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/sway" \
       --add-flags "-c ${sway-config}" \
+      --prefix PATH ':' ${firefox-wayland}/bin \
       --prefix PATH ':' ${i3status'}/bin \
       --prefix PATH ':' ${imv}/bin \
       --prefix PATH ':' ${mpv}/bin \
       --prefix PATH ':' ${pavucontrol}/bin \
-      --prefix PATH ':' ${wob}/bin \
-      --prefix PATH ':' ${zoom-us}/bin
+      --prefix PATH ':' ${zoom-us}/bin \
+      --set-default _JAVA_AWT_WM_NONREPARENTING 1 \
+      --set-default ECORE_EVAS_ENGINE "wayland_egl" \
+      --set-default ELM_ENGINE "wayland_egl" \
+      --set-default KITTY_ENABLE_WAYALAND 1 \
+      --set-default QT_QPA_PLATFORM wayland \
+      --set-default QT_WAYLAND_DISABLE_WINDOWDECORATION 1 \
+      --set-default QT_WAYLAND_FORCE_DPI physical \
+      --set-default SDL_VIDEODRIVER wayland
   '';
+#     --prefix PATH ':' ${wob}/bin \
 }
