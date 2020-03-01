@@ -47,7 +47,7 @@ nnoremap <silent> <Leader>lh :call <SID>show_documentation()<CR>
 
 nmap <Leader>lr <Plug>(coc-rename)
 nmap <Leader>lf :call CocAction('format')<CR>
-nmap <leader>lf  <Plug>(coc-fix-current)
+nmap <leader>lx  <Plug>(coc-fix-current)
 
 nnoremap <silent> <space>lst :<C-u>CocCommand metals.tvp<CR>
 nnoremap <silent> <space>lsb :<C-u>CocCommand metals.tvp metalsBuild<CR>
