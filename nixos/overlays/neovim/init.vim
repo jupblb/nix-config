@@ -32,26 +32,32 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 
-imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 "inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-nmap <silent> <Leader>[ <Plug>(coc-diagnostic-prev)
-nmap <silent> <Leader>] <Plug>(coc-diagnostic-next)
+nmap <silent> <Leader>[l <Plug>(coc-diagnostic-prev)
+nmap <silent> <Leader>]l <Plug>(coc-diagnostic-next)
 
-nmap <silent> <Leader>d <Plug>(coc-definition)
-nmap <silent> <Leader>t <Plug>(coc-type-definition)
-nmap <silent> <Leader>i <Plug>(coc-implementation)
-nmap <silent> <Leader>u <Plug>(coc-references)
+nmap <silent> <Leader>ld <Plug>(coc-definition)
+nmap <silent> <Leader>lt <Plug>(coc-type-definition)
+nmap <silent> <Leader>li <Plug>(coc-implementation)
+nmap <silent> <Leader>lu <Plug>(coc-references)
 
-nnoremap <silent> <Leader>h :call <SID>show_documentation()<CR>
+nnoremap <silent> <Leader>lh :call <SID>show_documentation()<CR>
 
-nmap <Leader>r <Plug>(coc-rename)
-nmap <Leader>f :call CocAction('format')<CR>
+nmap <Leader>lr <Plug>(coc-rename)
+nmap <Leader>lf :call CocAction('format')<CR>
+nmap <leader>lf  <Plug>(coc-fix-current)
 
-nnoremap <silent> <Leader>a :<C-u>CocList diagnostics<CR>
-nnoremap <silent> <Leader>e :<C-u>CocList extensions<cr>
-nnoremap <silent> <Leader>c :<C-u>CocList commands<cr>
-nnoremap <silent> <Leader>o :<C-u>CocList outline<cr>
+nnoremap <silent> <space>lst :<C-u>CocCommand metals.tvp<CR>
+nnoremap <silent> <space>lsb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+nnoremap <silent> <space>lsc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+nnoremap <silent> <space>lsf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+
+nnoremap <silent> <Leader>la :<C-u>CocList diagnostics<CR>
+nnoremap <silent> <Leader>le :<C-u>CocList extensions<cr>
+nnoremap <silent> <Leader>lc :<C-u>CocList commands<cr>
+nnoremap <silent> <Leader>lo :<C-u>CocList outline<cr>
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -87,8 +93,8 @@ colorscheme gruvbox
 
 " LimeLight & Goyo
 let g:goyo_width = 100
-nmap <Leader>l :Limelight!!<CR>:Goyo<CR>
-xmap <Leader>l :Limelight!!<CR>:Goyo<CR>
+nmap <Leader>g :Limelight!!<CR>:Goyo<CR>
+xmap <Leader>g :Limelight!!<CR>:Goyo<CR>
 
 " Remap split navigation
 nnoremap <C-J> <C-W><C-J>
@@ -106,8 +112,8 @@ inoremap <C-tab>   <Esc>:tabnext<CR>i
 inoremap <C-t>     <Esc>:tabnew<CR>i
 inoremap <C-w>     <Esc>:tabclose<CR>i
 
-" Mappings
+" Other mappings
 nnoremap <Leader>n :set invnumber<CR>:GitGutterToggle<CR>
-nnoremap <Leader>bd :bd<CR>
-nnoremap <Leader>bw :w<CR>
+nnoremap <Leader>d :bd<CR>
+nnoremap <Leader>w :w<CR>
 

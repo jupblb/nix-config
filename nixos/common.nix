@@ -3,8 +3,6 @@
 {
   boot = {
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
-#   kernel.sysctl."kernel.kptr_restrict"        = 0;
-#   kernel.sysctl."kernel.perf_event_paranoid"  = 1;
     kernel.sysctl."vm.swappiness"               = 20;
     kernelPackages                              = pkgs.linuxPackages_latest;
     kernelParams                                = [ "mitigations=off" "no_stf_barrier" "noibpb" "noibrs" ];
@@ -92,11 +90,9 @@
     evince.enable                = true;
     fish.enable                  = true;
     fish.interactiveShellInit    = ''
-      ${builtins.readFile(./misc/fishrc)}
+      set -g __fish_git_prompt_showdirtystate "yes"
       ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
-      function fish_greeting
-        ${pkgs.fortune}/bin/fortune -sa
-      end
+      function fish_greeting; ${pkgs.fortune}/bin/fortune -sa; end
     '';
     fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
     gnupg.agent.enable           = true;
