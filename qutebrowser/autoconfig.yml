@@ -29,6 +29,7 @@ settings:
     '*://*.youtube.com/*': true
     '*://bitbucket.org/*': true
     '*://calendar.google.com/*': true
+    '*://docs.google.com/*': true
     '*://github.com/*': true
     '*://igeolise.myjetbrains.com/*': true
     '*://mail.google.com/*': true
@@ -51,8 +52,7 @@ settings:
     - -c
     - normal {line}G{column0}l
   fonts.default_family:
-    global:
-    - PragmataPro Mono Liga
+    global: PragmataPro Mono
   statusbar.hide:
     global: true
   tabs.background:
