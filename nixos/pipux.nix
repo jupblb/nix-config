@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  sway-scaled = pkgs.sway'.override { qutebrowser = pkgs.unstable.qutebrowser; withScaling = true; };
+  sway-scaled = pkgs.unstable.sway'.override { withScaling = true; };
   xresources  = pkgs.writeTextFile {
     name = "Xresources";
     text = ''
@@ -17,8 +17,8 @@ in {
   boot.initrd.kernelModules          = [ "amdgpu" ];
   boot.tmpOnTmpfs                    = true;
 
-# console.font     = "ter-232n";
-# console.packages = [ pkgs.terminus_font ];
+  console.font     = "ter-232n";
+  console.packages = [ pkgs.terminus_font ];
 
   environment.etc."X11/xinit/xinitrc".text = ''
     xrdb -merge ${xresources}
