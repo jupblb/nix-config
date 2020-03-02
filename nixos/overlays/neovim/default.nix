@@ -3,7 +3,7 @@
 let
   neovim' = neovim.override {
     configure   = {
-      customRC = ${builtins.readFile(./init.vim)};
+      customRC = builtins.readFile(./init.vim);
 
       packages.myVimPackage = with vimPlugins; {
         opt   = [ ];

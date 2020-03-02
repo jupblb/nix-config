@@ -53,11 +53,13 @@
     ];
     variables                         = {
       _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot=$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/java'';
+      CARGO_HOME            = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.local/share/cargo";
       GNUPGHOME             = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.local/share/gnupg";
       HISTFILE              = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.cache/bash_history";
       LESSHISTFILE          = "-";
       NIXPKGS_ALLOW_UNFREE  = "1";
       NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
+      RUSTUP_HOME           = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.local/share/rustup";
       XAUTHORITY            = "/tmp/Xauthority";
     };
   };
