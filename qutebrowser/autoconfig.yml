@@ -39,6 +39,7 @@ settings:
     '*://www.x-kom.pl/*': true
     global: false
     https://www.gazeta.pl/0,0.html: true
+    https://www.google.com/maps: true
   content.media_capture:
     https://www.messenger.com: true
   content.register_protocol_handler:
