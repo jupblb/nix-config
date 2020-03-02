@@ -11,7 +11,7 @@ in {
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.callPackage ./neovim { inherit (pkgs.nodePackages) bash-language-server; };
-  redshift-wayland' = pkgs.callPackage ./redshift {
+  redshift-wayland' = pkgs.callPackage ./redshift-wayland {
     inherit (pkgs.python3Packages) pygobject3 python pyxdg wrapPython;
   };
   sbt'              = pkgs.callPackage ./sbt { };

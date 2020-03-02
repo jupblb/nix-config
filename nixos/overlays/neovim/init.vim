@@ -32,8 +32,7 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 
-"imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 nmap <silent> <Leader>[l <Plug>(coc-diagnostic-prev)
 nmap <silent> <Leader>]l <Plug>(coc-diagnostic-next)
@@ -81,7 +80,7 @@ autocmd VimEnter * highlight clear Normal
 
 " CtrlP
 let g:ctrlp_map = '<Leader>p'
-nnoremap <Leader>bl :CtrlPBuffer<CR>
+nnoremap <Leader>b :CtrlPBuffer<CR>
 set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 
 " EasyMotion
@@ -92,12 +91,13 @@ nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
 let &t_ut=''
 let g:airline_theme = 'gruvbox'
 let g:gruvbox_contrast_light = 'hard'
+let g:gruvbox_italic = 1
 colorscheme gruvbox
 
 " LimeLight & Goyo
 let g:goyo_width = 100
-nmap <Leader>g :Limelight!!<CR>:Goyo<CR>
-xmap <Leader>g :Limelight!!<CR>:Goyo<CR>
+nmap <Leader>` :Goyo<CR>
+xmap <Leader>` :Goyo<CR>
 
 " Remap split navigation
 nnoremap <C-J> <C-W><C-J>
