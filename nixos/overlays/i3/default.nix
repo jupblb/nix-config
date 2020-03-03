@@ -1,5 +1,5 @@
 {
-  bemenu, dunst, firefox, franz, gnome-screenshot,
+  bemenu, dunst, firefox, ferdi', gnome-screenshot,
   i3-gaps, i3status', idea-ultimate', imv, lib,
   makeWrapper, mpv, pavucontrol, qutebrowser, redshift,
   symlinkJoin, writeTextFile, zoom-us
@@ -27,6 +27,6 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/i3" \
       --add-flags "-c ${i3Config}" \
-      --prefix PATH : ${lib.makeBinPath [ firefox franz i3status' idea-ultimate' imv mpv pavucontrol zoom-us ]}
+      --prefix PATH : ${lib.makeBinPath [ firefox ferdi' i3status' idea-ultimate' imv mpv pavucontrol zoom-us ]}
   '';
 }

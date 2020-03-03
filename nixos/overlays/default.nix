@@ -5,6 +5,7 @@ let
 in { 
   all-hies'         = all-hies.selection { selector = p: { inherit (p) ghc882 ghc865 ghc844; }; };
   ammonite'         = pkgs.callPackage ./ammonite { };
+  ferdi'            = pkgs.callPackage ./ferdi { };
   git'              = pkgs.callPackage ./git { inherit (pkgs.gitAndTools) diff-so-fancy; };
   i3'               = pkgs.callPackage ./i3 { inherit (pkgs.gnome3) gnome-screenshot; };
   i3status'         = pkgs.callPackage ./i3status { };
