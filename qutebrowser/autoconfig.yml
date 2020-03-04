@@ -31,6 +31,7 @@ settings:
     '*://calendar.google.com/*': true
     '*://docs.google.com/*': true
     '*://github.com/*': true
+    '*://igeolise.charliehr.com/*': true
     '*://igeolise.myjetbrains.com/*': true
     '*://mail.google.com/*': true
     '*://maps.google.com/*': true

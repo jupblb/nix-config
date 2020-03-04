@@ -20,7 +20,7 @@ let
           goyo
           gruvbox-community
           surround
-	  vim-nix
+          vim-nix
           vim-startify
         ];
       };

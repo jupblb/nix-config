@@ -45,8 +45,9 @@
       git'
       htop kitty'
       lm_sensors
-      pkgs.neovim'
+      neovim'
       paper-icon-theme
+      ranger'
       rustup
       sbt'
       unzip
