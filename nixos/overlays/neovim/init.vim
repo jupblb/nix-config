@@ -87,10 +87,15 @@ set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 let g:EasyMotion_do_mapping = 0
 nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
 
+" Grepper
+let g:grepper = {}
+let g:grepper.stop = 25
+let g:grepper.tools = ['git', 'rg', 'grep']
+
 " LimeLight & Goyo
 let g:goyo_width = 100
-nmap <Leader>` :Goyo<CR>
-xmap <Leader>` :Goyo<CR>
+nmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
+xmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
 
 " Remap split navigation
 nnoremap <C-J> <C-W><C-J>
@@ -109,8 +114,9 @@ inoremap <C-t>     <Esc>:tabnew<CR>i
 inoremap <C-w>     <Esc>:tabclose<CR>i
 
 " Other mappings
-nnoremap <Leader>n :set invnumber<CR>:GitGutterToggle<CR>
 nnoremap <Leader>d :bd<CR>
+nnoremap <Leader>g :Grepper<CR>
+nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
 nnoremap <Leader>w :w<CR>
 
 " Colorscheme
