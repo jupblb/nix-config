@@ -87,13 +87,6 @@ set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 let g:EasyMotion_do_mapping = 0
 nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
 
-" Gruvbox setup
-let &t_ut=''
-let g:airline_theme = 'gruvbox'
-let g:gruvbox_contrast_light = 'hard'
-let g:gruvbox_italic = 1
-colorscheme gruvbox
-
 " LimeLight & Goyo
 let g:goyo_width = 100
 nmap <Leader>` :Goyo<CR>
@@ -119,4 +112,10 @@ inoremap <C-w>     <Esc>:tabclose<CR>i
 nnoremap <Leader>n :set invnumber<CR>:GitGutterToggle<CR>
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>w :w<CR>
+
+" Colorscheme
+let g:airline_theme = 'gruvbox'
+let g:gruvbox_contrast_light = 'hard'
+let g:gruvbox_italic = 1
+colorscheme gruvbox
 
