@@ -17,7 +17,7 @@
 
   hardware.opengl.extraPackages = with pkgs; [ vaapiIntel' vaapiVdpau libvdpau-va-gl intel-media-driver ];
 
-  networking.hostName = "pipek";
+  networking.hostName = "ares";
 
   nix.maxJobs = 8;
 

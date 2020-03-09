@@ -7,7 +7,7 @@ let
     text = ''
       Xcursor.size: 24
       Xcursor.theme: Paper
-      Xft.dpi: 192
+      Xft.dpi: 163
     '';
   };
 in {
@@ -40,7 +40,7 @@ in {
 
   networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 ];
   networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 ];
-  networking.hostName                 = "pipux";
+  networking.hostName                 = "hades";
 
   nix.maxJobs = 12;
 
