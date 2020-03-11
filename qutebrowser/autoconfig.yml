@@ -35,6 +35,7 @@ settings:
     '*://igeolise.myjetbrains.com/*': true
     '*://mail.google.com/*': true
     '*://maps.google.com/*': true
+    '*://www.dropbox.com/*': true
     '*://www.linkedin.com/*': true
     '*://www.messenger.com/*': true
     '*://www.x-kom.pl/*': true
