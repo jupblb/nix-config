@@ -88,6 +88,18 @@ in {
   '';
   system.stateVersion           = "19.09";
 
+  systemd.services.checkip = {
+    after         = [ "network.target" ];
+    description   = "Public IP checker";
+    script        = "${pkgs.curl}/bin/curl ipinfo.io/ip > /data/Dropbox/ip.txt";
+    serviceConfig = {
+      ProtectSystem = "full";
+      Type          = "oneshot";
+      User          = "jupblb";
+    };
+    startAt       = "*:0/15";
+  };
+
   time.hardwareClockInLocalTime = true;
 
   users.groups.data.members = [ "jupblb" ];
