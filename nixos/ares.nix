@@ -8,7 +8,7 @@
     "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "ums_realtek" "sd_mod" "sr_mod"
   ];
 
-  environment.systemPackages = with pkgs.unstable; [ franz sway' xwayland ];
+  environment.systemPackages = with pkgs.unstable; [ ferdi' sway' xwayland ];
 
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";
