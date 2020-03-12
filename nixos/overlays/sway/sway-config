@@ -1,7 +1,6 @@
 ##### SWAY CONFIGURATION #####
 #
 ### Startup
-exec systemctl --user start dropbox
 exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 
 ### Variables

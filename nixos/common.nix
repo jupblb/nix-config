@@ -139,18 +139,20 @@
     mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2
   '';
 
-  systemd.user.services.dropbox = {
+  systemd.services.dropbox = {
+    after                        = [ "network.target" ];
     description                  = "Dropbox";
-    environment.QT_PLUGIN_PATH   = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtPluginPrefix}";
     environment.QML2_IMPORT_PATH = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtQmlPrefix}";
+    environment.QT_PLUGIN_PATH   = "${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtPluginPrefix}";
     serviceConfig                = {
       ExecStart     = "${pkgs.dropbox}/bin/dropbox";
       ExecReload    = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
       KillMode      = "control-group";
-      Restart       = "on-failure";
+      Nice          = 10;
       PrivateTmp    = true;
       ProtectSystem = "full";
-      Nice          = 10;
+      Restart       = "on-failure";
+      User          = "jupblb";
     };
     wantedBy                     = [ "default.target" ];
   };
