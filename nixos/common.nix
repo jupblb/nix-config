@@ -120,6 +120,7 @@
   services = {
     acpid.enable                         = true;
     fstrim.enable                        = true;
+    fwupd.enable                         = true;
     openssh.openFirewall                 = true;
     openssh.enable                       = true;
     openssh.passwordAuthentication       = false;
