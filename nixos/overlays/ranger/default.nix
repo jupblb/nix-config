@@ -1,17 +1,29 @@
-{ atool, bat, file, imagemagick, jq,
-  lib, lynx, makeWrapper, mediainfo, poppler_utils,
-  ranger, symlinkJoin
+{ atool, bat, catdoc, ffmpegthumbnailer, file,
+  glow, imagemagick, jq, lib, makeWrapper,
+  mediainfo, p7zip, pandoc, poppler_utils, ranger,
+  symlinkJoin, unrar, xlsx2csv
 }:
 
-symlinkJoin {
+let
+  ranger' = ranger.overrideAttrs(old: rec {
+    preConfigure = ''
+      substituteInPlace ranger/config/rc.conf --replace "#set preview_script ~/.config/ranger/scope.sh" "set preview_script ${./scope.sh}"
+      substituteInPlace ranger/config/rc.conf --replace "map g? cd /usr/share/doc/ranger" "map g? cd $out/share/doc/ranger"
+      substituteInPlace ranger/config/rc.conf --replace "set preview_images false" "set preview_images true"
+      substituteInPlace ranger/config/rc.conf --replace "set preview_images_method w3m" "set preview_images_method kitty"
+      substituteInPlace ranger/config/rc.conf --replace "set vcs_aware false" "set vcs_aware true"
+    '';
+  });
+in symlinkJoin {
   buildInputs = [ makeWrapper ];
   name        = "ranger";
-  paths       = [ ranger ];
+  paths       = [ ranger' ];
   postBuild   = ''
     wrapProgram "$out/bin/ranger" \
-      --add-flags "--confdir=${builtins.toString ./.}" \
-      --prefix PATH : ${lib.makeBinPath [ atool bat file imagemagick jq lynx mediainfo poppler_utils ]} \
-      --set TERM xterm-kitty \
-      --set BAT_THEME GitHub
+      --prefix PATH : ${
+        lib.makeBinPath [ atool bat catdoc ffmpegthumbnailer file glow imagemagick jq mediainfo p7zip pandoc poppler_utils unrar xlsx2csv ]
+      } \
+      --set BAT_THEME OneHalfLight \
+      --set TERM xterm-kitty
   '';
 }
