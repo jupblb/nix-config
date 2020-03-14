@@ -41,6 +41,7 @@
       dropbox-cli
       file
       fzf
+      gcc
       ghc
       git'
       htop kitty'
