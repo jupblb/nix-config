@@ -6,8 +6,8 @@
 
 let
   ranger' = ranger.overrideAttrs(old: rec {
+    patches      = [ ./scope.patch ];
     preConfigure = ''
-      substituteInPlace ranger/config/rc.conf --replace "#set preview_script ~/.config/ranger/scope.sh" "set preview_script ${./scope.sh}"
       substituteInPlace ranger/config/rc.conf --replace "map g? cd /usr/share/doc/ranger" "map g? cd $out/share/doc/ranger"
       substituteInPlace ranger/config/rc.conf --replace "set preview_images false" "set preview_images true"
       substituteInPlace ranger/config/rc.conf --replace "set preview_images_method w3m" "set preview_images_method kitty"
