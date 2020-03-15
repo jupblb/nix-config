@@ -1,7 +1,7 @@
-{ atool, bat, catdoc, ffmpegthumbnailer, file,
-  glow, imagemagick, jq, lib, makeWrapper,
-  mediainfo, p7zip, pandoc, poppler_utils, ranger,
-  symlinkJoin, unrar, xlsx2csv
+{ atool, bat, calibre, catdoc, ffmpegthumbnailer,
+  file, fontforge, glow, imagemagick, jq,
+  lib, makeWrapper, p7zip, pandoc, poppler_utils,
+  ranger, symlinkJoin, unrar, xlsx2csv
 }:
 
 let
@@ -21,7 +21,7 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/ranger" \
       --prefix PATH : ${
-        lib.makeBinPath [ atool bat catdoc ffmpegthumbnailer file glow imagemagick jq mediainfo p7zip pandoc poppler_utils unrar xlsx2csv ]
+        lib.makeBinPath [ atool bat calibre catdoc ffmpegthumbnailer file fontforge glow imagemagick jq p7zip pandoc poppler_utils unrar xlsx2csv ]
       } \
       --set BAT_THEME OneHalfLight \
       --set TERM xterm-kitty
