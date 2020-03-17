@@ -1,9 +1,4 @@
-self: pkgs:
-
-let
-  all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
-in { 
-  all-hies'         = all-hies.selection { selector = p: { inherit (p) ghc882 ghc865 ghc844; }; };
+self: pkgs: { 
   ammonite'         = pkgs.callPackage ./ammonite { };
   ferdi'            = pkgs.callPackage ./ferdi { };
   git'              = pkgs.callPackage ./git { inherit (pkgs.gitAndTools) diff-so-fancy; };

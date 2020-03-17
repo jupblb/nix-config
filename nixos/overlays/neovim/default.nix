@@ -1,4 +1,4 @@
-{ all-hies', bash-language-server, lib, makeWrapper, neovim, openjdk8, ripgrep, symlinkJoin, vimPlugins }:
+{ bash-language-server, lib, makeWrapper, neovim, openjdk8, ripgrep, symlinkJoin, vimPlugins }:
 
 let
   neovim' = neovim.override {
@@ -39,7 +39,7 @@ in symlinkJoin {
   name        = "nvim";
   paths       = [ neovim' ];
   postBuild   = ''
-    wrapProgram "$out/bin/nvim" --prefix PATH : ${lib.makeBinPath [ all-hies' bash-language-server openjdk8 ripgrep ]}
+    wrapProgram "$out/bin/nvim" --prefix PATH : ${lib.makeBinPath [ bash-language-server openjdk8 ripgrep ]}
 
     ln -sfn $out/bin/nvim $out/bin/vim
   '';

@@ -42,7 +42,6 @@
       file
       fzf
       gcc
-      ghc
       git'
       htop kitty'
       lm_sensors
@@ -56,6 +55,7 @@
     variables                         = {
       _JAVA_OPTIONS         = ''-Djava.util.prefs.userRoot=$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.config/java'';
       CARGO_HOME            = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.local/share/cargo";
+      FZF_DEFAULT_OPTS      = "--color=light";
       GNUPGHOME             = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.local/share/gnupg";
       HISTFILE              = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)/.cache/bash_history";
       LESSHISTFILE          = "-";
