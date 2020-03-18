@@ -1,6 +1,16 @@
-{ bash-language-server, lib, makeWrapper, neovim, openjdk8, ripgrep, symlinkJoin, vimPlugins }:
+{ bash-language-server, fetchFromGitHub, lib, makeWrapper, neovim, openjdk8, ripgrep, symlinkJoin, vimPlugins, vimUtils }:
 
 let
+  coc-nvim' = vimUtils.buildVimPluginFrom2Nix rec {
+    pname = "coc-nvim";
+    version = "0.0.76";
+    src = fetchFromGitHub {
+      owner = "neoclide";
+      repo = "coc.nvim";
+      rev = "78af80302de9ee96237afcc4f290ff756cbc41b8";
+      sha256 = "1nx8hn5vb82qcykwzjdpd4sh1vsc8nm5068qmdf7sjw1rldn5hkb";
+    };
+  };
   neovim' = neovim.override {
     configure   = {
       customRC = builtins.readFile(./init.vim);
@@ -12,7 +22,7 @@ let
           ctrlp
 #         coc-json
 #         coc-metals
-          coc-nvim
+          coc-nvim'
 #         coc-rust-analyzer
           easymotion
           fugitive

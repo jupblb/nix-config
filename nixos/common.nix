@@ -43,7 +43,8 @@
       fzf
       gcc
       git'
-      htop kitty'
+      htop
+      kitty'
       lm_sensors
       neovim'
       paper-icon-theme
@@ -101,7 +102,7 @@
   programs = {
     bash.enableCompletion        = true;
     bash.promptInit              = builtins.readFile(./misc/bashrc);
-    bash.shellAliases            = { ls = "ls --color=auto"; };
+    bash.shellAliases.ls         = "ls --color=auto";
     dconf.enable                 = true;
     evince.enable                = true;
     fish.enable                  = true;
@@ -111,7 +112,8 @@
       ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
       function fish_greeting; ${pkgs.fortune}/bin/fortune -sa; end
     '';
-    fish.shellAliases            = { nix-shell = "nix-shell --command fish"; };
+    fish.shellAliases.nix-shell  = "nix-shell --command fish";
+    fish.shellAliases.rvim       = "env NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim && rm -f /tmp/nvimsocket";
     gnupg.agent.enable           = true;
     gnupg.agent.enableSSHSupport = true;
     ssh.extraConfig              = builtins.readFile(./misc/ssh-config);
