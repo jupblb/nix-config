@@ -107,8 +107,8 @@
     evince.enable                = true;
     fish.enable                  = true;
     fish.interactiveShellInit    = ''
-      set -g __fish_git_prompt_showdirtystate "yes"
-      set -g __fish_git_prompt_showuntrackedfiles "yes"
+      set __fish_git_prompt_showdirtystate "yes"
+      set __fish_git_prompt_showuntrackedfiles "yes"
       ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
       function fish_greeting; ${pkgs.fortune}/bin/fortune -sa; end
     '';
