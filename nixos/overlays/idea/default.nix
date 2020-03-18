@@ -3,10 +3,10 @@
 let
   idea-ultimate' = jetbrains.idea-ultimate.overrideAttrs (old: rec {
     name    = "idea-ultimate-${version}";
-    version = "2019.3.3";
+    version = "2019.3.4";
     src     = buildPackages.fetchurl {
       url    = "https://download.jetbrains.com/idea/ideaIU-${version}.tar.gz";
-      sha256 = "1mmhqh243yjf348zcwn53ggv4n1b6xv7c2hppvcbwa756rzkc6x7";
+      sha256 = "0ymwanzyh09v2igxzhx8gws711a5b987vhdjbb7flav3b5qf8l3g";
     };
   });
 in
