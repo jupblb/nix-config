@@ -3,9 +3,16 @@ general {
   interval = 1
 }
 
+order += "cpu_temperature 0"
 order += "volume master"
 order += "load"
 order += "tztime local"
+
+cpu_temperature 0 {
+  format = " %degrees °C"
+  max_threshold = 82
+  path = /sys/devices/platform/coretemp.0/hwmon/hwmon6/temp1_input
+}
 
 volume master {
   format       = "♪ %volume"

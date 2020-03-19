@@ -4,5 +4,7 @@ symlinkJoin {
   buildInputs = [ makeWrapper ];
   name        = "kitty";
   paths       = [ kitty ];
-  postBuild   = ''wrapProgram "$out/bin/kitty" --add-flags "--config ${./kitty.conf}"'';
+  postBuild   = ''
+    wrapProgram "$out/bin/kitty" --add-flags "--config ${./kitty.conf}"
+  '';
 }

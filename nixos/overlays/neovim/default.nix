@@ -1,4 +1,7 @@
-{ bash-language-server, fetchFromGitHub, lib, makeWrapper, neovim, openjdk8, ripgrep, symlinkJoin, vimPlugins, vimUtils }:
+{
+  bash-language-server, fetchFromGitHub, lib, makeWrapper, neovim, openjdk8,
+  ripgrep, symlinkJoin, vimPlugins, vimUtils
+}:
 
 let
   coc-nvim' = vimUtils.buildVimPluginFrom2Nix rec {
@@ -49,7 +52,9 @@ in symlinkJoin {
   name        = "nvim";
   paths       = [ neovim' ];
   postBuild   = ''
-    wrapProgram "$out/bin/nvim" --prefix PATH : ${lib.makeBinPath [ bash-language-server openjdk8 ripgrep ]}
+    wrapProgram "$out/bin/nvim" --prefix PATH : ${lib.makeBinPath [
+      bash-language-server openjdk8 ripgrep
+    ]}
 
     ln -sfn $out/bin/nvim $out/bin/vim
   '';

@@ -13,7 +13,7 @@ let
 in {
   imports = [ ./common.nix ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" ];
   boot.initrd.kernelModules          = [ "amdgpu" ];
   boot.tmpOnTmpfs                    = true;
 
@@ -36,8 +36,6 @@ in {
     "/data".fsType = "ext4";
   };
 
-  hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
-
   networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 ];
   networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 ];
   networking.hostName                 = "hades";
@@ -54,7 +52,9 @@ in {
     mingetty.autologinUser               = "jupblb";
     nfs                                  = {
       server.enable     = true;
-      server.exports    = "/data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)";
+      server.exports    = ''
+        /data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)
+      '';
       server.lockdPort  = 4001;
       server.mountdPort = 4002;
       server.statdPort  = 4000;
@@ -69,7 +69,6 @@ in {
     };
     udev.extraRules                      = ''
       ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
-      ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="34:29:8f:73:aa:fd", NAME="ethusb"
     '';
     xserver.displayManager.startx.enable = true;
     xserver.enable                       = true;

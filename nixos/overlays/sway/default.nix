@@ -6,22 +6,26 @@
 }:
 
 let
+  picture-dir = "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
   sway-config = writeTextFile {
     name = "config";
     text = ''
       exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
-      exec --no-startup-id ${redshift-wayland'}/bin/redshift -m wayland -l 51.12:17.05
+      exec --no-startup-id ${redshift-wayland'}/bin/redshift \
+        -m wayland -l 51.12:17.05
       output * background ${builtins.toString(./wallpaper.png)} fill
       ${lib.optionalString withScaling "output * scale 2"}
       ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}
       set $browser ${qutebrowser}/bin/qutebrowser
-      set $menu ${bemenu}/bin/bemenu-run \
-        --fn 'PragmataPro 12' -p "" --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
+      set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 12' -p "" \
+        --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
         --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg' | xargs swaymsg exec --
-      set $print ${grim}/bin/grim $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png')
+      set $print ${grim}/bin/grim \
+        ${picture-dir}/screenshots/$(date +'%s_grim.png')
       ${builtins.readFile(../common-wm-config)}
       ${builtins.readFile(./sway-config)}
-      bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" $(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)/screenshots/$(date +'%F_%R:%S_grim.png')
+      bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" \
+        ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png')
     '';
   };
   sway' = sway.override {
@@ -35,6 +39,8 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/sway" \
       --add-flags "-c ${sway-config}" \
-      --prefix PATH : ${lib.makeBinPath [ firefox-wayland i3status' imv mpv pavucontrol wob zoom-us ]}
+      --prefix PATH : ${lib.makeBinPath[
+        firefox-wayland i3status' imv mpv pavucontrol wob zoom-us
+      ]}
   '';
 }

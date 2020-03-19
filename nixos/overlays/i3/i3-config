@@ -1,7 +1,6 @@
 ##### i3 CONFIGURATION #####
 #
 ### Startup
-#exec --no-startup-id systemctl --user start dropbox
 exec --no-startup-id xset m 4/2 0
 
 ### Variables

@@ -4,9 +4,7 @@
   imports = [ ./common.nix ];
 
   boot.extraModprobeConfig           = "options snd_hda_intel power_save=1";
-  boot.initrd.availableKernelModules = [
-    "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "ums_realtek" "sd_mod" "sr_mod"
-  ];
+  boot.initrd.availableKernelModules = [ "ehci_pci" "ums_realtek" "sr_mod" ];
 
   environment.systemPackages = with pkgs.unstable; [ ferdi' sway' xwayland ];
 
@@ -15,7 +13,7 @@
   fileSystems."/boot".device = "/dev/disk/by-label/boot";
   fileSystems."/boot".fsType = "vfat";
 
-  hardware.opengl.extraPackages = with pkgs; [ vaapiIntel' vaapiVdpau libvdpau-va-gl intel-media-driver ];
+  hardware.opengl.extraPackages = with pkgs; [ intel-media-driver vaapiIntel' ];
 
   networking.hostName = "ares";
 
