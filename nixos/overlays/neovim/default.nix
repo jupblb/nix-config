@@ -6,7 +6,7 @@
 let
   coc-nvim' = vimUtils.buildVimPluginFrom2Nix rec {
     pname = "coc-nvim";
-    version = "0.0.76";
+    version = "0.0.77";
     src = fetchFromGitHub {
       owner = "neoclide";
       repo = "coc.nvim";
@@ -23,6 +23,7 @@ let
         start = [
           airline
           ctrlp
+#         coc-java
 #         coc-json
 #         coc-metals
           coc-nvim'
