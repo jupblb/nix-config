@@ -1,5 +1,5 @@
 {
-  bash-language-server, fetchFromGitHub, lib, makeWrapper, neovim, openjdk8,
+  bash-language-server, fetchFromGitHub, lib, makeWrapper, neovim, openjdk11,
   ripgrep, symlinkJoin, vimPlugins, vimUtils
 }:
 
@@ -53,9 +53,11 @@ in symlinkJoin {
   name        = "nvim";
   paths       = [ neovim' ];
   postBuild   = ''
-    wrapProgram "$out/bin/nvim" --prefix PATH : ${lib.makeBinPath [
-      bash-language-server openjdk8 ripgrep
-    ]}
+    wrapProgram "$out/bin/nvim" \
+      --prefix PATH : ${lib.makeBinPath[
+        bash-language-server openjdk11 ripgrep
+      ]} \
+      --set JAVA_HOME ${openjdk11}/lib/openjdk
 
     ln -sfn $out/bin/nvim $out/bin/vim
   '';

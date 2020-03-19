@@ -3,4 +3,5 @@
 *.gz
 .idea
 metals.sbt
+.factorypath
 
