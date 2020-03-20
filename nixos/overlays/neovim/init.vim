@@ -6,6 +6,7 @@ set number
 set shell=bash
 set smartcase
 set termguicolors
+set tabstop=4
 
 " Remap leader key to space
 nnoremap <Space> <Nop>
@@ -92,6 +93,10 @@ let g:grepper = {}
 let g:grepper.stop = 25
 let g:grepper.tools = ['git', 'rg', 'grep']
 
+" indentLine
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+
 " LimeLight & Goyo
 let g:goyo_width = 100
 nmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
@@ -116,7 +121,7 @@ inoremap <C-w>     <Esc>:tabclose<CR>i
 " Other mappings
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>g :Grepper<CR>
-nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
+nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>:IndentLinesToggle<CR>
 nnoremap <Leader>w :w<CR>
 
 " Colorscheme

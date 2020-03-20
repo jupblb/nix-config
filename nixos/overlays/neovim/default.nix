@@ -32,6 +32,7 @@ let
           fugitive
           goyo
           gruvbox-community
+          indentLine
           surround
           vim-grepper
           vim-nix
