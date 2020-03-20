@@ -45,7 +45,6 @@ in {
       CARGO_HOME            = "${userHome}/.local/share/cargo";
       EDITOR                = "vim";
       FZF_DEFAULT_OPTS      = "--color=light";
-      GNUPGHOME             = "${userHome}/.local/share/gnupg";
       HISTFILE              = "${userHome}/.cache/bash_history";
       LESSHISTFILE          = "-";
       NIXPKGS_ALLOW_UNFREE  = "1";
