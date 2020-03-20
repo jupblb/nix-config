@@ -6,8 +6,6 @@
 
 config_version: 2
 settings:
-  aliases:
-    global: null
   content.autoplay:
     global: false
   content.default_encoding:
@@ -34,11 +32,9 @@ settings:
     '*://igeolise.charliehr.com/*': true
     '*://igeolise.myjetbrains.com/*': true
     '*://mail.google.com/*': true
-    '*://maps.google.com/*': true
     '*://www.dropbox.com/*': true
     '*://www.linkedin.com/*': true
     '*://www.messenger.com/*': true
-    '*://www.x-kom.pl/*': true
     global: false
     https://translate.google.com/: true
     https://www.gazeta.pl/0,0.html: true
