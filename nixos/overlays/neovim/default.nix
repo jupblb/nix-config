@@ -23,7 +23,7 @@ let
         start = [
           airline
           ctrlp
-#         coc-java
+          coc-java
 #         coc-json
 #         coc-metals
           coc-nvim'
