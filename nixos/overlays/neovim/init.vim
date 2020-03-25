@@ -33,10 +33,8 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 
-inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-nmap <silent> <Leader>[l <Plug>(coc-diagnostic-prev)
-nmap <silent> <Leader>]l <Plug>(coc-diagnostic-next)
+inoremap <expr> <CR> complete_info()["selected"] != "-1" ?
+  \ "\<C-y>" : "\<C-g>u\<CR>"
 
 nmap <silent> <Leader>ld <Plug>(coc-definition)
 nmap <silent> <Leader>lt <Plug>(coc-type-definition)
@@ -47,18 +45,8 @@ nnoremap <silent> <Leader>lh :call <SID>show_documentation()<CR>
 
 nmap <Leader>lr <Plug>(coc-rename)
 nmap <Leader>lf :call CocAction('format')<CR>
-nmap <leader>lx  <Plug>(coc-fix-current)
-
-nnoremap <silent> <Leader>lst :<C-u>CocCommand metals.tvp<CR>
-nnoremap <silent> <Leader>lsb :<C-u>CocCommand metals.tvp metalsBuild<CR>
-nnoremap <silent> <Leader>lsc :<C-u>CocCommand metals.tvp metalsCompile<CR>
-nnoremap <silent> <Leader>lsf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
-
-nnoremap <silent> <Leader>lrr :CocCommand rust-analyzer.run<CR>
-nnoremap <silent> <Leader>lrs :CocCommand rust-analyzer.runSingle<CR>
 
 nnoremap <silent> <Leader>la :<C-u>CocList diagnostics<CR>
-nnoremap <silent> <Leader>le :<C-u>CocList extensions<cr>
 nnoremap <silent> <Leader>lc :<C-u>CocList commands<cr>
 nnoremap <silent> <Leader>lo :<C-u>CocList outline<cr>
 
@@ -80,27 +68,28 @@ endfunction
 autocmd VimEnter * highlight clear Normal
 
 " CtrlP
-let g:ctrlp_map = '<Leader>p'
-nnoremap <Leader>b :CtrlPBuffer<CR>
+nnoremap <C-c> :CtrlPBuffer<CR>
 set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
-nmap <Leader><Leader> <Plug>(easymotion-overwin-f2)
+nmap <Leader><Leader> <Plug>(easymotion-overwin-f)
 
 " Grepper
 let g:grepper = {}
 let g:grepper.stop = 25
 let g:grepper.tools = ['git', 'rg', 'grep']
+nnoremap <Leader>g :Grepper<CR>
 
 " indentLine
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
-
 " LimeLight & Goyo
 let g:goyo_width = 100
-nmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
-xmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
+nmap <Leader>` :SignifyToggle<CR>:IndentLinesToggle<CR>
+  \ :Goyo<CR>:hi clear Normal<CR>
+xmap <Leader>` :SignifyToggle<CR>:IndentLinesToggle<CR>
+  \ :Goyo<CR>:hi clear Normal<CR>
 
 " Remap split navigation
 nnoremap <C-J> <C-W><C-J>
@@ -120,9 +109,7 @@ inoremap <C-w>     <Esc>:tabclose<CR>i
 
 " Other mappings
 nnoremap <Leader>d :bd<CR>
-nnoremap <Leader>g :Grepper<CR>
 nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>:IndentLinesToggle<CR>
-nnoremap <Leader>w :w<CR>
 
 " Colorscheme
 let g:airline_theme = 'gruvbox'
