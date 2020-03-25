@@ -25,7 +25,7 @@ let
         --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
         --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg' | xargs swaymsg exec --
       set $print ${grim}/bin/grim \
-        ${picture-dir}/screenshots/$(date +'%s_grim.png')
+        ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png') 
       ${builtins.readFile(../common-wm-config)}
       ${builtins.readFile(./sway-config)}
       bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" \
