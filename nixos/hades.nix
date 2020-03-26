@@ -60,12 +60,16 @@ in {
       server.statdPort  = 4000;
     };
     transmission                         = {
-      enable                          = true;
-      group                           = "data";
-      settings.download-dir           = "/data/transmission";
-      settings.incomplete-dir         = "/data/transmission/.incomplete";
-      settings.incomplete-dir-enabled = true;
-      settings.rpc-whitelist          = "127.0.0.1,192.168.*.*";
+      enable   = true;
+      group    = "data";
+      settings = {
+        download-dir           = "/data/transmission";
+        incomplete-dir         = "/data/transmission/.incomplete";
+        incomplete-dir-enabled = true;
+        ratio-limit            = 0;
+        ratio-limit-enabled    = true;
+        rpc-whitelist          = "127.0.0.1,192.168.*.*";
+      };
     };
     udev.extraRules                      = ''
       ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
