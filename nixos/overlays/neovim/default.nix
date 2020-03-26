@@ -42,8 +42,6 @@ let
       };
     };
 
-    vimAlias = true;
-  
     withNodeJs  = true;
     withPython  = false;
     withPython3 = false;
