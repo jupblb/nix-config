@@ -92,11 +92,9 @@ in {
     bash.shellAliases.ls         = "ls --color=auto";
     evince.enable                = true;
     fish.enable                  = true;
-    fish.interactiveShellInit    = with pkgs; ''
-      set __fish_git_prompt_showdirtystate "yes"
-      set __fish_git_prompt_showuntrackedfiles "yes"
-      set fish_greeting
-      ${xdg-user-dirs}/bin/xdg-user-dirs-update
+    fish.interactiveShellInit    = ''
+      ${builtins.readFile(./misc/fishrc)}
+      ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
     '';
     fish.shellAliases.nix-shell  = "nix-shell --command fish";
     ssh.extraConfig              = builtins.readFile(./misc/ssh-config);
