@@ -95,8 +95,8 @@ in {
     fish.interactiveShellInit    = with pkgs; ''
       set __fish_git_prompt_showdirtystate "yes"
       set __fish_git_prompt_showuntrackedfiles "yes"
+      set fish_greeting
       ${xdg-user-dirs}/bin/xdg-user-dirs-update
-      function fish_greeting; ${fortune}/bin/fortune -sa; end
     '';
     fish.shellAliases.nix-shell  = "nix-shell --command fish";
     ssh.extraConfig              = builtins.readFile(./misc/ssh-config);
