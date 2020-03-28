@@ -102,8 +102,6 @@ in {
 
   services = {
     acpid.enable                         = true;
-    emacs.enable                         = true;
-    emacs.package                        = pkgs.unstable.emacs-nox;
     fstrim.enable                        = true;
     fwupd.enable                         = true;
     openssh.openFirewall                 = true;

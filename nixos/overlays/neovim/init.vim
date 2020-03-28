@@ -1,4 +1,5 @@
 set background=light
+set clipboard+=unnamedplus
 set ignorecase
 set mouse=a
 set nowrap
@@ -13,11 +14,9 @@ nnoremap <Space> <Nop>
 let mapleader="\<Space>"
 
 " Airline
+set noshowmode
 let g:airline_powerline_fonts = 1
 let g:airline_symbols_ascii = 0
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#left_sep = ' '
 
 " coc.nvim
 set cmdheight=2
@@ -26,29 +25,22 @@ set shortmess+=c
 set signcolumn=yes
 set updatetime=200
 
-inoremap <silent><expr> <TAB>
+inoremap <expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <silent><expr> <c-space> coc#refresh()
-
+inoremap <expr> <c-space> coc#refresh()
 inoremap <expr> <CR> complete_info()["selected"] != "-1" ?
   \ "\<C-y>" : "\<C-g>u\<CR>"
 
-nmap <silent> <Leader>ld <Plug>(coc-definition)
-nmap <silent> <Leader>lt <Plug>(coc-type-definition)
-nmap <silent> <Leader>li <Plug>(coc-implementation)
-nmap <silent> <Leader>lu <Plug>(coc-references)
-
-nnoremap <silent> <Leader>lh :call <SID>show_documentation()<CR>
-
-nmap <Leader>lr <Plug>(coc-rename)
-nmap <Leader>lf :call CocAction('format')<CR>
-
-nnoremap <silent> <Leader>la :<C-u>CocList diagnostics<CR>
-nnoremap <silent> <Leader>lc :<C-u>CocList commands<cr>
-nnoremap <silent> <Leader>lo :<C-u>CocList outline<cr>
+nmap     <Leader>ld <Plug>(coc-definition)
+nmap     <Leader>lt <Plug>(coc-type-definition)
+nmap     <Leader>li <Plug>(coc-implementation)
+nmap     <Leader>lu <Plug>(coc-references)
+nmap     <Leader>lr <Plug>(coc-rename)
+nmap     <Leader>lf :call CocAction('format')<CR>
+nnoremap <Leader>lh :call <SID>show_documentation()<CR>
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -67,29 +59,42 @@ endfunction
 
 autocmd VimEnter * highlight clear Normal
 
-" CtrlP
-nnoremap <C-c> :CtrlPBuffer<CR>
-set wildignore+=*.class,*.jar,*/target/*,*/.metals/*
+" Fzf
+autocmd! FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+nnoremap ; :Commands<CR>
+nnoremap <Leader>/ :BLines<CR>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>f :GFiles<CR>
+nnoremap <Leader>h :History<CR>
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
 nmap <Leader><Leader> <Plug>(easymotion-overwin-f)
 
 " Grepper
 let g:grepper = {}
 let g:grepper.stop = 25
-let g:grepper.tools = ['git', 'rg', 'grep']
-nnoremap <Leader>g :Grepper<CR>
+let g:grepper.tools = ['rg', 'git', 'grep']
+nnoremap <Leader>r :Grepper<CR>
 
-" indentLine
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+" Goyo
+let g:goyo_width = 200
+nmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
 
-" LimeLight & Goyo
-let g:goyo_width = 100
-nmap <Leader>` :SignifyToggle<CR>:IndentLinesToggle<CR>
-  \ :Goyo<CR>:hi clear Normal<CR>
-xmap <Leader>` :SignifyToggle<CR>:IndentLinesToggle<CR>
-  \ :Goyo<CR>:hi clear Normal<CR>
+" PreviewMarkdown
+let g:preview_markdown_auto_update = 1
+let g:preview_markdown_parser = 'glow'
+let g:preview_markdown_vertical = 1
+
+" Startify
+function! StartifyEntryFormat()
+    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+endfunction
+
+" Opt plugins auto load
+autocmd FileType markdown :packadd preview-markdown
 
 " Remap split navigation
 nnoremap <C-J> <C-W><C-J>
@@ -97,19 +102,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Tab navigation like Firefox.
-nnoremap <C-S-tab> :tabprevious<CR>
-nnoremap <C-tab>   :tabnext<CR>
-nnoremap <C-t>     :tabnew<CR>
-nnoremap <C-w>     :tabclose<CR>
-inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>i
-inoremap <C-w>     <Esc>:tabclose<CR>i
-
 " Other mappings
 nnoremap <Leader>d :bd<CR>
-nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>:IndentLinesToggle<CR>
+nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
 
 " Colorscheme
 let g:airline_theme = 'gruvbox'

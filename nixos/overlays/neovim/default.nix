@@ -1,28 +1,54 @@
 {
-  bash-language-server, fetchFromGitHub, lib, makeWrapper, neovim, openjdk11,
-  ripgrep, symlinkJoin, vimPlugins, vimUtils
+  bash-language-server, fetchFromGitHub, glow, lib, makeWrapper, neovim,
+  openjdk11, ripgrep, symlinkJoin, vimPlugins, vimUtils
 }:
 
 let
-  coc-nvim' = vimUtils.buildVimPluginFrom2Nix rec {
-    pname = "coc-nvim";
+  coc-nvim'          = vimUtils.buildVimPluginFrom2Nix rec {
+    pname   = "coc-nvim";
     version = "0.0.77";
-    src = fetchFromGitHub {
-      owner = "neoclide";
-      repo = "coc.nvim";
-      rev = "78af80302de9ee96237afcc4f290ff756cbc41b8";
+    src     = fetchFromGitHub {
+      owner  = "neoclide";
+      repo   = "coc.nvim";
+      rev    = "78af80302de9ee96237afcc4f290ff756cbc41b8";
       sha256 = "1nx8hn5vb82qcykwzjdpd4sh1vsc8nm5068qmdf7sjw1rldn5hkb";
     };
+  };
+  gruvbox'           = vimUtils.buildVimPluginFrom2Nix rec {
+    pname   = "gruvbox-community";
+    version = "2020-03-28";
+    src     = fetchFromGitHub {
+      owner   = "gruvbox-community";
+      repo    = "gruvbox";
+      rev     = "f5711c15480b83378bde13306fa997057c0c81cd";
+      sha256  = "0vx289a7av31dxm58c6kmfdnsrwnq1rzj5rwci2pqjdac8ds2qm0";
+    };
+  };
+  preview-markdown'  = vimUtils.buildVimPluginFrom2Nix rec {
+    pname   = "preview-markdown";
+    version = "2020-03-28";
+    src     = fetchFromGitHub {
+      owner  = "skanehira";
+      repo   = "preview-markdown.vim";
+      rev    = "2197aa6bf46b9f0b02c5b006512da2b05430e85d";
+      sha256 = "03s8dmxz25wdmznljfvh668z8gva2g0mkfn70dz5hsf0vi4q8p9p";
+    };
+  };
+
+  glow'   = symlinkJoin {
+    buildInputs = [ makeWrapper ];
+    name        = "glow";
+    paths       = [ glow ];
+    postBuild   = ''wrapProgram "$out/bin/glow" --add-flags "-s light"'';
   };
   neovim' = neovim.override {
     configure   = {
       customRC = builtins.readFile(./init.vim);
 
       packages.myVimPackage = with vimPlugins; {
-        opt   = [ ];
+        opt   = [ preview-markdown' ];
         start = [
           airline
-          ctrlp
           coc-java
 #         coc-json
 #         coc-metals
@@ -30,12 +56,12 @@ let
 #         coc-rust-analyzer
           easymotion
           fugitive
+          fzf-vim
           goyo
-          gruvbox-community
-          indentLine
-          surround
+          gruvbox'
+          vim-devicons
           vim-grepper
-          vim-nix
+		  vim-nix
           vim-signify
           vim-startify
         ];
@@ -54,7 +80,7 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/nvim" \
       --prefix PATH : ${lib.makeBinPath[
-        bash-language-server openjdk11 ripgrep
+        bash-language-server glow' openjdk11 ripgrep
       ]} \
       --set JAVA_HOME ${openjdk11}/lib/openjdk
 

@@ -1,4 +1,5 @@
 {
+	"coc.source.buffer.enable": false,
 	"languageserver": {
 		"bash": {
 			"command": "bash-language-server",
