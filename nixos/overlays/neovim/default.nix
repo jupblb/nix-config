@@ -1,6 +1,6 @@
 {
   bash-language-server, fetchFromGitHub, glow, lib, makeWrapper, neovim,
-  openjdk11, ripgrep, symlinkJoin, vimPlugins, vimUtils
+  openjdk11, python-language-server, ripgrep, symlinkJoin, vimPlugins, vimUtils
 }:
 
 let
@@ -53,6 +53,7 @@ let
 #         coc-json
 #         coc-metals
           coc-nvim'
+#         coc-python
 #         coc-rust-analyzer
           easymotion
           fugitive
@@ -80,7 +81,7 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/nvim" \
       --prefix PATH : ${lib.makeBinPath[
-        bash-language-server glow' openjdk11 ripgrep
+        bash-language-server glow' openjdk11 python-language-server ripgrep
       ]} \
       --set JAVA_HOME ${openjdk11}/lib/openjdk
 

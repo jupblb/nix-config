@@ -12,6 +12,7 @@ self: pkgs: {
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.callPackage ./neovim {
     inherit (pkgs.nodePackages) bash-language-server;
+    inherit (pkgs.python3Packages) python-language-server;
   };
   ranger'           = pkgs.callPackage ./ranger { };
   redshift-wayland' = pkgs.callPackage ./redshift-wayland {

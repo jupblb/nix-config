@@ -36,7 +36,7 @@ in {
       htop 
       kitty'
       neovim'
-      paper-icon-theme
+      paper-icon-theme python3
       ranger' rustup
       sbt'
       unzip
