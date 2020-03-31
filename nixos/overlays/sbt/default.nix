@@ -1,4 +1,4 @@
-{ makeWrapper, sbt, symlinkJoin, xdg-user-dirs }:
+{ makeWrapper, sbt, symlinkJoin }:
 
 symlinkJoin {
   buildInputs = [ makeWrapper ];
@@ -6,7 +6,7 @@ symlinkJoin {
   paths       = [ sbt ];
   postBuild   = ''
     wrapProgram "$out/bin/sbt" \
-    --add-flags "--color=always" \
-    --add-flags "--mem 8192"
+      --add-flags "--color=always" \
+      --add-flags "--mem 8192"
   '';
 }

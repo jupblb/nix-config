@@ -1,8 +1,6 @@
-{ diff-so-fancy, git, makeWrapper, symlinkJoin }:
+{ diff-so-fancy, git, lib, makeWrapper, symlinkJoin }:
 
-let
-  diff-so-fancy-bin = "${diff-so-fancy}/bin/diff-so-fancy";
-in symlinkJoin {
+symlinkJoin {
   buildInputs = [ makeWrapper ];
   name        = "git";
   paths       = [ git ];
@@ -13,8 +11,9 @@ in symlinkJoin {
       --add-flags "-c core.excludesfile=${./gitignore}" \
       --add-flags "-c core.mergeoptions=--no-edit" \
       --add-flags "-c fetch.prune=true" \
-      --add-flags "-c pager.diff='${diff-so-fancy-bin} | less --tabs=1,5 -RFX'" \
-      --add-flags "-c pager.show='${diff-so-fancy-bin} | less --tabs=1,5 -RFX'" \
-      --add-flags "-c push.default=upstream"
+      --add-flags "-c pager.diff='diff-so-fancy | less --tabs=1,5 -RFX'" \
+      --add-flags "-c pager.show='diff-so-fancy | less --tabs=1,5 -RFX'" \
+      --add-flags "-c push.default=upstream" \
+      --prefix PATH : ${lib.makeBinPath[ diff-so-fancy ]}
   '';
 }

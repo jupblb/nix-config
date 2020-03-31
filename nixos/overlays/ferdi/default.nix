@@ -31,11 +31,6 @@ in stdenv.mkDerivation {
     mkdir -p $out/bin
     cp -r opt $out
     ln -s $out/opt/Ferdi/ferdi $out/bin
-
-    # provide desktop item and icon
-    cp -r usr/share $out
-    substituteInPlace $out/share/applications/ferdi.desktop \
-      --replace Exec=\"/opt/Ferdi/ferdi\" Exec=ferdi
   '';
 
   dontWrapGApps = true;

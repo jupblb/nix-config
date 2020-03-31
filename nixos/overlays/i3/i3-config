@@ -2,6 +2,7 @@
 #
 ### Startup
 exec --no-startup-id xset m 4/2 0
+exec --no-startup-id redshift -l 51.12:17.05
 
 ### Variables
 set $wmmsg i3-msg
@@ -16,6 +17,12 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+
+set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 26' -p "" \
+  --fb '#282828' --ff '#f9f5d7' --hb '#98971a' --hf '#f9f5d7' \
+  --nb '#282828' --nf '#f9f5d7' --sf '#282828' --sb '#f9f5d7' \
+  --tf '#f9f5d7' --tb '#282828'
+set $print gnome-screenshot -i --display=:0
 
 ### General configuration
 font pango:PragmataPro Mono Liga 10

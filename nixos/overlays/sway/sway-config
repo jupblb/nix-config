@@ -2,9 +2,14 @@
 #
 ### Startup
 exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
+exec --no-startup-id redshift -m wayland -l 51.12:17.05
 
 ### Variables
 set $wmmsg swaymsg
+
+set $menu bemenu-run --fn 'PragmataPro 12' -p "" \
+  --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
+  --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg'
 
 ### Input configuration
 input * {

@@ -20,6 +20,7 @@ set $gray     #7c6f64
 set $darkgray #1d2021
 set $dummy    #ffffff
 
+set $browser qutebrowser
 set $term kitty
 
 ### General configuration

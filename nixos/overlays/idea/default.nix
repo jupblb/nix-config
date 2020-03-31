@@ -9,16 +9,15 @@ let
       sha256 = "0ymwanzyh09v2igxzhx8gws711a5b987vhdjbb7flav3b5qf8l3g";
     };
   });
-in
-  symlinkJoin {
-    buildInputs = [ makeWrapper ];
-    name        = "idea";
-    paths       = [ idea-ultimate' ];
-    postBuild   = ''
-      wrapProgram "$out/bin/idea-ultimate" \
+in symlinkJoin {
+  buildInputs = [ makeWrapper ];
+  name        = "idea";
+  paths       = [ idea-ultimate' ];
+  postBuild   = ''
+    wrapProgram "$out/bin/idea-ultimate" \
       --prefix PATH : ${linuxPackages_latest.perf}/bin \
       --set-default IDEA_JDK "${jetbrains.jdk}" \
       --set-default IDEA_PROPERTIES "${./idea.properties}" \
       --set-default IDEA_VM_OPTIONS "${./idea64.vmoptions}"
-    '';
-  }
+  '';
+}

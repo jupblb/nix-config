@@ -14,16 +14,10 @@ let
     name = "config";
     text = ''
       exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
-      exec --no-startup-id ${redshift-wayland'}/bin/redshift \
-        -m wayland -l 51.12:17.05
       output * background ${builtins.toString(./wallpaper.png)} fill
       ${lib.optionalString withScaling "output * scale 2"}
       ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}
       ${lib.optionalString withScaling "xwayland scale 2"}
-      set $browser ${qutebrowser}/bin/qutebrowser
-      set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 12' -p "" \
-        --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
-        --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg' | xargs swaymsg exec --
       set $print ${grim}/bin/grim \
         ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png') 
       ${builtins.readFile(../common-wm-config)}
@@ -81,10 +75,13 @@ in symlinkJoin {
     wrapProgram "$out/bin/sway" \
       --add-flags "-c ${sway-config}" \
       --prefix PATH : ${lib.makeBinPath[
+        bemenu
         ferdi' firefox-wayland
         i3status' idea-ultimate' imv
         mpv
         pavucontrol
+        redshift-wayland'
+        qutebrowser
         wl-clipboard wob
         xwayland'
         zoom-us
