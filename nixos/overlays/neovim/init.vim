@@ -63,10 +63,11 @@ autocmd VimEnter * highlight clear Normal
 autocmd! FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 nnoremap ; :Commands<CR>
-nnoremap <Leader>/ :BLines<CR>
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>f :GFiles<CR>
-nnoremap <Leader>h :History<CR>
+nnoremap <Leader>/  :BLines<CR>
+nnoremap <Leader>b  :Buffers<CR>
+nnoremap <Leader>f  :Files<CR>
+nnoremap <Leader>gf :GFiles<CR>
+nnoremap <Leader>h  :History<CR>
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
