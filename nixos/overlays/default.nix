@@ -1,5 +1,6 @@
 self: pkgs: { 
   ammonite'         = pkgs.callPackage ./ammonite { };
+  bat'              = pkgs.callPackage ./bat { };
   ferdi'            = pkgs.callPackage ./ferdi { };
   git'              = pkgs.callPackage ./git {
     inherit (pkgs.gitAndTools) diff-so-fancy;
@@ -13,6 +14,7 @@ self: pkgs: {
   neovim'           = pkgs.callPackage ./neovim {
     inherit (pkgs.nodePackages) bash-language-server;
     inherit (pkgs.python3Packages) python-language-server;
+    inherit (pkgs.rustPlatform) buildRustPackage;
   };
   ranger'           = pkgs.callPackage ./ranger { };
   redshift-wayland' = pkgs.callPackage ./redshift-wayland {

@@ -1,6 +1,6 @@
-{ atool, bat, calibre, catdoc, ffmpegthumbnailer,
-  file, fontforge, glow, imagemagick, jq,
-  lib, makeWrapper, neovim-remote, p7zip, pandoc,
+{
+  atool, bat', calibre, catdoc, ffmpegthumbnailer, file, fontforge, glow,
+  imagemagick, jq, lib, makeWrapper, neovim-remote, p7zip, pandoc,
   poppler_utils, ranger, symlinkJoin, unrar, xlsx2csv
 }:
 
@@ -26,7 +26,7 @@ in symlinkJoin {
     wrapProgram "$out/bin/ranger" \
       --prefix PATH : ${lib.makeBinPath [
         atool
-        bat
+        bat'
         calibre catdoc
         ffmpegthumbnailer file fontforge
         glow
@@ -36,7 +36,6 @@ in symlinkJoin {
         unrar
         xlsx2csv
       ]} \
-      --set BAT_THEME OneHalfLight \
       --set EDITOR "${neovim-remote}/bin/nvr --remote" \
       --set TERM xterm-kitty
   '';

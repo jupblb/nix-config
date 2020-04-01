@@ -62,11 +62,27 @@ autocmd VimEnter * highlight clear Normal
 " Fzf
 autocmd! FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-nnoremap ; :Commands<CR>
+
+function! Fzf(command)
+  let l:fzf_files_options = 
+    \ '--preview "bat --color always --style numbers {2..} | head -'.&lines.'"'
+  function! s:edit_devicon_prepended_file(item)
+    let l:file_path = a:item[4:-1]
+    execute 'silent e' l:file_path
+  endfunction
+  call fzf#run({
+    \ 'source':  a:command . ' | devicon-lookup',
+    \ 'sink':    function('s:edit_devicon_prepended_file'),
+    \ 'options': '-m ' . l:fzf_files_options,
+    \ 'down':    '60%' })
+endfunction
+
+nnoremap ;          :Commands<CR>
 nnoremap <Leader>/  :BLines<CR>
 nnoremap <Leader>b  :Buffers<CR>
-nnoremap <Leader>f  :Files<CR>
-nnoremap <Leader>gf :GFiles<CR>
+nnoremap <Leader>f  :call Fzf("fd -L --type f")<CR>
+nnoremap <Leader>gf :call 
+  \ Fzf("git ls-files $(git rev-parse --show-toplevel) \| uniq")<CR>
 nnoremap <Leader>h  :History<CR>
 
 " EasyMotion

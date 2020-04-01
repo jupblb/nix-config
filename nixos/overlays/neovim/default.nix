@@ -1,6 +1,7 @@
 {
-  bash-language-server, fetchFromGitHub, glow, lib, makeWrapper, neovim,
-  openjdk11, python-language-server, ripgrep, symlinkJoin, vimPlugins, vimUtils
+  bash-language-server, bat', buildRustPackage, fd, fetchFromGitHub, git', glow,
+  lib, makeWrapper, neovim, openjdk11, python-language-server, ripgrep,
+  symlinkJoin, vimPlugins, vimUtils
 }:
 
 let
@@ -35,13 +36,25 @@ let
     };
   };
 
-  glow'   = symlinkJoin {
+  devicon-lookup' = buildRustPackage rec {
+    cargoSha256 = "1w8dj0si8glcdxg66pnbil2zlwhb009wiq6p205a0q9hiqisid4l";
+    pname       = "devicon-lookup";
+    version     = "0.7.1";
+
+    src = fetchFromGitHub {
+      owner  = "coreyja";
+      repo   = pname;
+      rev    = version;
+      sha256 = "1c15pl9f6civpya7kjxc87s5yffxghgi41zmaa5n3cqchsfizprs";
+    };
+  };
+  glow'           = symlinkJoin {
     buildInputs = [ makeWrapper ];
     name        = "glow";
     paths       = [ glow ];
     postBuild   = ''wrapProgram "$out/bin/glow" --add-flags "-s light"'';
   };
-  neovim' = neovim.override {
+  neovim'         = neovim.override {
     configure   = {
       customRC = builtins.readFile(./init.vim);
 
@@ -81,7 +94,13 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/nvim" \
       --prefix PATH : ${lib.makeBinPath[
-        bash-language-server glow' openjdk11 python-language-server ripgrep
+        bash-language-server bat'
+        devicon-lookup'
+        fd
+        git' glow'
+        openjdk11
+        python-language-server
+        ripgrep
       ]} \
       --set JAVA_HOME ${openjdk11}/lib/openjdk
 
