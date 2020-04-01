@@ -47,6 +47,7 @@ in {
       FZF_DEFAULT_OPTS      = "--color=light";
       HISTFILE              = "${userHome}/.cache/bash_history";
       LESSHISTFILE          = "-";
+      MANPAGER              = "vim -c 'set ft=man' -";
       NIXPKGS_ALLOW_UNFREE  = "1";
       NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
       NVIM_LISTEN_ADDRESS   = "/tmp/nvimsocket";
@@ -127,11 +128,11 @@ in {
   systemd.services.dropbox = {
     after                        = [ "network.target" ];
     description                  = "Dropbox";
-    environment.QML2_IMPORT_PATH = ''
-      ${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtQmlPrefix}
+    environment.QML2_IMPORT_PATH = with pkgs.qt5; ''
+      ${qtbase}${qtbase.qtQmlPrefix}
     '';
-    environment.QT_PLUGIN_PATH   = ''
-      ${pkgs.qt5.qtbase}${pkgs.qt5.qtbase.qtPluginPrefix}
+    environment.QT_PLUGIN_PATH   = with pkgs.qt5; ''
+      ${qtbase}${qtbase.qtPluginPrefix}
     '';
     serviceConfig                = {
       ExecStart     = "${pkgs.dropbox}/bin/dropbox";
