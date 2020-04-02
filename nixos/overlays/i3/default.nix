@@ -1,6 +1,6 @@
 {
   bemenu, dunst, firefox, ferdi', gnome-screenshot, i3-gaps, i3status',
-  idea-ultimate', imv, lib, makeWrapper, mpv, pavucontrol, qutebrowser,
+  idea-ultimate', imv, kitty', lib, makeWrapper, mpv, pavucontrol, qutebrowser,
   redshift, symlinkJoin, writeTextFile, zoom-us
 }:
 
@@ -36,6 +36,7 @@ in symlinkJoin {
         firefox ferdi'
         gnome-screenshot
         i3status' idea-ultimate' imv
+        kitty'
         mpv
         pavucontrol
         qutebrowser'

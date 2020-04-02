@@ -1,10 +1,11 @@
 {
   autoreconfHook, bemenu, ferdi', fetchFromGitHub, fetchgit, fetchpatch,
-  firefox-wayland, fontutil, grim, i3status', idea-ultimate', imv, lib,
+  firefox-wayland, fontutil, grim, i3status', idea-ultimate', imv, kitty', lib,
   makeWrapper, mako, mpv, pavucontrol, qutebrowser, redshift-wayland', slurp,
   symlinkJoin, sway, sway-unwrapped, swayidle, utilmacros, wl-clipboard,
   wlroots, wob, writeTextFile, xdg-user-dirs, xorgserver, xwayland, zoom-us,
 
+  withExtraPackages ? false,
   withScaling ? false
 }:
 
@@ -76,15 +77,21 @@ in symlinkJoin {
       --add-flags "-c ${sway-config}" \
       --prefix PATH : ${lib.makeBinPath[
         bemenu
-        ferdi' firefox-wayland
-        i3status' idea-ultimate' imv
+        firefox-wayland
+        i3status' imv
+        kitty'
         mpv
         pavucontrol
         redshift-wayland'
         qutebrowser
         wl-clipboard wob
-        xwayland'
-        zoom-us
-      ]}
+      ]} ${lib.optionalString withExtraPackages '' \
+        --prefix PATH : ${lib.makeBinPath[
+          ferdi'
+          idea-ultimate'
+          xwayland'
+          zoom-us]
+        }
+      ''}
   '';
 }

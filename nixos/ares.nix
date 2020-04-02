@@ -1,19 +1,35 @@
 { config, pkgs, ... }:
 
-{
+let
+  sway'' = pkgs.unstable.sway'.override { withExtraPackages = true };
+in {
   imports = [ ./common.nix ];
 
-  boot.extraModprobeConfig           = "options snd_hda_intel power_save=1";
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ums_realtek" "sr_mod" ];
+  boot.extraModprobeConfig                         = ''
+    options snd_hda_intel power_save=1
+  '';
+  boot.initrd.availableKernelModules               = [
+    "ahci"
+    "ehci_pci"
+    "sd_mod" "sr_mod"
+    "ums_realtek" "usb_storage" "usbhid"
+    "xhci_pci"
+  ];
+  boot.kernelPackages                              = pkgs.linuxPackages_latest;
+  boot.loader.efi.canTouchEfiVariables             = true;
+  boot.loader.systemd-boot.enable                  = true;
 
-  environment.systemPackages = with pkgs.unstable; [ ferdi' sway' xwayland ];
+  environment.systemPackages = [ sway'' ];
 
   fileSystems."/".device     = "/dev/disk/by-label/nixos";
   fileSystems."/".fsType     = "xfs";
   fileSystems."/boot".device = "/dev/disk/by-label/boot";
   fileSystems."/boot".fsType = "vfat";
 
-  hardware.opengl.extraPackages = with pkgs; [ intel-media-driver vaapiIntel' ];
+  hardware.cpu.intel.updateMicrocode  = true;
+  hardware.opengl.extraPackages       = with pkgs; [
+    intel-media-driver libvdpau-va-gl vaapiIntel' vaapiVdpau
+  ];
 
   networking.hostName = "ares";
 

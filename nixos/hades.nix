@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  sway-scaled = pkgs.unstable.sway'.override { withScaling = true; };
+  sway-scaled = pkgs.unstable.sway'.override {
+    withExtraPackages = true;
+    withScaling       = true;
+  };
   xresources  = pkgs.writeTextFile {
     name = "Xresources";
     text = ''
@@ -13,9 +16,16 @@ let
 in {
   imports = [ ./common.nix ];
 
-  boot.initrd.availableKernelModules = [ "nvme" ];
-  boot.initrd.kernelModules          = [ "amdgpu" ];
-  boot.tmpOnTmpfs                    = true;
+  boot.initrd.availableKernelModules               = [
+    "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
+  ];
+  boot.initrd.kernelModules                        = [ "amdgpu" ];
+  boot.kernel.sysctl."fs.inotify.max_user_watches" = 524288;
+  boot.kernel.sysctl."vm.swappiness"               = 20;
+  boot.kernelPackages                              = pkgs.linuxPackages_latest;
+  boot.loader.efi.canTouchEfiVariables             = true;
+  boot.loader.systemd-boot.enable                  = true;
+  boot.tmpOnTmpfs                                  = true;
 
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
@@ -35,6 +45,10 @@ in {
     "/data".device = "/dev/disk/by-label/data";
     "/data".fsType = "ext4";
   };
+
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+  hardware.pulseaudio.package        = pkgs.pulseaudioFull;
 
   networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 ];
   networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 ];

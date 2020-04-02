@@ -3,19 +3,9 @@
 let
   userHome = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)";
 in {
-  boot = {
-    initrd.availableKernelModules               = [
-      "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
-    ];
-    kernel.sysctl."fs.inotify.max_user_watches" = 524288;
-    kernel.sysctl."vm.swappiness"               = 20;
-    kernelPackages                              = pkgs.linuxPackages_latest;
-    kernelParams                                = [ "mitigations=off" ];
-    loader.efi.canTouchEfiVariables             = true;
-    loader.systemd-boot.enable                  = true;
-    loader.timeout                              = 1;
-    supportedFilesystems                        = [ "ntfs" "exfat" ];
-  };
+  boot.kernelParams         = [ "mitigations=off" ];
+  boot.loader.timeout       = 1;
+  boot.supportedFilesystems = [ "ntfs" "exfat" ];
 
   console.colors     = [
     "f9f5d7" "cc241d" "98971a" "d79921"
@@ -34,7 +24,6 @@ in {
       file fzf
       gcc git'
       htop 
-      kitty'
       neovim'
       paper-icon-theme python3
       ranger' rustup
@@ -59,12 +48,9 @@ in {
   fonts.fonts = [ pkgs.vistafonts ];
 
   hardware = {
-    cpu.intel.updateMicrocode     = true;
     enableRedistributableFirmware = true;
     opengl.enable                 = true;
-    opengl.extraPackages          = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
     pulseaudio.enable             = true;
-    pulseaudio.package            = pkgs.pulseaudioFull;
   };
 
   i18n.defaultLocale    = "en_US.UTF-8";
