@@ -40,6 +40,7 @@ settings:
     https://www.gazeta.pl/0,0.html: true
     https://www.google.com/maps: true
   content.media_capture:
+    https://hangouts.google.com: true
     https://www.messenger.com: true
   content.register_protocol_handler:
     https://calendar.google.com?cid=%25s: true

@@ -1,5 +1,6 @@
 {
 	"coc.source.buffer.enable": false,
+	"eslint.trace.server": "verbose",
 	"languageserver": {
 		"bash": {
 			"command": "bash-language-server",

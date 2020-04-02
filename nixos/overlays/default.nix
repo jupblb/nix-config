@@ -5,6 +5,7 @@ self: pkgs: {
   git'              = pkgs.callPackage ./git {
     inherit (pkgs.gitAndTools) diff-so-fancy;
   };
+  glow'             = pkgs.callPackage ./glow { };
   i3'               = pkgs.callPackage ./i3 {
     inherit (pkgs.gnome3) gnome-screenshot;
   };
@@ -12,7 +13,7 @@ self: pkgs: {
   idea-ultimate'    = pkgs.callPackage ./idea { };
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.callPackage ./neovim {
-    inherit (pkgs.nodePackages) bash-language-server;
+    inherit (pkgs.nodePackages) bash-language-server eslint npm;
     inherit (pkgs.python3Packages) python-language-server;
     inherit (pkgs.rustPlatform) buildRustPackage;
   };

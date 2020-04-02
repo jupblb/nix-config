@@ -1,5 +1,5 @@
 {
-  atool, bat', calibre, catdoc, ffmpegthumbnailer, file, fontforge, glow,
+  atool, bat', calibre, catdoc, ffmpegthumbnailer, file, fontforge, glow',
   imagemagick, jq, lib, makeWrapper, neovim-remote, p7zip, pandoc,
   poppler_utils, ranger, symlinkJoin, unrar, xlsx2csv
 }:
@@ -29,7 +29,7 @@ in symlinkJoin {
         bat'
         calibre catdoc
         ffmpegthumbnailer file fontforge
-        glow
+        glow'
         imagemagick
         jq
         p7zip pandoc poppler_utils

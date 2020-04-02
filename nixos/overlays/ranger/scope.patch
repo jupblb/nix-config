@@ -8,7 +8,7 @@ index f403ed83..0c667fb7 100755
  
 +	## Markdown
 +	md|markdown)
-+	    glow -s light - "${FILE_PATH}" && { dump | trim; exit 5; }
++	    glow - "${FILE_PATH}" && { dump | trim; exit 5; }
 +	    ;;
 +
          ## HTML

@@ -80,7 +80,7 @@ endfunction
 nnoremap ;          :Commands<CR>
 nnoremap <Leader>/  :BLines<CR>
 nnoremap <Leader>b  :Buffers<CR>
-nnoremap <Leader>f  :call Fzf("fd -L --type f")<CR>
+nnoremap <Leader>f  :call Fzf("fd -HL --type f")<CR>
 nnoremap <Leader>gf :call 
   \ Fzf("git ls-files $(git rev-parse --show-toplevel) \| uniq")<CR>
 nnoremap <Leader>h  :History<CR>
@@ -92,6 +92,8 @@ nmap <Leader><Leader> <Plug>(easymotion-overwin-f)
 
 " Grepper
 let g:grepper = {}
+let g:grepper.highlight = 1
+let g:grepper.searchreg = 1
 let g:grepper.stop = 25
 let g:grepper.tools = ['rg', 'git', 'grep']
 nnoremap <Leader>r :Grepper<CR>

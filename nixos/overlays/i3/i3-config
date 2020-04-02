@@ -18,7 +18,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 26' -p "" \
+set $menu bemenu-run --fn 'PragmataPro 26' -p "" \
   --fb '#282828' --ff '#f9f5d7' --hb '#98971a' --hf '#f9f5d7' \
   --nb '#282828' --nf '#f9f5d7' --sf '#282828' --sb '#f9f5d7' \
   --tf '#f9f5d7' --tb '#282828'

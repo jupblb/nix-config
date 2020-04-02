@@ -1,7 +1,7 @@
 {
-  bash-language-server, bat', buildRustPackage, fd, fetchFromGitHub, git', glow,
-  lib, makeWrapper, neovim, openjdk11, python-language-server, ripgrep,
-  symlinkJoin, vimPlugins, vimUtils
+  bash-language-server, bat', buildRustPackage, eslint, fd, fetchFromGitHub,
+  git', glow', lib, makeWrapper, neovim, nodejs_latest, npm, openjdk11,
+  python-language-server, ripgrep, symlinkJoin, vimPlugins, vimUtils
 }:
 
 let
@@ -27,32 +27,26 @@ let
   };
   preview-markdown'  = vimUtils.buildVimPluginFrom2Nix rec {
     pname   = "preview-markdown";
-    version = "2020-03-28";
+    version = "2020-04-02";
     src     = fetchFromGitHub {
       owner  = "skanehira";
       repo   = "preview-markdown.vim";
-      rev    = "2197aa6bf46b9f0b02c5b006512da2b05430e85d";
-      sha256 = "03s8dmxz25wdmznljfvh668z8gva2g0mkfn70dz5hsf0vi4q8p9p";
+      rev    = "a9520f6a218eb085a0aa1c8f55568e5bbb8b6840";
+      sha256 = "1qn0dw1y4xcmaw876v4d3zs30h5gmvv2ppk1niw0hjb9c3nbisy7";
     };
   };
 
   devicon-lookup' = buildRustPackage rec {
-    cargoSha256 = "1w8dj0si8glcdxg66pnbil2zlwhb009wiq6p205a0q9hiqisid4l";
+    cargoSha256 = "048yb45zr589gxvff520wh7cwlhsb3h64zqsjfy85c5y28sv6sas";
     pname       = "devicon-lookup";
-    version     = "0.7.1";
+    version     = "0.8.0";
 
     src = fetchFromGitHub {
       owner  = "coreyja";
       repo   = pname;
       rev    = version;
-      sha256 = "1c15pl9f6civpya7kjxc87s5yffxghgi41zmaa5n3cqchsfizprs";
+      sha256 = "0v4jc9ckbk6rvhw7apdfr6wp2v8gfx0w13gwpr8ka1sph9n4p3a7";
     };
-  };
-  glow'           = symlinkJoin {
-    buildInputs = [ makeWrapper ];
-    name        = "glow";
-    paths       = [ glow ];
-    postBuild   = ''wrapProgram "$out/bin/glow" --add-flags "-s light"'';
   };
   neovim'         = neovim.override {
     configure   = {
@@ -62,12 +56,14 @@ let
         opt   = [ preview-markdown' ];
         start = [
           airline
+#         coc-eslint
           coc-java
 #         coc-json
 #         coc-metals
           coc-nvim'
 #         coc-python
 #         coc-rust-analyzer
+#         coc-tsserver
           easymotion
           fugitive
           fzf-vim
@@ -96,8 +92,10 @@ in symlinkJoin {
       --prefix PATH : ${lib.makeBinPath[
         bash-language-server bat'
         devicon-lookup'
+        eslint
         fd
         git' glow'
+        nodejs_latest npm
         openjdk11
         python-language-server
         ripgrep

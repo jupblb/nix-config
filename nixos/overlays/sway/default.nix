@@ -2,8 +2,8 @@
   autoreconfHook, bemenu, ferdi', fetchFromGitHub, fetchgit, fetchpatch,
   firefox-wayland, fontutil, grim, i3status', idea-ultimate', imv, lib,
   makeWrapper, mako, mpv, pavucontrol, qutebrowser, redshift-wayland', slurp,
-  symlinkJoin, sway, sway-unwrapped, utilmacros, wl-clipboard, wlroots, wob,
-  writeTextFile, xdg-user-dirs, xorgserver, xwayland, zoom-us,
+  symlinkJoin, sway, sway-unwrapped, swayidle, utilmacros, wl-clipboard,
+  wlroots, wob, writeTextFile, xdg-user-dirs, xorgserver, xwayland, zoom-us,
 
   withScaling ? false
 }:
