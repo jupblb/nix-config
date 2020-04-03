@@ -35,7 +35,9 @@ in {
     ${pkgs.feh}/bin/feh --bg-scale ${./misc/wallpaper.png}
     exec i3
   '';
-  environment.systemPackages               = [ dropbox-cli sway-scaled ];
+  environment.systemPackages               = with pkgs.unstable; [
+    dropbox-cli sway-scaled
+  ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
