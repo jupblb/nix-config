@@ -6,6 +6,13 @@
 
 config_version: 2
 settings:
+  aliases:
+    global:
+      q: close
+      qa: quit
+      w: session-save
+      wq: quit --save
+      wqa: quit --save
   content.autoplay:
     global: false
   content.default_encoding:
@@ -14,6 +21,8 @@ settings:
     global: false
   content.headers.accept_language:
     global: en-US
+  content.host_blocking.enabled:
+    global: false
   content.host_blocking.lists:
     global:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
@@ -31,6 +40,7 @@ settings:
     '*://github.com/*': true
     '*://igeolise.charliehr.com/*': true
     '*://igeolise.myjetbrains.com/*': true
+    '*://iris/*': true
     '*://mail.google.com/*': true
     '*://www.dropbox.com/*': true
     '*://www.linkedin.com/*': true
