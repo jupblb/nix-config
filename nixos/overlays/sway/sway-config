@@ -2,7 +2,6 @@
 #
 ### Startup
 exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
-exec --no-startup-id redshift -m wayland -l 51.12:17.05
 
 ### Variables
 set $wmmsg swaymsg

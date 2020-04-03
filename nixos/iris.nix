@@ -16,6 +16,8 @@
   '';
   boot.loader.raspberryPi.version        = 4;
 
+  environment.systemPackages = with pkgs.unstable; [ sway' ];
+
   fileSystems."/".device     = "/dev/disk/by-label/NIXOS_SD";
   fileSystems."/".fsType     = "ext4";
   fileSystems."/boot".device = "/dev/disk/by-label/FIRMWARE";

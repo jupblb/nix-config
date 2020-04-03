@@ -15,6 +15,10 @@ let
     name = "config";
     text = ''
       exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
+      ${lib.optionalString withExtraPackages ''
+        exec --no-startup-id ${redshift-wayland'}/bin/redshift \
+          -m wayland -l 51.12:17.05
+      ''}
       output * background ${builtins.toString(./wallpaper.png)} fill
       ${lib.optionalString withScaling "output * scale 2"}
       ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}
@@ -78,17 +82,17 @@ in symlinkJoin {
       --prefix PATH : ${lib.makeBinPath[
         bemenu
         firefox-wayland
-        i3status' imv
+        i3status'
         kitty'
-        mpv
         pavucontrol
-        redshift-wayland'
         qutebrowser
         wl-clipboard wob
       ]} ${lib.optionalString withExtraPackages '' \
         --prefix PATH : ${lib.makeBinPath[
           ferdi'
-          idea-ultimate'
+          idea-ultimate' imv
+          mpv
+          redshift-wayland'
           xwayland'
           zoom-us]
         }
