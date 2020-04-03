@@ -30,10 +30,13 @@ in
   fileSystems."/boot".device = "/dev/disk/by-label/FIRMWARE";
   fileSystems."/boot".fsType = "vfat";
 
+  hardware.bluetooth.enable        = true;
   hardware.deviceTree.base         = pkgs.device-tree_rpi;
   hardware.deviceTree.overlays     = [ "${pkgs.device-tree_rpi.overlays}/vc4-fkms-v3d.dtbo" ];
   hardware.opengl.setLdLibraryPath = true;
   hardware.opengl.package          = pkgs.mesa_drivers;
+  hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
+  hardware.pulseaudio.package      = pkgs.pulseaudioFull;
 
   networking.hostName = "iris";
 
@@ -41,5 +44,6 @@ in
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
+  services.blueman.enable         = true;
   services.mingetty.autologinUser = "jupblb";
 }
