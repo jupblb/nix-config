@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 
 let
-  sway = pkgs.unstable.sway'.override { withScaling = true; };
+  serverIP = "192.168.1.7";
+  sway     = pkgs.unstable.sway'.override { withScaling = true; };
 in
 {
   imports = [
@@ -23,6 +24,29 @@ in
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
 
+  docker-containers.pihole = {
+    image              = "pihole/pihole:latest";
+    volumes            = [
+      "/var/lib/pihole/:/etc/pihole/"
+      "/var/lib/dnsmasq/.d:/etc/dnsmasq.d/"
+    ];
+    environment        = {
+      ServerIP    = serverIP;
+      WEBPASSWORD = "changeme";
+      TZ          = "Europe/Warsaw";
+    };
+    extraDockerOptions = [
+      "--cap-add=NET_ADMIN"
+      "--cap-add=NET_BIND_SERVICE"
+      "--cap-add=NET_RAW"
+      "--dns=127.0.0.1"
+      "--dns=1.1.1.1"
+      "--net=host"
+      "--privileged"
+    ];
+    workdir            = "/var/lib/pihole/";
+  };
+
   environment.systemPackages = [ sway ];
 
   fileSystems."/".device     = "/dev/disk/by-label/NIXOS_SD";
@@ -38,7 +62,9 @@ in
   hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   hardware.pulseaudio.package      = pkgs.pulseaudioFull;
 
-  networking.hostName = "iris";
+  networking.firewall.allowedTCPPorts = [ 53 67 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 53 67 80 443 ];
+  networking.hostName                 = "iris";
 
   nix.maxJobs = 4;
 
@@ -46,4 +72,8 @@ in
 
   services.blueman.enable         = true;
   services.mingetty.autologinUser = "jupblb";
+
+  users.users.jupblb.extraGroups = [ "docker" ];
+
+  virtualisation.docker.enable = true;
 }
