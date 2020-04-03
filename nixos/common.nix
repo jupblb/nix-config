@@ -83,6 +83,7 @@ in {
       ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
     '';
     fish.shellAliases.nix-shell  = "nix-shell --command fish";
+    fish.shellAliases.ssh        = "env TERM=xterm-256color ssh";
     ssh.extraConfig              = builtins.readFile(./misc/ssh-config);
   };
 
