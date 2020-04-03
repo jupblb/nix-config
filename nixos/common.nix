@@ -20,7 +20,6 @@ in {
     etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/user-dirs);
     systemPackages                    = with pkgs.unstable; [
       ammonite'
-      dropbox-cli
       file fzf
       gcc git'
       htop 
@@ -89,8 +88,6 @@ in {
 
   services = {
     acpid.enable                         = true;
-    fstrim.enable                        = true;
-    fwupd.enable                         = true;
     openssh.openFirewall                 = true;
     openssh.enable                       = true;
     openssh.passwordAuthentication       = false;
@@ -110,28 +107,6 @@ in {
     mkdir -m 0755 -p /lib64
     ln -sfn ${pkgs.glibc}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
   '';
-
-  systemd.services.dropbox = {
-    after                        = [ "network.target" ];
-    description                  = "Dropbox";
-    environment.QML2_IMPORT_PATH = with pkgs.qt5; ''
-      ${qtbase}${qtbase.qtQmlPrefix}
-    '';
-    environment.QT_PLUGIN_PATH   = with pkgs.qt5; ''
-      ${qtbase}${qtbase.qtPluginPrefix}
-    '';
-    serviceConfig                = {
-      ExecStart     = "${pkgs.dropbox}/bin/dropbox";
-      ExecReload    = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
-      KillMode      = "control-group";
-      Nice          = 10;
-      PrivateTmp    = true;
-      ProtectSystem = "full";
-      Restart       = "on-failure";
-      User          = "jupblb";
-    };
-    wantedBy                     = [ "default.target" ];
-  };
 
   time.timeZone = "Europe/Warsaw";
 

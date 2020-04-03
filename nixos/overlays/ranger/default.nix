@@ -27,12 +27,12 @@ in symlinkJoin {
       --prefix PATH : ${lib.makeBinPath [
         atool
         bat'
-        calibre catdoc
-        ffmpegthumbnailer file fontforge
+        catdoc
+        ffmpegthumbnailer file
         glow'
         imagemagick
         jq
-        p7zip pandoc poppler_utils
+        p7zip poppler_utils
         unrar
         xlsx2csv
       ]} \

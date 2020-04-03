@@ -35,7 +35,7 @@ in {
     ${pkgs.feh}/bin/feh --bg-scale ${./misc/wallpaper.png}
     exec i3
   '';
-  environment.systemPackages               = [ sway-scaled ];
+  environment.systemPackages               = [ dropbox-cli sway-scaled ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -63,6 +63,7 @@ in {
       UPSTYPE usb
       DEVICE
     '';
+    fstrim.enable                        = true;
     mingetty.autologinUser               = "jupblb";
     nfs                                  = {
       server.enable     = true;
@@ -115,6 +116,27 @@ in {
       User          = "jupblb";
     };
     startAt       = "*:0/15";
+  };
+  systemd.services.dropbox = {
+    after                        = [ "network.target" ];
+    description                  = "Dropbox";
+    environment.QML2_IMPORT_PATH = with pkgs.qt5; ''
+      ${qtbase}${qtbase.qtQmlPrefix}
+    '';
+    environment.QT_PLUGIN_PATH   = with pkgs.qt5; ''
+      ${qtbase}${qtbase.qtPluginPrefix}
+    '';
+    serviceConfig                = {
+      ExecStart     = "${pkgs.dropbox}/bin/dropbox";
+      ExecReload    = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+      KillMode      = "control-group";
+      Nice          = 10;
+      PrivateTmp    = true;
+      ProtectSystem = "full";
+      Restart       = "on-failure";
+      User          = "jupblb";
+    };
+    wantedBy                     = [ "default.target" ];
   };
 
   time.hardwareClockInLocalTime = true;

@@ -35,6 +35,7 @@ in {
 
   nix.maxJobs = 8;
 
+  services.fstrim.enable   = true;
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="d8:50:e6:03:5c:44", NAME="eth"
     ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="70:18:8b:3f:58:47", NAME="wlp"
