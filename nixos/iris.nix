@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  sway = pkgs.unstable.sway'.override { withScaling = true; };
+in
 {
   imports = [
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
@@ -11,12 +14,16 @@
   boot.loader.grub.enable                = false;
   boot.loader.raspberryPi.enable         = true;
   boot.loader.raspberryPi.firmwareConfig = ''
+    disable_overscan=1
     dtparam=audio=on
     gpu_mem=256
   '';
   boot.loader.raspberryPi.version        = 4;
 
-  environment.systemPackages = with pkgs.unstable; [ sway' ];
+  console.font     = "ter-232n";
+  console.packages = [ pkgs.terminus_font ];
+
+  environment.systemPackages = [ sway ];
 
   fileSystems."/".device     = "/dev/disk/by-label/NIXOS_SD";
   fileSystems."/".fsType     = "ext4";
@@ -33,4 +40,6 @@
   nix.maxJobs = 4;
 
   powerManagement.cpuFreqGovernor = "ondemand";
+
+  services.mingetty.autologinUser = "jupblb";
 }
