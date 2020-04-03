@@ -36,7 +36,6 @@ in symlinkJoin {
         unrar
         xlsx2csv
       ]} \
-      --set EDITOR "${neovim-remote}/bin/nvr --remote" \
-      --set TERM xterm-kitty
+      --set EDITOR "${neovim-remote}/bin/nvr --remote"
   '';
 }
