@@ -22,7 +22,7 @@ let
       output * background ${builtins.toString(./wallpaper.png)} fill
       ${lib.optionalString withScaling "output * scale 2"}
       ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}
-      ${lib.optionalString withScaling "xwayland scale 2"}
+      ${lib.optionalString (withScaling && withExtraPackages) "xwayland scale 2"}
       set $print ${grim}/bin/grim \
         ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png') 
       ${builtins.readFile(../common-wm-config)}
