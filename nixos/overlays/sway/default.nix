@@ -33,7 +33,9 @@ let
   };
   sway'            = sway.override {
     extraSessionCommands = builtins.readFile(./sway.sh);
-    sway-unwrapped       = if withScaling then sway-unwrapped'' else sway-unwrapped;
+    sway-unwrapped       = if withScaling && withExtraPackages
+      then sway-unwrapped'' 
+      else sway-unwrapped;
     withGtkWrapper       = true;
   };
   sway-unwrapped'  = sway-unwrapped.override { wlroots = wlroots'; };
