@@ -31,7 +31,8 @@ in {
     intel-media-driver libvdpau-va-gl vaapiIntel' vaapiVdpau
   ];
 
-  networking.hostName = "ares";
+  networking.hostName              = "ares";
+  networking.networkmanager.enable = true;
 
   nix.maxJobs = 8;
 

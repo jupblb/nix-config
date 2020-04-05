@@ -63,9 +63,12 @@ in
   hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
   hardware.pulseaudio.package      = pkgs.pulseaudioFull;
 
-  networking.firewall.allowedTCPPorts = [ 53 67 80 443 ];
-  networking.firewall.allowedUDPPorts = [ 53 67 80 443 ];
-  networking.hostName                 = "iris";
+  networking.defaultGateway                 = "192.168.1.1";
+  networking.firewall.allowedTCPPorts       = [ 53 67 80 443 ];
+  networking.firewall.allowedUDPPorts       = [ 53 67 80 443 ];
+  networking.hostName                       = "iris";
+  networking.interfaces.eno2.ipv4.addresses = [ { address = "192.168.1.7"; prefixLength = 24; } ];
+  networking.wireless.enable                = false;
 
   nix.maxJobs = 4;
 
