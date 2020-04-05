@@ -10,6 +10,7 @@ in
     ./common.nix
   ];
 
+  boot.blacklistedKernelModules          = [ "brcmfmac" ];
   boot.consoleLogLevel                   = 7;
   boot.kernelPackages                    = pkgs.linuxPackages_rpi4;
   boot.loader.grub.enable                = false;
