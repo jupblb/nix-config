@@ -7,11 +7,27 @@ set number
 set shell=bash
 set smartcase
 set termguicolors
-set tabstop=4
 
 " Remap leader key to space
 nnoremap <Space> <Nop>
 let mapleader="\<Space>"
+
+" Use spaces for indentation
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+autocmd FileType make noexpandtab
+
+" Remap split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Other mappings
+nnoremap <Leader>d :bd<CR>
+nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
 
 " Airline
 set noshowmode
@@ -114,16 +130,6 @@ endfunction
 
 " Opt plugins auto load
 autocmd FileType markdown :packadd preview-markdown
-
-" Remap split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" Other mappings
-nnoremap <Leader>d :bd<CR>
-nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
 
 " Colorscheme
 let g:airline_theme = 'gruvbox'
