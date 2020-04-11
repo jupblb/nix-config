@@ -3,8 +3,8 @@
   fetchpatch, firefox-wayland, fontutil, grim, i3status', idea-ultimate', imv,
   kitty', lib, makeWrapper, mako, mpv, pavucontrol, qutebrowser,
   redshift-wayland', slurp, symlinkJoin, sway, sway-unwrapped, swayidle,
-  utilmacros, wayvnc, wl-clipboard, wlroots, wob, writeTextFile, xdg-user-dirs,
-  xorgserver, xwayland, zoom-us, stdenv, 
+  utilmacros, wayvnc, wdisplays, wl-clipboard, wlroots, wob, writeTextFile,
+  xdg-user-dirs, xorgserver, xwayland, zoom-us, stdenv, 
 
   withExtraPackages ? false,
   withScaling ? false
@@ -15,7 +15,7 @@ let
     bemenu firefox-wayland i3status' kitty' pavucontrol qutebrowser wl-clipboard
   ];
   bin-paths-extra  = lib.makeBinPath[
-    ferdi' idea-ultimate' imv mpv xwayland' zoom-us
+    ferdi' idea-ultimate' imv mpv xwayland' wdisplays zoom-us
   ];
   picture-dir      = "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
   common-config    = writeTextFile {
@@ -26,6 +26,10 @@ let
         ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png') 
       ${builtins.readFile(../common-wm-config)}
       ${builtins.readFile(./sway-common-config)}
+      ${lib.optionalString withScaling ''
+        output * scale 2
+        ${lib.optionalString withExtraPackages "xwayland scale 2"}
+      ''}
       bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" \
         ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png')
     '';
@@ -43,11 +47,7 @@ let
     text = ''
       ${builtins.readFile(common-config)}
       ${builtins.readFile(./sway-config)}
-      ${lib.optionalString withScaling ''
-        output * scale 2
-        seat * xcursor_theme Paper 18
-        ${lib.optionalString withExtraPackages "xwayland scale 2"}
-      ''}
+      ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}
       exec --no-startup-id ${redshift-wayland'}/bin/redshift \
         -m wayland -l 51.12:17.05
       exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
