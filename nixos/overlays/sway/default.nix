@@ -1,34 +1,61 @@
 {
-  autoreconfHook, bemenu, ferdi', fetchFromGitHub, fetchgit, fetchpatch,
-  firefox-wayland, fontutil, grim, i3status', idea-ultimate', imv, kitty', lib,
-  makeWrapper, mako, mpv, pavucontrol, qutebrowser, redshift-wayland', slurp,
-  symlinkJoin, sway, sway-unwrapped, swayidle, utilmacros, wl-clipboard,
-  wlroots, wob, writeTextFile, xdg-user-dirs, xorgserver, xwayland, zoom-us,
+  autoreconfHook, bemenu, edid-generator, ferdi', fetchFromGitHub, fetchgit,
+  fetchpatch, firefox-wayland, fontutil, grim, i3status', idea-ultimate', imv,
+  kitty', lib, makeWrapper, mako, mpv, pavucontrol, qutebrowser,
+  redshift-wayland', slurp, symlinkJoin, sway, sway-unwrapped, swayidle,
+  utilmacros, wayvnc, wl-clipboard, wlroots, wob, writeTextFile, xdg-user-dirs,
+  xorgserver, xwayland, zoom-us, stdenv, 
 
   withExtraPackages ? false,
   withScaling ? false
 }:
 
 let
+  bin-paths        = lib.makeBinPath[
+    bemenu firefox-wayland i3status' kitty' pavucontrol qutebrowser wl-clipboard
+  ];
+  bin-paths-extra  = lib.makeBinPath[
+    ferdi' idea-ultimate' imv mpv xwayland' zoom-us
+  ];
   picture-dir      = "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
-  sway-config      = writeTextFile {
-    name = "config";
+  common-config    = writeTextFile {
+    name = "sway-common-config";
     text = ''
-      exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
-      ${lib.optionalString withExtraPackages ''
-        exec --no-startup-id ${redshift-wayland'}/bin/redshift \
-          -m wayland -l 51.12:17.05
-      ''}
       output * background ${builtins.toString(./wallpaper.png)} fill
-      ${lib.optionalString withScaling "output * scale 2"}
-      ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}
-      ${lib.optionalString (withScaling && withExtraPackages) "xwayland scale 2"}
       set $print ${grim}/bin/grim \
         ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png') 
       ${builtins.readFile(../common-wm-config)}
-      ${builtins.readFile(./sway-config)}
+      ${builtins.readFile(./sway-common-config)}
       bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" \
         ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png')
+    '';
+  };
+  headless-config  = writeTextFile {
+    name = "sway-headless-config";
+    text = ''
+      ${builtins.readFile(common-config)}
+      ${builtins.readFile(./sway-headless-config)}
+      exec ${wayvnc}/bin/wayvnc --keyboard=pl 0.0.0.0 5900
+    '';
+  };
+  regular-config   = writeTextFile {
+    name = "sway-config";
+    text = ''
+      ${builtins.readFile(common-config)}
+      ${builtins.readFile(./sway-config)}
+      ${lib.optionalString withScaling ''
+        output * scale 2
+        seat * xcursor_theme Paper 18
+        ${lib.optionalString withExtraPackages "xwayland scale 2"}
+      ''}
+      exec --no-startup-id ${redshift-wayland'}/bin/redshift \
+        -m wayland -l 51.12:17.05
+      exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
+      exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob \
+        | ${wob}/bin/wob
+      exec ${swayidle}/bin/swayidle -w \
+        timeout 300 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"'
     '';
   };
   sway'            = sway.override {
@@ -79,25 +106,20 @@ in symlinkJoin {
   buildInputs = [ makeWrapper ];
   paths       = [ sway' ];
   postBuild   = ''
-    wrapProgram "$out/bin/sway" \
-      --add-flags "-c ${sway-config}" \
-      --prefix PATH : ${lib.makeBinPath[
-        bemenu
-        firefox-wayland
-        i3status'
-        kitty'
-        pavucontrol
-        qutebrowser
-        wl-clipboard wob
-      ]} ${lib.optionalString withExtraPackages '' \
-        --prefix PATH : ${lib.makeBinPath[
-          ferdi'
-          idea-ultimate' imv
-          mpv
-          redshift-wayland'
-          xwayland'
-          zoom-us]
-        }
+    mv $out/bin/sway $out/bin/sway-clean
+
+    makeWrapper "$out/bin/sway-clean" $out/bin/sway \
+      --add-flags "-c ${regular-config}" \
+      --prefix PATH : ${bin-paths} ${lib.optionalString withExtraPackages '' \
+        --prefix PATH : ${bin-paths-extra}
+      ''}
+
+    makeWrapper "$out/bin/sway-clean" $out/bin/sway-headless \
+      --add-flags "-c ${headless-config}" \
+      --set WLR_BACKENDS "headless" \
+      --set WLR_LIBINPUT_NO_DEVICES 1 \
+      --prefix PATH : ${bin-paths} ${lib.optionalString withExtraPackages '' \
+        --prefix PATH : ${bin-paths-extra} \
       ''}
   '';
 }

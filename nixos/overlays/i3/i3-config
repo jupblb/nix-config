@@ -2,7 +2,6 @@
 #
 ### Startup
 exec --no-startup-id xset m 4/2 0
-exec --no-startup-id redshift -l 51.12:17.05
 
 ### Variables
 set $wmmsg i3-msg

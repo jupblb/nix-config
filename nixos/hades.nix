@@ -52,8 +52,8 @@ in {
   hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
   hardware.pulseaudio.package        = pkgs.pulseaudioFull;
 
-  networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 ];
-  networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 ];
+  networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 5900 ];
+  networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 5900 ];
   networking.hostName                 = "hades";
   networking.networkmanager.enable    = true;
 

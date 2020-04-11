@@ -1,7 +1,7 @@
 {
   bemenu, dunst, firefox, ferdi', gnome-screenshot, i3-gaps, i3status',
   idea-ultimate', imv, kitty', lib, makeWrapper, mpv, pavucontrol, qutebrowser,
-  redshift, symlinkJoin, writeTextFile, zoom-us
+  symlinkJoin, writeTextFile, zoom-us
 }:
 
 let
@@ -33,14 +33,13 @@ in symlinkJoin {
       --add-flags "-c ${i3Config}" \
       --prefix PATH : ${lib.makeBinPath[
         bemenu
-        firefox ferdi'
+        ferdi' firefox
         gnome-screenshot
         i3status' idea-ultimate' imv
         kitty'
         mpv
         pavucontrol
         qutebrowser'
-        redshift
         zoom-us
       ]}
   '';

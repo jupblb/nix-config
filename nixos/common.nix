@@ -71,18 +71,18 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
-    bash.enableCompletion        = true;
-    bash.promptInit              = builtins.readFile(./misc/bashrc);
-    bash.shellAliases.ls         = "ls --color=auto";
-    evince.enable                = true;
-    fish.enable                  = true;
-    fish.interactiveShellInit    = ''
+    bash.enableCompletion       = true;
+    bash.promptInit             = builtins.readFile(./misc/bashrc);
+    bash.shellAliases.ls        = "ls --color=auto";
+    evince.enable               = true;
+    fish.enable                 = true;
+    fish.interactiveShellInit   = ''
       ${builtins.readFile(./misc/fishrc)}
       ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
     '';
-    fish.shellAliases.nix-shell  = "nix-shell --command fish";
-    fish.shellAliases.ssh        = "env TERM=xterm-256color ssh";
-    ssh.extraConfig              = builtins.readFile(./misc/ssh-config);
+    fish.shellAliases.nix-shell = "nix-shell --command fish";
+    fish.shellAliases.ssh       = "env TERM=xterm-256color ssh";
+    ssh.extraConfig             = builtins.readFile(./misc/ssh-config);
   };
 
   services = {
