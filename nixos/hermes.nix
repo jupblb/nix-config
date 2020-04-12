@@ -16,17 +16,18 @@ in {
     ./common.nix
   ];
 
-  boot.initrd.availableKernelModules               = [
+  boot.initrd.availableKernelModules          = [
     "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"
   ];
-  boot.initrd.kernelModules            = [ "i915" ];
-  boot.kernelPackages                  = pkgs.linuxPackages_latest;
-  boot.kernelParams                    = [
+  boot.initrd.kernelModules                   = [ "i915" ];
+  boot.kernelPackages                         = pkgs.linuxPackages_latest;
+  boot.kernelParams                           = [
     "reboot=pci" "i915.enable_guc=2" "inte_idle.max_cstate=1" "i915.enable_dc=0"
   ];
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.enable      = true;
-  boot.tmpOnTmpfs                      = true;
+  boot.loader.efi.canTouchEfiVariables        = true;
+  boot.loader.systemd-boot.configurationLimit = 3;
+  boot.loader.systemd-boot.enable             = true;
+  boot.tmpOnTmpfs                             = true;
 
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];

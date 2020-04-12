@@ -3,8 +3,8 @@
   fetchpatch, firefox-wayland, fontutil, grim, i3status', idea-ultimate', imv,
   kitty', lib, makeWrapper, mako, mpv, pavucontrol, qutebrowser,
   redshift-wayland', slurp, symlinkJoin, sway, sway-unwrapped, swayidle,
-  utilmacros, wayvnc, wdisplays, wl-clipboard, wlroots, wob, writeTextFile,
-  xdg-user-dirs, xorgserver, xwayland, zoom-us, stdenv, 
+  swaylock, utilmacros, wayvnc, wdisplays, wl-clipboard, wlroots, wob,
+  writeTextFile, xdg-user-dirs, xorgserver, xwayland, zoom-us, stdenv, 
 
   withExtraPackages ? false,
   withScaling ? false
@@ -12,7 +12,14 @@
 
 let
   bin-paths        = lib.makeBinPath[
-    bemenu firefox-wayland i3status' kitty' pavucontrol qutebrowser wl-clipboard
+    bemenu
+    firefox-wayland
+    i3status'
+    kitty'
+    pavucontrol
+    swaylock
+    qutebrowser
+    wl-clipboard
   ];
   bin-paths-extra  = lib.makeBinPath[
     ferdi' idea-ultimate' imv mpv xwayland' wdisplays zoom-us
