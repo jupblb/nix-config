@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 let
+  battery-level     = pkgs.writeScriptBin "battery" ''
+    #!/usr/bin/env sh
+    echo $(cat /sys/class/power_supply/hidpp_battery_0/capacity_level)
+  '';
   chromium-firmware = pkgs.fetchgit {
     url    = "https://chromium.googlesource.com/chromiumos/third_party/linux-firmware";
     rev    = "6e5869c8ea7679009c8f8a301153face63d6bfd4";
@@ -33,7 +37,7 @@ in {
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
 
-  environment.systemPackages = with pkgs.unstable; [ sway'' ];
+  environment.systemPackages = with pkgs.unstable; [ battery-level sway'' ];
   environment.variables      = { MESA_LOADER_DRIVER_OVERRIDE = "iris"; };
 
   fileSystems = {
