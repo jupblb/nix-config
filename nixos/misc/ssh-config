@@ -21,3 +21,9 @@ Host *.amazonaws.com
 
 Host *.bitbucket.org
     AddressFamily inet
+
+Host hades
+  HostName jupblb.ddns.net
+  User jupblb
+  IdentitiesOnly yes
+  IdentityFile /home/jupblb/.ssh/id_rsa

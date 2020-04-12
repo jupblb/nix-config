@@ -4,7 +4,7 @@ let
   userHome = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)";
 in {
   boot.kernelParams         = [ "mitigations=off" ];
-  boot.loader.timeout       = 1;
+  boot.loader.timeout       = 3;
   boot.supportedFilesystems = [ "ntfs" "exfat" ];
 
   console.colors     = [
