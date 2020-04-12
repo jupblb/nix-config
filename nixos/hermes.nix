@@ -6,8 +6,14 @@ let
     withScaling       = true;
   };
 in {
-  imports = [ ./common.nix ];
+  imports = [
+    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+    ./common.nix
+  ];
 
+  boot.initrd.availableKernelModules               = [
+    "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"
+  ];
   boot.kernelPackages                  = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.enable      = true;
@@ -21,8 +27,8 @@ in {
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
-#   "/boot".device = "/dev/disk/by-label/boot";
-#   "/boot".fsType = "vfat";
+    "/boot".device = "/dev/disk/by-uuid/7E3B-F184";
+    "/boot".fsType = "vfat";
     "/data".device = "/dev/disk/by-label/data";
     "/data".fsType = "ext4";
   };
@@ -38,6 +44,8 @@ in {
   networking.networkmanager.enable    = true;
 
   nix.maxJobs = 8;
+
+  powerManagement.cpuFreqGovernor = "powersave";
 
   services.fstrim.enable = true;
 
