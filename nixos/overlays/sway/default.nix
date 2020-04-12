@@ -6,6 +6,7 @@
   swaylock, utilmacros, wayvnc, wdisplays, wl-clipboard, wlroots, wob,
   writeTextFile, xdg-user-dirs, xorgserver, xwayland, zoom-us, stdenv, 
 
+  additionalConfig ? "",
   withExtraPackages ? false,
   withScaling ? false
 }:
@@ -54,6 +55,7 @@ let
     text = ''
       ${builtins.readFile(common-config)}
       ${builtins.readFile(./sway-config)}
+      ${additionalConfig}
       ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}
       exec --no-startup-id ${redshift-wayland'}/bin/redshift \
         -m wayland -l 51.12:17.05
