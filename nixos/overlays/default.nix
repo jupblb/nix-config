@@ -10,7 +10,9 @@ self: pkgs: {
     inherit (pkgs.gnome3) gnome-screenshot;
   };
   i3status'         = pkgs.callPackage ./i3status { };
-  idea-ultimate'    = pkgs.callPackage ./idea { };
+  idea-ultimate'    = pkgs.callPackage ./idea {
+    inherit (pkgs.jetbrains) idea-ultimate jdk;
+  };
   kitty'            = pkgs.callPackage ./kitty { };
   neovim'           = pkgs.callPackage ./neovim {
     inherit (pkgs.nodePackages) bash-language-server eslint npm;
