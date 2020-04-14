@@ -85,6 +85,8 @@ in {
     ssh.extraConfig             = builtins.readFile(./misc/ssh-config);
   };
 
+  security.pam.services.swaylock.text = "auth include login";
+
   services = {
     acpid.enable                         = true;
     openssh.openFirewall                 = true;
