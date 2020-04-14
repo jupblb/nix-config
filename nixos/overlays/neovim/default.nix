@@ -7,12 +7,12 @@
 let
   coc-nvim'          = vimUtils.buildVimPluginFrom2Nix rec {
     pname   = "coc-nvim";
-    version = "0.0.77";
+    version = "0.0.78";
     src     = fetchFromGitHub {
       owner  = "neoclide";
       repo   = "coc.nvim";
-      rev    = "78af80302de9ee96237afcc4f290ff756cbc41b8";
-      sha256 = "1nx8hn5vb82qcykwzjdpd4sh1vsc8nm5068qmdf7sjw1rldn5hkb";
+      rev    = "705f94fdd3e9919b6f3c69e4dd44bf3bb5167f60";
+      sha256 = "1r8ysly8lcfpxky31mj5n5r641k44di5pa8n80l95v7ik939h3ws";
     };
   };
   gruvbox'           = vimUtils.buildVimPluginFrom2Nix rec {
