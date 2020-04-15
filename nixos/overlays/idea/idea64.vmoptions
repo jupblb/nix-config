@@ -18,3 +18,4 @@
 -Dawt.useSystemAAFontSettings=lcd
 -Dsun.java2d.renderer=sun.java2d.marlin.MarlinRenderingEngine
 -Dsun.tools.attach.tmp.only=true
+-Djbre.popupwindow.settype=false

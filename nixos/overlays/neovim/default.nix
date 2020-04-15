@@ -55,15 +55,16 @@ let
       packages.myVimPackage = with vimPlugins; {
         opt   = [ preview-markdown' ];
         start = [
-          airline
-#         coc-eslint
-          coc-java
-#         coc-json
-#         coc-metals
           coc-nvim'
-#         coc-python
+
+          airline
+          coc-eslint
+          coc-java
+          coc-json
+          coc-metals
+          coc-python
 #         coc-rust-analyzer
-#         coc-tsserver
+          coc-tsserver
           easymotion
           fugitive
           fzf-vim
