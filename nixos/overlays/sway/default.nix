@@ -13,14 +13,7 @@
 
 let
   bin-paths        = lib.makeBinPath[
-    bemenu
-    firefox-wayland
-    i3status'
-    kitty'
-    pavucontrol
-    swaylock
-    qutebrowser
-    wl-clipboard
+    bemenu firefox-wayland i3status' kitty' pavucontrol qutebrowser wl-clipboard
   ];
   bin-paths-extra  = lib.makeBinPath[
     ferdi' idea-ultimate' imv mpv xwayland' wdisplays zoom-us
@@ -65,6 +58,7 @@ let
       exec ${swayidle}/bin/swayidle -w \
         timeout 300 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"'
+      bindsym $mod+BackSpace exec ${swaylock}/bin/swaylock
     '';
   };
   sway'            = sway.override {
