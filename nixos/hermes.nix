@@ -79,7 +79,8 @@ in {
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  services.fstrim.enable = true;
+  services.fstrim.enable    = true;
+  services.logind.lidSwitch = "ignore";
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
