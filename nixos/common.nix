@@ -76,9 +76,10 @@ in {
     bash.shellAliases.ls        = "ls --color=auto";
     evince.enable               = true;
     fish.enable                 = true;
-    fish.interactiveShellInit   = ''
+    fish.interactiveShellInit   = with pkgs; ''
       ${builtins.readFile(./misc/fishrc)}
-      ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
+      ${xdg-user-dirs}/bin/xdg-user-dirs-update
+      ${fortune}/bin/fortune -sa
     '';
     fish.shellAliases.nix-shell = "nix-shell --command fish";
     fish.shellAliases.ssh       = "env TERM=xterm-256color ssh";

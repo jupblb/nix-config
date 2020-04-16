@@ -42,6 +42,7 @@ settings:
     '*://igeolise.myjetbrains.com/*': true
     '*://iris/*': true
     '*://mail.google.com/*': true
+    '*://teamcity.igeolise.com/*': true
     '*://www.dropbox.com/*': true
     '*://www.linkedin.com/*': true
     '*://www.messenger.com/*': true
