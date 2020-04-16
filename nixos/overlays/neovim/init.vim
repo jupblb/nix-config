@@ -31,8 +31,13 @@ nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
 
 " Airline
 set noshowmode
-let g:airline_powerline_fonts = 1
-let g:airline_symbols_ascii = 0
+if ( $TERM == 'linux' )
+    let g:airline_symbols_ascii = 1
+    let g:webdevicons_enable_airline_statusline = 0
+else
+    let g:airline_powerline_fonts = 1
+    let g:airline_symbols_ascii = 0
+endif
 
 " coc.nvim
 set cmdheight=2
@@ -124,16 +129,22 @@ let g:preview_markdown_parser = 'glow'
 let g:preview_markdown_vertical = 1
 
 " Startify
-function! StartifyEntryFormat()
-    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
-endfunction
+if ( $TERM != 'linux' )
+    function! StartifyEntryFormat()
+        return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+    endfunction
+endif
 
 " Opt plugins auto load
 autocmd FileType markdown :packadd preview-markdown
 
 " Colorscheme
-let g:airline_theme = 'gruvbox'
-let g:gruvbox_contrast_light = 'hard'
-let g:gruvbox_italic = 1
-colorscheme gruvbox
+if ( $TERM == 'linux' )
+    colorscheme pablo
+else
+    let g:airline_theme = 'gruvbox'
+    let g:gruvbox_contrast_light = 'hard'
+    let g:gruvbox_italic = 1
+    colorscheme gruvbox
+endif
 
