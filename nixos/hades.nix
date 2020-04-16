@@ -22,6 +22,7 @@ in {
   boot.initrd.kernelModules                        = [ "amdgpu" ];
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 524288;
   boot.kernel.sysctl."vm.swappiness"               = 20;
+  boot.kernelModules                               = [ "kvm-intel" ];
   boot.kernelPackages                              = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables             = true;
   boot.loader.systemd-boot.enable                  = true;
