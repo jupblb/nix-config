@@ -36,6 +36,7 @@ settings:
     '*://*.youtube.com/*': true
     '*://bitbucket.org/*': true
     '*://calendar.google.com/*': true
+    '*://codeforces.com/*': true
     '*://docs.google.com/*': true
     '*://github.com/*': true
     '*://igeolise.charliehr.com/*': true
@@ -46,6 +47,7 @@ settings:
     '*://www.dropbox.com/*': true
     '*://www.linkedin.com/*': true
     '*://www.messenger.com/*': true
+    '*://www.overleaf.com/*': true
     global: false
     https://translate.google.com/: true
     https://www.gazeta.pl/0,0.html: true
