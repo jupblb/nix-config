@@ -1,17 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  preview-markdown  = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
-    pname   = "preview-markdown";
-    version = "2020-04-02";
-    src     = pkgs.fetchFromGitHub {
-      owner  = "skanehira";
-      repo   = "preview-markdown.vim";
-      rev    = "a9520f6a218eb085a0aa1c8f55568e5bbb8b6840";
-      sha256 = "1qn0dw1y4xcmaw876v4d3zs30h5gmvv2ppk1niw0hjb9c3nbisy7";
-    };
-  };
-  userHome          = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)";
+  userHome = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)";
 in {
   home.packages         = with pkgs.unstable; [
     ammonite' gcc neovim' python3 ranger' rustup sbt
@@ -38,7 +28,16 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
-    fish                      = {
+    firefox = {
+      enable            = true;
+      package           = pkgs.unstable.firefox-wayland;
+      profiles."jupblb" = {
+        extraConfig = builtins.readFile(./misc/firefox/user.js);
+        userContent = builtins.readFile(./misc/firefox/user.css);
+      };
+    };
+
+    fish = {
       enable               = true;
       interactiveShellInit = ''
         function fish_greeting; ${pkgs.fortune}/bin/fortune -sa; end;
@@ -55,17 +54,16 @@ in {
           sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
         };
       } ];
-      shellAliases          = {
+      shellAliases         = {
         nix-shell = "nix-shell --command fish";
         ssh       = "env TERM=xterm-256color ssh";
       };
     };
 
-    fzf.defaultOptions        = [ "--color=light" ];
-    fzf.enable                = true;
-    fzf.enableFishIntegration = true;
+    fzf.defaultOptions  = [ "--color=light" ];
+    fzf.enable          = true;
 
-    git                       = {
+    git = {
       enable    = true;
       ignores   = [ ".bloop" ".metals" ".idea" "metals.sbt" ".factorypath" ];
       package   = pkgs.git';
@@ -73,22 +71,23 @@ in {
       userName  = "jupblb";
     };
 
-    kitty.enable              = true;
-    kitty.extraConfig         = builtins.readFile(./misc/kitty.conf);
+    kitty.enable      = true;
+    kitty.extraConfig = builtins.readFile(./misc/kitty.conf);
 
-    zathura.enable            = true;
-    zathura.extraConfig       = "set selection-clipboard clipboard";
+    zathura.enable      = true;
+    zathura.extraConfig = "set selection-clipboard clipboard";
   };
 
   xdg.userDirs = {
-    desktop      = "\$HOME/desktop";
-    documents    = "\$HOME/documents";
-    download     = "\$HOME/downloads";
-    enable       = true;
-    music        = "\$HOME/music";
-    pictures     = "\$HOME/pictures";
-    publicShare  = "\$HOME/public";
-    templates    = "\$HOME";
-    videos       = "\$HOME";
+    desktop     = "\$HOME/desktop";
+    documents   = "\$HOME/documents";
+    download    = "\$HOME/downloads";
+    enable      = true;
+    music       = "\$HOME/music";
+    pictures    = "\$HOME/pictures";
+    publicShare = "\$HOME/public";
+    templates   = "\$HOME";
+    videos      = "\$HOME";
   };
 }
+

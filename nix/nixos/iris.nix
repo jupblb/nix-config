@@ -8,17 +8,19 @@ in {
     ./common.nix
   ];
 
-  boot.blacklistedKernelModules          = [ "brcmfmac" ];
-  boot.consoleLogLevel                   = 7;
-  boot.kernelPackages                    = pkgs.linuxPackages_rpi4;
-  boot.loader.grub.enable                = false;
-  boot.loader.raspberryPi.enable         = true;
-  boot.loader.raspberryPi.firmwareConfig = ''
-    disable_overscan=1
-    dtparam=audio=on
-    gpu_mem=256
-  '';
-  boot.loader.raspberryPi.version        = 4;
+  boot = {
+    blacklistedKernelModules          = [ "brcmfmac" ];
+    consoleLogLevel                   = 7;
+    kernelPackages                    = pkgs.linuxPackages_rpi4;
+    loader.grub.enable                = false;
+    loader.raspberryPi.enable         = true;
+    loader.raspberryPi.firmwareConfig = ''
+      disable_overscan=1
+      dtparam=audio=on
+      gpu_mem=256
+    '';
+    loader.raspberryPi.version        = 4;
+  };
 
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
@@ -51,20 +53,26 @@ in {
   fileSystems."/boot".device = "/dev/disk/by-label/FIRMWARE";
   fileSystems."/boot".fsType = "vfat";
 
-  hardware.bluetooth.enable        = true;
-  hardware.deviceTree.base         = pkgs.device-tree_rpi;
-  hardware.deviceTree.overlays     = [ "${pkgs.device-tree_rpi.overlays}/vc4-fkms-v3d.dtbo" ];
-  hardware.opengl.setLdLibraryPath = true;
-  hardware.opengl.package          = pkgs.mesa_drivers;
-  hardware.pulseaudio.extraModules = [ pkgs.pulseaudio-modules-bt ];
-  hardware.pulseaudio.package      = pkgs.pulseaudioFull;
+  hardware = {
+    bluetooth.enable        = true;
+    deviceTree.base         = pkgs.device-tree_rpi;
+    deviceTree.overlays     = [
+      "${pkgs.device-tree_rpi.overlays}/vc4-fkms-v3d.dtbo"
+    ];
+    opengl.setLdLibraryPath = true;
+    opengl.package          = pkgs.mesa_drivers;
+  };
 
-  networking.defaultGateway                 = "192.168.1.1";
-  networking.firewall.allowedTCPPorts       = [ 53 67 80 443 ];
-  networking.firewall.allowedUDPPorts       = [ 53 67 80 443 ];
-  networking.hostName                       = "iris";
-  networking.interfaces.eth0.ipv4.addresses = [ { address = serverIP; prefixLength = 24; } ];
-  networking.wireless.enable                = false;
+  networking = {
+    defaultGateway                 = "192.168.1.1";
+    firewall.allowedTCPPorts       = [ 53 67 80 443 ];
+    firewall.allowedUDPPorts       = [ 53 67 80 443 ];
+    hostName                       = "iris";
+    interfaces.eth0.ipv4.addresses = [
+      { address = serverIP; prefixLength = 24; }
+    ];
+    wireless.enable                = false;
+  };
 
   nix.maxJobs = 2;
 

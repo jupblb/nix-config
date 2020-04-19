@@ -5,7 +5,7 @@
 }:
 
 let
-  preview-markdown'  = vimUtils.buildVimPluginFrom2Nix rec {
+  preview-markdown' = vimUtils.buildVimPluginFrom2Nix rec {
     pname   = "preview-markdown";
     version = "2020-04-02";
     src     = fetchFromGitHub {
@@ -16,7 +16,7 @@ let
     };
   };
 
-  devicon-lookup' = buildRustPackage rec {
+  devicon-lookup'   = buildRustPackage rec {
     cargoSha256 = "048yb45zr589gxvff520wh7cwlhsb3h64zqsjfy85c5y28sv6sas";
     pname       = "devicon-lookup";
     version     = "0.8.0";
@@ -29,7 +29,7 @@ let
     };
   };
 
-  neovim'         = neovim.override {
+  neovim'           = neovim.override {
     configure   = {
       customRC = builtins.readFile(./init.vim);
 

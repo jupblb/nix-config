@@ -1,9 +1,9 @@
 {
-  bemenu, edid-generator, ferdi', fetchFromGitHub, fetchpatch, firefox-wayland,
-  grim, i3status', idea-ultimate', imv, lib, makeWrapper, mako, mpv,
-  pavucontrol, qutebrowser, redshift-wayland', slurp, symlinkJoin, sway,
-  sway-unwrapped, swayidle, swaylock, wayvnc, wdisplays, wl-clipboard, wlroots',
-  wob, writeTextFile, xdg-user-dirs, xwayland', zoom-us,
+  bemenu, edid-generator, ferdi', fetchFromGitHub, fetchpatch, grim, i3status',
+  idea-ultimate', imv, lib, makeWrapper, mako, mpv, pavucontrol, qutebrowser,
+  redshift-wayland', remmina, slurp, symlinkJoin, sway, sway-unwrapped,
+  swayidle, swaylock, wayvnc, wdisplays, wl-clipboard, wlroots', wob,
+  writeTextFile, xdg-user-dirs, xwayland', zoom-us,
 
   withExtraPackages ? false,
   withScaling ? false
@@ -12,10 +12,10 @@
 let
   bin-paths = {
     common = lib.makeBinPath[
-      bemenu firefox-wayland i3status' pavucontrol qutebrowser wl-clipboard
+      bemenu i3status' pavucontrol qutebrowser wl-clipboard
     ];
     extra  = lib.makeBinPath[
-      ferdi' idea-ultimate' imv mpv xwayland' wdisplays zoom-us
+      ferdi' idea-ultimate' imv mpv remmina xwayland' wdisplays zoom-us
     ];
   };
   config    = {

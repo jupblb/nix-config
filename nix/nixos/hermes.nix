@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  battery-level     = pkgs.writeScriptBin "battery" ''
-    #!/usr/bin/env sh
-    echo $(cat /sys/class/power_supply/hidpp_battery_0/capacity_level)
-  '';
   chromium-firmware = pkgs.fetchgit {
     url    = "https://chromium.googlesource.com/chromiumos/third_party/linux-firmware";
     rev    = "6e5869c8ea7679009c8f8a301153face63d6bfd4";
@@ -20,23 +16,25 @@ in {
     ./common.nix
   ];
 
-  boot.initrd.availableKernelModules          = [
-    "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"
-  ];
-  boot.initrd.kernelModules                   = [ "i915" ];
-  boot.kernelPackages                         = pkgs.linuxPackages_latest;
-  boot.kernelParams                           = [
-    "reboot=pci" "i915.enable_guc=2" "inte_idle.max_cstate=1" "i915.enable_dc=0"
-  ];
-  boot.loader.efi.canTouchEfiVariables        = true;
-  boot.loader.systemd-boot.configurationLimit = 3;
-  boot.loader.systemd-boot.enable             = true;
-  boot.tmpOnTmpfs                             = true;
+  boot = {
+    initrd.availableKernelModules          = [
+      "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"
+    ];
+    initrd.kernelModules                   = [ "i915" ];
+    kernelPackages                         = pkgs.linuxPackages_latest;
+    kernelParams                           = [
+      "reboot=pci" "i915.enable_guc=2" "inte_idle.max_cstate=1" "i915.enable_dc=0"
+    ];
+    loader.efi.canTouchEfiVariables        = true;
+    loader.systemd-boot.configurationLimit = 3;
+    loader.systemd-boot.enable             = true;
+    tmpOnTmpfs                             = true;
+  };
 
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
 
-  environment.systemPackages = with pkgs.unstable; [ battery-level sway'' ];
+  environment.systemPackages = with pkgs.unstable; [ sway'' ];
   environment.variables      = { MESA_LOADER_DRIVER_OVERRIDE = "iris"; };
 
   fileSystems = {
@@ -46,35 +44,39 @@ in {
     "/boot".fsType = "vfat";
   };
 
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.firmware                  = [
-    (pkgs.runCommandNoCC "intel-wifi" {} ''
-      mkdir -p $out/lib/firmware
-      cp ${chromium-firmware}/iwlwifi-* $out/lib/firmware/
-      ln -s $out/lib/firmware/iwlwifi-Qu-c0-hr-b0-50.ucode \
-        $out/lib/firmware/iwlwifi-Qu-b0-hr-b0-50.ucode
-    '')
-  ];
-  hardware.opengl.package            = (pkgs.mesa.override {
-    galliumDrivers = [ "nouveau" "virgl" "swrast" "iris" ];
-  }).drivers;
-  hardware.opengl.extraPackages      = with pkgs; [
-    intel-media-driver libvdpau-va-gl vaapiIntel' vaapiVdpau
-  ];
-  hardware.pulseaudio.package        = pkgs.pulseaudioFull;
+  hardware = {
+    cpu.intel.updateMicrocode = true;
+    firmware                  = [
+      (pkgs.runCommandNoCC "intel-wifi" {} ''
+        mkdir -p $out/lib/firmware
+        cp ${chromium-firmware}/iwlwifi-* $out/lib/firmware/
+        ln -s $out/lib/firmware/iwlwifi-Qu-c0-hr-b0-50.ucode \
+          $out/lib/firmware/iwlwifi-Qu-b0-hr-b0-50.ucode
+      '')
+    ];
+    opengl.package            = (pkgs.mesa.override {
+      galliumDrivers = [ "nouveau" "virgl" "swrast" "iris" ];
+    }).drivers;
+    opengl.extraPackages      = with pkgs; [
+      intel-media-driver libvdpau-va-gl vaapiIntel' vaapiVdpau
+    ];
+    pulseaudio.package        = pkgs.pulseaudioFull;
+  };
 
-  networking.firewall.allowedTCPPorts = [ 5900 ];
-  networking.firewall.allowedUDPPorts = [ 5900 ];
-  networking.hostName                 = "hermes";
-  networking.networkmanager.enable    = true;
+  networking = {
+    firewall.allowedTCPPorts = [ 5900 ];
+    firewall.allowedUDPPorts = [ 5900 ];
+    hostName                 = "hermes";
+    networkmanager.enable    = true;
+  };
 
-  nix.buildMachines = [ {
+  nix.buildMachines     = [ {
     hostName = "hades";
     system   = "x86_64-linux";
     maxJobs  = 1;    
   } ];
   nix.distributedBuilds = true;
-  nix.maxJobs = 8;
+  nix.maxJobs           = 8;
 
   powerManagement.cpuFreqGovernor = "performance";
 
@@ -83,12 +85,7 @@ in {
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
-  system.extraSystemBuilderCmds = with pkgs; ''
-    mkdir -p $out/pkgs
-    ln -s ${openjdk8} $out/pkgs/openjdk8
-    ln -s ${openjdk} $out/pkgs/openjdk
-  '';
-  system.stateVersion           = "20.03";
+  system.stateVersion = "20.03";
 
   time.hardwareClockInLocalTime = true;
 }
