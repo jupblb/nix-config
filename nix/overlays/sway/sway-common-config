@@ -132,7 +132,6 @@ bar {
 
     status_command exec i3status
 
-    modifier $mod+Shift
     separator_symbol " | "
     font pango:PragmataPro Mono Liga 11
 
