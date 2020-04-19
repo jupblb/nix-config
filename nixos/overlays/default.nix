@@ -1,29 +1,26 @@
-self: pkgs: { 
-  ammonite'         = pkgs.callPackage ./ammonite { };
-  bat'              = pkgs.callPackage ./bat { };
-  ferdi'            = pkgs.callPackage ./ferdi { };
-  git'              = pkgs.callPackage ./git {
-    inherit (pkgs.gitAndTools) diff-so-fancy;
+self: pkgs: with pkgs; { 
+  ammonite'         = callPackage ./ammonite { };
+  bat'              = callPackage ./bat { };
+  ferdi'            = callPackage ./ferdi { };
+  git'              = callPackage ./git {
+    inherit (gitAndTools) diff-so-fancy;
   };
-  glow'             = pkgs.callPackage ./glow { };
-  i3'               = pkgs.callPackage ./i3 {
-    inherit (pkgs.gnome3) gnome-screenshot;
+  glow'             = callPackage ./glow { };
+  i3status'         = callPackage ./i3status { };
+  idea-ultimate'    = callPackage ./idea {
+    inherit (jetbrains) idea-ultimate jdk;
   };
-  i3status'         = pkgs.callPackage ./i3status { };
-  idea-ultimate'    = pkgs.callPackage ./idea {
-    inherit (pkgs.jetbrains) idea-ultimate jdk;
+  kitty'            = callPackage ./kitty { };
+  neovim'           = callPackage ./neovim {
+    inherit (nodePackages) bash-language-server eslint npm;
+    inherit (python3Packages) python-language-server;
+    inherit (rustPlatform) buildRustPackage;
   };
-  kitty'            = pkgs.callPackage ./kitty { };
-  neovim'           = pkgs.callPackage ./neovim {
-    inherit (pkgs.nodePackages) bash-language-server eslint npm;
-    inherit (pkgs.python3Packages) python-language-server;
-    inherit (pkgs.rustPlatform) buildRustPackage;
+  ranger'           = callPackage ./ranger { };
+  redshift-wayland' = callPackage ./redshift-wayland {
+    inherit (python3Packages) pygobject3 python pyxdg wrapPython;
   };
-  ranger'           = pkgs.callPackage ./ranger { };
-  redshift-wayland' = pkgs.callPackage ./redshift-wayland {
-    inherit (pkgs.python3Packages) pygobject3 python pyxdg wrapPython;
-  };
-  sbt'              = pkgs.callPackage ./sbt { };
-  sway'             = pkgs.callPackage ./sway { };
-  vaapiIntel'       = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  sbt'              = callPackage ./sbt { };
+  sway'             = callPackage ./sway { };
+  vaapiIntel'       = vaapiIntel.override { enableHybridCodec = true; };
 }

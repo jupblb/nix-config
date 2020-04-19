@@ -25,7 +25,6 @@ let
       output * background ${builtins.toString(./wallpaper.png)} fill
       set $print ${grim}/bin/grim \
         ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png') 
-      ${builtins.readFile(../common-wm-config)}
       ${builtins.readFile(./sway-common-config)}
       ${lib.optionalString withScaling ''
         output * scale 2

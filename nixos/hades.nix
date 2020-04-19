@@ -5,14 +5,6 @@ let
     withExtraPackages = true;
     withScaling       = true;
   };
-  xresources  = pkgs.writeTextFile {
-    name = "Xresources";
-    text = ''
-      Xcursor.size: 24
-      Xcursor.theme: Paper
-      Xft.dpi: 163
-    '';
-  };
 in {
   imports = [ ./common.nix ];
 
@@ -31,14 +23,7 @@ in {
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
 
-  environment.etc."X11/xinit/xinitrc".text = ''
-    xrdb -merge ${xresources}
-    ${pkgs.feh}/bin/feh --bg-scale ${./misc/wallpaper.png}
-    exec i3
-  '';
-  environment.systemPackages               = with pkgs.unstable; [
-    dropbox-cli sway-scaled
-  ];
+  environment.systemPackages = with pkgs.unstable; [ dropbox-cli sway-scaled ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -93,12 +78,6 @@ in {
     udev.extraRules                      = ''
       ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
     '';
-    xserver.displayManager.startx.enable = true;
-    xserver.enable                       = true;
-    xserver.layout                       = "pl";
-    xserver.windowManager.i3.enable      = true;
-    xserver.windowManager.i3.package     = pkgs.unstable.i3';
-    xserver.videoDrivers                 = [ "amdgpu" ];
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];

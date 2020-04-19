@@ -44,7 +44,8 @@ in {
     };
   };
 
-  fonts.fonts = [ pkgs.vistafonts ];
+  fonts.enableDefaultFonts = true;
+  fonts.fonts              = [ pkgs.vistafonts ];
 
   hardware = {
     enableRedistributableFirmware = true;
