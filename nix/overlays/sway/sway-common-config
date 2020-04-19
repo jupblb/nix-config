@@ -126,25 +126,26 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 ### Status bar
-bar {                                                                               
-    position top                                                                    
-    mode hide                                                                       
-                                                                                    
-    status_command exec i3status                  
-                                                                                    
-    separator_symbol " | "                                                          
-    font pango:PragmataPro Mono Liga 11                                             
-                                                                                    
-    colors {                                                                        
-        background $bg                                                              
-        statusline $fg                                                              
-                                                                                    
-        # workspaces section border    background text                              
-        focused_workspace    $green    $green     $fg                               
-        inactive_workspace   $bg       $fg        $bg                               
-        urgent_workspace     $bg       $red       $fg                               
-    }                                                                               
-                                                                                    
-    tray_output none                                                                
+bar {
+    position top
+    mode hide
+
+    status_command exec i3status
+
+    modifier $mod+Shift
+    separator_symbol " | "
+    font pango:PragmataPro Mono Liga 11
+
+    colors {
+        background $bg
+        statusline $fg
+
+        # workspaces section border    background text
+        focused_workspace    $green    $green     $fg
+        inactive_workspace   $bg       $fg        $bg
+        urgent_workspace     $bg       $red       $fg
+    }
+
+    tray_output none
 }
 
