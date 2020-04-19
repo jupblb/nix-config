@@ -22,7 +22,7 @@ in {
       ammonite'
       file fzf
       gcc git'
-      htop 
+      home-manager htop 
       neovim'
       paper-icon-theme python3
       ranger' rustup
