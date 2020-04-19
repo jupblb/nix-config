@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  userHome = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)";
+  homeManager = "https://github.com/rycee/home-manager/archive/master.tar.gz";
 in {
   boot.kernelParams         = [ "mitigations=off" ];
   boot.loader.timeout       = 3;
@@ -16,36 +16,11 @@ in {
   console.earlySetup = true;
   console.keyMap     = "pl";
 
-  environment = {
-    etc."xdg/user-dirs.defaults".text = builtins.readFile(./misc/user-dirs);
-    systemPackages                    = with pkgs.unstable; [
-      ammonite'
-      file fzf
-      gcc git'
-      home-manager htop 
-      neovim'
-      paper-icon-theme python3
-      ranger' rustup
-      sbt'
-      unzip
-    ];
-    variables                         = {
-      CARGO_HOME            = "${userHome}/.local/share/cargo";
-      EDITOR                = "vim";
-      FZF_DEFAULT_OPTS      = "--color=light";
-      HISTFILE              = "${userHome}/.cache/bash_history";
-      LESSHISTFILE          = "-";
-      MANPAGER              = "vim -c 'set ft=man' -";
-      NIXPKGS_ALLOW_UNFREE  = "1";
-      NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
-      NVIM_LISTEN_ADDRESS   = "/tmp/nvimsocket";
-      RUSTUP_HOME           = "${userHome}/.local/share/rustup";
-      XAUTHORITY            = "/tmp/Xauthority";
-    };
-  };
+  environment.systemPackages = with pkgs; [ file htop unzip ];
+  environment.variables      = { NIXPKGS_ALLOW_UNFREE  = "1"; };
 
   fonts.enableDefaultFonts = true;
-  fonts.fonts              = [ pkgs.vistafonts ];
+  fonts.fonts              = with pkgs; [ vistafonts ];
 
   hardware = {
     enableRedistributableFirmware = true;
@@ -53,8 +28,12 @@ in {
     pulseaudio.enable             = true;
   };
 
+  home-manager.users.jupblb = (import ./home.nix);
+
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
+
+  imports = [ (import "${builtins.fetchTarball homeManager}/nixos") ];
 
   networking.useDHCP = false;
 
@@ -64,7 +43,7 @@ in {
 
   nixpkgs.config.allowUnfree      = true;
   nixpkgs.config.packageOverrides = pkgs: {
-    unstable = import <nixos-unstable> {
+    unstable = import <nixpkgs-unstable> {
       config   = config.nixpkgs.config;
       overlays = config.nixpkgs.overlays;
     };
@@ -72,33 +51,25 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
-    bash.enableCompletion       = true;
-    bash.promptInit             = builtins.readFile(./misc/bashrc);
-    bash.shellAliases.ls        = "ls --color=auto";
-    evince.enable               = true;
-    fish.enable                 = true;
-    fish.interactiveShellInit   = with pkgs; ''
-      ${builtins.readFile(./misc/fishrc)}
-      ${xdg-user-dirs}/bin/xdg-user-dirs-update
-      ${fortune}/bin/fortune -sa
-    '';
-    fish.shellAliases.nix-shell = "nix-shell --command fish";
-    fish.shellAliases.ssh       = "env TERM=xterm-256color ssh";
-    ssh.extraConfig             = builtins.readFile(./misc/ssh-config);
+    bash.enableCompletion = true;
+    bash.promptInit       = builtins.readFile(./misc/bashrc);
+    bash.shellAliases.ls  = "ls --color=auto";
+    evince.enable         = true;
+    ssh.extraConfig       = builtins.readFile(./misc/ssh-config);
   };
 
   security.pam.services.swaylock.text = "auth include login";
 
   services = {
-    acpid.enable                         = true;
-    openssh.openFirewall                 = true;
-    openssh.enable                       = true;
-    openssh.passwordAuthentication       = false;
-    openssh.permitRootLogin              = "no";
-    printing.drivers                     = [
-      pkgs.samsung-unified-linux-driver_1_00_37
+    acpid.enable                   = true;
+    openssh.openFirewall           = true;
+    openssh.enable                 = true;
+    openssh.passwordAuthentication = false;
+    openssh.permitRootLogin        = "no";
+    printing.drivers               = with pkgs; [
+      samsung-unified-linux-driver_1_00_37
     ];
-    printing.enable                      = true;
+    printing.enable                = true;
   };
 
   sound.enable = true;

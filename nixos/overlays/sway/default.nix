@@ -1,10 +1,10 @@
 {
   autoreconfHook, bemenu, edid-generator, ferdi', fetchFromGitHub, fetchgit,
   fetchpatch, firefox-wayland, fontutil, grim, i3status', idea-ultimate', imv,
-  kitty', lib, makeWrapper, mako, mpv, pavucontrol, qutebrowser,
-  redshift-wayland', slurp, symlinkJoin, sway, sway-unwrapped, swayidle,
-  swaylock, utilmacros, wayvnc, wdisplays, wl-clipboard, wlroots, wob,
-  writeTextFile, xdg-user-dirs, xorgserver, xwayland, zoom-us, stdenv, 
+  lib, makeWrapper, mako, mpv, pavucontrol, qutebrowser, redshift-wayland',
+  slurp, symlinkJoin, sway, sway-unwrapped, swayidle, swaylock, utilmacros,
+  wayvnc, wdisplays, wl-clipboard, wlroots, wob, writeTextFile, xdg-user-dirs,
+  xorgserver, xwayland, zoom-us, stdenv, 
 
   additionalConfig ? "",
   withExtraPackages ? false,
@@ -13,7 +13,7 @@
 
 let
   bin-paths        = lib.makeBinPath[
-    bemenu firefox-wayland i3status' kitty' pavucontrol qutebrowser wl-clipboard
+    bemenu firefox-wayland i3status' pavucontrol qutebrowser wl-clipboard
   ];
   bin-paths-extra  = lib.makeBinPath[
     ferdi' idea-ultimate' imv mpv xwayland' wdisplays zoom-us
@@ -48,7 +48,6 @@ let
       ${builtins.readFile(common-config)}
       ${builtins.readFile(./sway-config)}
       ${additionalConfig}
-      ${lib.optionalString withScaling "seat * xcursor_theme Paper 18"}
       exec --no-startup-id ${redshift-wayland'}/bin/redshift \
         -m wayland -l 51.12:17.05
       exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
