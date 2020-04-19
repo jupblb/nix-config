@@ -70,13 +70,7 @@ in {
     networkmanager.enable    = true;
   };
 
-  nix.buildMachines     = [ {
-    hostName = "hades";
-    system   = "x86_64-linux";
-    maxJobs  = 1;    
-  } ];
-  nix.distributedBuilds = true;
-  nix.maxJobs           = 8;
+  nix.maxJobs = 8;
 
   powerManagement.cpuFreqGovernor = "performance";
 
