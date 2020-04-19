@@ -62,7 +62,7 @@ let
       '';
     };
   };
-  sway'     = 
+  sway'     =
     let
       sway-unwrapped'  = sway-unwrapped.override { wlroots = wlroots'; };
       sway-unwrapped'' = sway-unwrapped'.overrideAttrs(old: rec {

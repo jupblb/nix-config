@@ -52,7 +52,6 @@
     bash.enableCompletion = true;
     bash.promptInit       = builtins.readFile(../misc/bashrc);
     bash.shellAliases.ls  = "ls --color=auto";
-    evince.enable         = true;
     ssh.extraConfig       = builtins.readFile(../misc/ssh-config);
   };
 
