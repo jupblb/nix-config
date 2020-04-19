@@ -76,11 +76,20 @@ let
     src     = fetchFromGitHub {
       owner  = "swaywm";
       repo   = "sway";
-      rev    = "55016729a573a171a0faa20e0dec44e703da2c45";
-      sha256 = "1ryja4bh7vzwr7cjl5zwzxd5ymbk87bhyrjay73p5whlxhysq1cp";
+      rev    = "2b15cf453e4b28324e9012515011a705c2960b30";
+      sha256 = "0adqxdyr1w7s6js81p7px918s6kgr41l75pw4v8y1jxmnb1qbsw7";
     };
   });
   wlroots'         = wlroots.overrideAttrs(old: rec {
+    mesonFlags = [
+      "-Dlibcap=enabled"
+      "-Dlogind-provider=systemd"
+      "-Dxwayland=enabled"
+      "-Dx11-backend=enabled"
+      "-Dxcb-icccm=enabled"
+      "-Dxcb-xkb=enabled"
+      "-Dxcb-errors=enabled"
+    ];
     patches = [(fetchpatch {
       url = "https://github.com/swaywm/wlroots/pull/2064.patch";
       sha256 = "0jvfxyx1nbvzljhdxbjcn4739lda61mfzpznvk9i5hw1pclbck4w";
@@ -88,8 +97,8 @@ let
     src     = fetchFromGitHub {
       owner  = "swaywm";
       repo   = "wlroots";
-      rev    = "1282c3b12fc2c0dacf0c5df9b261dfc45046e7c6";
-      sha256 = "0iz1v9zf433vcry88l63mn387717lr2z7r3dasjykyiplf6kgm2n";
+      rev    = "85e299e6c55e5478617cb167eea316cfe7ee430c";
+      sha256 = "13yhq96lglx16j8v11dfr43779ibn9z6f673w7jkq9lm06cp91qj";
     };
   });
   xorgserver'      = xorgserver.overrideAttrs(old: rec {
