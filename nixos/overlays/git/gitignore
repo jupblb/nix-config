@@ -1,7 +1,0 @@
-.bloop
-.metals
-*.gz
-.idea
-metals.sbt
-.factorypath
-

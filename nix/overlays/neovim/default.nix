@@ -5,27 +5,7 @@
 }:
 
 let
-  coc-nvim'          = vimUtils.buildVimPluginFrom2Nix rec {
-    pname   = "coc-nvim";
-    version = "0.0.78";
-    src     = fetchFromGitHub {
-      owner  = "neoclide";
-      repo   = "coc.nvim";
-      rev    = "705f94fdd3e9919b6f3c69e4dd44bf3bb5167f60";
-      sha256 = "1r8ysly8lcfpxky31mj5n5r641k44di5pa8n80l95v7ik939h3ws";
-    };
-  };
-  gruvbox'           = vimUtils.buildVimPluginFrom2Nix rec {
-    pname   = "gruvbox-community";
-    version = "2020-03-28";
-    src     = fetchFromGitHub {
-      owner   = "gruvbox-community";
-      repo    = "gruvbox";
-      rev     = "f5711c15480b83378bde13306fa997057c0c81cd";
-      sha256  = "0vx289a7av31dxm58c6kmfdnsrwnq1rzj5rwci2pqjdac8ds2qm0";
-    };
-  };
-  preview-markdown'  = vimUtils.buildVimPluginFrom2Nix rec {
+  preview-markdown' = vimUtils.buildVimPluginFrom2Nix rec {
     pname   = "preview-markdown";
     version = "2020-04-02";
     src     = fetchFromGitHub {
@@ -36,7 +16,7 @@ let
     };
   };
 
-  devicon-lookup' = buildRustPackage rec {
+  devicon-lookup'   = buildRustPackage rec {
     cargoSha256 = "048yb45zr589gxvff520wh7cwlhsb3h64zqsjfy85c5y28sv6sas";
     pname       = "devicon-lookup";
     version     = "0.8.0";
@@ -48,14 +28,15 @@ let
       sha256 = "0v4jc9ckbk6rvhw7apdfr6wp2v8gfx0w13gwpr8ka1sph9n4p3a7";
     };
   };
-  neovim'         = neovim.override {
+
+  neovim'           = neovim.override {
     configure   = {
       customRC = builtins.readFile(./init.vim);
 
       packages.myVimPackage = with vimPlugins; {
         opt   = [ preview-markdown' ];
         start = [
-          coc-nvim'
+          coc-nvim
 
           airline
           coc-eslint
@@ -69,7 +50,7 @@ let
           fugitive
           fzf-vim
           goyo
-          gruvbox'
+          gruvbox-community
           vim-devicons
           vim-grepper
 		  vim-nix

@@ -10,7 +10,6 @@ self: pkgs: with pkgs; {
   idea-ultimate'    = callPackage ./idea {
     inherit (jetbrains) idea-ultimate jdk;
   };
-  kitty'            = callPackage ./kitty { };
   neovim'           = callPackage ./neovim {
     inherit (nodePackages) bash-language-server eslint npm;
     inherit (python3Packages) python-language-server;
@@ -20,7 +19,8 @@ self: pkgs: with pkgs; {
   redshift-wayland' = callPackage ./redshift-wayland {
     inherit (python3Packages) pygobject3 python pyxdg wrapPython;
   };
-  sbt'              = callPackage ./sbt { };
   sway'             = callPackage ./sway { };
   vaapiIntel'       = vaapiIntel.override { enableHybridCodec = true; };
+  wlroots'          = callPackage ./wlroots { };
+  xwayland'         = callPackage ./xwayland { };
 }
