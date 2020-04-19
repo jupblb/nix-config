@@ -2,9 +2,7 @@
 
 let
   serverIP = "192.168.1.7";
-  sway     = pkgs.unstable.sway'.override { withScaling = true; };
-in
-{
+in {
   imports = [
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ./common.nix
@@ -48,8 +46,6 @@ in
     workdir            = "/var/lib/pihole/";
   };
 
-  environment.systemPackages = [ sway ];
-
   fileSystems."/".device     = "/dev/disk/by-label/NIXOS_SD";
   fileSystems."/".fsType     = "ext4";
   fileSystems."/boot".device = "/dev/disk/by-label/FIRMWARE";
@@ -67,14 +63,13 @@ in
   networking.firewall.allowedTCPPorts       = [ 53 67 80 443 ];
   networking.firewall.allowedUDPPorts       = [ 53 67 80 443 ];
   networking.hostName                       = "iris";
-  networking.interfaces.eth0.ipv4.addresses = [ { address = "192.168.1.7"; prefixLength = 24; } ];
+  networking.interfaces.eth0.ipv4.addresses = [ { address = serverIP; prefixLength = 24; } ];
   networking.wireless.enable                = false;
 
   nix.maxJobs = 2;
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
-  services.blueman.enable         = true;
   services.mingetty.autologinUser = "jupblb";
 
   users.users.jupblb.extraGroups = [ "docker" ];
