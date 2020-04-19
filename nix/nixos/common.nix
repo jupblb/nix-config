@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-  homeManager = "https://github.com/rycee/home-manager/archive/master.tar.gz";
-in {
+{
   boot.kernelParams         = [ "mitigations=off" ];
   boot.loader.timeout       = 3;
   boot.supportedFilesystems = [ "ntfs" "exfat" ];
@@ -28,12 +26,12 @@ in {
     pulseaudio.enable             = true;
   };
 
-  home-manager.users.jupblb = (import ./home.nix);
+  home-manager.users.jupblb = (import ../home.nix);
 
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
 
-  imports = [ (import "${builtins.fetchTarball homeManager}/nixos") ];
+  imports = [ <home-manager/nixos> ];
 
   networking.useDHCP = false;
 
@@ -48,14 +46,14 @@ in {
       overlays = config.nixpkgs.overlays;
     };
   };
-  nixpkgs.overlays                = [ (import ./overlays) ];
+  nixpkgs.overlays                = [ (import ../overlays) ];
 
   programs = {
     bash.enableCompletion = true;
-    bash.promptInit       = builtins.readFile(./misc/bashrc);
+    bash.promptInit       = builtins.readFile(../misc/bashrc);
     bash.shellAliases.ls  = "ls --color=auto";
     evince.enable         = true;
-    ssh.extraConfig       = builtins.readFile(./misc/ssh-config);
+    ssh.extraConfig       = builtins.readFile(../misc/ssh-config);
   };
 
   security.pam.services.swaylock.text = "auth include login";

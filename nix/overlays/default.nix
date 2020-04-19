@@ -21,4 +21,6 @@ self: pkgs: with pkgs; {
   };
   sway'             = callPackage ./sway { };
   vaapiIntel'       = vaapiIntel.override { enableHybridCodec = true; };
+  wlroots'          = callPackage ./wlroots { };
+  xwayland'         = callPackage ./xwayland { };
 }

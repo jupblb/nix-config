@@ -11,7 +11,6 @@ let
     sha256 = "0hd5qkj5srliplqk2sq0zjhs1smfpkvgjhb914aql0aqmfhr7bc9";
   };
   sway''            = pkgs.unstable.sway'.override {
-    additionalConfig  = "exec --no-startup-id ${pkgs.kanshi}/bin/kanshi";
     withExtraPackages = true;
     withScaling       = true;
   };
