@@ -3,11 +3,6 @@
 let
   serverIP = "192.168.1.7";
 in {
-  imports = [
-    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ./common.nix
-  ];
-
   boot = {
     blacklistedKernelModules          = [ "brcmfmac" ];
     consoleLogLevel                   = 7;
@@ -62,6 +57,11 @@ in {
     opengl.setLdLibraryPath = true;
     opengl.package          = pkgs.mesa_drivers;
   };
+
+  imports = [
+    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+    ./common.nix
+  ];
 
   networking = {
     defaultGateway                 = "192.168.1.1";

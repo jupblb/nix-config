@@ -3,8 +3,6 @@
 let
   sway'' = pkgs.unstable.sway'.override { withExtraPackages = true };
 in {
-  imports = [ ./common.nix ];
-
   boot.initrd.availableKernelModules   = [
     "ahci"
     "ehci_pci"
@@ -29,6 +27,8 @@ in {
   hardware.opengl.extraPackages      = with pkgs; [
     intel-media-driver libvdpau-va-gl vaapiIntel' vaapiVdpau
   ];
+
+  imports = [ ./common.nix ];
 
   networking.hostName              = "ares";
   networking.networkmanager.enable = true;

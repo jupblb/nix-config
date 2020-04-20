@@ -11,11 +11,6 @@ let
     withScaling       = true;
   };
 in {
-  imports = [
-    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ./common.nix
-  ];
-
   boot = {
     initrd.availableKernelModules          = [
       "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"
@@ -62,6 +57,11 @@ in {
     ];
     pulseaudio.package        = pkgs.pulseaudioFull;
   };
+
+  imports = [
+    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+    ./common.nix
+  ];
 
   networking = {
     firewall.allowedTCPPorts = [ 5900 ];
