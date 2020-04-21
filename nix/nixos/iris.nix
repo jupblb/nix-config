@@ -49,7 +49,6 @@ in {
   fileSystems."/boot".fsType = "vfat";
 
   hardware = {
-    bluetooth.enable        = true;
     deviceTree.base         = pkgs.device-tree_rpi;
     deviceTree.overlays     = [
       "${pkgs.device-tree_rpi.overlays}/vc4-fkms-v3d.dtbo"

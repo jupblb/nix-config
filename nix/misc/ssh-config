@@ -25,5 +25,4 @@ Host *.bitbucket.org
 Host hades
   HostName jupblb.ddns.net
   User jupblb
-  IdentitiesOnly yes
-  IdentityFile /home/jupblb/.ssh/id_rsa
+

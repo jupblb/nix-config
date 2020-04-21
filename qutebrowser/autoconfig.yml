@@ -42,7 +42,9 @@ settings:
     '*://igeolise.charliehr.com/*': true
     '*://igeolise.myjetbrains.com/*': true
     '*://iris/*': true
+    '*://leetcode.com/*': true
     '*://mail.google.com/*': true
+    '*://stackoverflow.com/*': true
     '*://teamcity.igeolise.com/*': true
     '*://www.dropbox.com/*': true
     '*://www.linkedin.com/*': true
