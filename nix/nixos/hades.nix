@@ -91,6 +91,11 @@ in {
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
+  system.extraSystemBuilderCmds = with pkgs; ''
+    mkdir -p $out/jdks
+    ln -s ${openjdk8}  $out/jdks/openjdk8
+    ln -s ${openjdk11} $out/jdks/openjdk11
+  '';
   system.stateVersion = "19.09";
 
   systemd.services.checkip = {
