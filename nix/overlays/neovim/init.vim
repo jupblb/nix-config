@@ -101,7 +101,7 @@ endfunction
 nnoremap ;          :Commands<CR>
 nnoremap <Leader>/  :BLines<CR>
 nnoremap <Leader>b  :Buffers<CR>
-nnoremap <Leader>f  :call Fzf("fd -HL --type f")<CR>
+nnoremap <Leader>f  :call Fzf("fd -HL --exclude '.git' --type f")<CR>
 nnoremap <Leader>gf :call 
   \ Fzf("git ls-files $(git rev-parse --show-toplevel) \| uniq")<CR>
 nnoremap <Leader>h  :History<CR>
