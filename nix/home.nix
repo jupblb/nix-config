@@ -4,7 +4,7 @@ let
   userHome = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)";
 in {
   home.packages         = with pkgs.unstable; [
-    ammonite' gcc neovim' python3 ranger' rustup sbt
+    ammonite' file gcc neovim' python3 ranger' rustup sbt unzip
   ];
   home.sessionVariables = {
     CARGO_HOME            = "${userHome}/.local/share/cargo";
@@ -28,6 +28,10 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
+    bat.enable         = true;
+    bat.config.theme   = "gruvbox";
+    bat.themes.gruvbox = builtins.readFile(./misc/gruvbox.tmTheme);
+
     firefox = {
       enable            = true;
       package           = pkgs.unstable.firefox-wayland;
@@ -71,8 +75,12 @@ in {
       userName  = "jupblb";
     };
 
+    htop.enable = true;
+
     kitty.enable      = true;
     kitty.extraConfig = builtins.readFile(./misc/kitty.conf);
+
+    qutebrowser.enable = true;
 
     zathura.enable      = true;
     zathura.extraConfig = "set selection-clipboard clipboard";

@@ -1,5 +1,5 @@
 {
-  atool, bat', calibre, catdoc, ffmpegthumbnailer, file, fontforge, glow',
+  atool, calibre, catdoc, ffmpegthumbnailer, file, fontforge, glow',
   imagemagick, jq, lib, makeWrapper, neovim-remote, p7zip, pandoc,
   poppler_utils, ranger, symlinkJoin, unrar, xlsx2csv
 }:
@@ -26,7 +26,6 @@ in symlinkJoin {
     wrapProgram "$out/bin/ranger" \
       --prefix PATH : ${lib.makeBinPath [
         atool
-        bat'
         catdoc
         ffmpegthumbnailer file
         glow'

@@ -1,6 +1,5 @@
 self: pkgs: with pkgs; { 
   ammonite'      = callPackage ./ammonite { };
-  bat'           = callPackage ./bat { };
   ferdi'         = callPackage ./ferdi { };
   git'           = callPackage ./git { inherit (gitAndTools) diff-so-fancy; };
   glow'          = callPackage ./glow { };

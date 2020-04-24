@@ -14,8 +14,7 @@
   console.earlySetup = true;
   console.keyMap     = "pl";
 
-  environment.systemPackages = with pkgs; [ file htop unzip ];
-  environment.variables      = { NIXPKGS_ALLOW_UNFREE  = "1"; };
+  environment.variables = { NIXPKGS_ALLOW_UNFREE  = "1"; };
 
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [ vistafonts ];
