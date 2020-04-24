@@ -1,9 +1,9 @@
 {
   bemenu, edid-generator, ferdi', fetchFromGitHub, fetchpatch, grim, i3status',
   idea-ultimate', imv, lib, makeWrapper, mako, mpv, pavucontrol, qutebrowser,
-  redshift-wayland', remmina, slurp, symlinkJoin, sway, sway-unwrapped,
-  swayidle, swaylock, wayvnc, wdisplays, wl-clipboard, wlroots', wob,
-  writeTextFile, xdg-user-dirs, xwayland', zoom-us,
+  redshift-wlr, remmina, slurp, symlinkJoin, sway, sway-unwrapped, swayidle,
+  swaylock, wayvnc, wdisplays, wl-clipboard, wlroots', wob, writeTextFile,
+  xdg-user-dirs, xwayland', zoom-us,
 
   withExtraPackages ? false,
   withScaling ? false
@@ -50,7 +50,7 @@ let
       text = ''
         ${builtins.readFile(config.common)}
         ${builtins.readFile(./sway-config)}
-        exec --no-startup-id ${redshift-wayland'}/bin/redshift \
+        exec --no-startup-id ${redshift-wlr}/bin/redshift \
           -m wayland -l 51.12:17.05
         exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
         exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob \
