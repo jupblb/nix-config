@@ -18,6 +18,7 @@ in {
   };
   home.stateVersion     = "20.03";
 
+  nixpkgs.config.allowBroken      = true;
   nixpkgs.config.allowUnfree      = true;
   nixpkgs.config.packageOverrides = pkgs: {
     unstable = import <nixpkgs-unstable> {
@@ -28,6 +29,7 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
+    # Remember to run `bat cache --build` before first run
     bat.enable         = true;
     bat.config.theme   = "gruvbox";
     bat.themes.gruvbox = builtins.readFile(./misc/gruvbox.tmTheme);
@@ -80,7 +82,8 @@ in {
     kitty.enable      = true;
     kitty.extraConfig = builtins.readFile(./misc/kitty.conf);
 
-    qutebrowser.enable = true;
+    qutebrowser.enable      = true;
+    qutebrowser.extraConfig = "config.load_autoconfig()";
 
     zathura.enable      = true;
     zathura.extraConfig = "set selection-clipboard clipboard";
