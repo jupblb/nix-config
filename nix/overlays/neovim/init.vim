@@ -31,7 +31,7 @@ nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
 
 " Airline
 set noshowmode
-if ( $TERM == 'linux' )
+if ( $TERM != 'xterm-kitty' )
     let g:airline_symbols_ascii = 1
     let g:webdevicons_enable_airline_statusline = 0
 else
@@ -101,9 +101,14 @@ endfunction
 nnoremap ;          :Commands<CR>
 nnoremap <Leader>/  :BLines<CR>
 nnoremap <Leader>b  :Buffers<CR>
-nnoremap <Leader>f  :call Fzf("fd -HL --exclude '.git' --type f")<CR>
-nnoremap <Leader>gf :call 
-  \ Fzf("git ls-files $(git rev-parse --show-toplevel) \| uniq")<CR>
+if ( $TERM == 'xterm-kitty' )
+    nnoremap <Leader>f  :call Fzf("fd -HL --exclude '.git' --type f")<CR>
+    nnoremap <Leader>gf :call
+      \ Fzf("git ls-files $(git rev-parse --show-toplevel) \| uniq")<CR>
+else
+    nnoremap <Leader>f  :Files<CR>
+    nnoremap <Leader>gf :GFiles<CR>
+endif
 nnoremap <Leader>h  :History<CR>
 
 " EasyMotion
@@ -129,7 +134,7 @@ let g:preview_markdown_parser = 'glow'
 let g:preview_markdown_vertical = 1
 
 " Startify
-if ( $TERM != 'linux' )
+if ( $TERM == 'xterm-kitty' )
     function! StartifyEntryFormat()
         return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
     endfunction
