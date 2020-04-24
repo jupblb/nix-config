@@ -40,6 +40,7 @@ in {
   };
 
   hardware = {
+    bluetooth.enable          = true;
     cpu.intel.updateMicrocode = true;
     firmware                  = [
       (pkgs.runCommandNoCC "intel-wifi" {} ''
@@ -74,6 +75,7 @@ in {
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  services.blueman.enable   = true;
   services.fstrim.enable    = true;
   services.logind.lidSwitch = "ignore";
 
