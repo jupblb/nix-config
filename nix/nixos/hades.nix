@@ -13,7 +13,6 @@ in {
     initrd.kernelModules                        = [ "amdgpu" ];
     kernel.sysctl."fs.inotify.max_user_watches" = 524288;
     kernel.sysctl."vm.swappiness"               = 20;
-    kernelModules                               = [ "kvm-intel" ];
     kernelPackages                              = pkgs.linuxPackages_latest;
     loader.efi.canTouchEfiVariables             = true;
     loader.systemd-boot.enable                  = true;
