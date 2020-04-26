@@ -4,7 +4,14 @@ let
   userHome = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)";
 in {
   home.packages         = with pkgs.unstable; [
-    ammonite' file gcc neovim' python3 ranger' rustup sbt unzip
+    ammonite'
+    file
+    gcc
+    neovim'
+    pciutils python3
+    ranger' rustup
+    sbt
+    unzip usbutils
   ];
   home.sessionVariables = {
     CARGO_HOME            = "${userHome}/.local/share/cargo";

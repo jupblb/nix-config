@@ -34,8 +34,10 @@ in {
     "/data".fsType = "ext4";
   };
 
+  hardware.bluetooth.enable          = true;
   hardware.cpu.intel.updateMicrocode = true;
   hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+  hardware.pulseaudio.extraModules   = [ pkgs.pulseaudio-modules-bt ];
   hardware.pulseaudio.package        = pkgs.pulseaudioFull;
 
   imports = [ ./common.nix ];
@@ -56,6 +58,8 @@ in {
       UPSTYPE usb
       DEVICE
     '';
+
+    blueman.enable = true;
 
     fstrim.enable = true;
 
