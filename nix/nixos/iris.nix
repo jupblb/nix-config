@@ -15,6 +15,7 @@ in {
       gpu_mem=256
     '';
     loader.raspberryPi.version        = 4;
+    tmpOnTmpfs                        = true;
   };
 
   console.font     = "ter-232n";
