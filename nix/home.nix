@@ -7,7 +7,7 @@ let
 in {
   home.packages         = (with pkgs; [
     bemenu
-    ferdi' file
+    ferdi'
     imv
     lm_sensors
     mpv
@@ -38,11 +38,6 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
-    # Remember to run `bat cache --build` before first run
-    bat.enable         = true;
-    bat.config.theme   = "gruvbox";
-    bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
-
     firefox = {
       enable            = true;
       package           = pkgs.firefox-wayland;

@@ -36,6 +36,8 @@
     pulseaudio.package        = pkgs.pulseaudioFull;
   };
 
+  home-manager.users.jupblb = (import ../home.nix);
+
   imports = [ ./common.nix ];
 
   networking = {

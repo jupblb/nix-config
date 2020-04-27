@@ -1,6 +1,6 @@
 {
-  bash-language-server, buildRustPackage, eslint, fd, fetchFromGitHub, glow,
-  lib, makeWrapper, neovim, nodejs_latest, npm, openjdk11,
+  bash-language-server, bat', buildRustPackage, eslint, fd, fetchFromGitHub,
+  glow, lib, makeWrapper, neovim, nodejs_latest, npm, openjdk11,
   python-language-server, ripgrep, symlinkJoin, vimPlugins, vimUtils
 }:
 
@@ -78,7 +78,7 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/nvim" \
       --prefix PATH : ${lib.makeBinPath[
-        bash-language-server
+        bash-language-server bat'
         devicon-lookup'
         eslint
         fd

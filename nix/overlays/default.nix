@@ -1,5 +1,6 @@
 self: pkgs: with pkgs; { 
   ammonite'      = callPackage ./ammonite { };
+  bat'           = callPackage ./bat { };
   ferdi'         = callPackage ./ferdi { };
   i3status'      = callPackage ./i3status { };
   idea-ultimate' = callPackage ./idea-ultimate {

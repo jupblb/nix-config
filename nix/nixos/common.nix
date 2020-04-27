@@ -14,7 +14,8 @@
   console.earlySetup = true;
   console.keyMap     = "pl";
 
-  environment.variables = { NIXPKGS_ALLOW_UNFREE  = "1"; };
+  environment.systemPackages = with pkgs; [ file git htop neovim' unzip ];
+  environment.variables      = { NIXPKGS_ALLOW_UNFREE  = "1"; };
 
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [ vistafonts ];
@@ -24,8 +25,6 @@
     opengl.enable                 = true;
     pulseaudio.enable             = true;
   };
-
-  home-manager.users.jupblb = (import ../home.nix);
 
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];

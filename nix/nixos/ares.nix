@@ -24,6 +24,8 @@
     intel-media-driver libvdpau-va-gl vaapiIntel' vaapiVdpau
   ];
 
+  home-manager.users.jupblb = (import ../home.nix);
+
   imports = [ ./common.nix ];
 
   networking.hostName              = "ares";
