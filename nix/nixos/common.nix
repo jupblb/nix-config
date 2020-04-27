@@ -14,7 +14,7 @@
   console.earlySetup = true;
   console.keyMap     = "pl";
 
-  environment.systemPackages = with pkgs; [ file git htop neovim' unzip ];
+  environment.systemPackages = with pkgs; [ file git htop unzip vim ];
   environment.variables      = { NIXPKGS_ALLOW_UNFREE  = "1"; };
 
   fonts.enableDefaultFonts = true;
