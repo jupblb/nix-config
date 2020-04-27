@@ -78,6 +78,6 @@
     initialPassword = "changeme";
     isNormalUser    = true;
     extraGroups     = [ "lp" "networkmanager" "wheel" ];
-    shell           = pkgs.fish;
+    shell           = pkgs.bashInteractive;
   };
 }
