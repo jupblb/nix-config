@@ -1,4 +1,0 @@
-seat seat0 keyboard_grouping none
-output HEADLESS-1 mode 2736x1824@30Hz
-#output HEADLESS-1 mode 3840x2160@30Hz
-

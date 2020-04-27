@@ -1,11 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  sway'' = pkgs.unstable.sway'.override {
-    withExtraPackages = true;
-    withScaling       = true;
-  };
-in {
+{
   boot = {
     initrd.availableKernelModules               = [
       "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
@@ -22,7 +17,7 @@ in {
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
 
-  environment.systemPackages = with pkgs.unstable; [ dropbox-cli sway'' ];
+  environment.systemPackages = with pkgs; [ dropbox-cli ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -33,11 +28,13 @@ in {
     "/data".fsType = "ext4";
   };
 
-  hardware.bluetooth.enable          = true;
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
-  hardware.pulseaudio.extraModules   = [ pkgs.pulseaudio-modules-bt ];
-  hardware.pulseaudio.package        = pkgs.pulseaudioFull;
+  hardware = {
+    bluetooth.enable          = true;
+    cpu.intel.updateMicrocode = true;
+    opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+    pulseaudio.extraModules   = with pkgs; [ pulseaudio-modules-bt ];
+    pulseaudio.package        = pkgs.pulseaudioFull;
+  };
 
   imports = [ ./common.nix ];
 
@@ -86,10 +83,6 @@ in {
         rpc-whitelist          = "127.0.0.1,192.168.*.*";
       };
     };
-
-    udev.extraRules = ''
-      ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:d8:61:50:ae:85", NAME="eth"
-    '';
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];

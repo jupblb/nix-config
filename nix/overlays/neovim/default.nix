@@ -1,6 +1,6 @@
 {
-  bash-language-server, buildRustPackage, eslint, fd, fetchFromGitHub, git',
-  glow', lib, makeWrapper, neovim, nodejs_latest, npm, openjdk11,
+  bash-language-server, buildRustPackage, eslint, fd, fetchFromGitHub, glow,
+  lib, makeWrapper, neovim, nodejs_latest, npm, openjdk11,
   python-language-server, ripgrep, symlinkJoin, vimPlugins, vimUtils
 }:
 
@@ -16,7 +16,7 @@ let
     };
   };
 
-  devicon-lookup'   = buildRustPackage rec {
+  devicon-lookup' = buildRustPackage rec {
     cargoSha256 = "048yb45zr589gxvff520wh7cwlhsb3h64zqsjfy85c5y28sv6sas";
     pname       = "devicon-lookup";
     version     = "0.8.0";
@@ -27,6 +27,12 @@ let
       rev    = version;
       sha256 = "0v4jc9ckbk6rvhw7apdfr6wp2v8gfx0w13gwpr8ka1sph9n4p3a7";
     };
+  };
+  glow'           = symlinkJoin {
+    buildInputs = [ makeWrapper ];
+    name        = "glow";
+    paths       = [ glow ];
+    postBuild   = "wrapProgram $out/bin/glow --add-flags '-s light'";
   };
 
   neovim'           = neovim.override {
@@ -76,7 +82,7 @@ in symlinkJoin {
         devicon-lookup'
         eslint
         fd
-        git' glow'
+        glow'
         nodejs_latest npm
         openjdk11
         python-language-server

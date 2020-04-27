@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  sway'' = pkgs.unstable.sway'.override { withExtraPackages = true };
-in {
+{
   boot.initrd.availableKernelModules   = [
     "ahci"
     "ehci_pci"
@@ -13,8 +11,6 @@ in {
   boot.kernelPackages                  = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.enable      = true;
-
-  environment.systemPackages = [ sway'' ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -35,11 +31,7 @@ in {
 
   nix.maxJobs = 8;
 
-  services.fstrim.enable   = true;
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="d8:50:e6:03:5c:44", NAME="eth"
-    ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="70:18:8b:3f:58:47", NAME="wlp"
-  '';
+  services.fstrim.enable = true;
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 

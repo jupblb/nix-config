@@ -6,10 +6,6 @@ let
     rev    = "6e5869c8ea7679009c8f8a301153face63d6bfd4";
     sha256 = "0hd5qkj5srliplqk2sq0zjhs1smfpkvgjhb914aql0aqmfhr7bc9";
   };
-  sway''            = pkgs.unstable.sway'.override {
-    withExtraPackages = true;
-    withScaling       = true;
-  };
 in {
   boot = {
     initrd.availableKernelModules          = [
@@ -29,8 +25,7 @@ in {
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
 
-  environment.systemPackages = with pkgs.unstable; [ sway'' ];
-  environment.variables      = { MESA_LOADER_DRIVER_OVERRIDE = "iris"; };
+  environment.variables = { MESA_LOADER_DRIVER_OVERRIDE = "iris"; };
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";

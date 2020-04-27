@@ -1,7 +1,7 @@
 {
-  atool, calibre, catdoc, ffmpegthumbnailer, file, fontforge, glow',
-  imagemagick, jq, lib, makeWrapper, neovim-remote, p7zip, pandoc,
-  poppler_utils, ranger, symlinkJoin, unrar, xlsx2csv
+  atool, calibre, catdoc, ffmpegthumbnailer, file, fontforge, glow, imagemagick,
+  jq, lib, makeWrapper, neovim-remote, p7zip, pandoc, poppler_utils, ranger,
+  symlinkJoin, unrar, xlsx2csv
 }:
 
 let
@@ -28,7 +28,7 @@ in symlinkJoin {
         atool
         catdoc
         ffmpegthumbnailer file
-        glow'
+        glow
         imagemagick
         jq
         p7zip poppler_utils

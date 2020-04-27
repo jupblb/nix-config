@@ -6,26 +6,14 @@
 
 config_version: 2
 settings:
-  aliases:
-    global:
-      q: close
-      qa: quit
-      w: session-save
-      wq: quit --save
-      wqa: quit --save
   content.autoplay:
     global: false
   content.default_encoding:
     global: utf-8
-  content.geolocation:
-    global: false
   content.headers.accept_language:
     global: en-US
   content.host_blocking.enabled:
     global: false
-  content.host_blocking.lists:
-    global:
-    - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
   content.javascript.enabled:
     '*://*.1password.com/*': true
     '*://*.facebook.com/*': true
@@ -54,9 +42,6 @@ settings:
     https://translate.google.com/: true
     https://www.gazeta.pl/0,0.html: true
     https://www.google.com/maps: true
-  content.media_capture:
-    https://hangouts.google.com: true
-    https://www.messenger.com: true
   content.register_protocol_handler:
     https://calendar.google.com?cid=%25s: true
     https://mail.google.com?extsrc=mailto&url=%25s: true
@@ -71,8 +56,6 @@ settings:
     - normal {line}G{column0}l
   fonts.default_family:
     global: PragmataPro Mono
-  statusbar.hide:
-    global: true
   tabs.background:
     global: true
   url.searchengines:

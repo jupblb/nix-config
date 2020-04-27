@@ -1,31 +1,33 @@
 { config, lib, pkgs, ... }:
 
 let
-  userHome = "$(${pkgs.xdg-user-dirs}/bin/xdg-user-dir)";
-in {
-  home.packages         = with pkgs.unstable; [
-    ammonite'
-    file
-    gcc
-    neovim'
-    pciutils python3
-    ranger' rustup
-    sbt
-    unzip usbutils
+  devPackages = with pkgs.unstable; [
+    ammonite' idea-ultimate' neovim' python3 rustup sbt sway'
   ];
+in {
+  home.packages         = (with pkgs; [
+    bemenu
+    ferdi' file
+    imv
+    lm_sensors
+    mpv
+    pavucontrol pciutils
+    ranger' remmina
+    unzip usbutils
+    zoom-us
+  ]) ++ devPackages;
   home.sessionVariables = {
-    CARGO_HOME            = "${userHome}/.local/share/cargo";
+    CARGO_HOME            = "\$XDG_DATA_HOME/cargo";
     EDITOR                = "vim";
-    HISTFILE              = "${userHome}/.cache/bash_history";
+    HISTFILE              = "\$XDG_CACHE_HOME/bash_history";
     LESSHISTFILE          = "-";
     MANPAGER              = "vim -c 'set ft=man' -";
     NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
     NVIM_LISTEN_ADDRESS   = "/tmp/nvimsocket";
-    RUSTUP_HOME           = "${userHome}/.local/share/rustup";
+    RUSTUP_HOME           = "\$XDG_DATA_HOME/rustup";
   };
   home.stateVersion     = "20.03";
 
-  nixpkgs.config.allowBroken      = true;
   nixpkgs.config.allowUnfree      = true;
   nixpkgs.config.packageOverrides = pkgs: {
     unstable = import <nixpkgs-unstable> {
@@ -39,14 +41,14 @@ in {
     # Remember to run `bat cache --build` before first run
     bat.enable         = true;
     bat.config.theme   = "gruvbox";
-    bat.themes.gruvbox = builtins.readFile(./misc/gruvbox.tmTheme);
+    bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
 
     firefox = {
       enable            = true;
-      package           = pkgs.unstable.firefox-wayland;
+      package           = pkgs.firefox-wayland;
       profiles."jupblb" = {
-        extraConfig = builtins.readFile(./misc/firefox/user.js);
-        userContent = builtins.readFile(./misc/firefox/user.css);
+        extraConfig = builtins.readFile ./misc/firefox/user.js;
+        userContent = builtins.readFile ./misc/firefox/user.css;
       };
     };
 
@@ -77,17 +79,22 @@ in {
     fzf.enable          = true;
 
     git = {
-      enable    = true;
-      ignores   = [ ".bloop" ".metals" ".idea" "metals.sbt" ".factorypath" ];
-      package   = pkgs.git';
-      userEmail = "mpkielbowicz@gmail.com";
-      userName  = "jupblb";
+      enable      = true;
+      extraConfig = {
+        color.ui          = true;
+        core.mergeoptions = "--no-edit";
+        fetch.prune       = true;
+        push.default      = "upstream";
+      };
+      ignores     = [ ".bloop" ".metals" ".idea" "metals.sbt" ".factorypath" ];
+      userEmail   = "mpkielbowicz@gmail.com";
+      userName    = "jupblb";
     };
 
     htop.enable = true;
 
     kitty.enable      = true;
-    kitty.extraConfig = builtins.readFile(./misc/kitty.conf);
+    kitty.extraConfig = builtins.readFile ./misc/kitty.conf;
 
     qutebrowser.enable      = true;
     qutebrowser.extraConfig = "config.load_autoconfig()";
@@ -96,6 +103,7 @@ in {
     zathura.extraConfig = "set selection-clipboard clipboard";
   };
 
+  xdg.enable   = true;
   xdg.userDirs = {
     desktop     = "\$HOME/desktop";
     documents   = "\$HOME/documents";

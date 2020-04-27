@@ -38,14 +38,8 @@
   nix.gc.automatic      = true;
   nix.gc.dates          = "*-*-1,10,20 12:00:00";
 
-  nixpkgs.config.allowUnfree      = true;
-  nixpkgs.config.packageOverrides = pkgs: {
-    unstable = import <nixpkgs-unstable> {
-      config   = config.nixpkgs.config;
-      overlays = config.nixpkgs.overlays;
-    };
-  };
-  nixpkgs.overlays                = [ (import ../overlays) ];
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays           = [ (import ../overlays) ];
 
   programs = {
     bash.enableCompletion = true;
