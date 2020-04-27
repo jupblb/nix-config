@@ -11,11 +11,8 @@ in {
     initrd.availableKernelModules          = [
       "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"
     ];
-    initrd.kernelModules                   = [ "i915" ];
     kernelPackages                         = pkgs.linuxPackages_latest;
-    kernelParams                           = [
-      "reboot=pci" "i915.enable_guc=2" "inte_idle.max_cstate=1" "i915.enable_dc=0"
-    ];
+    kernelParams                           = [ "reboot=pci" ];
     loader.efi.canTouchEfiVariables        = true;
     loader.systemd-boot.configurationLimit = 3;
     loader.systemd-boot.enable             = true;
@@ -24,8 +21,6 @@ in {
 
   console.font     = "ter-232n";
   console.packages = [ pkgs.terminus_font ];
-
-  environment.variables = { MESA_LOADER_DRIVER_OVERRIDE = "iris"; };
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -45,9 +40,6 @@ in {
           $out/lib/firmware/iwlwifi-Qu-b0-hr-b0-50.ucode
       '')
     ];
-    opengl.package            = (pkgs.mesa.override {
-      galliumDrivers = [ "nouveau" "virgl" "swrast" "iris" ];
-    }).drivers;
     opengl.extraPackages      = with pkgs; [
       intel-media-driver libvdpau-va-gl vaapiIntel' vaapiVdpau
     ];
@@ -70,7 +62,7 @@ in {
 
   nix.maxJobs = 8;
 
-  powerManagement.cpuFreqGovernor = "performance";
+  powerManagement.cpuFreqGovernor = "ondemand";
 
   services.blueman.enable   = true;
   services.fstrim.enable    = true;
