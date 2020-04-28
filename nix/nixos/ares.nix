@@ -21,7 +21,7 @@
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.opengl.extraPackages      = with pkgs; [
-    intel-media-driver libvdpau-va-gl vaapiIntel' vaapiVdpau
+    intel-media-driver libvdpau-va-gl vaapiIntel vaapiVdpau
   ];
 
   home-manager.users.jupblb = (import ../home.nix);

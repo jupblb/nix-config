@@ -15,7 +15,6 @@
   console.keyMap     = "pl";
 
   environment.systemPackages = with pkgs; [ file git htop unzip vim ];
-  environment.variables      = { NIXPKGS_ALLOW_UNFREE  = "1"; };
 
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [ vistafonts ];
@@ -38,7 +37,6 @@
   nix.gc.dates          = "*-*-1,10,20 12:00:00";
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays           = [ (import ../overlays) ];
 
   programs = {
     bash.enableCompletion = true;

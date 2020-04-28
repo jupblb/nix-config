@@ -14,7 +14,6 @@ self: pkgs: with pkgs; {
   ranger'         = callPackage ./ranger { };
   scp-speed-test' = callPackage ./scp-speed-test { };
   sway'           = callPackage ./sway { };
-  vaapiIntel'     = vaapiIntel.override { enableHybridCodec = true; };
   wlroots'        = callPackage ./wlroots { };
   xwayland'       = callPackage ./xwayland { };
 }
