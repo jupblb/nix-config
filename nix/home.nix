@@ -23,6 +23,7 @@ in {
     HISTFILE              = "\$XDG_CACHE_HOME/bash_history";
     LESSHISTFILE          = "-";
     MANPAGER              = "vim -c 'set ft=man' -";
+    NIXPKGS_ALLOW_UNFREE  = "1";
     NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
     NVIM_LISTEN_ADDRESS   = "/tmp/nvimsocket";
     RUSTUP_HOME           = "\$XDG_DATA_HOME/rustup";
