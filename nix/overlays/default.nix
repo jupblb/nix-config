@@ -1,19 +1,20 @@
 self: pkgs: with pkgs; { 
-  ammonite'      = callPackage ./ammonite { };
-  bat'           = callPackage ./bat { };
-  ferdi'         = callPackage ./ferdi { };
-  i3status'      = callPackage ./i3status { };
-  idea-ultimate' = callPackage ./idea-ultimate {
+  ammonite'       = callPackage ./ammonite { };
+  bat'            = callPackage ./bat { };
+  ferdi'          = callPackage ./ferdi { };
+  i3status'       = callPackage ./i3status { };
+  idea-ultimate'  = callPackage ./idea-ultimate {
     inherit (jetbrains) idea-ultimate jdk;
   };
-  neovim'        = callPackage ./neovim {
+  neovim'         = callPackage ./neovim {
     inherit (nodePackages) bash-language-server eslint npm;
     inherit (python3Packages) python-language-server;
     inherit (rustPlatform) buildRustPackage;
   };
-  ranger'        = callPackage ./ranger { };
-  sway'          = callPackage ./sway { };
-  vaapiIntel'    = vaapiIntel.override { enableHybridCodec = true; };
-  wlroots'       = callPackage ./wlroots { };
-  xwayland'      = callPackage ./xwayland { };
+  ranger'         = callPackage ./ranger { };
+  scp-speed-test' = callPackage ./scp-speed-test { };
+  sway'           = callPackage ./sway { };
+  vaapiIntel'     = vaapiIntel.override { enableHybridCodec = true; };
+  wlroots'        = callPackage ./wlroots { };
+  xwayland'       = callPackage ./xwayland { };
 }

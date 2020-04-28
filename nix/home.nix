@@ -13,6 +13,7 @@ in {
     mpv
     pavucontrol pciutils
     ranger' remmina
+    scp-speed-test'
     unzip usbutils
     zoom-us
   ]) ++ devPackages;
