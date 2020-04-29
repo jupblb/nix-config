@@ -14,7 +14,18 @@
   console.earlySetup = true;
   console.keyMap     = "pl";
 
-  environment.systemPackages = with pkgs; [ file git htop unzip vim ];
+  environment.sessionVariables =  {
+    CARGO_HOME            = "\$HOME/.local/share/cargo";
+    EDITOR                = "vim";
+    HISTFILE              = "\$HOME/.cache/bash_history";
+    LESSHISTFILE          = "-";
+    MANPAGER              = "vim -c 'set ft=man' -";
+    NIXPKGS_ALLOW_UNFREE  = "1";
+    NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
+    NVIM_LISTEN_ADDRESS   = "/tmp/nvimsocket";
+    RUSTUP_HOME           = "\$HOME/.local/share/rustup";
+  };
+  environment.systemPackages   = with pkgs; [ file git htop unzip vim ];
 
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [ vistafonts ];

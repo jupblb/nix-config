@@ -5,7 +5,7 @@ let
     ammonite' idea-ultimate' neovim' python3 rustup sbt sway'
   ];
 in {
-  home.packages         = (with pkgs; [
+  home.packages     = (with pkgs; [
     bemenu
     ferdi'
     imv
@@ -17,18 +17,7 @@ in {
     unzip usbutils
     zoom-us
   ]) ++ devPackages;
-  home.sessionVariables = {
-    CARGO_HOME            = "\$XDG_DATA_HOME/cargo";
-    EDITOR                = "vim";
-    HISTFILE              = "\$XDG_CACHE_HOME/bash_history";
-    LESSHISTFILE          = "-";
-    MANPAGER              = "vim -c 'set ft=man' -";
-    NIXPKGS_ALLOW_UNFREE  = "1";
-    NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
-    NVIM_LISTEN_ADDRESS   = "/tmp/nvimsocket";
-    RUSTUP_HOME           = "\$XDG_DATA_HOME/rustup";
-  };
-  home.stateVersion     = "20.03";
+  home.stateVersion = "20.03";
 
   nixpkgs.config.allowUnfree      = true;
   nixpkgs.config.packageOverrides = pkgs: {
@@ -100,7 +89,6 @@ in {
     zathura.extraConfig = "set selection-clipboard clipboard";
   };
 
-  xdg.enable   = true;
   xdg.userDirs = {
     desktop     = "\$HOME/desktop";
     documents   = "\$HOME/documents";
