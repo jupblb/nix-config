@@ -29,6 +29,10 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
+    bash.enable       = true;
+    bash.initExtra    = builtins.readFile ./misc/bashrc;
+    bash.shellAliases = { ls = "ls --color=auto"; };
+
     firefox = {
       enable            = true;
       package           = pkgs.firefox-wayland;
@@ -40,12 +44,7 @@ in {
 
     fish = {
       enable               = true;
-      interactiveShellInit = ''
-        function fish_greeting; ${pkgs.fortune}/bin/fortune -sa; end;
-        set __fish_git_prompt_showdirtystate "yes"
-        set __fish_git_prompt_showuntrackedfiles "yes"
-        theme_gruvbox light hard
-      '';
+      interactiveShellInit = "set fish_greeting; theme_gruvbox light hard";
       plugins              = [ {
         name = "gruvbox";
         src  = pkgs.fetchFromGitHub {
@@ -86,10 +85,31 @@ in {
     htop.enable = true;
 
     kitty.enable      = true;
-    kitty.extraConfig = builtins.readFile ./misc/kitty.conf;
+    kitty.extraConfig = ''
+      ${builtins.readFile ./misc/kitty.conf}
+      startup_session ${builtins.toString (pkgs.writeTextFile {
+        name = "kitty-launch";
+        text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
+      })}
+    '';
 
     qutebrowser.enable      = true;
     qutebrowser.extraConfig = "config.load_autoconfig()";
+
+    starship.enable                = true;
+    starship.enableFishIntegration = true;
+    starship.enableBashIntegration = true;
+    starship.settings              = {
+      add_newline                         = false;
+      character.symbol                    = "~>";
+      directory.fish_style_pwd_dir_length = 1;
+      directory.truncation_length         = 8;
+      prompt_order                        = [
+        "username" "hostname" "directory" "git_branch" "git_commit" "git_state"
+        "git_status" "package" "java" "python" "rust" "nix_shell" "memory_usage"
+        "cmd_duration" "character"
+      ];
+    };
 
     zathura.enable      = true;
     zathura.extraConfig = "set selection-clipboard clipboard";
