@@ -29,10 +29,6 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
-    bash.enable       = true;
-    bash.initExtra    = builtins.readFile ./misc/bashrc;
-    bash.shellAliases = { ls = "ls --color=auto"; };
-
     firefox = {
       enable            = true;
       package           = pkgs.firefox-wayland;
@@ -98,7 +94,6 @@ in {
 
     starship.enable                = true;
     starship.enableFishIntegration = true;
-    starship.enableBashIntegration = true;
     starship.settings              = {
       add_newline                         = false;
       character.symbol                    = "~>";
