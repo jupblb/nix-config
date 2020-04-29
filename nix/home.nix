@@ -65,6 +65,9 @@ in {
     fzf.enable          = true;
 
     git = {
+      aliases     = {
+        bat = "! git diff --name-only --diff-filter=d | xargs ${pkgs.unstable.bat'}/bin/bat --diff";
+      };
       enable      = true;
       extraConfig = {
         color.ui            = true;
