@@ -67,10 +67,13 @@ in {
     git = {
       enable      = true;
       extraConfig = {
-        color.ui          = true;
-        core.mergeoptions = "--no-edit";
-        fetch.prune       = true;
-        push.default      = "upstream";
+        color.ui            = true;
+        core.mergeoptions   = "--no-edit";
+        diff.tool           = "vimdiff";
+        fetch.prune         = true;
+        merge.conflictstyle = "diff3";
+        merge.tool          = "vimdiff";
+        push.default        = "upstream";
       };
       ignores     = [ ".bloop" ".metals" ".idea" "metals.sbt" ".factorypath" ];
       userEmail   = "mpkielbowicz@gmail.com";
