@@ -1,17 +1,14 @@
 Host ghost.traveltimeapp.com
-    HostName ghost.traveltimeapp.com
     User mapupdate
+    SetEnv TERM=xterm-256color
 
 Host battuta.traveltimeapp.com
-    HostName battuta.traveltimeapp.com
     User mapupdate
-
-Host kraken.traveltimeapp.com
-    HostName kraken.traveltimeapp.com
-    User mapupdate
+    SetEnv TERM=xterm-256color
 
 Host *.traveltimeapp.com
     User traveltime
+    SetEnv TERM=xterm-256color
     StrictHostKeyChecking no
 
 Host *.amazonaws.com

@@ -52,7 +52,6 @@ in {
       } ];
       shellAliases         = {
         nix-shell = "nix-shell --command fish";
-        ssh       = "env TERM=xterm-256color ssh";
       };
     };
 
