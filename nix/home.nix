@@ -51,7 +51,7 @@ in {
         };
       } ];
       shellAliases         = {
-        ls        = "${pkgs.lsd'}/bin/lsd --no-symlink --date relative";
+        ls        = "${pkgs.unstable.lsd'}/bin/lsd --no-symlink --date relative";
         nix-shell = "nix-shell --command fish";
       };
     };

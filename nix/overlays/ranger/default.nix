@@ -1,5 +1,5 @@
 {
-  atool, calibre, catdoc, ffmpegthumbnailer, file, fontforge, glow, imagemagick,
+  atool, calibre, catdoc, fetchFromGitHub, ffmpegthumbnailer, file, fontforge, glow, imagemagick,
   jq, lib, makeWrapper, neovim-remote, p7zip, pandoc, poppler_utils, ranger,
   symlinkJoin, unrar, xlsx2csv
 }:
@@ -16,6 +16,8 @@ let
         "set preview_images_method w3m" "set preview_images_method kitty"
       substituteInPlace ranger/config/rc.conf --replace \
         "set vcs_aware false" "set vcs_aware true"
+
+      echo "default_linemode devicons" >> ranger/config/rc.conf
     '';
   });
 in symlinkJoin {
@@ -24,6 +26,7 @@ in symlinkJoin {
   paths       = [ ranger' ];
   postBuild   = ''
     wrapProgram "$out/bin/ranger" \
+      --add-flags "--confdir=${builtins.toString ./.}" \
       --prefix PATH : ${lib.makeBinPath [
         atool
         catdoc
