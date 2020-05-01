@@ -1,0 +1,95 @@
+diff --git a/src/color.rs b/src/color.rs
+index 943a1d0..91955c1 100644
+--- a/src/color.rs
++++ b/src/color.rs
+@@ -182,15 +182,15 @@ impl Colors {
+     fn get_light_theme_colour_map() -> HashMap<Elem, Colour> {
+         let mut m = HashMap::new();
+         // User / Group
+-        m.insert(Elem::User, Colour::Fixed(230)); // Cornsilk1
+-        m.insert(Elem::Group, Colour::Fixed(187)); // LightYellow3
++        m.insert(Elem::User, Colour::RGB(152, 151, 26));
++        m.insert(Elem::Group, Colour::RGB(121, 116, 14));
+ 
+         // Permissions
+         m.insert(Elem::Read, Colour::Green);
+         m.insert(Elem::Write, Colour::Yellow);
+         m.insert(Elem::Exec, Colour::Red);
+         m.insert(Elem::ExecSticky, Colour::Purple);
+-        m.insert(Elem::NoAccess, Colour::Fixed(245)); // Grey
++        m.insert(Elem::NoAccess, Colour::RGB(146, 131, 116)); // Grey
+ 
+         // File Types
+         m.insert(
+@@ -232,15 +232,15 @@ impl Colors {
+         m.insert(Elem::Special, Colour::Fixed(44)); // DarkTurquoise
+ 
+         // Last Time Modified
+-        m.insert(Elem::HourOld, Colour::Fixed(40)); // Green3
+-        m.insert(Elem::DayOld, Colour::Fixed(42)); // SpringGreen2
+-        m.insert(Elem::Older, Colour::Fixed(36)); // DarkCyan
++        m.insert(Elem::HourOld, Colour::RGB(104, 157, 106));
++        m.insert(Elem::DayOld, Colour::RGB(66, 123, 88));
++        m.insert(Elem::Older, Colour::RGB(146, 131, 116));
+ 
+         // Last Time Modified
+-        m.insert(Elem::NonFile, Colour::Fixed(245)); // Grey
+-        m.insert(Elem::FileSmall, Colour::Fixed(229)); // Wheat1
+-        m.insert(Elem::FileMedium, Colour::Fixed(216)); // LightSalmon1
+-        m.insert(Elem::FileLarge, Colour::Fixed(172)); // Orange3
++        m.insert(Elem::NonFile, Colour::RGB(104, 157, 106));
++        m.insert(Elem::FileSmall, Colour::RGB(66, 123, 88));
++        m.insert(Elem::FileMedium, Colour::RGB(146, 131, 116));
++        m.insert(Elem::FileLarge, Colour::RGB(40, 40, 40));
+ 
+         // INode
+         m.insert(Elem::INode { valid: true }, Colour::Fixed(13)); // Pink
+diff --git a/src/meta/date.rs b/src/meta/date.rs
+index fcfb8c9..87824af 100644
+--- a/src/meta/date.rs
++++ b/src/meta/date.rs
+@@ -112,7 +112,7 @@ mod test {
+         let flags = Flags::default();
+ 
+         assert_eq!(
+-            Colour::Fixed(40).paint(creation_date.ctime().to_string()),
++            Colour::RGB(104, 157, 106).paint(creation_date.ctime().to_string()),
+             date.render(&colors, &flags)
+         );
+ 
+@@ -136,7 +136,7 @@ mod test {
+         let flags = Flags::default();
+ 
+         assert_eq!(
+-            Colour::Fixed(42).paint(creation_date.ctime().to_string()),
++            Colour::RGB(66, 123, 88).paint(creation_date.ctime().to_string()),
+             date.render(&colors, &flags)
+         );
+ 
+@@ -160,7 +160,7 @@ mod test {
+         let flags = Flags::default();
+ 
+         assert_eq!(
+-            Colour::Fixed(36).paint(creation_date.ctime().to_string()),
++            Colour::RGB(146, 131, 116).paint(creation_date.ctime().to_string()),
+             date.render(&colors, &flags)
+         );
+ 
+@@ -186,7 +186,7 @@ mod test {
+         flags.date = DateFlag::Relative;
+ 
+         assert_eq!(
+-            Colour::Fixed(36).paint("2 days ago"),
++            Colour::RGB(146, 131, 116).paint("2 days ago"),
+             date.render(&colors, &flags)
+         );
+ 
+@@ -221,7 +221,7 @@ mod test {
+         let mut flags = Flags::default();
+         flags.date = DateFlag::Relative;
+ 
+-        assert_eq!(Colour::Fixed(40).paint("now"), date.render(&colors, &flags));
++        assert_eq!(Colour::RGB(104, 157, 106).paint("now"), date.render(&colors, &flags));
+ 
+         fs::remove_file(file_path).unwrap();
+     }
