@@ -32,6 +32,7 @@ settings:
     '*://iris/*': true
     '*://leetcode.com/*': true
     '*://mail.google.com/*': true
+    '*://pastebin.com/*': true
     '*://stackoverflow.com/*': true
     '*://teamcity.igeolise.com/*': true
     '*://www.dropbox.com/*': true
