@@ -2,7 +2,7 @@
 
 let
   devPackages = with pkgs.unstable; [
-    ammonite' idea-ultimate' neovim' python3 rustup sbt sway'
+    ammonite' gcc idea-ultimate' neovim' python3 rustup sbt sway'
   ];
 in {
   home.packages     = (with pkgs; [
@@ -51,6 +51,7 @@ in {
         };
       } ];
       shellAliases         = {
+        ls        = "${pkgs.unstable.lsd'}/bin/lsd --no-symlink --date relative";
         nix-shell = "nix-shell --command fish";
       };
     };
@@ -82,6 +83,10 @@ in {
     kitty.enable      = true;
     kitty.extraConfig = ''
       ${builtins.readFile ./misc/kitty.conf}
+      ${builtins.readFile (pkgs.fetchurl {
+        url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
+        sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
+      })}
       startup_session ${builtins.toString (pkgs.writeTextFile {
         name = "kitty-launch";
         text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";

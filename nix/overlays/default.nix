@@ -6,6 +6,7 @@ self: pkgs: with pkgs; {
   idea-ultimate'  = callPackage ./idea-ultimate {
     inherit (jetbrains) idea-ultimate jdk;
   };
+  lsd'            = callPackage ./lsd { };
   neovim'         = callPackage ./neovim {
     inherit (nodePackages) bash-language-server eslint npm;
     inherit (python3Packages) python-language-server;

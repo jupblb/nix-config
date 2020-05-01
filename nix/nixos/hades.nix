@@ -85,6 +85,10 @@
         rpc-whitelist          = "127.0.0.1,192.168.*.*";
       };
     };
+
+    udev.extraRules = ''
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0a12", ATTRS{idProduct}=="0001", ATTR{authorized}="0"
+    '';
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
