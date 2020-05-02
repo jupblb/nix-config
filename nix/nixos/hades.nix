@@ -103,9 +103,9 @@
   systemd.services.checkip = {
     after         = [ "network.target" ];
     description   = "Public IP checker";
-    script        = ''
-      ${pkgs.curl}/bin/curl ipinfo.io/ip >> /data/Dropbox/ip.txt
-      awk '!seen[$0]++' /data/Dropbox/ip.txt
+    script        = with pkgs; ''
+      ${curl}/bin/curl ipinfo.io/ip >> /data/Dropbox/ip.txt
+      ${gawk}/bin/awk '!seen[$0]++' /data/Dropbox/ip.txt
     '';
     serviceConfig = {
       ProtectSystem = "full";

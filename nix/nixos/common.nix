@@ -54,6 +54,7 @@
     bash.promptInit       = builtins.readFile(../misc/bashrc);
     bash.shellAliases.ls  = "ls --color=auto";
     ssh.extraConfig       = builtins.readFile(../misc/ssh-config);
+    ssh.startAgent        = true;
   };
 
   security.pam.services.swaylock.text = "auth include login";
@@ -64,10 +65,12 @@
     openssh.enable                 = true;
     openssh.passwordAuthentication = false;
     openssh.permitRootLogin        = "no";
+    openssh.ports                  = [ 22 1993 ];
     printing.drivers               = with pkgs; [
       samsung-unified-linux-driver_1_00_37
     ];
     printing.enable                = true;
+    sshguard.enable                = true;
   };
 
   sound.enable = true;
@@ -83,10 +86,13 @@
   time.timeZone = "Europe/Warsaw";
 
   users.users.jupblb = {
-    description     = "Michal Kielbowicz";
-    initialPassword = "changeme";
-    isNormalUser    = true;
-    extraGroups     = [ "lp" "networkmanager" "wheel" ];
-    shell           = pkgs.bashInteractive;
+    description                 = "Michal Kielbowicz";
+    extraGroups                 = [ "lp" "networkmanager" "wheel" ];
+    initialPassword             = "changeme";
+    isNormalUser                = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEtq1CzRgt2HFdkUL7kCx+4r63J9m36CVBtTmIIC4BvN ssh@kielbowi.cz"
+    ];
+    shell                       = pkgs.bashInteractive;
   };
 }
