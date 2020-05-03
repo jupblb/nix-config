@@ -1,22 +1,16 @@
 { config, lib, pkgs, ... }:
 
-let
-  devPackages = with pkgs.unstable; [
-    ammonite' gcc idea-ultimate' neovim' python3 rustup sbt sway'
-  ];
-in {
-  home.packages         = (with pkgs; [
-    bemenu
-    ferdi'
-    imv
-    lm_sensors
-    mpv
-    pavucontrol pciutils
-    ranger' remmina
-    scp-speed-test'
-    unzip usbutils
-    zoom-us
-  ]) ++ devPackages;
+{
+  home.packages         =
+    let
+      devPackages  = with pkgs.unstable; [
+        ammonite' gcc idea-ultimate' neovim' python3 rustup sbt sway'
+      ];
+      packages     = with pkgs; [
+        imv lm_sensors mpv pciutils ranger' scp-speed-test' unzip usbutils
+      ];
+      swayPackages = with pkgs; [ bemenu ferdi' pavucontrol remmina zoom-us ];
+    in devPackages ++ packages ++ swayPackages;
   home.sessionVariables = { BAT_THEME = "gruvbox"; };
   home.stateVersion     = "20.03";
 
@@ -65,24 +59,28 @@ in {
     fzf.enable          = true;
 
     git = {
-      aliases     = {
-        bat          = ''
-          !git diff --name-only --diff-filter=d \
-            | xargs ${pkgs.unstable.bat}/bin/bat --diff --diff-context=3
-        '';
-        branch-prune = "fetch --prune";
-      };
+      aliases     = { branch-prune = "fetch --prune"; };
       enable      = true;
-      extraConfig = {
-        color.ui            = true;
-        core.mergeoptions   = "--no-edit";
-        diff.tool           = "vimdiff";
-        fetch.prune         = true;
-        merge.conflictstyle = "diff3";
-        merge.tool          = "vimdiff";
-        push.default        = "upstream";
-      };
-      ignores     = [ ".bloop" ".metals" ".idea" "metals.sbt" ".factorypath" ];
+      extraConfig =
+        let
+          delta' = with pkgs.unstable.gitAndTools; ''
+            ${delta}/bin/delta --theme "gruvbox" --commit-color "#fabd2f" \
+              --file-color  "#076678" --hunk-color       "#458588" \
+              --minus-color "#f9d8bc" --minus-emph-color "#fa9f86" \
+              --plus-color  "#eeebba" --plus-emph-color  "#d9d87f"
+          '';
+        in {
+          color.ui               = true;
+          core.mergeoptions      = "--no-edit";
+          core.pager             = delta';
+          diff.tool              = "vimdiff";
+          fetch.prune            = true;
+          interactive.diffFilter = delta';
+          merge.conflictstyle    = "diff3";
+          merge.tool             = "vimdiff";
+          push.default           = "upstream";
+        };
+      ignores     = [ ".bloop" ".metals" ".idea" "metals.sbt" ];
       userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
