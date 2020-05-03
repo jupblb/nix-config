@@ -5,7 +5,7 @@ let
     ammonite' gcc idea-ultimate' neovim' python3 rustup sbt sway'
   ];
 in {
-  home.packages     = (with pkgs; [
+  home.packages         = (with pkgs; [
     bemenu
     ferdi'
     imv
@@ -17,7 +17,8 @@ in {
     unzip usbutils
     zoom-us
   ]) ++ devPackages;
-  home.stateVersion = "20.03";
+  home.sessionVariables = { BAT_THEME = "gruvbox"; };
+  home.stateVersion     = "20.03";
 
   nixpkgs.config.allowUnfree      = true;
   nixpkgs.config.packageOverrides = pkgs: {
@@ -29,6 +30,10 @@ in {
   nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
+    # Remember to run `bat cache --build` before first run
+    bat.enable         = true;
+    bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
+
     firefox = {
       enable            = true;
       package           = pkgs.firefox-wayland;
@@ -61,7 +66,11 @@ in {
 
     git = {
       aliases     = {
-        bat = "! git diff --name-only --diff-filter=d | xargs ${pkgs.unstable.bat'}/bin/bat --diff";
+        bat          = ''
+          !git diff --name-only --diff-filter=d \
+            | xargs ${pkgs.unstable.bat}/bin/bat --diff --diff-context=3
+        '';
+        branch-prune = "fetch --prune";
       };
       enable      = true;
       extraConfig = {

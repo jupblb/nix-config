@@ -2,11 +2,13 @@
   fetchFromGitHub, fetchpatch, grim, i3status', lib, mako, makeWrapper,
   redshift-wlr, slurp, symlinkJoin, sway, sway-unwrapped, swayidle, swaylock,
   wayvnc, wdisplays, wl-clipboard, wlroots', wob, writeTextFile, xdg-user-dirs,
-  xwayland'
+  xsettingsd, xwayland'
 }:
 
 let
-  binPaths  = lib.makeBinPath [ i3status' wdisplays wl-clipboard xwayland' ];
+  binPaths  = lib.makeBinPath [
+    i3status' wdisplays wl-clipboard xsettingsd xwayland'
+  ];
   config    = {
     common   =
       let
@@ -51,13 +53,13 @@ let
       sway-unwrapped'' = sway-unwrapped'.overrideAttrs(old: rec {
         patches = old.patches ++ [(fetchpatch {
           url    = "https://github.com/swaywm/sway/pull/5090.patch";
-          sha256 = "11zsjzsg2lnbq9nzr7q9bm1x98rcijbc9dbknd7zbpwbrg8hdw23";
+          sha256 = "131g9j02gbx0dsln6zp5fbr6vmvar11q2hbpq6dvfjlhj2ckxa4v";
         })];
         src     = fetchFromGitHub {
           owner  = "swaywm";
           repo   = "sway";
-          rev    = "2b15cf453e4b28324e9012515011a705c2960b30";
-          sha256 = "0adqxdyr1w7s6js81p7px918s6kgr41l75pw4v8y1jxmnb1qbsw7";
+          rev    = "52bd6aecf24af2aefc202d73aeef205cd62fa8b8";
+          sha256 = "1vly3qz6mzpvwfxh5la73qz2cy800c1y9ly9dlqcz06pzw69cram";
         };
       });
     in sway.override {

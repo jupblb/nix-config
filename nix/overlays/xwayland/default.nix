@@ -7,8 +7,8 @@ let
     nativeBuildInputs = old.nativeBuildInputs ++ [ autoreconfHook ];
     src               = fetchgit {
       url    = "https://gitlab.freedesktop.org/dirbaio/xserver";
-      rev    = "06224bd0c6f62ac9a8917100e504cb6659ece154";
-      sha256 = "0vzkqgqfg3n3mxsaffzl231p72r7rbij4l19g84kipdl3gj6qzlx";
+      rev    = "30ea6cb622e9bdbc75f74705d0e1cdf7355d5a80";
+      sha256 = "1jc30ipgzr9m5jgb8gwlp9qsl0bd6z35c0hvbbzypfa942rcs18w";
     };
   });
 in xwayland.override { xorgserver = xorgserver'; } 

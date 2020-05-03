@@ -60,17 +60,22 @@
   security.pam.services.swaylock.text = "auth include login";
 
   services = {
-    acpid.enable                   = true;
-    openssh.openFirewall           = true;
-    openssh.enable                 = true;
-    openssh.passwordAuthentication = false;
-    openssh.permitRootLogin        = "no";
-    openssh.ports                  = [ 22 1993 ];
-    printing.drivers               = with pkgs; [
-      samsung-unified-linux-driver_1_00_37
-    ];
-    printing.enable                = true;
-    sshguard.enable                = true;
+    acpid.enable = true;
+
+    openssh = {
+      openFirewall           = true;
+      enable                 = true;
+      passwordAuthentication = false;
+      permitRootLogin        = "no";
+      ports                  = [ 22 1993 ];
+    };
+
+    printing = {
+      drivers = with pkgs; [ samsung-unified-linux-driver_1_00_37 ];
+      enable  = true;
+    };
+
+    sshguard.enable = true;
   };
 
   sound.enable = true;

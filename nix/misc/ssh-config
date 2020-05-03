@@ -5,11 +5,13 @@ Host ghost.traveltimeapp.com
     User mapupdate
     IdentityFile ~/.ssh/igeolise/id_rsa
     SetEnv TERM=xterm-256color
+    StrictHostKeyChecking no
 
 Host battuta.traveltimeapp.com
     User mapupdate
     IdentityFile ~/.ssh/igeolise/id_rsa
     SetEnv TERM=xterm-256color
+    StrictHostKeyChecking no
 
 Host *.traveltimeapp.com
     User traveltime
@@ -24,7 +26,6 @@ Host *.amazonaws.com
 
 Host *.bitbucket.org
     AddressFamily inet
-    IdentityFile ~/.ssh/igeolise/id_rsa
 
 Host hades
   HostName jupblb.ddns.net

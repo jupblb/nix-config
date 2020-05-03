@@ -12,12 +12,12 @@ wlroots.overrideAttrs(old: rec {
   ];
   patches    = [ (fetchpatch {
     url    = "https://github.com/swaywm/wlroots/pull/2064.patch";
-    sha256 = "0jvfxyx1nbvzljhdxbjcn4739lda61mfzpznvk9i5hw1pclbck4w";
+    sha256 = "0gzaa6gdvrf3g4cn592pshhyrvr3ziz8sfbrswk461qrp1kxhv41";
   }) ];
   src        = fetchFromGitHub {
     owner  = "swaywm";
     repo   = "wlroots";
-    rev    = "85e299e6c55e5478617cb167eea316cfe7ee430c";
-    sha256 = "13yhq96lglx16j8v11dfr43779ibn9z6f673w7jkq9lm06cp91qj";
+    rev    = "46c83cbf3daf6c38c70d0dcb5492e164b6c8ab29";
+    sha256 = "015pidh69wcvh8y0v05q69p7d2jcwwpghv3hv0qxglb2jm726war";
   };
 })
