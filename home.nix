@@ -59,8 +59,9 @@
           sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
         };
       } ];
-      shellAliases         = {
-        ls        = "${pkgs.unstable.lsd'}/bin/lsd --date relative";
+      shellAliases         = with pkgs.unstable; {
+        cat       = "${bat}/bin/bat";
+        ls        = "${lsd'}/bin/lsd --date relative";
         nix-shell = "nix-shell --command fish";
       };
     };
