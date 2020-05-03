@@ -1,6 +1,16 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.file             = {
+    coc-nvim    = {
+      source = ./misc/coc-settings.json;
+      target = ".config/nvim/coc-settings.json";
+    };
+    xsettingsd  = {
+      target = ".config/xsettingsd/xsettingsd.conf";
+      text   = "Gdk/WindowScalingFactor 2\n";
+    };
+  };
   home.packages         =
     let
       devPackages  = with pkgs.unstable; [
