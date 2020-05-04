@@ -75,10 +75,10 @@
       extraConfig =
         let
           delta' = with pkgs.unstable.gitAndTools; ''
-            ${delta}/bin/delta --theme "gruvbox" --commit-color "#fabd2f" \
-              --file-color  "#076678" --hunk-color       "#458588" \
-              --minus-color "#f9d8bc" --minus-emph-color "#fa9f86" \
-              --plus-color  "#eeebba" --plus-emph-color  "#d9d87f"
+            ${delta}/bin/delta --theme "gruvbox" --hunk-style plain \
+              --commit-color "#fabd2f" --file-color        "#076678" \
+              --minus-color  "#f9d8bc"  --minus-emph-color "#fa9f86" \
+              --plus-color   "#eeebba"  --plus-emph-color  "#d9d87f"
           '';
         in {
           color.ui               = true;
