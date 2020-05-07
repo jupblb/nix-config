@@ -9,7 +9,6 @@ self: pkgs: with pkgs; {
   neovim'         = callPackage ./neovim {
     inherit (nodePackages) bash-language-server eslint npm;
     inherit (python3Packages) python-language-server;
-    inherit (rustPlatform) buildRustPackage;
   };
   ranger'         = callPackage ./ranger { };
   scp-speed-test' = callPackage ./scp-speed-test { };
