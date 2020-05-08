@@ -46,7 +46,6 @@ if ( $TERM != 'xterm-kitty' )
     let g:webdevicons_enable_airline_statusline = 0
 else
     let g:airline_powerline_fonts = 1
-    let g:airline_symbols_ascii = 0
 endif
 
 " coc.nvim
@@ -101,8 +100,6 @@ function! s:denite_my_settings() abort
     \ denite#do_map('quit')
     nnoremap <silent><buffer><expr> i
     \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <Space>
-    \ denite#do_map('toggle_select').'j'
 endfunction
 
 autocmd FileType denite-filter call s:denite_filter_my_settings()
@@ -110,37 +107,33 @@ function! s:denite_filter_my_settings() abort
     imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
 endfunction
 
-autocmd VimEnter * call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
-autocmd VimEnter * call denite#custom#var('grep', {
+call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
+call denite#custom#var('grep', {
     \ 'command': ['rg'],
     \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
-    \ 'recursive_opts': [],
     \ 'pattern_opt': ['--regexp'],
-    \ 'separator': ['--'],
-    \ 'final_opts': [],
+    \ 'separator': ['--']
     \ })
 
-autocmd VimEnter * call denite#custom#alias('source', 'file/rec/git', 'file/rec')
-autocmd VimEnter * call denite#custom#var('file/rec/git', 'command',
+call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+call denite#custom#var('file/rec/git', 'command',
     \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
-autocmd VimEnter * call denite#custom#option('default', {
+call denite#custom#option('default', {
     \ 'auto_resize': 1,
     \ 'winheight': 15,
-    \ 'vertical_preview': 1,
-    \ 'floating_preview': 1,
-    \ 'preview_width': 80,
     \ 'preview_height': 40,
     \ })
 
+filetype plugin indent on
 nnoremap <Leader>/    :Denite line -start-filter=true<CR>
-nnoremap <Leader>b    :Denite buffer -auto-action=preview<CR>
-nnoremap <Leader><CR> :DeniteProjectDir file -auto-action=preview<CR>
-nnoremap <Leader>ff   :DeniteProjectDir file -auto-action=preview<CR>
-nnoremap <Leader>fg   :DeniteProjectDir file/rec/git -auto-action=preview<CR>
-nnoremap <Leader>fr   :DeniteProjectDir file/rec -auto-action=preview -start-filter=true<CR>
-nnoremap <Leader>h    :Denite file/old -auto-action=preview<CR>
-nnoremap <Leader>r    :Denite grep -auto-action=preview<CR>
+nnoremap <Leader>b    :Denite buffer<CR>
+nnoremap <Leader><CR> :DeniteProjectDir file<CR>
+nnoremap <Leader>ff   :Denite file<CR>
+nnoremap <Leader>fg   :DeniteProjectDir file/rec/git -start-filter=true<CR>
+nnoremap <Leader>fr   :DeniteProjectDir file/rec -start-filter=true<CR>
+nnoremap <Leader>h    :Denite file/old<CR>
+nnoremap <Leader>r    :DeniteProjectDir grep<CR>
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0

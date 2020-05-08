@@ -9,29 +9,27 @@ let
     configure   = {
       customRC = builtins.readFile(./init.vim);
 
-      packages.myVimPackage = with vimPlugins; {
-        start = [
-          coc-nvim
+      plug.plugins = with vimPlugins; [
+        coc-nvim
+        denite
 
-          airline
-          coc-eslint
-          coc-java
-          coc-json
-          coc-metals
-          coc-python
-#         coc-rust-analyzer
-          coc-tsserver
-          denite
-          easymotion
-          fugitive
-          goyo
-          gruvbox-community
-          vim-devicons
-		  vim-nix
-          vim-signify
-          vim-startify
-        ];
-      };
+        airline
+        coc-eslint
+        coc-java
+        coc-json
+        coc-metals
+        coc-python
+#       coc-rust-analyzer
+        coc-tsserver
+        easymotion
+        fugitive
+        goyo
+        gruvbox-community
+        vim-devicons
+        vim-nix
+        vim-signify
+        vim-startify
+      ];
     };
 
     withNodeJs  = true;
