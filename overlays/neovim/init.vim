@@ -133,13 +133,14 @@ autocmd VimEnter * call denite#custom#option('default', {
     \ 'preview_height': 40,
     \ })
 
-nnoremap <Leader>/  :Denite line -start-filter=true<CR>
-nnoremap <Leader>b  :Denite buffer -auto-action=preview<CR>
-nnoremap <Leader>ff :DeniteProjectDir file -auto-action=preview<CR>
-nnoremap <Leader>fg :DeniteProjectDir file/rec/git -auto-action=preview<CR>
-nnoremap <Leader>fr :DeniteProjectDir file/rec -auto-action=preview -start-filter=true<CR>
-nnoremap <Leader>h  :Denite file/old -auto-action=preview<CR>
-nnoremap <Leader>r  :Denite grep -auto-action=preview<CR>
+nnoremap <Leader>/    :Denite line -start-filter=true<CR>
+nnoremap <Leader>b    :Denite buffer -auto-action=preview<CR>
+nnoremap <Leader><CR> :DeniteProjectDir file -auto-action=preview<CR>
+nnoremap <Leader>ff   :DeniteProjectDir file -auto-action=preview<CR>
+nnoremap <Leader>fg   :DeniteProjectDir file/rec/git -auto-action=preview<CR>
+nnoremap <Leader>fr   :DeniteProjectDir file/rec -auto-action=preview -start-filter=true<CR>
+nnoremap <Leader>h    :Denite file/old -auto-action=preview<CR>
+nnoremap <Leader>r    :Denite grep -auto-action=preview<CR>
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
