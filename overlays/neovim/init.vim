@@ -125,15 +125,13 @@ call denite#custom#option('default', {
     \ 'preview_height': 40,
     \ })
 
-filetype plugin indent on
-nnoremap <Leader>/    :Denite line -start-filter=true<CR>
-nnoremap <Leader>b    :Denite buffer<CR>
-nnoremap <Leader><CR> :DeniteProjectDir file<CR>
-nnoremap <Leader>ff   :Denite file<CR>
-nnoremap <Leader>fg   :DeniteProjectDir file/rec/git -start-filter=true<CR>
-nnoremap <Leader>fr   :DeniteProjectDir file/rec -start-filter=true<CR>
-nnoremap <Leader>h    :Denite file/old<CR>
-nnoremap <Leader>r    :DeniteProjectDir grep<CR>
+nnoremap <Leader>/  :Denite line -start-filter=true<CR>
+nnoremap <Leader>b  :Denite buffer<CR>
+nnoremap <Leader>ff :DeniteProjectDir file<CR>
+nnoremap <Leader>fg :DeniteProjectDir file/rec/git -start-filter=true<CR>
+nnoremap <Leader>fr :DeniteProjectDir file/rec -start-filter=true<CR>
+nnoremap <Leader>h  :Denite file/old<CR>
+nnoremap <Leader>r  :DeniteProjectDir grep<CR>
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
@@ -143,6 +141,10 @@ nmap <Leader><Leader> <Plug>(easymotion-overwin-f)
 " Goyo
 let g:goyo_width = 200
 nmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
+
+" Ranger
+let g:ranger_replace_netrw = 1
+nnoremap <Leader><CR> :Ranger<CR>
 
 " Startify
 if ( $TERM == 'xterm-kitty' )
