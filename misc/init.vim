@@ -120,7 +120,7 @@ call denite#custom#var('file/rec/git', 'command',
 call denite#custom#option('default', {
     \ 'auto_resize': 1,
     \ 'winheight': 15,
-    \ 'preview_height': 40,
+    \ 'preview_height': 30,
     \ })
 
 nnoremap <Leader>/  :Denite line -start-filter=true<CR>
