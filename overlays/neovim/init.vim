@@ -30,9 +30,7 @@ nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
 
 " Colorscheme
-if ( $TERM == 'linux' )
-    colorscheme pablo
-else
+if ( $TERM != 'linux' )
     let g:airline_theme = 'gruvbox'
     let g:gruvbox_contrast_light = 'hard'
     let g:gruvbox_italic = 1

@@ -61,7 +61,7 @@
         };
       } ];
       shellAliases         = with pkgs.unstable; {
-        cat       = "${bat}/bin/bat";
+        cat       = "${bat}/bin/bat -p";
         ls        = "${lsd'}/bin/lsd --date relative";
         nix-shell = "nix-shell --command fish";
       };
@@ -71,13 +71,12 @@
     fzf.enable          = true;
 
     git = {
-      aliases     = { branch-prune = "fetch --prune"; };
       enable      = true;
       extraConfig =
         let
           delta' = with pkgs.unstable.gitAndTools; ''
             ${delta}/bin/delta --theme "gruvbox" --hunk-style plain \
-              --commit-color "#fabd2f" --file-color        "#076678" \
+              --commit-color "#fabd2f"  --file-color       "#076678" \
               --minus-color  "#f9d8bc"  --minus-emph-color "#fa9f86" \
               --plus-color   "#eeebba"  --plus-emph-color  "#d9d87f"
           '';

@@ -105,7 +105,8 @@
     description   = "Public IP checker";
     script        = with pkgs; ''
       ${curl}/bin/curl ipinfo.io/ip >> /data/Dropbox/ip.txt
-      ${gawk}/bin/awk '!seen[$0]++' /data/Dropbox/ip.txt
+      ${gawk}/bin/awk '!seen[$0]++' /data/Dropbox/ip.txt > /data/Dropbox/ip.txt.next
+      mv /data/Dropbox/ip.txt.next /data/Dropbox/ip.txt
     '';
     serviceConfig = {
       ProtectSystem = "full";
