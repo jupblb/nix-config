@@ -1,6 +1,6 @@
 {
   atool, calibre, catdoc, fetchFromGitHub, ffmpegthumbnailer, file, fontforge,
-  glow, imagemagick, jq, lib, makeWrapper, p7zip, pandoc, poppler_utils, ranger,
+  glow, imagemagick, jq, lib, makeWrapper, pandoc, poppler_utils, ranger,
   symlinkJoin, unrar, xlsx2csv
 }:
 
@@ -34,7 +34,7 @@ in symlinkJoin {
         glow
         imagemagick
         jq
-        p7zip poppler_utils
+        poppler_utils
         unrar
         xlsx2csv
       ]}

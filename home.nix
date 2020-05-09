@@ -24,15 +24,14 @@
   home.sessionVariables = { BAT_THEME = "gruvbox"; };
   home.stateVersion     = "20.03";
 
-  nixpkgs.config.allowUnfree               = true;
-  nixpkgs.config.packageOverrides          = pkgs: {
+  nixpkgs.config.allowUnfree      = true;
+  nixpkgs.config.packageOverrides = pkgs: {
     unstable = import <nixpkgs-unstable> {
       config   = config.nixpkgs.config;
       overlays = config.nixpkgs.overlays;
     };
   };
-  nixpkgs.config.permittedInsecurePackages = [ "p7zip-16.02" ];
-  nixpkgs.overlays                         = [ (import ./overlays) ];
+  nixpkgs.overlays                = [ (import ./overlays) ];
 
   programs = {
     # Remember to run `bat cache --build` before first run
