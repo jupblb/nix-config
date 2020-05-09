@@ -51,8 +51,8 @@
 
   programs = {
     bash.enableCompletion = true;
+    bash.enableLsColors   = true;
     bash.promptInit       = builtins.readFile(../misc/bashrc);
-    bash.shellAliases.ls  = "ls --color=auto";
     ssh.extraConfig       = builtins.readFile(../misc/ssh-config);
     ssh.startAgent        = true;
   };

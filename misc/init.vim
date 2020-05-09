@@ -39,11 +39,11 @@ endif
 
 " Airline
 set noshowmode
-if ( $TERM != 'xterm-kitty' )
+if ( $TERM == 'xterm-kitty' )
+    let g:airline_powerline_fonts = 1
+else
     let g:airline_symbols_ascii = 1
     let g:webdevicons_enable_airline_statusline = 0
-else
-    let g:airline_powerline_fonts = 1
 endif
 
 " coc.nvim
@@ -141,8 +141,7 @@ let g:goyo_width = 200
 nmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
 
 " Ranger
-let g:ranger_replace_netrw = 1
-nnoremap <Leader><CR> :Ranger<CR>
+nnoremap <Leader><CR> :RangerEdit<CR>
 
 " Startify
 if ( $TERM == 'xterm-kitty' )

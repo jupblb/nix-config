@@ -14,7 +14,7 @@
   home.packages         =
     let
       devPackages  = with pkgs.unstable; [
-        ammonite' gcc idea-ultimate' neovim' python3 rustup sbt sway'
+        ammonite' gcc idea-ultimate' python3 rustup sbt sway'
       ];
       packages     = with pkgs; [
         imv lm_sensors mpv pciutils ranger' scp-speed-test' unzip usbutils
@@ -73,13 +73,12 @@
     git = {
       enable      = true;
       extraConfig =
-        let
-          delta' = with pkgs.unstable.gitAndTools; ''
-            ${delta}/bin/delta --theme "gruvbox" --hunk-style plain \
-              --commit-color "#fabd2f"  --file-color       "#076678" \
-              --minus-color  "#f9d8bc"  --minus-emph-color "#fa9f86" \
-              --plus-color   "#eeebba"  --plus-emph-color  "#d9d87f"
-          '';
+        let delta' = with pkgs.unstable.gitAndTools; ''
+              ${delta}/bin/delta --theme "gruvbox" --hunk-style plain \
+                --commit-color "#fabd2f"  --file-color       "#076678" \
+                --minus-color  "#f9d8bc"  --minus-emph-color "#fa9f86" \
+                --plus-color   "#eeebba"  --plus-emph-color  "#d9d87f"
+            '';
         in {
           color.ui               = true;
           core.mergeoptions      = "--no-edit";
@@ -110,6 +109,52 @@
         text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
       })}
     '';
+
+    neovim = {
+      configure    = {
+        customRC     = builtins.readFile ./misc/init.vim;
+        plug.plugins = with pkgs.unstable.vimPlugins; [
+          airline
+          coc-eslint
+          coc-java
+          coc-json
+          coc-metals
+          coc-nvim
+          coc-python
+#         coc-rust-analyzer
+          coc-tsserver
+          denite
+          easymotion
+          fugitive
+          goyo
+          gruvbox-community
+          ranger-vim
+          vim-devicons
+          vim-nix
+          vim-signify
+          vim-startify
+        ];
+      };
+      enable       = true;
+      package      = pkgs.unstable.neovim.override {
+        extraMakeWrapperArgs = with pkgs.unstable; ''
+          --prefix PATH : ${lib.makeBinPath[
+            bash-language-server
+            eslint
+            nodejs_latest npm
+            openjdk11
+            python-language-server
+            ranger' ripgrep
+          ]} \
+          --set JAVA_HOME ${openjdk11}/lib/openjdk
+        '';
+      };
+      vimAlias     = true;
+      vimdiffAlias = true;
+      withNodeJs   = true;
+      withPython   = false;
+      withRuby     = false;
+    };
 
     qutebrowser.enable      = true;
     qutebrowser.extraConfig = "config.load_autoconfig()";
