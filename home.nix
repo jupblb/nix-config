@@ -111,8 +111,14 @@
     '';
 
     neovim = {
-      configure    = {
-        customRC     = builtins.readFile ./misc/init.vim;
+      configure            = {
+        customRC     = with pkgs.unstable; with nodePackages; ''
+          let $JAVA_HOME = '${openjdk11}/lib/openjdk'
+          let $PATH     .= ':${lib.makeBinPath[
+            bash-language-server eslint nodejs_latest npm openjdk11 ripgrep
+          ]}'
+          ${builtins.readFile ./misc/init.vim}
+        '';
         plug.plugins = with pkgs.unstable.vimPlugins; [
           airline
           coc-eslint
@@ -135,25 +141,13 @@
           vim-startify
         ];
       };
-      enable       = true;
-      package      = pkgs.unstable.neovim.override {
-        extraMakeWrapperArgs = with pkgs.unstable; ''
-          --prefix PATH : ${lib.makeBinPath[
-            bash-language-server
-            eslint
-            nodejs_latest npm
-            openjdk11
-            python-language-server
-            ranger' ripgrep
-          ]} \
-          --set JAVA_HOME ${openjdk11}/lib/openjdk
-        '';
-      };
-      vimAlias     = true;
-      vimdiffAlias = true;
-      withNodeJs   = true;
-      withPython   = false;
-      withRuby     = false;
+      enable               = true;
+      extraPython3Packages = (ps: [ ps.python-language-server ]);
+      vimAlias             = true;
+      vimdiffAlias         = true;
+      withNodeJs           = true;
+      withPython           = false;
+      withRuby             = false;
     };
 
     qutebrowser.enable      = true;
