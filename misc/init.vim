@@ -30,21 +30,15 @@ nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
 
 " Colorscheme
-if ( $TERM != 'linux' )
-    let g:airline_theme = 'gruvbox'
-    let g:gruvbox_contrast_light = 'hard'
-    let g:gruvbox_italic = 1
-    colorscheme gruvbox
-endif
+let g:airline_theme = 'gruvbox'
+let g:gruvbox_contrast_light = 'hard'
+let g:gruvbox_italic = 1
+colorscheme gruvbox
 
 " Airline
 set noshowmode
-if ( $TERM == 'xterm-kitty' )
-    let g:airline_powerline_fonts = 1
-else
-    let g:airline_symbols_ascii = 1
-    let g:webdevicons_enable_airline_statusline = 0
-endif
+let g:airline_symbols_ascii = 1
+let g:webdevicons_enable_airline_statusline = 0
 
 " coc.nvim
 set cmdheight=2
@@ -144,9 +138,7 @@ nmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
 nnoremap <Leader><CR> :RangerEdit<CR>
 
 " Startify
-if ( $TERM == 'xterm-kitty' )
-    function! StartifyEntryFormat()
-        return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
-    endfunction
-endif
+function! StartifyEntryFormat()
+    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+endfunction
 

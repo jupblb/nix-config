@@ -1,3 +1,7 @@
+if [ "$(tty)" = "/dev/tty1" -a -x "$(command -v sway)" ]; then
+	exec sway
+fi
+
 if [ "$TERM" == "xterm-kitty" -a -x "$(command -v fish)" ]; then
     exec fish
 fi
