@@ -118,7 +118,7 @@
         plug.plugins = with pkgs.unstable.vimPlugins; [
           airline
           coc-eslint coc-java coc-json coc-metals coc-nvim coc-python
-            coc-tsserver # coc-rust-analyzer
+            coc-rust-analyzer coc-tsserver
           denite
           easymotion
           fugitive

@@ -37,8 +37,7 @@ colorscheme gruvbox
 
 " Airline
 set noshowmode
-let g:airline_symbols_ascii = 1
-let g:webdevicons_enable_airline_statusline = 0
+let g:airline_powerline_fonts = 1
 
 " coc.nvim
 set cmdheight=2
