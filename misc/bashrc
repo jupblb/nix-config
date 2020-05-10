@@ -3,7 +3,11 @@ if [ "$(tty)" = "/dev/tty1" -a -x "$(command -v sway)" ]; then
 fi
 
 if [ "$TERM" == "xterm-kitty" -a -x "$(command -v fish)" ]; then
-    exec fish
+    if [ -x "$(command -v fortune)" ]; then
+        exec fish -C 'fortune -sa'
+    else
+        exec fish
+    fi
 fi
 
 export PS1="\[\e[0;32m\]\u@\h \[\e[0;37m\]\w\[\e[0;34m\] $ \[\e[0m\]"

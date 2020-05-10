@@ -103,10 +103,6 @@
         url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
         sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
       })}
-      startup_session ${builtins.toString (pkgs.writeTextFile {
-        name = "kitty-launch";
-        text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
-      })}
     '';
 
     neovim = {

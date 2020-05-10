@@ -25,7 +25,7 @@
     NVIM_LISTEN_ADDRESS   = "/tmp/nvimsocket";
     RUSTUP_HOME           = "\$HOME/.local/share/rustup";
   };
-  environment.systemPackages   = with pkgs; [ file git htop unzip vim ];
+  environment.systemPackages   = with pkgs; [ file fortune git htop unzip vim ];
 
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [ vistafonts ];
