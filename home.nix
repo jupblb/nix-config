@@ -61,6 +61,7 @@
       } ];
       shellAliases         = with pkgs.unstable; {
         cat       = "${bat}/bin/bat -p --paging=never";
+        less      = "${bat}/bin/bat --paging=always";
         ls        = "${lsd'}/bin/lsd --date relative";
         nix-shell = "nix-shell --command fish";
       };
