@@ -1,3 +1,12 @@
+{ bemenu, callPackage, grim, mako, slurp, wob, writeTextFile, xdg-user-dirs }:
+
+let
+  picture-dir =  "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
+in ''
+### Startup
+exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
+exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob \
+  | ${wob}/bin/wob
 ### Variables
 set $mod Mod4
 
@@ -20,13 +29,14 @@ set $dummy    #ffffff
 
 set $browser qutebrowser
 set $term kitty
-set $wmmsg swaymsg
 
-set $menu bemenu-run --fn 'PragmataPro 12' -p "" \
+set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 12' -p "" \
   --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
   --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg'
 
-### Input configuration
+### Input/Output configuration
+output * background ${builtins.toString ./wallpaper.png} fill
+
 input * {
   click_method clickfinger
   middle_emulation enabled
@@ -70,7 +80,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
 bindsym $mod+q exec $browser
 bindsym $mod+Shift+c reload
-bindsym $mod+Shift+e exec $wmmsg exit
+bindsym $mod+Shift+e exec swaymsg exit
 
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
@@ -128,20 +138,26 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% \
-  && amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print substr($2, 0, length($2)-1) }' \
-  > $SWAYSOCK.wob
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% \
-  && amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print substr($2, 0, length($2)-1) }' \
-  > $SWAYSOCK.wob
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym Print exec ${grim}/bin/grim \
+  ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png')
+bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" \
+  ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png')
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl \
+  set-sink-volume @DEFAULT_SINK@ +2% && amixer sget Master | grep 'Right:' \
+  | awk -F'[][]' '{ print substr($2, 0, length($2)-1) }' > $SWAYSOCK.wob
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl \
+  set-sink-volume @DEFAULT_SINK@ -2% && amixer sget Master | grep 'Right:' \
+  | awk -F'[][]' '{ print substr($2, 0, length($2)-1) }' > $SWAYSOCK.wob
+bindsym XF86AudioMute        exec --no-startup-id pactl \
+  set-sink-mute   @DEFAULT_SINK@ toggle
 
 ### Status bar
 bar {
     position top
     mode hide
 
-    status_command exec i3status
+    status_command exec ${callPackage ./i3status {}}/bin/i3status
 
     separator_symbol " | "
     font pango:PragmataPro Mono Liga 11
@@ -158,4 +174,7 @@ bar {
 
     tray_output none
 }
+
+include ~/.config/sway/config
+''
 
