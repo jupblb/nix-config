@@ -60,7 +60,7 @@
         };
       } ];
       shellAliases         = with pkgs.unstable; {
-        cat       = "${bat}/bin/bat -p";
+        cat       = "${bat}/bin/bat -p --paging=never";
         ls        = "${lsd'}/bin/lsd --date relative";
         nix-shell = "nix-shell --command fish";
       };
@@ -74,9 +74,9 @@
       extraConfig =
         let delta' = with pkgs.unstable.gitAndTools; ''
               ${delta}/bin/delta --theme "gruvbox" --hunk-style plain \
-                --commit-color "#fabd2f"  --file-color       "#076678" \
-                --minus-color  "#f9d8bc"  --minus-emph-color "#fa9f86" \
-                --plus-color   "#eeebba"  --plus-emph-color  "#d9d87f"
+                --commit-color "#fabd2f" --file-color       "#076678" \
+                --minus-color  "#f9d8bc" --minus-emph-color "#fa9f86" \
+                --plus-color   "#eeebba" --plus-emph-color  "#d9d87f"
             '';
         in {
           color.ui               = true;
@@ -116,24 +116,14 @@
         '';
         plug.plugins = with pkgs.unstable.vimPlugins; [
           airline
-          coc-eslint
-          coc-java
-          coc-json
-          coc-metals
-          coc-nvim
-          coc-python
-#         coc-rust-analyzer
-          coc-tsserver
+          coc-eslint coc-java coc-json coc-metals coc-nvim coc-python
+            coc-tsserver # coc-rust-analyzer
           denite
           easymotion
           fugitive
-          goyo
-          gruvbox-community
+          goyo gruvbox-community
           ranger-vim
-          vim-devicons
-          vim-nix
-          vim-signify
-          vim-startify
+          vim-devicons vim-nix vim-signify vim-startify
         ];
       };
       enable               = true;

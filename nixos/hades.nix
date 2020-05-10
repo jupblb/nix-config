@@ -100,21 +100,6 @@
   '';
   system.stateVersion = "19.09";
 
-  systemd.services.checkip = {
-    after         = [ "network.target" ];
-    description   = "Public IP checker";
-    script        = with pkgs; ''
-      ${curl}/bin/curl ipinfo.io/ip >> /data/Dropbox/ip.txt
-      ${gawk}/bin/awk '!seen[$0]++' /data/Dropbox/ip.txt > /data/Dropbox/ip.txt.next
-      mv /data/Dropbox/ip.txt.next /data/Dropbox/ip.txt
-    '';
-    serviceConfig = {
-      ProtectSystem = "full";
-      Type          = "oneshot";
-      User          = "jupblb";
-    };
-    startAt       = "*:0/15";
-  };
   systemd.services.dropbox = {
     after                        = [ "network.target" ];
     description                  = "Dropbox";

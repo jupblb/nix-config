@@ -80,6 +80,22 @@ in {
 
   services.mingetty.autologinUser = "jupblb";
 
+  systemd.services.checkip = {
+    after         = [ "network.target" ];
+    description   = "Public IP checker";
+    script        = with pkgs; ''
+      ${curl}/bin/curl ipinfo.io/ip >> ~/ip.txt
+      ${gawk}/bin/awk '!seen[$0]++' ~/ip.txt > ~/ip.txt.next
+      mv ~/ip.txt.next ~/ip.txt
+    '';
+    serviceConfig = {
+      ProtectSystem = "full";
+      Type          = "oneshot";
+      User          = "jupblb";
+    };
+    startAt       = "*:0/15";
+  };
+
   users.users.jupblb.extraGroups = [ "docker" ];
 
   virtualisation.docker.enable = true;
