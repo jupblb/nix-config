@@ -3,8 +3,11 @@
 {
   home.file             = {
     coc-nvim    = {
-      source = ./misc/coc-settings.json;
       target = ".config/nvim/coc-settings.json";
+      text   =  with pkgs.unstable; with python3Packages; ''
+        ${lib.removeSuffix "\n}\n" (builtins.readFile ./misc/coc-settings.json)}
+        ,"metals.sbtScript": "${sbt}/bin/sbt" }
+      '';
     };
     xsettingsd  = {
       target = ".config/xsettingsd/xsettingsd.conf";
@@ -111,18 +114,21 @@
     '';
 
     neovim = {
-      configure            = {
-        customRC     = with pkgs.unstable; with nodePackages; ''
-          let $JAVA_HOME = '${openjdk11}/lib/openjdk'
-          let $PATH     .= ':${lib.makeBinPath[
-            bash-language-server eslint nodejs_latest npm openjdk11 ripgrep
-          ]}'
-          ${builtins.readFile ./misc/init.vim}
-        '';
+      configure    = {
+        customRC     =
+          let
+            packages = with pkgs.unstable; [ nodejs openjdk11 ripgrep rnix-lsp ];
+            nodePackages = with pkgs.unstable.nodePackages; [ bash-language-server eslint npm ];
+            pythonPackages = with pkgs.unstable.python3Packages; [ python-language-server ];
+          in ''
+            let $JAVA_HOME = '${pkgs.openjdk11}/lib/openjdk'
+            let $PATH     .= ':${lib.makeBinPath (packages ++ nodePackages ++ pythonPackages)}'
+            ${builtins.readFile ./misc/init.vim}
+          '';
         plug.plugins = with pkgs.unstable.vimPlugins; [
           airline
-          coc-eslint coc-java coc-json coc-metals coc-nvim coc-python
-            coc-rust-analyzer coc-tsserver
+          coc-eslint coc-java coc-json coc-metals coc-nvim coc-rust-analyzer
+            coc-tsserver
           denite
           easymotion
           fugitive
@@ -131,13 +137,12 @@
           vim-devicons vim-nix vim-signify vim-startify
         ];
       };
-      enable               = true;
-      extraPython3Packages = (ps: [ ps.python-language-server ]);
-      vimAlias             = true;
-      vimdiffAlias         = true;
-      withNodeJs           = true;
-      withPython           = false;
-      withRuby             = false;
+      enable       = true;
+      vimAlias     = true;
+      vimdiffAlias = true;
+      withNodeJs   = true;
+      withPython   = false;
+      withRuby     = false;
     };
 
     qutebrowser.enable      = true;
