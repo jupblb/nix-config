@@ -2,14 +2,18 @@
 
 {
   home.file             = {
-    coc-nvim    = {
+    coc-nvim   = {
       target = ".config/nvim/coc-settings.json";
       text   =  with pkgs.unstable; with python3Packages; ''
         ${lib.removeSuffix "\n}\n" (builtins.readFile ./misc/coc-settings.json)}
         ,"metals.sbtScript": "${sbt}/bin/sbt" }
       '';
     };
-    xsettingsd  = {
+    openjdk11  = {
+      source = "${pkgs.openjdk11}";
+      target = ".local/lib/openjdk11";
+    };
+    xsettingsd = {
       target = ".config/xsettingsd/xsettingsd.conf";
       text   = "Gdk/WindowScalingFactor 2\n";
     };
@@ -117,12 +121,20 @@
       configure    = {
         customRC     =
           let
-            packages = with pkgs.unstable; [ nodejs openjdk11 ripgrep rnix-lsp ];
-            nodePackages = with pkgs.unstable.nodePackages; [ bash-language-server eslint npm ];
-            pythonPackages = with pkgs.unstable.python3Packages; [ python-language-server ];
+            packages = with pkgs.unstable; [
+              nodejs openjdk11 ripgrep rnix-lsp
+            ];
+            nodePackages = with pkgs.unstable.nodePackages; [
+              bash-language-server eslint npm
+            ];
+            pythonPackages = with pkgs.unstable.python3Packages; [
+              python-language-server
+            ];
           in ''
             let $JAVA_HOME = '${pkgs.openjdk11}/lib/openjdk'
-            let $PATH     .= ':${lib.makeBinPath (packages ++ nodePackages ++ pythonPackages)}'
+            let $PATH     .= ':${
+              lib.makeBinPath (packages ++ nodePackages ++ pythonPackages)
+            }'
             ${builtins.readFile ./misc/init.vim}
           '';
         plug.plugins = with pkgs.unstable.vimPlugins; [
