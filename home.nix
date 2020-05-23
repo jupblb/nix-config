@@ -29,7 +29,7 @@
       swayPackages = with pkgs; [ bemenu ferdi' pavucontrol remmina zoom-us ];
     in devPackages ++ packages ++ swayPackages;
   home.sessionVariables = {
-    AWS_CONFIG_FILE             = "\$HOME/.config/aws";
+    AWS_CONFIG_FILE             = "\$HOME/.config/aws/config";
     AWS_SHARED_CREDENTIALS_FILE = "\$HOME/.config/aws/credentials";
     BAT_THEME                   = "gruvbox";
     CARGO_HOME                  = "\$HOME/.local/share/cargo";
