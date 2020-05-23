@@ -69,13 +69,7 @@
 
     fish = {
       enable               = true;
-      interactiveShellInit = ''
-        set fish_greeting; theme_gruvbox light hard
-        complete --command aws --no-files --arguments \
-          '(begin; set --local --export COMP_SHELL fish; \
-            set --local --export COMP_LINE (commandline); \
-            aws_completer | sed \'s/ $//\'; end)'
-      '';
+      interactiveShellInit = builtins.readFile ./misc/config.fish;
       plugins              = [ {
         name = "gruvbox";
         src  = pkgs.fetchFromGitHub {
