@@ -21,7 +21,7 @@
   home.packages         =
     let
       devPackages  = with pkgs.unstable; [
-        ammonite' gcc idea-ultimate' python3 rustup sbt sway'
+        aws-cli' ammonite' gcc idea-ultimate' python3 rustup sbt sway'
       ];
       packages     = with pkgs; [
         imv lm_sensors mpv pciutils ranger' scp-speed-test' unzip usbutils
