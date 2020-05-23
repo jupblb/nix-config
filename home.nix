@@ -28,7 +28,20 @@
       ];
       swayPackages = with pkgs; [ bemenu ferdi' pavucontrol remmina zoom-us ];
     in devPackages ++ packages ++ swayPackages;
-  home.sessionVariables = { BAT_THEME = "gruvbox"; };
+  home.sessionVariables = {
+    AWS_CONFIG_FILE             = "\$HOME/.config/aws";
+    AWS_SHARED_CREDENTIALS_FILE = "\$HOME/.config/aws/credentials";
+    BAT_THEME                   = "gruvbox";
+    CARGO_HOME                  = "\$HOME/.local/share/cargo";
+    EDITOR                      = "vim";
+    HISTFILE                    = "\$HOME/.cache/bash_history";
+    LESSHISTFILE                = "-";
+    MANPAGER                    = "vim -c 'set ft=man' -";
+    NIXPKGS_ALLOW_UNFREE         = "1";
+    NPM_CONFIG_USERCONFIG       = builtins.toString ./misc/npmrc;
+    PYLINTHOME                  = "\$HOME/.cache/pylint";
+    RUSTUP_HOME                 = "\$HOME/.local/share/rustup";
+  };
   home.stateVersion     = "20.03";
 
   nixpkgs.config.allowUnfree      = true;

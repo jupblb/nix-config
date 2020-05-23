@@ -15,15 +15,10 @@
   console.keyMap     = "pl";
 
   environment.sessionVariables =  {
-    CARGO_HOME            = "\$HOME/.local/share/cargo";
-    EDITOR                = "vim";
-    HISTFILE              = "\$HOME/.cache/bash_history";
-    LESSHISTFILE          = "-";
-    MANPAGER              = "vim -c 'set ft=man' -";
-    NIXPKGS_ALLOW_UNFREE  = "1";
-    NPM_CONFIG_USERCONFIG = builtins.toString ./misc/npmrc;
-    NVIM_LISTEN_ADDRESS   = "/tmp/nvimsocket";
-    RUSTUP_HOME           = "\$HOME/.local/share/rustup";
+    EDITOR               = "vim";
+    HISTFILE             = "\$HOME/.cache/bash_history";
+    LESSHISTFILE         = "-";
+    NIXPKGS_ALLOW_UNFREE = "1";
   };
   environment.systemPackages   = with pkgs; [ file git htop unzip vim ];
 
