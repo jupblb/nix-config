@@ -17,7 +17,7 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
-autocmd FileType make noexpandtab
+autocmd FileType make set noexpandtab
 
 " Remap split navigation
 nnoremap <C-J> <C-W><C-J>
