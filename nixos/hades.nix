@@ -44,7 +44,6 @@
         output HEADLESS-1 {
           #mode 3840x2160@30Hz
           mode 2736x1824@30Hz
-          #mode 1600x900@30Hz
           scale 2
         }
         xwayland force scale 2
