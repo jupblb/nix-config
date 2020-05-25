@@ -53,12 +53,8 @@ in {
     ./common.nix
   ];
 
-  networking = {
-    firewall.allowedTCPPorts = [ 5900 ];
-    firewall.allowedUDPPorts = [ 5900 ];
-    hostName                 = "hermes";
-    networkmanager.enable    = true;
-  };
+  networking.hostName              = "hermes";
+  networking.networkmanager.enable = true;
 
   nix.maxJobs = 8;
 

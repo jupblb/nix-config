@@ -55,8 +55,8 @@
   imports = [ ./common.nix ];
 
   networking = {
-    firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 5900 ];
-    firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 5900 ];
+    firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 ];
+    firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 ];
     hostName                 = "hades";
     networkmanager.enable    = true;
   };
