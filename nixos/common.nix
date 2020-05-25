@@ -39,8 +39,6 @@
   networking.useDHCP = false;
 
   nix.autoOptimiseStore = true;
-  nix.gc.automatic      = true;
-  nix.gc.dates          = "*-*-* 12:00:00";
 
   nixpkgs.config.allowUnfree = true;
 
