@@ -2,7 +2,7 @@
 
 let
   path   = with pkgs; lib.makeBinPath [
-    wdisplays wl-clipboard xsettingsd (callPackage ./xwayland.nix {})
+    wdisplays wl-clipboard (callPackage ./xwayland.nix {})
   ];
   config = {
     common   = with pkgs; callPackage ./sway-config.nix {};
@@ -20,11 +20,6 @@ let
         ${config.common}
         exec --no-startup-id ${redshift-wlr}/bin/redshift \
           -m wayland -l 51.12:17.05
-        exec ${swayidle}/bin/swayidle -w \
-          timeout 300 '${swaylock}/bin/swaylock' \
-          timeout 360 'swaymsg "output * dpms off"' \
-               resume 'swaymsg "output * dpms on"' \
-          before-sleep '${swaylock}/bin/swaylock'
         bindsym $mod+BackSpace exec ${swaylock}/bin/swaylock
       '';
     };

@@ -46,7 +46,7 @@ in {
     pulseaudio.package        = pkgs.pulseaudioFull;
   };
 
-  home-manager.users.jupblb = (import ../home.nix);
+  home-manager.users.jupblb = import ../home.nix {};
 
   imports = [
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>

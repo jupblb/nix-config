@@ -36,7 +36,22 @@
     pulseaudio.package        = pkgs.pulseaudioFull;
   };
 
-  home-manager.users.jupblb = (import ../home.nix);
+  home-manager.users.jupblb = import ../home.nix {
+    files.sway-config = {
+      target = ".config/sway/config";
+      text   = ''
+        output DP-3 scale 2
+        output HEADLESS-1 {
+          #mode 3840x2160@30Hz
+          mode 2736x1824@30Hz
+          #mode 1600x900@30Hz
+          scale 2
+        }
+        xwayland force scale 2
+        exec ${pkgs.xsettingsd}/bin/xsettingsd
+      '';
+    };
+  };
 
   imports = [ ./common.nix ];
 

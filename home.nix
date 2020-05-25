@@ -1,23 +1,24 @@
+{ files ? {} }:
 { config, lib, pkgs, ... }:
 
 {
   home.file             = {
-    coc-nvim   = {
+    coc-nvim    = {
       target = ".config/nvim/coc-settings.json";
       text   =  with pkgs.unstable; with python3Packages; ''
         ${lib.removeSuffix "\n}\n" (builtins.readFile ./misc/coc-settings.json)}
         ,"metals.sbtScript": "${sbt}/bin/sbt" }
       '';
     };
-    openjdk11  = {
+    openjdk11   = {
       source = "${pkgs.openjdk11}";
       target = ".local/lib/openjdk11";
     };
-    xsettingsd = {
+    xsettingsd  = {
       target = ".config/xsettingsd/xsettingsd.conf";
       text   = "Gdk/WindowScalingFactor 2\n";
     };
-  };
+  } // files;
   home.packages         =
     let
       devPackages  = with pkgs.unstable; [
