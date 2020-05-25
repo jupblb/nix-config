@@ -58,8 +58,6 @@ in {
 
   nix.maxJobs = 8;
 
-  powerManagement.cpuFreqGovernor = "ondemand";
-
   services.blueman.enable   = true;
   services.fstrim.enable    = true;
   services.logind.lidSwitch = "ignore";

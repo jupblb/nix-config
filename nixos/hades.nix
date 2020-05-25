@@ -64,7 +64,7 @@
   nix.maxJobs = 12;
 
   services = {
-    apcupsd.enable = true;
+    apcupsd.enable     = true;
     apcupsd.configText = ''
       UPSCABLE usb
       UPSTYPE usb

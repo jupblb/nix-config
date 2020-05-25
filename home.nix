@@ -5,14 +5,18 @@
   home.file             = {
     coc-nvim    = {
       target = ".config/nvim/coc-settings.json";
-      text   =  with pkgs.unstable; with python3Packages; ''
+      text   = ''
         ${lib.removeSuffix "\n}\n" (builtins.readFile ./misc/coc-settings.json)}
-        ,"metals.sbtScript": "${sbt}/bin/sbt" }
+        ,"metals.sbtScript": "${pkgs.unstable.sbt}/bin/sbt" }
       '';
     };
     openjdk11   = {
       source = "${pkgs.openjdk11}";
       target = ".local/lib/openjdk11";
+    };
+    sway-config = {
+      target = ".config/sway/config";
+      text   = "";
     };
     xsettingsd  = {
       target = ".config/xsettingsd/xsettingsd.conf";

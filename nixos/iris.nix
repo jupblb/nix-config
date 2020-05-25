@@ -76,8 +76,6 @@ in {
 
   nix.maxJobs = 2;
 
-  powerManagement.cpuFreqGovernor = "ondemand";
-
   services.mingetty.autologinUser = "jupblb";
 
   systemd.services.checkip = {
