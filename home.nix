@@ -143,7 +143,7 @@
         };
         plug.plugins = with pkgs.unstable.vimPlugins; [
           airline
-          coc-eslint coc-java coc-json coc-metals pkgs.vimPlugins.coc-nvim coc-rust-analyzer
+          coc-eslint coc-java coc-json coc-metals coc-nvim coc-rust-analyzer
             coc-tsserver
           denite
           easymotion
