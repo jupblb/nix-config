@@ -137,24 +137,10 @@
 
     neovim = {
       configure    = {
-        customRC     =
-          let
-            packages = with pkgs.unstable; [
-              nodejs openjdk11 ripgrep rnix-lsp
-            ];
-            nodePackages = with pkgs.unstable.nodePackages; [
-              bash-language-server eslint npm
-            ];
-            pythonPackages = with pkgs.unstable.python3Packages; [
-              python-language-server
-            ];
-          in ''
-            let $JAVA_HOME = '${pkgs.openjdk11}/lib/openjdk'
-            let $PATH     .= ':${
-              lib.makeBinPath (packages ++ nodePackages ++ pythonPackages)
-            }'
-            ${builtins.readFile ./misc/init.vim}
-          '';
+        customRC     = with pkgs.unstable; callPackage ./misc/init.vim.nix {
+          inherit(nodePackages)    bash-language-server eslint npm;
+          inherit(python3Packages) python-language-server;
+        };
         plug.plugins = with pkgs.unstable.vimPlugins; [
           airline
           coc-eslint coc-java coc-json coc-metals coc-nvim coc-rust-analyzer

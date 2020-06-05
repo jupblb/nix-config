@@ -1,3 +1,19 @@
+{
+  bash-language-server, eslint, lib, nodejs, npm, openjdk11,
+  python-language-server, ripgrep, rnix-lsp
+}:
+
+''
+let $JAVA_HOME = '${openjdk11}/lib/openjdk'
+let $PATH     .= ':${lib.makeBinPath[
+  bash-language-server
+  eslint
+  nodejs npm
+  openjdk11
+  python-language-server
+  rnix-lsp
+]}'
+
 set background=light
 set clipboard+=unnamedplus
 set ignorecase
@@ -98,9 +114,11 @@ function! s:denite_filter_my_settings() abort
     imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
 endfunction
 
-call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
+call denite#custom#var('file/rec', 'command', [
+    \ '${ripgrep}/bin/rg', '--files', '--glob', '!.git'
+    \ ])
 call denite#custom#var('grep', {
-    \ 'command': ['rg'],
+    \ 'command': ['${ripgrep}/bin/rg'],
     \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
     \ 'pattern_opt': ['--regexp'],
     \ 'separator': ['--']
@@ -140,4 +158,5 @@ nnoremap <Leader><CR> :RangerEdit<CR>
 function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
+''
 
