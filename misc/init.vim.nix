@@ -123,24 +123,17 @@ call denite#custom#var('grep', {
     \ 'pattern_opt': ['--regexp'],
     \ 'separator': ['--']
     \ })
-
-call denite#custom#alias('source', 'file/rec/git', 'file/rec')
-call denite#custom#var('file/rec/git', 'command',
-    \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
 call denite#custom#option('default', {
     \ 'auto_resize': 1,
     \ 'winheight': 15,
     \ 'preview_height': 30,
     \ })
 
-nnoremap <Leader>/  :Denite line -start-filter=true<CR>
-nnoremap <Leader>b  :Denite buffer<CR>
-nnoremap <Leader>ff :DeniteProjectDir file<CR>
-nnoremap <Leader>fg :DeniteProjectDir file/rec/git -start-filter=true<CR>
-nnoremap <Leader>fr :DeniteProjectDir file/rec -start-filter=true<CR>
-nnoremap <Leader>h  :Denite file/old<CR>
-nnoremap <Leader>r  :DeniteProjectDir grep<CR>
+nnoremap <Leader>/ :Denite line -start-filter=true<CR>
+nnoremap <Leader>b :Denite buffer<CR>
+nnoremap <Leader>f :DeniteProjectDir file/rec -start-filter=true<CR>
+nnoremap <Leader>h :Denite file/old<CR>
+nnoremap <Leader>r :DeniteProjectDir grep<CR>
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
