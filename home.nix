@@ -63,6 +63,9 @@
     bat.enable         = true;
     bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
 
+    emacs.enable  = true;
+    emacs.package = pkgs.unstable.emacs';
+
     firefox = {
       enable            = true;
       package           = pkgs.firefox-wayland;

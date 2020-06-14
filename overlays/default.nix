@@ -3,6 +3,7 @@ self: pkgs: with pkgs; {
   aws-cli'       = callPackage ./aws-cli {
     inherit(python3.pkgs) buildPythonApplication;
   };
+  emacs'         = callPackage ./emacs {};
   ferdi'         = callPackage ./ferdi {};
   idea-ultimate' = callPackage ./idea-ultimate {
     inherit(jetbrains) idea-ultimate jdk;
