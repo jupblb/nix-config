@@ -35,12 +35,6 @@ set softtabstop=4
 set tabstop=4
 autocmd FileType make set noexpandtab
 
-" Remap split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 " Other mappings
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
