@@ -44,6 +44,8 @@ in {
     workdir            = "/var/lib/pihole/";
   };
 
+  environment.systemPackages = with pkgs; [ wol ];
+
   fileSystems."/".device     = "/dev/disk/by-label/NIXOS_SD";
   fileSystems."/".fsType     = "ext4";
   fileSystems."/boot".device = "/dev/disk/by-label/FIRMWARE";
