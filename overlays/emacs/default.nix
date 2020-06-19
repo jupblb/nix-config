@@ -6,7 +6,7 @@
 }:
 
 let emacs28 = emacs.overrideAttrs(old: {
-  buildInputs       = old.buildInputs ++ [ wayland wayland-protocols];
+  buildInputs       = old.buildInputs ++ [ wayland wayland-protocols ];
   configureFlags    = old.configureFlags ++ [
     "--without-x" "--with-cairo" "--with-modules"
   ];
