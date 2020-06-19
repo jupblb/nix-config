@@ -3,13 +3,6 @@
 
 {
   home.file             = {
-    coc-nvim    = {
-      target = ".config/nvim/coc-settings.json";
-      text   = ''
-        ${lib.removeSuffix "\n}\n" (builtins.readFile ./misc/coc-settings.json)}
-        ,"metals.sbtScript": "${pkgs.unstable.sbt}/bin/sbt" }
-      '';
-    };
     openjdk11   = {
       source = "${pkgs.openjdk11}";
       target = ".local/lib/openjdk11";
@@ -140,20 +133,17 @@
 
     neovim = {
       configure    = {
-        customRC     = with pkgs.unstable; callPackage ./misc/init.vim.nix {
-          inherit(nodePackages)    bash-language-server eslint npm;
-          inherit(python3Packages) python-language-server;
-        };
+        customRC     = ''
+          let $PATH .= '${pkgs.ripgrep}/bin/rg'
+          ${builtins.readFile ./misc/init.vim}
+        '';
         plug.plugins = with pkgs.unstable.vimPlugins; [
           airline
-          coc-eslint coc-java coc-json coc-metals coc-nvim coc-rust-analyzer
-            coc-tsserver
           denite
           easymotion
-          fugitive
-          goyo gruvbox-community
+          gruvbox-community
           ranger-vim
-          vim-devicons vim-nix vim-signify vim-startify
+          vim-devicons vim-nix vim-signify
         ];
       };
       enable       = true;
