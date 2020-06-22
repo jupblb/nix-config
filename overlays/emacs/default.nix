@@ -1,6 +1,6 @@
 {
   autoflake, autoreconfHook, bash-language-server, clang-tools, emacs,
-  fetchFromGitHub, flake8, lib, makeWrapper, metals, pytest,
+  fetchFromGitHub, flake8, lib, makeWrapper, metals, pandoc, pytest,
   python-language-server, ripgrep, texinfo, symlinkJoin, wayland,
   wayland-protocols
 }:
@@ -32,7 +32,7 @@ in symlinkJoin {
         clang-tools
 #       flake8
         metals
-#       pytest python-language-server
+        pandoc # pytest python-language-server
         ripgrep
       ]}
   '';

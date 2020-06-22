@@ -19,7 +19,7 @@
   home.packages         =
     let
       devPackages  = with pkgs.unstable; [
-        aws-cli' ammonite' gcc idea-ultimate' python3 rustup sbt sway'
+        aws-cli' ammonite' bazel bear clang idea-ultimate' python3 rustup sbt sway'
       ];
       packages     = with pkgs; [
         discord imv lm_sensors mpv pciutils ranger' unzip usbutils
@@ -134,7 +134,7 @@
     neovim = {
       configure    = {
         customRC     = ''
-          let $PATH .= '${pkgs.ripgrep}/bin/rg'
+          let $PATH .= ':${pkgs.ripgrep}/bin'
           ${builtins.readFile ./misc/init.vim}
         '';
         plug.plugins = with pkgs.unstable.vimPlugins; [
