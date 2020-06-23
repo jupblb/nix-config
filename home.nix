@@ -156,7 +156,6 @@
 
     qutebrowser.enable      = true;
     qutebrowser.extraConfig = "config.load_autoconfig()";
-    qutebrowser.package     = pkgs.unstable.qutebrowser;
 
     starship.enable                = true;
     starship.enableFishIntegration = true;
