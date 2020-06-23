@@ -22,7 +22,7 @@
         aws-cli' ammonite' bazel bear clang idea-ultimate' python3 rustup sbt sway'
       ];
       packages     = with pkgs; [
-        discord imv lm_sensors mpv pciutils ranger' unzip usbutils
+        discord imv lm_sensors mpv pciutils ranger' screen unzip usbutils
       ];
       swayPackages = with pkgs; [ bemenu ferdi' pavucontrol remmina zoom-us ];
     in devPackages ++ packages ++ swayPackages;
