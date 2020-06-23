@@ -30,9 +30,9 @@ in symlinkJoin {
         autoflake
         bash-language-server
         clang-tools
-#       flake8
+        flake8
         metals
-        pandoc # pytest python-language-server
+        pandoc pytest python-language-server
         ripgrep
       ]}
   '';
