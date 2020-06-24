@@ -28,7 +28,7 @@ Host *.bitbucket.org
     AddressFamily inet
 
 Host hades
-  HostName jupblb.ddns.net
-  Port 1993
-  User jupblb
+    HostName jupblb.ddns.net
+    Port 1993
+    User jupblb
 
