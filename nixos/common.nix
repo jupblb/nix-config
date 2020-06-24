@@ -102,6 +102,6 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEtq1CzRgt2HFdkUL7kCx+4r63J9m36CVBtTmIIC4BvN ssh@kielbowi.cz"
     ];
-    shell                       = pkgs.bashInteractive;
+    shell                       = pkgs.fish;
   };
 }

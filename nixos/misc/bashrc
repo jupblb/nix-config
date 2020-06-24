@@ -1,7 +1,3 @@
-if [ "$(tty)" = "/dev/tty1" -a -x "$(command -v sway)" ]; then
-	exec sway
-fi
-
 export PS1="\[\e[0;32m\]\u@\h \[\e[0;37m\]\w\[\e[0;34m\] $ \[\e[0m\]"
  
 # Avoid duplicate entries
