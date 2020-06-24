@@ -1,5 +1,4 @@
 self: pkgs: with pkgs; { 
-  ammonite'      = callPackage ./ammonite {};
   aws-cli'       = callPackage ./aws-cli {
     inherit(python3Packages) buildPythonApplication;
   };

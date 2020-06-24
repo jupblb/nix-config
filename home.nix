@@ -19,7 +19,7 @@
   home.packages         =
     let
       devPackages  = with pkgs.unstable; [
-        aws-cli' ammonite'
+        aws-cli'
         bazel bear
         clang
         google-cloud-sdk
