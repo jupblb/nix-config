@@ -25,7 +25,6 @@
         google-cloud-sdk
         idea-ultimate'
         python3
-        rustup
         sbt sway'
       ];
       packages     = with pkgs; [
@@ -37,7 +36,6 @@
     AWS_CONFIG_FILE             = "\$HOME/.config/aws/config";
     AWS_SHARED_CREDENTIALS_FILE = "\$HOME/.config/aws/credentials";
     BAT_THEME                   = "gruvbox";
-    CARGO_HOME                  = "\$HOME/.local/share/cargo";
     EDITOR                      = "vim";
     HISTFILE                    = "\$HOME/.cache/bash_history";
     LESSHISTFILE                = "-";
@@ -45,7 +43,6 @@
     NIXPKGS_ALLOW_UNFREE         = "1";
     NPM_CONFIG_USERCONFIG       = builtins.toString ./misc/npmrc;
     PYLINTHOME                  = "\$HOME/.cache/pylint";
-    RUSTUP_HOME                 = "\$HOME/.local/share/rustup";
   };
   home.stateVersion     = "20.03";
 
@@ -173,7 +170,7 @@
       directory.truncation_length         = 8;
       prompt_order                        = [
         "username" "hostname" "directory" "git_branch" "git_commit" "git_state"
-        "git_status" "package" "java" "python" "rust" "nix_shell" "memory_usage"
+        "git_status" "package" "java" "python" "nix_shell" "memory_usage"
         "cmd_duration" "character"
       ];
     };
