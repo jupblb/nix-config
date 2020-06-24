@@ -40,8 +40,7 @@
     HISTFILE                    = "\$HOME/.cache/bash_history";
     LESSHISTFILE                = "-";
     MANPAGER                    = "vim -c 'set ft=man' -";
-    NIXPKGS_ALLOW_UNFREE         = "1";
-    NPM_CONFIG_USERCONFIG       = builtins.toString ./misc/npmrc;
+    NIXPKGS_ALLOW_UNFREE        = "1";
     PYLINTHOME                  = "\$HOME/.cache/pylint";
   };
   home.stateVersion     = "20.03";
