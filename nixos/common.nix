@@ -6,7 +6,7 @@
     loader.timeout       = 3;
     supportedFilesystems = [ "ntfs" "exfat" ];
     tmpOnTmpfs           = true;
-  }
+  };
 
   console = {
     colors     = [
@@ -19,7 +19,7 @@
     font       = "ter-232n";
     keyMap     = "pl";
     packages   = [ pkgs.terminus_font ];
-  }
+  };
 
   environment.sessionVariables =  {
     EDITOR               = "vim";
