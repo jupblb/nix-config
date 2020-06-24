@@ -48,7 +48,10 @@
     };
   };
 
-  imports = [ ./common.nix ];
+  imports = [
+    <home-manager/nixos>
+    ./common.nix
+  ];
 
   networking = {
     firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 ];
