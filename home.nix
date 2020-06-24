@@ -106,11 +106,8 @@
           color.ui               = true;
           core.mergeoptions      = "--no-edit";
           core.pager             = delta';
-          diff.tool              = "vimdiff";
           fetch.prune            = true;
           interactive.diffFilter = delta';
-          merge.conflictstyle    = "diff3";
-          merge.tool             = "vimdiff";
           push.default           = "upstream";
         };
       ignores     = [ ".bloop" ".metals" ".idea" "metals.sbt" ];
