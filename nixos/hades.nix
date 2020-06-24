@@ -11,11 +11,7 @@
     kernelPackages                              = pkgs.linuxPackages_latest;
     loader.efi.canTouchEfiVariables             = true;
     loader.systemd-boot.enable                  = true;
-    tmpOnTmpfs                                  = true;
   };
-
-  console.font     = "ter-232n";
-  console.packages = [ pkgs.terminus_font ];
 
   environment.systemPackages = with pkgs; [ dropbox-cli ];
 
@@ -74,8 +70,6 @@
     blueman.enable = true;
 
     fstrim.enable = true;
-
-    mingetty.autologinUser = "jupblb";
 
     nfs = {
       server.enable     = true;

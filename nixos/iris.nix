@@ -15,11 +15,7 @@ in {
       gpu_mem=256
     '';
     loader.raspberryPi.version        = 4;
-    tmpOnTmpfs                        = true;
   };
-
-  console.font     = "ter-232n";
-  console.packages = [ pkgs.terminus_font ];
 
   docker-containers.pihole = {
     image              = "pihole/pihole:latest";
@@ -77,8 +73,6 @@ in {
   };
 
   nix.maxJobs = 2;
-
-  services.mingetty.autologinUser = "jupblb";
 
   systemd.services.checkip = {
     after         = [ "network.target" ];
