@@ -19,7 +19,14 @@
   home.packages         =
     let
       devPackages  = with pkgs.unstable; [
-        aws-cli' ammonite' bazel bear clang idea-ultimate' python3 rustup sbt sway'
+        aws-cli' ammonite'
+        bazel bear
+        clang
+        google-cloud-sdk
+        idea-ultimate'
+        python3
+        rustup
+        sbt sway'
       ];
       packages     = with pkgs; [
         discord imv lm_sensors mpv pciutils ranger' screen unzip usbutils
