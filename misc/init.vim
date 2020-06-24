@@ -1,19 +1,3 @@
-{
-  bash-language-server, eslint, lib, nodejs, npm, openjdk11,
-  python-language-server, ripgrep, rnix-lsp
-}:
-
-''
-let $JAVA_HOME = '${openjdk11}/lib/openjdk'
-let $PATH     .= ':${lib.makeBinPath[
-  bash-language-server
-  eslint
-  nodejs npm
-  openjdk11
-  python-language-server
-  rnix-lsp
-]}'
-
 set background=light
 set clipboard+=unnamedplus
 set ignorecase
@@ -35,12 +19,6 @@ set softtabstop=4
 set tabstop=4
 autocmd FileType make set noexpandtab
 
-" Remap split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 " Other mappings
 nnoremap <Leader>d :bd<CR>
 nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
@@ -54,47 +32,6 @@ colorscheme gruvbox
 " Airline
 set noshowmode
 let g:airline_powerline_fonts = 1
-
-" coc.nvim
-set cmdheight=2
-set hidden
-set shortmess+=c
-set signcolumn=yes
-set updatetime=200
-
-inoremap <expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <c-space> coc#refresh()
-inoremap <expr> <CR> complete_info()["selected"] != "-1" ?
-  \ "\<C-y>" : "\<C-g>u\<CR>"
-
-nmap     <Leader>ld <Plug>(coc-definition)
-nmap     <Leader>lt <Plug>(coc-type-definition)
-nmap     <Leader>li <Plug>(coc-implementation)
-nmap     <Leader>lu <Plug>(coc-references)
-nmap     <Leader>lr <Plug>(coc-rename)
-nmap     <Leader>lf :call CocAction('format')<CR>
-nnoremap <Leader>lh :call <SID>show_documentation()<CR>
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-autocmd VimEnter * highlight clear Normal
 
 " Denite
 autocmd FileType denite call s:denite_my_settings()
@@ -115,10 +52,10 @@ function! s:denite_filter_my_settings() abort
 endfunction
 
 call denite#custom#var('file/rec', 'command', [
-    \ '${ripgrep}/bin/rg', '--files', '--glob', '!.git'
+    \ 'rg', '--files', '--glob', '!.git'
     \ ])
 call denite#custom#var('grep', {
-    \ 'command': ['${ripgrep}/bin/rg'],
+    \ 'command': ['rg'],
     \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
     \ 'pattern_opt': ['--regexp'],
     \ 'separator': ['--']
@@ -140,16 +77,6 @@ let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 nmap <Leader><Leader> <Plug>(easymotion-overwin-f)
 
-" Goyo
-let g:goyo_width = 200
-nmap <Leader>` :Goyo<CR>:hi clear Normal<CR>
-
 " Ranger
 nnoremap <Leader><CR> :RangerEdit<CR>
-
-" Startify
-function! StartifyEntryFormat()
-    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
-endfunction
-''
 

@@ -3,13 +3,6 @@
 
 {
   home.file             = {
-    coc-nvim    = {
-      target = ".config/nvim/coc-settings.json";
-      text   = ''
-        ${lib.removeSuffix "\n}\n" (builtins.readFile ./misc/coc-settings.json)}
-        ,"metals.sbtScript": "${pkgs.unstable.sbt}/bin/sbt" }
-      '';
-    };
     openjdk11   = {
       source = "${pkgs.openjdk11}";
       target = ".local/lib/openjdk11";
@@ -26,10 +19,10 @@
   home.packages         =
     let
       devPackages  = with pkgs.unstable; [
-        aws-cli' ammonite' gcc idea-ultimate' python3 rustup sbt sway'
+        aws-cli' ammonite' bazel bear clang idea-ultimate' python3 rustup sbt sway'
       ];
       packages     = with pkgs; [
-        discord imv lm_sensors mpv pciutils ranger' unzip usbutils
+        discord imv lm_sensors mpv pciutils ranger' screen unzip usbutils
       ];
       swayPackages = with pkgs; [ bemenu ferdi' pavucontrol remmina zoom-us ];
     in devPackages ++ packages ++ swayPackages;
@@ -62,6 +55,9 @@
     # Remember to run `bat cache --build` before first run
     bat.enable         = true;
     bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
+
+    emacs.enable  = true;
+    emacs.package = pkgs.unstable.emacs';
 
     firefox = {
       enable            = true;
@@ -137,20 +133,17 @@
 
     neovim = {
       configure    = {
-        customRC     = with pkgs.unstable; callPackage ./misc/init.vim.nix {
-          inherit(nodePackages)    bash-language-server eslint npm;
-          inherit(python3Packages) python-language-server;
-        };
+        customRC     = ''
+          let $PATH .= ':${pkgs.ripgrep}/bin'
+          ${builtins.readFile ./misc/init.vim}
+        '';
         plug.plugins = with pkgs.unstable.vimPlugins; [
           airline
-          coc-eslint coc-java coc-json coc-metals coc-nvim coc-rust-analyzer
-            coc-tsserver
           denite
           easymotion
-          fugitive
-          goyo gruvbox-community
+          gruvbox-community
           ranger-vim
-          vim-devicons vim-nix vim-signify vim-startify
+          vim-devicons vim-nix vim-signify
         ];
       };
       enable       = true;

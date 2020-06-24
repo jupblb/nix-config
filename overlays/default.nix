@@ -1,7 +1,11 @@
 self: pkgs: with pkgs; { 
   ammonite'      = callPackage ./ammonite {};
   aws-cli'       = callPackage ./aws-cli {
-    inherit(python3.pkgs) buildPythonApplication;
+    inherit(python3Packages) buildPythonApplication;
+  };
+  emacs'         = callPackage ./emacs {
+    inherit(nodePackages) bash-language-server;
+    inherit(python3Packages) flake8 pytest python-language-server;
   };
   ferdi'         = callPackage ./ferdi {};
   idea-ultimate' = callPackage ./idea-ultimate {

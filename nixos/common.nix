@@ -23,7 +23,7 @@
   environment.systemPackages   = with pkgs; [ file git htop unzip vim ];
 
   fonts.enableDefaultFonts = true;
-  fonts.fonts              = with pkgs; [ vistafonts ];
+  fonts.fonts              = with pkgs; [ emacs-all-the-icons-fonts vistafonts ];
 
   hardware = {
     enableRedistributableFirmware = true;
