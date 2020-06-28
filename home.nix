@@ -18,12 +18,8 @@
   } // files;
   home.packages         =
     let
-      devPackages  = with pkgs.unstable; [
-        aws-cli' bazel bear clang idea-ultimate' python3 sbt sway'
-      ];
-      packages     = with pkgs; [
-        discord imv lm_sensors mpv pciutils ranger' screen unzip usbutils
-      ];
+      devPackages  = with pkgs.unstable; [ aws-cli' idea-ultimate' sway' ];
+      packages     = with pkgs; [ discord imv mpv ranger' screen unzip ];
       swayPackages = with pkgs; [ bemenu ferdi' pavucontrol remmina zoom-us ];
     in devPackages ++ packages ++ swayPackages;
   home.sessionVariables = {
