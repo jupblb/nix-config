@@ -5,7 +5,6 @@
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
     EDITOR               = "vim";
-    HISTFILE             = "\$HOME/.cache/bash_history";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
   };

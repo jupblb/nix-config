@@ -1,8 +1,8 @@
 {
-  bemenu, callPackage, discord, grim, imv, lib, makeWrapper, mako, mpv,
-  pavucontrol, qutebrowser, redshift-wlr, remmina, slurp, sway, swaylock,
-  symlinkJoin, wayvnc, wdisplays, wl-clipboard, wob, writeScriptBin,
-  writeTextFile, xdg-user-dirs
+  bemenu, callPackage, discord, grim, imv, lib, makeWrapper, mpv, pavucontrol,
+  qutebrowser, redshift-wlr, remmina, slurp, sway, swaylock, symlinkJoin,
+  wayvnc, wdisplays, wl-clipboard, wob, writeScriptBin, writeTextFile,
+  xdg-user-dirs
 }:
 
 let

@@ -21,11 +21,7 @@
     packages   = [ pkgs.terminus_font ];
   };
 
-  environment.sessionVariables =  {
-    EDITOR       = "vim";
-    LESSHISTFILE = "-";
-  };
-  environment.systemPackages   = with pkgs; [ file git htop unzip vim ];
+  environment.systemPackages = with pkgs; [ file git htop unzip ];
 
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [
@@ -53,6 +49,7 @@
     bash.promptInit       = builtins.readFile ./misc/bashrc;
     ssh.extraConfig       = builtins.readFile ./misc/ssh-config;
     ssh.startAgent        = true;
+    vim.defaultEditor     = true;
   };
 
   security.pam.services.swaylock.text = "auth include login";

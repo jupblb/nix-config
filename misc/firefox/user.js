@@ -13,5 +13,3 @@ user_pref("permissions.default.desktop-notification", 2);
 
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 
-user_pref("webgl.force-enabled", true);
-

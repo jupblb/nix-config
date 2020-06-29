@@ -1,5 +1,5 @@
 {
-  bemenu, callPackage, grim, i3status, mako, qutebrowser, slurp, stdenv, wob,
+  bemenu, callPackage, grim, i3status, qutebrowser, slurp, stdenv, wob,
   writeScriptBin, xdg-user-dirs
 }:
 
@@ -7,7 +7,6 @@ let
   picture-dir =  "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
 in ''
 ### Startup
-exec --no-startup-id ${mako}/bin/mako -c ${./mako-config}
 exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob \
   | ${wob}/bin/wob
 ### Variables

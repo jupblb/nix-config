@@ -6,14 +6,6 @@
   }
 }
 
-@-moz-document domain(bitbucket.org) {
-  .source, .page, .view-line, pre {
-    font-family: "PragmataPro Mono Liga" !important;
-    font-weight: normal !important;
-    font-style: normal !important;
-  }
-}
-
 @-moz-document domain(leetcode.com) {
   .CodeMirror-lines {
     font-family: "PragmataPro Mono Liga" !important;
