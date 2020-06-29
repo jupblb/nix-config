@@ -76,14 +76,6 @@
 
   sound.enable = true;
 
-  system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
-    ln -sfn ${pkgs.bashInteractive}/bin/bash /bin/bash
-  '';
-  system.activationScripts.ld-linux = lib.stringAfter [ "usrbinenv" ] ''
-    mkdir -m 0755 -p /lib64
-    ln -sfn ${pkgs.glibc}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
-  '';
-
   time.timeZone = "Europe/Warsaw";
 
   users.users.jupblb = {
