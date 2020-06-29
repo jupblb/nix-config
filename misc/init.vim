@@ -19,10 +19,6 @@ set softtabstop=4
 set tabstop=4
 autocmd FileType make set noexpandtab
 
-" Other mappings
-nnoremap <Leader>d :bd<CR>
-nnoremap <Leader>n :set invnumber<CR>:SignifyToggle<CR>
-
 " Colorscheme
 let g:airline_theme = 'gruvbox'
 let g:gruvbox_contrast_light = 'hard'

@@ -1,6 +1,3 @@
-Host *
-    AddKeysToAgent yes
-
 Host hades
     HostName jupblb.ddns.net
     Port 1993

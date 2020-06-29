@@ -48,7 +48,6 @@
     bash.enableLsColors   = true;
     bash.promptInit       = builtins.readFile ./misc/bashrc;
     ssh.extraConfig       = builtins.readFile ./misc/ssh-config;
-    ssh.startAgent        = true;
     vim.defaultEditor     = true;
   };
 
