@@ -1,7 +1,4 @@
-{
-  bemenu, callPackage, grim, i3status, qutebrowser, slurp, stdenv, wob,
-  writeScriptBin, xdg-user-dirs
-}:
+{ bemenu, grim, qutebrowser, slurp, wob, xdg-user-dirs }:
 
 let
   picture-dir =  "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
@@ -165,7 +162,7 @@ bar {
     position top
     mode hide
 
-    status_command exec ${callPackage ./i3status {}}/bin/i3status
+    status_command exec i3status
 
     separator_symbol " | "
     font pango:PragmataPro Mono Liga 11

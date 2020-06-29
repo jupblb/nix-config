@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ ranger screen unzip ];
+  home.packages         = with pkgs; [ ranger screen sway unzip ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
     EDITOR               = "vim";
@@ -87,6 +87,9 @@
     };
 
     htop.enable = true;
+
+    i3status.enable        = true;
+    i3status.enableDefault = true;
 
     kitty.enable      = true;
     kitty.extraConfig = with pkgs; ''
