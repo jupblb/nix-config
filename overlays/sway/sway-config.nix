@@ -1,4 +1,7 @@
-{ bemenu, callPackage, grim, mako, slurp, wob, writeTextFile, xdg-user-dirs }:
+{
+  bemenu, callPackage, grim, i3status, mako, qutebrowser, slurp, stdenv, wob,
+  writeScriptBin, xdg-user-dirs
+}:
 
 let
   picture-dir =  "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
@@ -27,7 +30,7 @@ set $gray     #7c6f64
 set $darkgray #1d2021
 set $dummy    #ffffff
 
-set $browser qutebrowser
+set $browser ${qutebrowser}/bin/qutebrowser
 set $term kitty
 
 set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 12' -p "" \
@@ -36,6 +39,12 @@ set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 12' -p "" \
 
 ### Input/Output configuration
 output * background ${builtins.toString ./wallpaper.png} fill
+output DP-3 scale 2
+output HEADLESS-1 {
+  #mode 3840x2160@30Hz
+  mode 2736x1824@30Hz
+  scale 2
+}
 
 input * {
   click_method clickfinger

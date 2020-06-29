@@ -1,4 +1,3 @@
-export _JAVA_AWT_WM_NONREPARENTING=1
 export ECORE_EVAS_ENGINE=wayland_egl
 export ELM_ENGINE=wayland_egl
 export KITTY_ENABLE_WAYLAND=1

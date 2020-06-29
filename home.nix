@@ -1,23 +1,7 @@
-{ files ? {} }:
 { config, lib, pkgs, ... }:
 
 {
-  home.file             = {
-    sway-config = {
-      target = ".config/sway/config";
-      text   = "";
-    };
-    xsettingsd  = {
-      target = ".config/xsettingsd/xsettingsd.conf";
-      text   = "Gdk/WindowScalingFactor 2\n";
-    };
-  } // files;
-  home.packages         =
-    let
-      devPackages  = with pkgs.unstable; [ sway' ];
-      packages     = with pkgs; [ discord imv mpv ranger' screen unzip ];
-      swayPackages = with pkgs; [ bemenu pavucontrol remmina ];
-    in devPackages ++ packages ++ swayPackages;
+  home.packages         = with pkgs; [ ranger' screen unzip ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
     EDITOR               = "vim";
@@ -136,9 +120,6 @@
       withPython   = false;
       withRuby     = false;
     };
-
-    qutebrowser.enable      = true;
-    qutebrowser.extraConfig = "config.load_autoconfig()";
 
     starship.enable                = true;
     starship.enableFishIntegration = true;

@@ -1,14 +1,19 @@
-{ makeWrapper, pkgs, symlinkJoin, sway, writeTextFile }:
+{
+  bemenu, callPackage, discord, grim, imv, lib, makeWrapper, mako, mpv,
+  pavucontrol, qutebrowser, redshift-wlr, remmina, slurp, sway, swaylock,
+  symlinkJoin, wayvnc, wdisplays, wl-clipboard, wob, writeScriptBin,
+  writeTextFile, xdg-user-dirs
+}:
 
 let
-  path   = with pkgs; lib.makeBinPath [
-    wdisplays wl-clipboard (callPackage ./xwayland.nix {})
+  path   = lib.makeBinPath [
+    discord imv mpv pavucontrol remmina wdisplays wl-clipboard
   ];
   config = {
-    common   = with pkgs; callPackage ./sway-config.nix {};
+    common   = callPackage ./sway-config.nix {};
     headless = writeTextFile {
       name = "sway-config-headless";
-      text = with pkgs; ''
+      text = ''
         ${config.common}
         exec ${wayvnc}/bin/wayvnc --keyboard=pl
         seat seat0 keyboard_grouping none
@@ -16,7 +21,7 @@ let
     };
     regular  = writeTextFile {
       name = "sway-config";
-      text = with pkgs; ''
+      text = ''
         ${config.common}
         exec --no-startup-id ${redshift-wlr}/bin/redshift \
           -m wayland -l 51.12:17.05
@@ -26,7 +31,6 @@ let
   };
   sway'  = sway.override {
     extraSessionCommands = builtins.readFile ./sway.sh;
-    sway-unwrapped       = with pkgs; callPackage ./sway-unwrapped.nix {};
     withGtkWrapper       = true;
   };
 in symlinkJoin {
