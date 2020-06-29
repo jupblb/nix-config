@@ -33,49 +33,47 @@ colorscheme gruvbox
 set noshowmode
 let g:airline_powerline_fonts = 1
 
-" Denite
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> <CR>
-    \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> p
-    \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> <Esc>
-    \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> i
-    \ denite#do_map('open_filter_buffer')
+" Fzf
+let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+    \ 'bg':      ['bg', 'Normal'],
+    \ 'hl':      ['fg', 'Comment'],
+    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+    \ 'hl+':     ['fg', 'Statement'],
+    \ 'info':    ['fg', 'PreProc'],
+    \ 'border':  ['fg', 'Ignore'],
+    \ 'prompt':  ['fg', 'Conditional'],
+    \ 'pointer': ['fg', 'Exception'],
+    \ 'marker':  ['fg', 'Keyword'],
+    \ 'spinner': ['fg', 'Label'],
+    \ 'header':  ['fg', 'Comment'] }
+
+autocmd! FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+function! RipgrepFzf(query, fullscreen)
+    let command_fmt = 
+        \ 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+    let initial_command = printf(command_fmt, shellescape(a:query))
+    let reload_command = printf(command_fmt, '{q}')
+    let spec = { 'options': [
+        \ '--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command
+        \ ] }
+    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
-autocmd FileType denite-filter call s:denite_filter_my_settings()
-function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
-endfunction
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-call denite#custom#var('file/rec', 'command', [
-    \ 'rg', '--files', '--glob', '!.git'
-    \ ])
-call denite#custom#var('grep', {
-    \ 'command': ['rg'],
-    \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
-    \ 'pattern_opt': ['--regexp'],
-    \ 'separator': ['--']
-    \ })
-call denite#custom#option('default', {
-    \ 'auto_resize': 1,
-    \ 'winheight': 15,
-    \ 'preview_height': 30,
-    \ })
-
-nnoremap <Leader>/ :Denite line -start-filter=true<CR>
-nnoremap <Leader>b :Denite buffer<CR>
-nnoremap <Leader>f :DeniteProjectDir file/rec -start-filter=true<CR>
-nnoremap <Leader>h :Denite file/old<CR>
-nnoremap <Leader>r :DeniteProjectDir grep<CR>
-
-" EasyMotion
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-nmap <Leader><Leader> <Plug>(easymotion-overwin-f)
+nnoremap <Leader>/  :BLines<CR>
+nnoremap <Leader>b  :Buffers<CR>
+nnoremap <Leader>f  :Files<CR>
+nnoremap <Leader>gf :GFiles<CR>
+nnoremap <Leader>h  :History<CR>
+nnoremap <Leader>r  :RG<CR>
 
 " Ranger
 nnoremap <Leader><CR> :RangerEdit<CR>

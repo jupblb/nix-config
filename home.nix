@@ -103,25 +103,19 @@
     '';
 
     neovim = {
-      configure    = {
-        customRC     = ''
-          let $PATH .= ':${pkgs.ripgrep}/bin'
-          ${builtins.readFile ./misc/init.vim}
-        '';
-        plug.plugins = with pkgs.vimPlugins; [
-          airline
-          denite
-          easymotion
-          gruvbox-community
-          ranger-vim
-          vim-devicons vim-nix vim-signify
-        ];
-      };
       enable       = true;
+      extraConfig  = with pkgs; ''
+        let $PATH .= ':${lib.makeBinPath [ ripgrep ]}'
+        ${builtins.readFile ./misc/init.vim}
+      '';
+      plugins      = with pkgs.vimPlugins; [
+        airline gruvbox-community fzf-vim ranger-vim vim-nix vim-signify
+      ];
       vimAlias     = true;
       vimdiffAlias = true;
-      withNodeJs   = true;
+      withNodeJs   = false;
       withPython   = false;
+      withPython3  = false;
       withRuby     = false;
     };
 
