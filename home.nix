@@ -1,25 +1,30 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ ranger' screen unzip ];
+  home.packages         = with pkgs; [ ranger screen unzip ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
     EDITOR               = "vim";
     HISTFILE             = "\$HOME/.cache/bash_history";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
-    PYLINTHOME           = "\$HOME/.cache/pylint";
   };
   home.stateVersion     = "20.03";
 
   nixpkgs.config.allowUnfree      = true;
-  nixpkgs.config.packageOverrides = pkgs: {
-    unstable = import <nixpkgs-unstable> {
-      config   = config.nixpkgs.config;
-      overlays = config.nixpkgs.overlays;
+  nixpkgs.config.packageOverrides =
+    let unstable = import <nixpkgs-unstable> {
+      config.allowUnfree = true;
+      overlays           = [ (import ./overlays) ];
     };
-  };
-  nixpkgs.overlays                = [ (import ./overlays) ];
+    in pkgs: {
+      bat         = unstable.bat;
+      emacsGtk    = unstable.emacs';
+      gitAndTools = pkgs.gitAndTools // { delta = unstable.gitAndTools.delta; };
+      lsd         = unstable.lsd';
+      sway        = unstable.sway';
+      ranger      = unstable.ranger';
+    };
 
   programs = {
     # Remember to run `bat cache --build` before first run
@@ -27,7 +32,7 @@
     bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
 
     emacs.enable  = true;
-    emacs.package = pkgs.unstable.emacs';
+    emacs.package = pkgs.emacsGtk;
 
     firefox = {
       enable            = true;
@@ -50,10 +55,10 @@
           sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
         };
       } ];
-      shellAliases         = with pkgs.unstable; {
+      shellAliases         = with pkgs; {
         cat       = "${bat}/bin/bat -p --paging=never";
         less      = "${bat}/bin/bat -p --paging=always";
-        ls        = "${lsd'}/bin/lsd --date relative";
+        ls        = "${lsd}/bin/lsd --date relative";
         nix-shell = "nix-shell --command fish";
       };
     };
@@ -62,23 +67,22 @@
     fzf.enable          = true;
 
     git = {
+      delta       = {
+        enable  = true;
+        options = [
+          "--commit-color '#fabd2f'" "--file-color '#076678'"
+          "--hunk-style plain" "--minus-color '#f9d8bc'"
+          "--minus-emph-color '#fa9f86'" "--plus-color '#eeebba'"
+          "--plus-emph-color '#d9d87f'" "--theme 'gruvbox'" 
+        ];
+      };
       enable      = true;
-      extraConfig =
-        let delta' = with pkgs.unstable.gitAndTools; ''
-              ${delta}/bin/delta --theme "gruvbox" --hunk-style plain \
-                --commit-color "#fabd2f" --file-color       "#076678" \
-                --minus-color  "#f9d8bc" --minus-emph-color "#fa9f86" \
-                --plus-color   "#eeebba" --plus-emph-color  "#d9d87f"
-            '';
-        in {
-          color.ui               = true;
-          core.mergeoptions      = "--no-edit";
-          core.pager             = delta';
-          fetch.prune            = true;
-          interactive.diffFilter = delta';
-          push.default           = "upstream";
-        };
-      ignores     = [ ".bloop" ".metals" ".idea" "metals.sbt" ];
+      extraConfig = {
+        color.ui          = true;
+        core.mergeoptions = "--no-edit";
+        fetch.prune       = true;
+        push.default      = "upstream";
+      };
       userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
@@ -86,15 +90,15 @@
     htop.enable = true;
 
     kitty.enable      = true;
-    kitty.extraConfig = ''
+    kitty.extraConfig = with pkgs; ''
       ${builtins.readFile ./misc/kitty.conf}
-      ${builtins.readFile (pkgs.fetchurl {
+      ${builtins.readFile (fetchurl {
         url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
         sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
       })}
-      startup_session ${builtins.toString (pkgs.writeTextFile {	
+      startup_session ${builtins.toString (writeTextFile {	
         name = "kitty-launch";	
-        text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";	
+        text = "launch fish -C '${fortune}/bin/fortune -sa'";	
       })}
     '';
 
@@ -104,7 +108,7 @@
           let $PATH .= ':${pkgs.ripgrep}/bin'
           ${builtins.readFile ./misc/init.vim}
         '';
-        plug.plugins = with pkgs.unstable.vimPlugins; [
+        plug.plugins = with pkgs.vimPlugins; [
           airline
           denite
           easymotion

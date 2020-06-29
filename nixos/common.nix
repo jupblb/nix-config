@@ -22,10 +22,8 @@
   };
 
   environment.sessionVariables =  {
-    EDITOR               = "vim";
-    HISTFILE             = "\$HOME/.cache/bash_history";
-    LESSHISTFILE         = "-";
-    NIXPKGS_ALLOW_UNFREE = "1";
+    EDITOR       = "vim";
+    LESSHISTFILE = "-";
   };
   environment.systemPackages   = with pkgs; [ file git htop unzip vim ];
 

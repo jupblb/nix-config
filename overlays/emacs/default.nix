@@ -34,6 +34,7 @@ in symlinkJoin {
         metals
         pandoc pytest python-language-server
         ripgrep
-      ]}
+      ]} \
+      --set PYLINTHOME "$HOME/.cache/pylint"
   '';
 }
