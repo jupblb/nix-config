@@ -67,9 +67,6 @@ font pango:PragmataPro 10
 default_border pixel 5
 smart_borders on
 
-no_focus [title=".*Ferdi.*"]
-assign [title=".*Ferdi.*"] 10
-
 ### Idle configuration
 
 ### Key bindings
@@ -84,7 +81,6 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
 bindsym $mod+q exec $browser
-bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaymsg exit
 
 bindsym $mod+$left focus left
@@ -179,7 +175,5 @@ bar {
 
     tray_output none
 }
-
-include ~/.config/sway/config
 ''
 
