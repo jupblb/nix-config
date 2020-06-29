@@ -2,15 +2,13 @@
 
 {
   boot = {
-    initrd.availableKernelModules               = [
+    initrd.availableKernelModules   = [
       "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
     ];
-    initrd.kernelModules                        = [ "amdgpu" ];
-    kernel.sysctl."fs.inotify.max_user_watches" = 524288;
-    kernel.sysctl."vm.swappiness"               = 20;
-    kernelPackages                              = pkgs.linuxPackages_latest;
-    loader.efi.canTouchEfiVariables             = true;
-    loader.systemd-boot.enable                  = true;
+    initrd.kernelModules            = [ "amdgpu" ];
+    kernelPackages                  = pkgs.linuxPackages_latest;
+    loader.efi.canTouchEfiVariables = true;
+    loader.systemd-boot.enable      = true;
   };
 
   environment.systemPackages = with pkgs; [ dropbox-cli ];

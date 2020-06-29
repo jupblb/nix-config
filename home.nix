@@ -3,10 +3,6 @@
 
 {
   home.file             = {
-    openjdk11   = {
-      source = "${pkgs.openjdk11}";
-      target = ".local/lib/openjdk11";
-    };
     sway-config = {
       target = ".config/sway/config";
       text   = "";
@@ -18,19 +14,17 @@
   } // files;
   home.packages         =
     let
-      devPackages  = with pkgs.unstable; [ aws-cli' idea-ultimate' sway' ];
+      devPackages  = with pkgs.unstable; [ sway' ];
       packages     = with pkgs; [ discord imv mpv ranger' screen unzip ];
-      swayPackages = with pkgs; [ bemenu ferdi' pavucontrol remmina zoom-us ];
+      swayPackages = with pkgs; [ bemenu pavucontrol remmina ];
     in devPackages ++ packages ++ swayPackages;
   home.sessionVariables = {
-    AWS_CONFIG_FILE             = "\$HOME/.config/aws/config";
-    AWS_SHARED_CREDENTIALS_FILE = "\$HOME/.config/aws/credentials";
-    BAT_THEME                   = "gruvbox";
-    EDITOR                      = "vim";
-    HISTFILE                    = "\$HOME/.cache/bash_history";
-    MANPAGER                    = "vim -c 'set ft=man' -";
-    NIXPKGS_ALLOW_UNFREE        = "1";
-    PYLINTHOME                  = "\$HOME/.cache/pylint";
+    BAT_THEME            = "gruvbox";
+    EDITOR               = "vim";
+    HISTFILE             = "\$HOME/.cache/bash_history";
+    MANPAGER             = "vim -c 'set ft=man' -";
+    NIXPKGS_ALLOW_UNFREE = "1";
+    PYLINTHOME           = "\$HOME/.cache/pylint";
   };
   home.stateVersion     = "20.03";
 

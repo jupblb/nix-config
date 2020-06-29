@@ -1,32 +1,6 @@
 Host *
     AddKeysToAgent yes
 
-Host ghost.traveltimeapp.com
-    User mapupdate
-    IdentityFile ~/.ssh/igeolise/id_rsa
-    SetEnv TERM=xterm-256color
-    StrictHostKeyChecking no
-
-Host battuta.traveltimeapp.com
-    User mapupdate
-    IdentityFile ~/.ssh/igeolise/id_rsa
-    SetEnv TERM=xterm-256color
-    StrictHostKeyChecking no
-
-Host *.traveltimeapp.com
-    User traveltime
-    IdentityFile ~/.ssh/igeolise/id_rsa
-    SetEnv TERM=xterm-256color
-    StrictHostKeyChecking no
-
-Host *.amazonaws.com
-    User ubuntu
-    IdentityFile ~/.ssh/igeolise/igeolise_aws.pem
-    StrictHostKeyChecking no
-
-Host *.bitbucket.org
-    AddressFamily inet
-
 Host hades
     HostName jupblb.ddns.net
     Port 1993
