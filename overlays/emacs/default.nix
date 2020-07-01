@@ -17,7 +17,7 @@ let emacs28 = emacs.overrideAttrs(old: {
     owner  = "masm11";
     repo   = "emacs";
     rev    = "pgtk";
-    sha256 = "1p6d3yq7x9kp275n58kzylcx2j64rkf4fmsqzirqw7lh7ki66y8m";
+    sha256 = "0wbjf88hyl6b1ikqh1rfgaib5y0v6py6k6s1bgi1sqq4zf5afgsv";
   };
 });
 in symlinkJoin {
