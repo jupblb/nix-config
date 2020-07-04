@@ -3,8 +3,8 @@
 let bazel-compdb = fetchFromGitHub {
   owner  = "grailbio";
   repo   = "bazel-compilation-database";
-  rev    = "master";
-  sha256 = "0hnbxwdznk1igi5s51cykk76plyqap89pxmhsmjijma3ikfqyabb";
+  rev    = "0.4.4";
+  sha256 = "13wgwzc6g22xv8wqi7iqvl42qlgyk11144l1hn5aw2acwm7dza9c";
 };
 in symlinkJoin {
   name        = "bazel-compdb";
