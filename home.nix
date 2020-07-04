@@ -1,7 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ ranger screen sway unzip ];
+  home.packages         = with pkgs; [
+    bazel bazel-compdb
+    clang
+    ranger
+    screen sway
+    unzip
+    xdg-user-dirs
+  ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
     EDITOR               = "vim";
@@ -17,12 +24,16 @@
       overlays           = [ (import ./overlays) ];
     };
     in pkgs: {
-      bat         = unstable.bat;
-      emacsGtk    = unstable.emacs';
-      gitAndTools = pkgs.gitAndTools // { delta = unstable.gitAndTools.delta; };
-      lsd         = unstable.lsd';
-      sway        = unstable.sway';
-      ranger      = unstable.ranger';
+      bat          = unstable.bat;
+      bazel        = unstable.bazel;
+      bazel-compdb = unstable.bazel-compdb';
+      emacsGtk     = unstable.emacs';
+      gitAndTools  = pkgs.gitAndTools // {
+        delta = unstable.gitAndTools.delta;
+      };
+      lsd          = unstable.lsd';
+      sway         = unstable.sway';
+      ranger       = unstable.ranger';
     };
 
   programs = {

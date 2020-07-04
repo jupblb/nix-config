@@ -1,7 +1,7 @@
 {
   autoflake, autoreconfHook, bash-language-server, clang-tools, emacs,
   fetchFromGitHub, flake8, lib, makeWrapper, metals, pandoc, pytest,
-  python-language-server, ripgrep, texinfo, symlinkJoin, wayland,
+  python-language-server, python3, ripgrep, texinfo, symlinkJoin, wayland,
   wayland-protocols
 }:
 
@@ -32,7 +32,7 @@ in symlinkJoin {
         clang-tools
         flake8
         metals
-        pandoc pytest python-language-server
+        pandoc pytest python-language-server python3
         ripgrep
       ]} \
       --set PYLINTHOME "$HOME/.cache/pylint"
