@@ -93,6 +93,7 @@
         fetch.prune       = true;
         push.default      = "upstream";
       };
+      ignores     = [ "compile_commands.json" ];
       userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
