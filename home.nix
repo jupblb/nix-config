@@ -11,6 +11,7 @@
   ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
+    CC                   = "clang++";
     EDITOR               = "vim";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
