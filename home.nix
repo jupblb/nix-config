@@ -2,8 +2,8 @@
 
 {
   home.packages         = with pkgs; [
-    bazel bazel-compdb
-    clang
+    bazel-compdb
+    code-server
     ranger
     screen sway
     unzip
@@ -11,7 +11,6 @@
   ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
-    CC                   = "clang++";
     EDITOR               = "vim";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
@@ -28,6 +27,7 @@
       bat          = unstable.bat;
       bazel        = unstable.bazel;
       bazel-compdb = unstable.bazel-compdb';
+      code-server  = unstable.code-server;
       emacsGtk     = unstable.emacs';
       gitAndTools  = pkgs.gitAndTools // {
         delta = unstable.gitAndTools.delta;

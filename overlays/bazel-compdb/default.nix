@@ -1,4 +1,4 @@
-{ bazel, clang-tools, fetchFromGitHub, lib, makeWrapper, symlinkJoin }:
+{ bazel, clang, clang-tools, fetchFromGitHub, lib, makeWrapper, symlinkJoin }:
 
 let bazel-compdb = fetchFromGitHub {
   owner  = "grailbio";
@@ -13,6 +13,7 @@ in symlinkJoin {
   postBuild   = ''
     sed -i 's/bin\/bash/usr\/bin\/env bash/g' $out/generate.sh
     makeWrapper $out/generate.sh $out/bin/bazel-compdb \
-      --prefix PATH : ${lib.makeBinPath[ bazel clang-tools ]}
+      --prefix PATH : ${lib.makeBinPath[ bazel clang clang-tools ]} \
+      --set CC "clang++"
   '';
 }
