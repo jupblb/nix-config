@@ -32,6 +32,7 @@
       };
       sway         = unstable.sway';
       ranger       = unstable.ranger';
+      wrapNeovim   = unstable.wrapNeovim;
     };
 
   programs = {
@@ -111,18 +112,36 @@
     '';
 
     neovim = {
+      configure    = {
+        customRC     = with pkgs; ''
+          let $PATH      .= ':${lib.makeBinPath [
+            clang-tools
+            metals
+            nodePackages.bash-language-server
+            python3Packages.python-language-server
+            ripgrep
+          ]}'
+          let $PYLINTHOME = '$HOME/.cache/pylint'
+          ${builtins.readFile ./misc/init.vim}
+        '';
+        plug.plugins = with pkgs.vimPlugins; [
+          airline
+          editorconfig-vim
+          gruvbox-community
+          fzf-vim
+          nvim-lsp
+          ranger-vim
+          vim-better-whitespace vim-nix vim-signify
+        ];
+      };
       enable       = true;
-      extraConfig  = with pkgs; ''
-        let $PATH .= ':${lib.makeBinPath [ ripgrep ]}'
-        ${builtins.readFile ./misc/init.vim}
-      '';
-      plugins      = with pkgs.vimPlugins; [
-        airline
-        gruvbox-community
-        fzf-vim
-        ranger-vim
-        vim-better-whitespace vim-nix vim-signify
-      ];
+      package      = pkgs.neovim-unwrapped.overrideAttrs(old: {
+        version = "nightly";
+        src     = builtins.fetchGit {
+          url = https://github.com/neovim/neovim.git;
+          ref = "nightly";
+        };
+      });
       vimAlias     = true;
       vimdiffAlias = true;
       withNodeJs   = false;
