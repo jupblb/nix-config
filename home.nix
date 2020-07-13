@@ -32,7 +32,6 @@
       gitAndTools  = pkgs.gitAndTools // {
         delta = unstable.gitAndTools.delta;
       };
-      lsd          = unstable.lsd';
       sway         = unstable.sway';
       ranger       = unstable.ranger';
     };
@@ -69,7 +68,6 @@
       shellAliases         = with pkgs; {
         cat       = "${bat}/bin/bat -p --paging=never";
         less      = "${bat}/bin/bat -p --paging=always";
-        ls        = "${lsd}/bin/lsd --date relative";
         nix-shell = "nix-shell --command fish";
       };
     };
