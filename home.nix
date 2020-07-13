@@ -116,7 +116,7 @@
 
     neovim = {
       configure    = {
-        customRC     = with pkgs; ''
+        customRC            = with pkgs; ''
           let $PATH      .= ':${lib.makeBinPath [
             clang-tools
             metals
@@ -127,13 +127,15 @@
           let $PYLINTHOME = '$HOME/.cache/pylint'
           ${builtins.readFile ./misc/init.vim}
         '';
-        plug.plugins = with pkgs.vimPlugins; [
-          airline
+        plug.plugins        = with pkgs.vimPlugins; [
           completion-nvim
+          nvim-lsp
+        ];
+        packages.nvim.start = with pkgs.vimPlugins; [
+          airline
           editorconfig-vim
           gruvbox-community
           fzf-vim
-          nvim-lsp
           ranger-vim
           vim-better-whitespace vim-nix vim-signify
         ];
