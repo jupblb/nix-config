@@ -3,7 +3,6 @@
 {
   home.packages         = with pkgs; [
     bazel-compdb
-    code-server
     ranger
     screen sway
     unzip
