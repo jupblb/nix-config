@@ -28,7 +28,6 @@
       bazel        = unstable.bazel;
       bazel-compdb = unstable.bazel-compdb';
       code-server  = unstable.code-server;
-      emacsGtk     = unstable.emacs';
       gitAndTools  = pkgs.gitAndTools // {
         delta = unstable.gitAndTools.delta;
       };
@@ -40,9 +39,6 @@
     # Remember to run `bat cache --build` before first run
     bat.enable         = true;
     bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
-
-    emacs.enable  = true;
-    emacs.package = pkgs.emacsGtk;
 
     firefox = {
       enable            = true;
