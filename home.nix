@@ -32,6 +32,9 @@
       };
       sway         = unstable.sway';
       ranger       = unstable.ranger';
+      vimPlugins   = pkgs.vimPlugins // {
+        completion-nvim = unstable.vimPlugins.completion-nvim;
+      };
       wrapNeovim   = unstable.wrapNeovim;
     };
 
@@ -126,6 +129,7 @@
         '';
         plug.plugins = with pkgs.vimPlugins; [
           airline
+          completion-nvim
           editorconfig-vim
           gruvbox-community
           fzf-vim

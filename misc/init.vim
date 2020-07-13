@@ -78,10 +78,20 @@ nnoremap <Leader>r  :RG<CR>
 lua << EOF
 local nvim_lsp = require 'nvim_lsp'
 nvim_lsp.bashls.setup {}
-nvim_lsp.clangd.setup {}
-nvim_lsp.metals.setup {}
-nvim_lsp.pyls.setup {}
+nvim_lsp.clangd.setup { on_attach = require'completion'.on_attach }
+nvim_lsp.metals.setup { on_attach = require'completion'.on_attach }
+nvim_lsp.pyls.setup { on_attach = require'completion'.on_attach }
 EOF
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
 
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
