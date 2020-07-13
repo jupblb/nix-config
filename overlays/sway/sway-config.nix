@@ -1,4 +1,4 @@
-{ bemenu, grim, qutebrowser, slurp, wob, xdg-user-dirs }:
+{ bemenu, grim, slurp, wob, xdg-user-dirs }:
 
 let
   picture-dir =  "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
@@ -26,12 +26,10 @@ set $gray     #7c6f64
 set $darkgray #1d2021
 set $dummy    #ffffff
 
-set $browser ${qutebrowser}/bin/qutebrowser
-set $term kitty
-
 set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 12' -p "" \
   --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
   --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg'
+set $term kitty
 
 ### Input/Output configuration
 output * background ${builtins.toString ./wallpaper.png} fill
@@ -80,7 +78,6 @@ bindsym $mod+f fullscreen
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
-bindsym $mod+q exec $browser
 bindsym $mod+Shift+e exec swaymsg exit
 
 bindsym $mod+$left focus left
