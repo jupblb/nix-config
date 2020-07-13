@@ -1,12 +1,12 @@
 {
   bemenu, callPackage, discord, grim, imv, lib, makeWrapper, mpv, pavucontrol,
   redshift-wlr, remmina, slurp, sway, swaylock, symlinkJoin, wayvnc, wdisplays,
-  wl-clipboard, wob, writeTextFile, xdg-user-dirs
+  wl-clipboard, wob, writeTextFile, xdg-user-dirs, xsettingsd
 }:
 
 let
   path   = lib.makeBinPath [
-    discord imv mpv pavucontrol remmina wdisplays wl-clipboard
+    imv mpv pavucontrol wdisplays wl-clipboard (callPackage ./xwayland.nix {})
   ];
   config = {
     common   = callPackage ./sway-config.nix {};
@@ -30,6 +30,7 @@ let
   };
   sway'  = sway.override {
     extraSessionCommands = builtins.readFile ./sway.sh;
+    sway-unwrapped       = callPackage ./sway-unwrapped.nix {};
     withGtkWrapper       = true;
   };
 in symlinkJoin {

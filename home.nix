@@ -168,6 +168,8 @@
       ];
     };
 
+    vscode.enable = true;
+
     zathura.enable      = true;
     zathura.extraConfig = "set selection-clipboard clipboard";
   };
