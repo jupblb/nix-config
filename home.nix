@@ -25,7 +25,6 @@
     };
     in pkgs: {
       bat          = unstable.bat;
-      bazel        = unstable.bazel;
       bazel-compdb = unstable.bazel-compdb';
       code-server  = unstable.code-server;
       gitAndTools  = pkgs.gitAndTools // {
@@ -78,7 +77,7 @@
           "--commit-color '#fabd2f'" "--file-color '#076678'"
           "--hunk-style plain" "--minus-color '#f9d8bc'"
           "--minus-emph-color '#fa9f86'" "--plus-color '#eeebba'"
-          "--plus-emph-color '#d9d87f'" "--theme 'gruvbox'" 
+          "--plus-emph-color '#d9d87f'" "--theme 'gruvbox'"
         ];
       };
       enable      = true;
@@ -89,7 +88,7 @@
         push.default      = "upstream";
       };
       ignores     = [ "compile_commands.json" ];
-      userEmail   = "mpkielbowicz@gmail.com";
+      userEmail   = "git@kielbowi.cz";
       userName    = "jupblb";
     };
 
@@ -105,9 +104,9 @@
         url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
         sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
       })}
-      startup_session ${builtins.toString (writeTextFile {	
-        name = "kitty-launch";	
-        text = "launch fish -C '${fortune}/bin/fortune -sa'";	
+      startup_session ${builtins.toString (writeTextFile {
+        name = "kitty-launch";
+        text = "launch fish -C '${fortune}/bin/fortune -sa'";
       })}
     '';
 
@@ -118,7 +117,11 @@
         ${builtins.readFile ./misc/init.vim}
       '';
       plugins      = with pkgs.vimPlugins; [
-        airline gruvbox-community fzf-vim ranger-vim vim-nix vim-signify
+        airline
+        gruvbox-community
+        fzf-vim
+        ranger-vim
+        vim-better-whitespace vim-nix vim-signify
       ];
       vimAlias     = true;
       vimdiffAlias = true;

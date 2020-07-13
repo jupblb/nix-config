@@ -30,7 +30,7 @@ set noshowmode
 let g:airline_powerline_fonts = 1
 
 " Fzf
-let g:fzf_colors = { 
+let g:fzf_colors = {
     \ 'fg':      ['fg', 'Normal'],
     \ 'bg':      ['bg', 'Normal'],
     \ 'hl':      ['fg', 'Comment'],
@@ -51,10 +51,10 @@ autocmd! FileType fzf set laststatus=0 noshowmode noruler
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=? -complete=dir GFiles
-    \ call fzf#vim#gitfiles('?', fzf#vim#with_preview(), <bang>0)
+    \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 function! RipgrepFzf(query, fullscreen)
-    let command_fmt = 
+    let command_fmt =
         \ 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
     let initial_command = printf(command_fmt, shellescape(a:query))
     let reload_command = printf(command_fmt, '{q}')
