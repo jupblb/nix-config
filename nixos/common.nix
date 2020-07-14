@@ -24,9 +24,7 @@
   environment.systemPackages = with pkgs; [ file git htop unzip ];
 
   fonts.enableDefaultFonts = true;
-  fonts.fonts              = with pkgs; [
-    emacs-all-the-icons-fonts vistafonts
-  ];
+  fonts.fonts              = with pkgs; [ vistafonts ];
 
   hardware = {
     enableRedistributableFirmware = true;

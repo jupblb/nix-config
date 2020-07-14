@@ -23,11 +23,8 @@
   };
 
   hardware = {
-    bluetooth.enable          = true;
     cpu.intel.updateMicrocode = true;
     opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
-    pulseaudio.extraModules   = with pkgs; [ pulseaudio-modules-bt ];
-    pulseaudio.package        = pkgs.pulseaudioFull;
   };
 
   home-manager.users.jupblb = import ../home.nix;
@@ -53,8 +50,6 @@
       UPSTYPE usb
       DEVICE
     '';
-
-    blueman.enable = true;
 
     fstrim.enable = true;
 
