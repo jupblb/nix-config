@@ -123,7 +123,6 @@
             python3Packages.python-language-server
             ripgrep
           ]}'
-          let $PYLINTHOME = '$HOME/.cache/pylint'
           ${builtins.readFile ./misc/init.vim}
         '';
         plug.plugins        = with pkgs.vimPlugins; [
