@@ -37,8 +37,6 @@
 
   networking.useDHCP = false;
 
-  nix.autoOptimiseStore = true;
-
   nixpkgs.config.allowUnfree = true;
 
   programs = {
