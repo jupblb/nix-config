@@ -13,7 +13,7 @@ exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob \
 exec ${xsettingsd}/bin/xsettingsd -c ${xsettingsd-conf}
 
 ### Variables
-set $mod Mod4
+set $mod Mod1
 
 set $left h
 set $down j
@@ -38,14 +38,10 @@ set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 12' -p "" \
 set $term kitty
 
 ### Input/Output configuration
-output * background ${./wallpaper.png} fill
-output DP-3 scale 2
-output HEADLESS-1 {
-  #mode 3840x2160@30Hz
-  mode 2736x1824@30Hz
+output * {
+  background ${./wallpaper.png} fill
   scale 2
 }
-
 xwayland force scale 2
 
 input * {
@@ -162,6 +158,7 @@ bindsym XF86AudioMute        exec --no-startup-id pactl \
 bar {
     position top
     mode hide
+    modifier Mod1
 
     status_command exec i3status
 
@@ -180,5 +177,7 @@ bar {
 
     tray_output none
 }
+
+include ~/.config/sway/config
 ''
 
