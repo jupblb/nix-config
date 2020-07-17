@@ -10,4 +10,5 @@ let xorgserver' = xorgserver.overrideAttrs(old: rec {
         sha256 = "1jc30ipgzr9m5jgb8gwlp9qsl0bd6z35c0hvbbzypfa942rcs18w";
       };
     });
-in xwayland.override { xorgserver = xorgserver'; } 
+in xwayland.override { xorgserver = xorgserver'; }
+
