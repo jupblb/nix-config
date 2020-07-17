@@ -44,7 +44,7 @@ in {
 
   fileSystems."/".device     = "/dev/disk/by-label/NIXOS_SD";
   fileSystems."/".fsType     = "ext4";
-  fileSystems."/boot".device = "/dev/disk/by-label/FIRMWARE";
+  fileSystems."/boot".device = "/dev/disk/by-label/NIXOS_BOOT";
   fileSystems."/boot".fsType = "vfat";
 
   hardware = {
@@ -56,10 +56,7 @@ in {
     opengl.package          = pkgs.mesa_drivers;
   };
 
-  imports = [
-    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ./common.nix
-  ];
+  imports = [ ./common.nix ];
 
   networking = {
     defaultGateway                 = "192.168.1.1";
@@ -69,6 +66,7 @@ in {
     interfaces.eth0.ipv4.addresses = [
       { address = serverIP; prefixLength = 24; }
     ];
+    nameservers                    = [ "1.1.1.1" "8.8.8.8" ];
     wireless.enable                = false;
   };
 
