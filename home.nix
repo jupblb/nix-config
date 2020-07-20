@@ -91,7 +91,7 @@
         push.default      = "upstream";
       };
       ignores     = [ "compile_commands.json" ];
-      userEmail   = "git@kielbowi.cz";
+      userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
 
