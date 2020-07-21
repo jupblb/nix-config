@@ -54,15 +54,6 @@
     fish = {
       enable               = true;
       interactiveShellInit = builtins.readFile ./misc/config.fish;
-      plugins              = [ {
-        name = "gruvbox";
-        src  = pkgs.fetchFromGitHub {
-          owner  = "Jomik";
-          repo   = "fish-gruvbox";
-          rev    = "d8c0463518fb95bed8818a1e7fe5da20cffe6fbd";
-          sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
-        };
-      } ];
       shellAliases         = with pkgs; {
         cat       = "${bat}/bin/bat -p --paging=never";
         less      = "${bat}/bin/bat -p --paging=always";
