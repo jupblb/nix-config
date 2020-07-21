@@ -76,12 +76,13 @@
     git = {
       delta       = {
         enable  = true;
-        options = [
-          "--commit-color '#fabd2f'" "--file-color '#076678'"
-          "--hunk-style plain" "--minus-color '#f9d8bc'"
-          "--minus-emph-color '#fa9f86'" "--plus-color '#eeebba'"
-          "--plus-emph-color '#d9d87f'" "--theme 'gruvbox'"
-        ];
+        options = {
+          minus-emph-style = "syntax #fa9f86";
+          minus-style      = "syntax #f9d8bc";
+          plus-emph-style  = "syntax #d9d87f";
+          plus-style       = "syntax #eeebba";
+          syntax-theme     = "gruvbox";
+        };
       };
       enable      = true;
       extraConfig = {
