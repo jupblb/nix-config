@@ -43,6 +43,9 @@
     bash.enableCompletion = true;
     bash.enableLsColors   = true;
     bash.promptInit       = builtins.readFile ./misc/bashrc;
+    fish.promptInit       = ''
+      set -g __fish_git_prompt_show_informative_status 1
+    '';
     ssh.extraConfig       = builtins.readFile ./misc/ssh-config;
     vim.defaultEditor     = true;
   };
