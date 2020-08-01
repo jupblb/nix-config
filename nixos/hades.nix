@@ -18,8 +18,6 @@
     "/".fsType     = "xfs";
     "/boot".device = "/dev/disk/by-label/boot";
     "/boot".fsType = "vfat";
-    "/data".device = "/dev/disk/by-label/data";
-    "/data".fsType = "ext4";
   };
 
   hardware = {
@@ -52,33 +50,6 @@
     '';
 
     fstrim.enable = true;
-
-    nfs = {
-      server.enable     = true;
-      server.exports    = ''
-        /data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)
-      '';
-      server.lockdPort  = 4001;
-      server.mountdPort = 4002;
-      server.statdPort  = 4000;
-    };
-
-    transmission = {
-      enable   = true;
-      group    = "data";
-      settings = {
-        download-dir           = "/data/transmission";
-        incomplete-dir         = "/data/transmission/.incomplete";
-        incomplete-dir-enabled = true;
-        ratio-limit            = 0;
-        ratio-limit-enabled    = true;
-        rpc-whitelist          = "127.0.0.1,192.168.*.*";
-      };
-    };
-
-    udev.extraRules = ''
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="0a12", ATTRS{idProduct}=="0001", ATTR{authorized}="0"
-    '';
 
     wakeonlan.interfaces = [ {
       interface = "eno2";
@@ -113,6 +84,4 @@
   };
 
   time.hardwareClockInLocalTime = true;
-
-  users.groups.data.members = [ "jupblb" ];
 }

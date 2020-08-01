@@ -166,16 +166,6 @@
     zathura.extraConfig = "set selection-clipboard clipboard";
   };
 
-  xdg.userDirs = {
-    desktop     = "\$HOME/desktop";
-    documents   = "\$HOME/documents";
-    download    = "\$HOME/downloads";
-    enable      = true;
-    music       = "\$HOME/music";
-    pictures    = "\$HOME/pictures";
-    publicShare = "\$HOME/public";
-    templates   = "\$HOME";
-    videos      = "\$HOME";
-  };
+  xdg.userDirs.enable = true;
 }
 
