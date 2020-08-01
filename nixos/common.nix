@@ -21,7 +21,7 @@
     packages   = [ pkgs.terminus_font ];
   };
 
-  environment.systemPackages = with pkgs; [ file git htop unzip ];
+  environment.systemPackages = with pkgs; [ file git htop patchelf unzip ];
 
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [ vistafonts ];
