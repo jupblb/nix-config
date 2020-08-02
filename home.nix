@@ -31,9 +31,7 @@
       };
       sway         = unstable.sway';
       ranger       = unstable.ranger';
-      vimPlugins   = pkgs.vimPlugins // {
-        completion-nvim = unstable.vimPlugins.completion-nvim;
-      };
+      vimPlugins   = unstable.vimPlugins;
       wrapNeovim   = unstable.wrapNeovim;
     };
 
