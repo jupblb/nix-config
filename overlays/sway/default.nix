@@ -1,6 +1,6 @@
 {
-  bemenu, callPackage, discord, grim, imv, lib, makeWrapper, mpv, pavucontrol,
-  redshift-wlr, remmina, slurp, sway, swaylock, symlinkJoin, wayvnc, wdisplays,
+  bemenu, callPackage, grim, imv, lib, makeWrapper, mpv, pavucontrol,
+  redshift-wlr, slurp, sway, swaylock, symlinkJoin, wayvnc, wdisplays,
   wl-clipboard, wob, writeTextFile, xdg-user-dirs, xsettingsd
 }:
 
