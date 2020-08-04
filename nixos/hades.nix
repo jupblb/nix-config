@@ -20,22 +20,15 @@
     "/boot".fsType = "vfat";
   };
 
-  hardware = {
-    cpu.intel.updateMicrocode = true;
-    opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
-  };
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
 
   home-manager.users.jupblb = import ../home.nix;
 
-  imports = [
-    <home-manager/nixos>
-    ./common.nix
-  ];
+  imports = [ <home-manager/nixos> ./common.nix ];
 
-  networking = {
-    hostName              = "hades";
-    networkmanager.enable = true;
-  };
+  networking.hostName              = "hades";
+  networking.networkmanager.enable = true;
 
   nix.maxJobs = 12;
 
@@ -57,7 +50,7 @@
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
-  system.stateVersion = "19.09";
+  system.stateVersion = "20.03";
 
   systemd.services.dropbox = {
     after                        = [ "network.target" ];
