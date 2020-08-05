@@ -42,10 +42,14 @@ in {
 
   environment.systemPackages = with pkgs; [ wol ];
 
-  fileSystems."/".device     = "/dev/disk/by-label/NIXOS_SD";
-  fileSystems."/".fsType     = "ext4";
-  fileSystems."/boot".device = "/dev/disk/by-label/NIXOS_BOOT";
-  fileSystems."/boot".fsType = "vfat";
+  fileSystems = {
+    "/".device     = "/dev/disk/by-label/NIXOS_SD";
+    "/".fsType     = "ext4";
+    "/boot".device = "/dev/disk/by-label/NIXOS_BOOT";
+    "/boot".fsType = "vfat";
+    "/data".device = "/dev/disk/by-label/data";
+    "/data".fsType = "ext4";
+  };
 
   hardware = {
     deviceTree.base         = pkgs.device-tree_rpi;
@@ -60,8 +64,12 @@ in {
 
   networking = {
     defaultGateway                 = "192.168.1.1";
-    firewall.allowedTCPPorts       = [ 53 67 80 443 ];
-    firewall.allowedUDPPorts       = [ 53 67 80 443 ];
+    firewall.allowedTCPPorts       = [
+      53 67 80 111 443 2049 4000 4001 4002 9091
+    ];
+    firewall.allowedUDPPorts       = [
+      53 67 80 111 443 2049 4000 4001 4002 9091
+    ];
     hostName                       = "iris";
     interfaces.eth0.ipv4.addresses = [
       { address = serverIP; prefixLength = 24; }
@@ -71,6 +79,31 @@ in {
   };
 
   nix.maxJobs = 2;
+
+  services = {
+    nfs = {
+      server.enable     = true;
+      server.exports    = ''
+        /data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)
+      '';
+      server.lockdPort  = 4001;
+      server.mountdPort = 4002;
+      server.statdPort  = 4000;
+    };
+
+    transmission = {
+      enable   = true;
+      group    = "users";
+      settings = {
+        download-dir           = "/data/transmission";
+        incomplete-dir         = "/data/transmission/.incomplete";
+        incomplete-dir-enabled = true;
+        ratio-limit            = 0;
+        ratio-limit-enabled    = true;
+        rpc-whitelist          = "127.0.0.1,192.168.*.*";
+      };
+    };
+  };
 
   systemd.services.checkip = {
     after         = [ "network.target" ];
