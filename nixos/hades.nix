@@ -16,7 +16,7 @@
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
-    "/boot".device = "/dev/disk/by-label/boot";
+    "/boot".device = "/dev/disk/by-uuid/9E04-A8F9";
     "/boot".fsType = "vfat";
   };
 
