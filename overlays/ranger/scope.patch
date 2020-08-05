@@ -1,5 +1,5 @@
 diff --git a/ranger/data/scope.sh b/ranger/data/scope.sh
-index f403ed83..0c667fb7 100755
+index f403ed83..00baa6db 100755
 --- a/ranger/data/scope.sh
 +++ b/ranger/data/scope.sh
 @@ -94,6 +94,11 @@ handle_extension() {
@@ -27,18 +27,8 @@ index f403ed83..0c667fb7 100755
  
          ## DjVu
          # image/vnd.djvu)
-@@ -154,31 +159,31 @@ handle_image() {
-             exit 7;;
- 
-         ## Video
--        # video/*)
--        #     # Thumbnail
--        #     ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
--        #     exit 1;;
-+        video/*)
-+            # Thumbnail
-+            ffmpegthumbnailer -i "${FILE_PATH}" -o "${IMAGE_CACHE_PATH}" -s 0 && exit 6
-+            exit 1;;
+@@ -160,25 +165,25 @@ handle_image() {
+         #     exit 1;;
  
          ## PDF
 -        # application/pdf)

@@ -30,7 +30,7 @@ in symlinkJoin {
       --prefix PATH : ${lib.makeBinPath [
         atool
         catdoc
-        ffmpegthumbnailer file
+        file
         glow
         imagemagick
         jq
