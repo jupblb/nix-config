@@ -29,6 +29,7 @@
       gitAndTools  = pkgs.gitAndTools // {
         delta = unstable.gitAndTools.delta;
       };
+      sd-switch    = unstable.sd-switch;
       sway         = unstable.sway';
       ranger       = unstable.ranger';
       vimPlugins   = unstable.vimPlugins;
