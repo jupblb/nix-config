@@ -166,9 +166,6 @@
     i3status.enableDefault = true;
 
     vscode.enable = true;
-
-    zathura.enable      = true;
-    zathura.extraConfig = "set selection-clipboard clipboard";
   } else {});
 }
 
