@@ -101,16 +101,19 @@
 
     neovim = {
       configure    = {
-        customRC            = with pkgs; ''
-          let $PATH      .= ':${lib.makeBinPath [
-            clang-tools
-            metals
-            nodePackages.bash-language-server
-            python3Packages.python-language-server
-            ripgrep
-          ]}'
-          ${builtins.readFile ./misc/init.vim}
-        '';
+        customRC            =
+          let pythonPackages = with pkgs;
+            if stdenv.isLinux then python3Packages else python37Packages;
+          in with pkgs; ''
+            let $PATH      .= ':${lib.makeBinPath [
+              clang-tools
+              metals
+              nodePackages.bash-language-server
+              pythonPackages.python-language-server
+              ripgrep
+            ]}'
+            ${builtins.readFile ./misc/init.vim}
+          '';
         plug.plugins        = with pkgs.vimPlugins; [
           completion-nvim
           nvim-lsp
