@@ -12,11 +12,9 @@
   };
   home.stateVersion     = "20.03";
 
-  nixpkgs.config.allowUnfree      = true;
   nixpkgs.config.packageOverrides =
     let unstable = import <nixpkgs-unstable> {
-      config.allowUnfree = true;
-      overlays           = [ (import ./overlays) ];
+      overlays = [ (import ./overlays) ];
     };
     in pkgs: {
       bat          = unstable.bat;
