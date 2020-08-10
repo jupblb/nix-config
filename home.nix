@@ -2,7 +2,7 @@
 
 {
   home.packages         = with pkgs; ([ ranger screen unzip ] ++ (
-    if pkgs.stdenv.isLinux then [ bazel-compdb sway ] else [])
+    if pkgs.stdenv.isLinux then [ bazel-compdb sway ] else [ gmailctl ])
   );
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
@@ -76,12 +76,9 @@
         push.default      = "upstream";
       };
       ignores     = [ "compile_commands.json" ];
-      userName    = "jupblb";
-    } // (if pkgs.stdenv.isLinux then {
-      userEmail = "mpkielbowicz@gmail.com";
-    } else {
       userEmail = "jupblb@google.com";
-    });
+      userName    = "jupblb";
+    };
 
     htop.enable = true;
 
@@ -124,7 +121,7 @@
           gruvbox-community
           fzf-vim
           ranger-vim
-          vim-better-whitespace vim-nix vim-signify
+          vim-better-whitespace vim-jsonnet vim-nix vim-signify
         ];
       };
       enable       = true;
