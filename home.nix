@@ -51,6 +51,7 @@
         cat       = "${bat}/bin/bat -p --paging=never";
         less      = "${bat}/bin/bat -p --paging=always";
         nix-shell = "nix-shell --command fish";
+        ssh       = "env TERM=xterm-256color ssh";
       };
     };
 
