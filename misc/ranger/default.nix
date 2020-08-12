@@ -1,6 +1,6 @@
 {
-  atool, calibre, catdoc, fetchFromGitHub, file, glow, imagemagick, jq, lib,
-  makeWrapper, poppler_utils, ranger, symlinkJoin, xlsx2csv
+  atool, catdoc, fetchFromGitHub, file, glow, imagemagick, jq, lib, makeWrapper,
+  poppler_utils, ranger, symlinkJoin, xlsx2csv
 }:
 
 let
@@ -27,7 +27,7 @@ in symlinkJoin {
     wrapProgram "$out/bin/ranger" \
       --add-flags "--confdir=${builtins.toString ./.}" \
       --prefix PATH : ${lib.makeBinPath [
-        atool calibre catdoc file glow imagemagick jq poppler_utils xlsx2csv
+        atool catdoc file glow imagemagick jq poppler_utils xlsx2csv
       ]}
   '';
 }

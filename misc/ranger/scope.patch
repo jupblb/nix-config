@@ -1,5 +1,5 @@
 diff --git a/ranger/data/scope.sh b/ranger/data/scope.sh
-index f403ed83..00baa6db 100755
+index f403ed83..d768cc8e 100755
 --- a/ranger/data/scope.sh
 +++ b/ranger/data/scope.sh
 @@ -94,6 +94,11 @@ handle_extension() {
@@ -27,7 +27,7 @@ index f403ed83..00baa6db 100755
  
          ## DjVu
          # image/vnd.djvu)
-@@ -160,25 +165,25 @@ handle_image() {
+@@ -160,14 +165,14 @@ handle_image() {
          #     exit 1;;
  
          ## PDF
@@ -50,22 +50,3 @@ index f403ed83..00baa6db 100755
  
  
          ## ePub, MOBI, FB2 (using Calibre)
--        # application/epub+zip|application/x-mobipocket-ebook|\
--        # application/x-fictionbook+xml)
--        #     # ePub (using https://github.com/marianosimone/epub-thumbnailer)
--        #     epub-thumbnailer "${FILE_PATH}" "${IMAGE_CACHE_PATH}" \
--        #         "${DEFAULT_SIZE%x*}" && exit 6
--        #     ebook-meta --get-cover="${IMAGE_CACHE_PATH}" -- "${FILE_PATH}" \
--        #         >/dev/null && exit 6
--        #     exit 1;;
-+        application/epub+zip|application/x-mobipocket-ebook|\
-+        application/x-fictionbook+xml)
-+            # ePub (using https://github.com/marianosimone/epub-thumbnailer)
-+            epub-thumbnailer "${FILE_PATH}" "${IMAGE_CACHE_PATH}" \
-+                "${DEFAULT_SIZE%x*}" && exit 6
-+            ebook-meta --get-cover="${IMAGE_CACHE_PATH}" -- "${FILE_PATH}" \
-+                >/dev/null && exit 6
-+            exit 1;;
- 
-         ## Font
-         application/font*|application/*opentype)
