@@ -28,6 +28,15 @@
 
     imports = [ ../home.nix ];
 
+    nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
+      bat         = bat;
+#     gitAndTools = gitAndTools // { delta = gitAndTools.delta; };
+      gmailctl    = gmailctl;
+      vimPlugins  = vimPlugins;
+      vscodium    = vscodium;
+      wrapNeovim  = wrapNeovim;
+    };
+
     programs = {
       firefox = {
         enable            = true;
@@ -44,7 +53,7 @@
       vscode.enable  = true;
       vscode.package = pkgs.vscodium;
     };
-  }
+  };
 
   imports = [ <home-manager/nixos> ./common.nix ];
 
@@ -53,7 +62,7 @@
 
   nix.maxJobs = 12;
 
-  nixpkgs.config.packageOverrides = pkgs: with import <nixpkgs> {}; {
+  nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
     sway = callPackage ./misc/sway {};
   };
 

@@ -10,16 +10,9 @@
   };
   home.username         = "jupblb";
 
-  nixpkgs.config.packageOverrides = pkgs: with import <nixpkgs> {}; {
-    bat          = bat;
-    bashls       = nodePackages.bash-language-server;
-    bazel-compdb = bazel-compdb';
-    gitAndTools  = pkgs.gitAndTools // { delta = gitAndTools.delta; };
-    sd-switch    = sd-switch;
-    ranger       = callPackage ./misc/ranger {};
-    vimPlugins   = vimPlugins;
-    vscodium     = vscodium;
-    wrapNeovim   = wrapNeovim;
+  nixpkgs.config.packageOverrides = pkgs: with pkgs; {
+    bashls = nodePackages.bash-language-server;
+    ranger = callPackage ./misc/ranger { ranger = pkgs.ranger; };
   };
 
   programs = {
