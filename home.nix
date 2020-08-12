@@ -1,36 +1,26 @@
 { config, lib, pkgs, ... }:
 
-let isLinux = pkgs.stdenv.isLinux;
-in {
-  home.packages         = with pkgs; ([ ranger screen unzip ] ++ (
-    if isLinux then [ sway ] else [ gmailctl ])
-  );
+{
+  home.packages         = with pkgs; [ gmailctl ranger screen unzip ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
     EDITOR               = "vim";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
   };
-  home.stateVersion     = "20.03";
+  home.username         = "jupblb";
 
-  nixpkgs.config.packageOverrides =
-    let unstable = import <nixpkgs> {
-      overlays = [ (import ./overlays) ];
-    };
-    in pkgs: {
-      bat          = unstable.bat;
-      bashls       = unstable.nodePackages.bash-language-server;
-      bazel-compdb = unstable.bazel-compdb';
-      gitAndTools  = pkgs.gitAndTools // {
-        delta = unstable.gitAndTools.delta;
-      };
-      sd-switch    = unstable.sd-switch;
-      sway         = unstable.sway';
-      ranger       = unstable.ranger';
-      vimPlugins   = unstable.vimPlugins;
-      vscodium     = unstable.vscodium;
-      wrapNeovim   = unstable.wrapNeovim;
-    };
+  nixpkgs.config.packageOverrides = pkgs: with import <nixpkgs> {}; {
+    bat          = bat;
+    bashls       = nodePackages.bash-language-server;
+    bazel-compdb = bazel-compdb';
+    gitAndTools  = pkgs.gitAndTools // { delta = gitAndTools.delta; };
+    sd-switch    = sd-switch;
+    ranger       = callPackage ./misc/ranger {};
+    vimPlugins   = vimPlugins;
+    vscodium     = vscodium;
+    wrapNeovim   = wrapNeovim;
+  };
 
   programs = {
     # Remember to run `bat cache --build` before first run
@@ -88,7 +78,8 @@ in {
     kitty.enable      = true;
     kitty.extraConfig = with pkgs; ''
       ${builtins.readFile ./misc/kitty.conf}
-      font_size ${if isLinux then "10.0" else "14.0"}
+      ${lib.optionalString stdenv.isLinux "10.0"}
+      ${lib.optionalString stdenv.isDarwin "14.0"}
       ${builtins.readFile (fetchurl {
         url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
         sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
@@ -123,6 +114,7 @@ in {
           ref = "nightly";
         };
       });
+      vimAlias     = true;
       vimdiffAlias = true;
       withNodeJs   = false;
       withPython   = false;
@@ -142,21 +134,6 @@ in {
         "git_status" "character"
       ];
     };
-  } // (if isLinux then {
-    firefox = {
-      enable            = true;
-      package           = pkgs.firefox-wayland;
-      profiles."jupblb" = {
-        extraConfig = builtins.readFile ./misc/firefox/user.js;
-        userContent = builtins.readFile ./misc/firefox/user.css;
-      };
-    };
-
-    i3status.enable        = true;
-    i3status.enableDefault = true;
-
-    vscode.enable  = true;
-    vscode.package = pkgs.vscodium;
-  } else {});
+  };
 }
 

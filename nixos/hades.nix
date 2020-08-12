@@ -11,7 +11,7 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ dropbox-cli ];
+  environment.systemPackages = with pkgs; [ dropbox-cli sway ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -23,7 +23,28 @@
   hardware.cpu.intel.updateMicrocode = true;
   hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
 
-  home-manager.users.jupblb = import ../home.nix;
+  home-manager.users.jupblb = {
+    home.stateVersion = "20.03";
+
+    imports = [ ../home.nix ];
+
+    programs = {
+      firefox = {
+        enable            = true;
+        package           = pkgs.firefox-wayland;
+        profiles."jupblb" = {
+          extraConfig = builtins.readFile ./misc/firefox/user.js;
+          userContent = builtins.readFile ./misc/firefox/user.css;
+        };
+      };
+
+      i3status.enable        = true;
+      i3status.enableDefault = true;
+
+      vscode.enable  = true;
+      vscode.package = pkgs.vscodium;
+    };
+  }
 
   imports = [ <home-manager/nixos> ./common.nix ];
 
@@ -31,6 +52,10 @@
   networking.networkmanager.enable = true;
 
   nix.maxJobs = 12;
+
+  nixpkgs.config.packageOverrides = pkgs: with import <nixpkgs> {}; {
+    sway = callPackage ./misc/sway {};
+  };
 
   services = {
     apcupsd.enable     = true;
