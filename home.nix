@@ -14,7 +14,7 @@ in {
   home.stateVersion     = "20.03";
 
   nixpkgs.config.packageOverrides =
-    let unstable = import <nixpkgs-unstable> {
+    let unstable = import <nixpkgs> {
       overlays = [ (import ./overlays) ];
     };
     in pkgs: {
