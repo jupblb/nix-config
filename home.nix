@@ -3,7 +3,7 @@
 let isLinux = pkgs.stdenv.isLinux;
 in {
   home.packages         = with pkgs; ([ ranger screen unzip ] ++ (
-    if isLinux then [ bazel-compdb sway ] else [ gmailctl ])
+    if isLinux then [ sway ] else [ gmailctl ])
   );
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
@@ -102,9 +102,7 @@ in {
     neovim = {
       configure    = {
         customRC            = with pkgs; ''
-          let $PATH      .= ':${lib.makeBinPath [
-            clang-tools metals bashls ripgrep
-          ]}'
+          let $PATH      .= ':${lib.makeBinPath [ metals bashls ripgrep ]}'
           ${builtins.readFile ./misc/init.vim}
         '';
         plug.plugins        = with pkgs.vimPlugins; [ completion-nvim nvim-lsp ];
