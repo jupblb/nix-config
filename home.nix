@@ -1,8 +1,9 @@
 { config, lib, pkgs, ... }:
 
-{
+let isLinux = pkgs.stdenv.isLinux;
+in {
   home.packages         = with pkgs; ([ ranger screen unzip ] ++ (
-    if pkgs.stdenv.isLinux then [ bazel-compdb sway ] else [ gmailctl ])
+    if isLinux then [ bazel-compdb sway ] else [ gmailctl ])
   );
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
@@ -18,8 +19,8 @@
     };
     in pkgs: {
       bat          = unstable.bat;
+      bashls       = unstable.nodePackages.bash-language-server;
       bazel-compdb = unstable.bazel-compdb';
-      code-server  = unstable.code-server;
       gitAndTools  = pkgs.gitAndTools // {
         delta = unstable.gitAndTools.delta;
       };
@@ -78,7 +79,7 @@
         push.default      = "upstream";
       };
       ignores     = [ "compile_commands.json" ];
-      userEmail = "jupblb@google.com";
+      userEmail   = "jupblb@google.com";
       userName    = "jupblb";
     };
 
@@ -87,7 +88,7 @@
     kitty.enable      = true;
     kitty.extraConfig = with pkgs; ''
       ${builtins.readFile ./misc/kitty.conf}
-      font_size ${if pkgs.stdenv.isLinux then "10.0" else "14.0"}
+      font_size ${if isLinux then "10.0" else "14.0"}
       ${builtins.readFile (fetchurl {
         url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
         sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
@@ -100,23 +101,13 @@
 
     neovim = {
       configure    = {
-        customRC            =
-          let pythonPackages = with pkgs;
-            if stdenv.isLinux then python3Packages else python37Packages;
-          in with pkgs; ''
-            let $PATH      .= ':${lib.makeBinPath [
-              clang-tools
-              metals
-              nodePackages.bash-language-server
-              pythonPackages.python-language-server
-              ripgrep
-            ]}'
-            ${builtins.readFile ./misc/init.vim}
-          '';
-        plug.plugins        = with pkgs.vimPlugins; [
-          completion-nvim
-          nvim-lsp
-        ];
+        customRC            = with pkgs; ''
+          let $PATH      .= ':${lib.makeBinPath [
+            clang-tools metals bashls ripgrep
+          ]}'
+          ${builtins.readFile ./misc/init.vim}
+        '';
+        plug.plugins        = with pkgs.vimPlugins; [ completion-nvim nvim-lsp ];
         packages.nvim.start = with pkgs.vimPlugins; [
           airline
           editorconfig-vim
@@ -134,7 +125,6 @@
           ref = "nightly";
         };
       });
-      vimAlias     = true;
       vimdiffAlias = true;
       withNodeJs   = false;
       withPython   = false;
@@ -154,7 +144,7 @@
         "git_status" "character"
       ];
     };
-  } // (if pkgs.stdenv.isLinux then {
+  } // (if isLinux then {
     firefox = {
       enable            = true;
       package           = pkgs.firefox-wayland;
