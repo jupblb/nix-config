@@ -27,6 +27,7 @@
       sway         = unstable.sway';
       ranger       = unstable.ranger';
       vimPlugins   = unstable.vimPlugins;
+      vscodium     = unstable.vscodium;
       wrapNeovim   = unstable.wrapNeovim;
     };
 
@@ -166,7 +167,8 @@
     i3status.enable        = true;
     i3status.enableDefault = true;
 
-    vscode.enable = true;
+    vscode.enable  = true;
+    vscode.package = pkgs.vscodium;
   } else {});
 }
 
