@@ -71,8 +71,8 @@
     kitty.enable      = true;
     kitty.extraConfig = with pkgs; ''
       ${builtins.readFile ./misc/kitty.conf}
-      ${lib.optionalString stdenv.isLinux "10.0"}
-      ${lib.optionalString stdenv.isDarwin "14.0"}
+      ${lib.optionalString stdenv.isLinux "font_size 10.0"}
+      ${lib.optionalString stdenv.isDarwin "font_size 14.0"}
       ${builtins.readFile (fetchurl {
         url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
         sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
