@@ -80,6 +80,18 @@ set shortmess+=c
 
 lua << EOF
 local nvim_lsp = require 'nvim_lsp'
+local configs  = require 'nvim_lsp/configs'
+
+configs.ciderlsp = {
+  default_config = {
+    cmd = {'/google/bin/releases/editor-devtools/ciderlsp', '--tooltag=nvim-lsp' , '--noforward_sync_responses'};
+    filetypes = {'c', 'cpp', 'java', 'proto', 'textproto', 'go', 'swift'};
+    root_dir = nvim_lsp.util.root_pattern('BUILD');
+    settings = {};
+  };
+}
+
+nvim_lsp.ciderlsp.setup{}
 nvim_lsp.bashls.setup {}
 nvim_lsp.metals.setup { on_attach = require'completion'.on_attach }
 nvim_lsp.pyls.setup { on_attach = require'completion'.on_attach }
