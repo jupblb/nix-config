@@ -1,4 +1,7 @@
-{ bemenu, grim, slurp, wob, xdg-user-dirs, xsettingsd, writeTextFile }:
+{
+  bemenu, grim, kitty, redshift-wlr, slurp, swaylock, wob, xdg-user-dirs,
+  xsettingsd, writeTextFile
+}:
 
 let
   picture-dir     = "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
@@ -6,11 +9,13 @@ let
     name = "xsettingsd-config";
     text = "Gdk/WindowScalingFactor 2\n";
   };
-in ''
+in writeTextFile {
+  name = "sway-config";
+  text = ''
 ### Startup
-exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob \
-  | ${wob}/bin/wob
 exec ${xsettingsd}/bin/xsettingsd -c ${xsettingsd-conf}
+exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob ${wob}/bin/wob
+exec --no-startup-id ${redshift-wlr}/bin/redshift -m wayland -l 51.12:17.05
 
 ### Variables
 set $mod Mod1
@@ -35,7 +40,7 @@ set $dummy    #ffffff
 set $menu ${bemenu}/bin/bemenu-run --fn 'PragmataPro 12' -p "" \
   --fb '$bg' --ff '$fg' --hb '$green' --hf '$fg' --nb '$bg' --nf '$fg' \
   --sf '$bg' --sb '$fg' --tf '$fg' --tb '$bg'
-set $term kitty
+set $term ${kitty}/bin/kitty
 
 ### Input/Output configuration
 output * {
@@ -80,7 +85,7 @@ bindsym $mod+v splitv
 bindsym $mod+f fullscreen
 
 bindsym $mod+Return exec $term
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+e exec swaymsg exit
 
@@ -140,6 +145,11 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+bindsym $mod+Control+l workspace next
+bindsym $mod+Control+h workspace prev
+
+bindsym $mod+BackSpace exec ${swaylock}/bin/swaylock
+
 bindsym Print exec ${grim}/bin/grim \
   ${picture-dir}/screenshots/$(date +'%F_%R:%S_grim.png')
 bindsym $mod+Print exec ${grim}/bin/grim -g "$(${slurp}/bin/slurp)" \
@@ -177,7 +187,6 @@ bar {
 
     tray_output none
 }
-
-include ~/.config/sway/config
-''
+  '';
+}
 

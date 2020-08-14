@@ -11,7 +11,7 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ dropbox-cli sway ];
+  environment.systemPackages = with pkgs; [ dropbox-cli ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -63,8 +63,25 @@
   nix.maxJobs = 12;
 
   nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
-    sway = callPackage ./misc/sway {};
+    sway     = sway.override {
+      sway-unwrapped = callPackage ./misc/sway/sway-unwrapped.nix {};
+    };
+    xwayland = callPackage ./misc/sway/xwayland.nix {};
   };
+
+  programs.sway = {
+    enable               = true;
+    extraOptions         = with pkgs; [
+      "-c" "${callPackage ./misc/sway/sway-config.nix {}}"
+    ];
+    extraPackages        = with pkgs; [
+      imv mpv pavucontrol wl-clipboard xwayland
+    ];
+    extraSessionCommands = builtins.readFile ./misc/sway/sway.sh;
+    wrapperFeatures.gtk  = true;
+  };
+
+  security.pam.services.swaylock.text = "auth include login";
 
   services = {
     apcupsd.enable     = true;

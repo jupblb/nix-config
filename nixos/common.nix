@@ -50,8 +50,6 @@
     vim.defaultEditor     = true;
   };
 
-  security.pam.services.swaylock.text = "auth include login";
-
   services = {
     acpid.enable = true;
 
