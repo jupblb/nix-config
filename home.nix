@@ -61,7 +61,6 @@
         fetch.prune       = true;
         push.default      = "upstream";
       };
-      ignores     = [ "compile_commands.json" ];
       userEmail   = "jupblb@google.com";
       userName    = "jupblb";
     };
