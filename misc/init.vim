@@ -109,8 +109,6 @@ if filereadable("/usr/share/vim/google/glug/bootstrap.vim")
   Glug blazedeps plugin[mappings]
   Glug codefmt
   Glug codefmt-google
-  Glug coverage
-  Glug coverage-google !plugin[autocmds]
   Glug critique
   Glug fzf-piper
   Glug g4 prompt=1
