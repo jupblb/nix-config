@@ -156,7 +156,7 @@ nnoremap <silent> gD         <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> K          <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <Leader>li <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> gr         <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> <Leader>lr <cmd>lua.vim.lsp.buf.rename()<CR>
+nnoremap <silent> <Leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> gs         <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <Leader>lt <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gW         <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
