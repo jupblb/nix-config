@@ -7,6 +7,7 @@
     EDITOR               = "vim";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
+    P4MERGE              = "/google/data/ro/teams/cider/cider-merge.sh";
   };
   home.username         = "jupblb";
 
