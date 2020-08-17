@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ gmailctl ranger screen unzip ];
+  home.packages         = with pkgs; [ gmailctl ranger sbt screen unzip ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
     EDITOR               = "vim";
