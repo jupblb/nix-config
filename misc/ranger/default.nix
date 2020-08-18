@@ -28,6 +28,8 @@ in symlinkJoin {
       --add-flags "--confdir=${builtins.toString ./.}" \
       --prefix PATH : ${lib.makeBinPath [
         atool catdoc file glow imagemagick jq poppler_utils xlsx2csv
-      ]}
+      ]} \
+      --set-default LC_ALL "C" \
+      --set-default LC_CTYPE "en_US.UTF-8"
   '';
 }
