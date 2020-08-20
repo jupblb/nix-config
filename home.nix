@@ -12,7 +12,6 @@
   home.username         = "jupblb";
 
   nixpkgs.config.packageOverrides = pkgs: with pkgs; {
-    bashls = nodePackages.bash-language-server;
     ranger = callPackage ./misc/ranger { ranger = pkgs.ranger; };
   };
 
@@ -85,10 +84,13 @@
 
     neovim = {
       configure    = {
-        customRC            = with pkgs; ''
-          let $PATH      .= ':${lib.makeBinPath [ metals bashls ripgrep ]}'
-          ${builtins.readFile ./misc/init.vim}
-        '';
+        customRC            = let
+          regular = with pkgs; [ metals ripgrep rnix-lsp ];
+          node    = with pkgs.nodePackages; [ bash-language-server ];
+                              in ''
+            let $PATH      .= ':${lib.makeBinPath (regular ++ node)}'
+            ${builtins.readFile ./misc/init.vim}
+          '';
         plug.plugins        = with pkgs.vimPlugins; [ completion-nvim nvim-lsp ];
         packages.nvim.start = with pkgs.vimPlugins; [
           airline

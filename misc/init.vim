@@ -82,6 +82,7 @@ local nvim_lsp = require 'nvim_lsp'
 
 nvim_lsp.bashls.setup {}
 nvim_lsp.metals.setup { on_attach = require'completion'.on_attach }
+nvim_lsp.rnix.setup {}
 
 local f = io.open("/google/bin/releases/editor-devtools/ciderlsp", "r")
 if f~=nil then
