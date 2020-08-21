@@ -16,6 +16,7 @@ let
       substituteInPlace ranger/config/rc.conf --replace \
         "set vcs_aware false" "set vcs_aware true"
 
+      echo "setlocal path=/google/.* vcs_aware false" >> ranger/config/rc.conf
       echo "default_linemode devicons" >> ranger/config/rc.conf
     '';
   });
