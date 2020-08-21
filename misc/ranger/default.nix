@@ -1,6 +1,6 @@
 {
-  atool, catdoc, fetchFromGitHub, file, glow, imagemagick, jq, lib, makeWrapper,
-  poppler_utils, ranger, symlinkJoin, xlsx2csv
+  atool, glow, imagemagick, jq, lib, makeWrapper, poppler_utils, ranger,
+  symlinkJoin
 }:
 
 let
@@ -22,7 +22,7 @@ in symlinkJoin {
   postBuild   = ''
     wrapProgram "$out/bin/ranger" \
       --prefix PATH : ${lib.makeBinPath [
-        atool catdoc file glow imagemagick jq poppler_utils xlsx2csv
+        atool glow imagemagick jq poppler_utils
       ]} \
       --set-default LC_ALL "C" \
       --set-default LC_CTYPE "en_US.UTF-8"
