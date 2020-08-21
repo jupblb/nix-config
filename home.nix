@@ -126,7 +126,7 @@
       directory.truncation_length         = 8;
       prompt_order                        = [
         "username" "hostname" "directory" "git_branch" "git_commit" "git_state"
-        "git_status" "character"
+        "git_status" "hg_branch" "character"
       ];
     };
   };
