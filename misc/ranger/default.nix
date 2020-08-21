@@ -13,10 +13,6 @@ let
         "set preview_images false" "set preview_images true"
       substituteInPlace ranger/config/rc.conf --replace \
         "set preview_images_method w3m" "set preview_images_method kitty"
-      substituteInPlace ranger/config/rc.conf --replace \
-        "set vcs_aware false" "set vcs_aware true"
-
-      echo "setlocal path=/google/.* vcs_aware false" >> ranger/config/rc.conf
       echo "default_linemode devicons" >> ranger/config/rc.conf
     '';
   });
