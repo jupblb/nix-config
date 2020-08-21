@@ -13,7 +13,6 @@ let
         "set preview_images false" "set preview_images true"
       substituteInPlace ranger/config/rc.conf --replace \
         "set preview_images_method w3m" "set preview_images_method kitty"
-      echo "default_linemode devicons" >> ranger/config/rc.conf
     '';
   });
 in symlinkJoin {
@@ -22,7 +21,6 @@ in symlinkJoin {
   paths       = [ ranger' ];
   postBuild   = ''
     wrapProgram "$out/bin/ranger" \
-      --add-flags "--confdir=${builtins.toString ./.}" \
       --prefix PATH : ${lib.makeBinPath [
         atool catdoc file glow imagemagick jq poppler_utils xlsx2csv
       ]} \

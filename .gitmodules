@@ -1,4 +1,0 @@
-[submodule "misc/ranger/plugins/ranger_devicons"]
-	path = misc/ranger/plugins/ranger_devicons
-	url = https://github.com/alexanderjeurissen/ranger_devicons.git
-	branch = master
