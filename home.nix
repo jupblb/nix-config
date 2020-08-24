@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ gmailctl ranger sbt screen unzip ];
+  home.packages         = with pkgs; [ gmailctl ranger screen unzip ];
   home.sessionVariables = {
     BAT_THEME            = "gruvbox";
     EDITOR               = "vim";
@@ -85,7 +85,7 @@
     neovim = {
       configure    = {
         customRC            = let
-          regular = with pkgs; [ metals ripgrep rnix-lsp ];
+          regular = with pkgs; [ ripgrep rnix-lsp ];
           node    = with pkgs.nodePackages; [ bash-language-server ];
                               in ''
             let $PATH      .= ':${lib.makeBinPath (regular ++ node)}'
