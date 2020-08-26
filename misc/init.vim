@@ -7,6 +7,7 @@ set number
 set shell=bash
 set smartcase
 set termguicolors
+set splitright
 
 " Remap leader key to space
 nnoremap <Space> <Nop>
