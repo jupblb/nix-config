@@ -163,6 +163,10 @@ nnoremap <silent> gs         <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <Leader>lt <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gW         <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 
+" preview-markdown.vim
+let g:preview_markdown_parser = 'glow'
+let g:preview_markdown_vertical = 1
+
 " Ranger
 nnoremap <Leader><CR> :RangerEdit<CR>
 
