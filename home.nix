@@ -92,7 +92,9 @@
             let $PATH      .= ':${lib.makeBinPath (regular ++ node)}'
             ${builtins.readFile ./misc/init.vim}
           '';
-        plug.plugins        = with pkgs.vimPlugins; [ completion-nvim nvim-lsp ];
+        plug.plugins        = with pkgs.vimPlugins; [
+          completion-nvim nvim-lspconfig
+        ];
         packages.nvim.start = let
             preview-markdown = pkgs.vimUtils.buildVimPluginFrom2Nix {
               pname   = "preview-markdown";
