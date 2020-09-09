@@ -13,7 +13,6 @@
 
   nixpkgs.config.packageOverrides = pkgs: with pkgs; {
     ranger = callPackage ./misc/ranger { ranger = pkgs.ranger; };
-    glow   = callPackage ./misc/glow.nix { glow = pkgs.glow; };
   };
 
   programs = {
@@ -86,7 +85,7 @@
     neovim = {
       configure    = {
         customRC            = let
-          regular = with pkgs; [ glow ripgrep rnix-lsp ];
+          regular = with pkgs; [ ripgrep rnix-lsp ];
           node    = with pkgs.nodePackages; [ bash-language-server ];
                               in ''
             let $PATH      .= ':${lib.makeBinPath (regular ++ node)}'
@@ -95,26 +94,14 @@
         plug.plugins        = with pkgs.vimPlugins; [
           completion-nvim nvim-lspconfig
         ];
-        packages.nvim.start = let
-            preview-markdown = pkgs.vimUtils.buildVimPluginFrom2Nix {
-              pname   = "preview-markdown";
-              version = "27.08.2020";
-              src     = pkgs.fetchFromGitHub {
-                owner  = "skanehira";
-                repo   = "preview-markdown.vim";
-                rev    = "f02248f6f6656534cb9eb978987cab2d02897b39";
-                sha256 = "044x1apb67j07gbdv0179cblaf82kinqz2lsf6zqvbcvr2hi8n8m";
-              };
-            };
-                              in with pkgs.vimPlugins; [
-            airline
-            editorconfig-vim
-            gruvbox-community
-            fzf-vim
-            preview-markdown
-            ranger-vim
-            vim-better-whitespace vim-jsonnet vim-nix vim-signify
-          ];
+        packages.nvim.start = with pkgs.vimPlugins; [
+          airline
+          editorconfig-vim
+          gruvbox-community
+          fzf-vim
+          ranger-vim
+          vim-better-whitespace vim-jsonnet vim-nix vim-signify
+        ];
       };
       enable       = true;
       package      = pkgs.neovim-unwrapped.overrideAttrs(old: {
