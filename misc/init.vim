@@ -112,14 +112,11 @@ if filereadable("/usr/share/vim/google/glug/bootstrap.vim")
   Glug codefmt
   Glug codefmt-google
   Glug critique
-  Glug fzf-piper
-  Glug g4 prompt=1
   Glug google-csimporter
   Glug google-filetypes
   Glug googler
   Glug googlestyle whitelist=`['.*']`
   Glug logmsgs
-  Glug piper
   Glug relatedfiles
 
   augroup autoformat_settings
@@ -136,7 +133,6 @@ if filereadable("/usr/share/vim/google/glug/bootstrap.vim")
     autocmd FileType sql AutoFormatBuffer format_sql
   augroup END
 
-  nnoremap          <Leader>gf :FZFPiperActiveFiles<CR>
   nnoremap <silent> <Leader>lf :FormatCode<CR>
   nnoremap          <Leader>ji :CsImporter<CR>
   nnoremap          <Leader>js :CsImporterSort<CR>
