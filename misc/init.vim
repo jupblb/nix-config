@@ -70,6 +70,7 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 nnoremap <Leader>/     :BLines<CR>
 nnoremap <Leader><Tab> :Buffers<CR>
+nnoremap <Leader>gf    :GFiles<CR>
 nnoremap <Leader>f     :Files<CR>
 nnoremap <Leader>h     :History<CR>
 nnoremap <Leader>r     :RG<CR>
@@ -80,67 +81,10 @@ set shortmess+=c
 
 lua << EOF
 local nvim_lsp = require 'nvim_lsp'
-
 nvim_lsp.bashls.setup {}
-nvim_lsp.metals.setup { on_attach = require'completion'.on_attach }
+nvim_lsp.pyls.setup { on_attach = require'completion'.on_attach }
 nvim_lsp.rnix.setup {}
-
-local f = io.open("/google/bin/releases/editor-devtools/ciderlsp", "r")
-if f~=nil then
-  io.close(f)
-
-  local configs  = require 'nvim_lsp/configs'
-  configs.ciderlsp = {
-    default_config = {
-      cmd = {'/google/bin/releases/editor-devtools/ciderlsp', '--tooltag=nvim-lsp' , '--noforward_sync_responses'};
-      filetypes = {'c', 'cpp', 'java', 'proto', 'textproto', 'go'};
-      root_dir = nvim_lsp.util.root_pattern('BUILD');
-      settings = {};
-    };
-  }
-  nvim_lsp.ciderlsp.setup { on_attach = require'completion'.on_attach }
-else
-  nvim_lsp.pyls.setup { on_attach = require'completion'.on_attach }
-end
 EOF
-
-if filereadable("/usr/share/vim/google/glug/bootstrap.vim")
-  source /usr/share/vim/google/glug/bootstrap.vim
-
-  Glug blaze plugin[mappings]
-  Glug blazedeps plugin[mappings]
-  Glug codefmt
-  Glug codefmt-google
-  Glug critique
-  Glug google-csimporter
-  Glug google-filetypes
-  Glug googler
-  Glug googlestyle whitelist=`['.*']`
-  Glug logmsgs
-  Glug relatedfiles
-
-  augroup autoformat_settings
-    autocmd FileType borg,gcl,patchpanel AutoFormatBuffer gclfmt
-    autocmd FileType bzl AutoFormatBuffer buildifier
-    autocmd FileType c,cpp,javascript AutoFormatBuffer clang-format
-    autocmd FileType go AutoFormatBuffer gofmt
-    autocmd FileType java AutoFormatBuffer google-java-format
-    autocmd FileType markdown AutoFormatBuffer mdformat
-    autocmd FileType ncl AutoFormatBuffer nclfmt
-    autocmd FileType python AutoFormatBuffer pyformat
-    autocmd FileType textpb AutoFormatBuffer text-proto-format
-    autocmd FileType proto AutoFormatBuffer protofmt
-    autocmd FileType sql AutoFormatBuffer format_sql
-  augroup END
-
-  nnoremap <silent> <Leader>lf :FormatCode<CR>
-  nnoremap          <Leader>ji :CsImporter<CR>
-  nnoremap          <Leader>js :CsImporterSort<CR>
-  nnoremap          <Leader>t  :RelatedFilesWindow<CR>
-else
-  nnoremap          <Leader>gf :GFiles<CR>
-  nnoremap <silent> <Leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
-endif
 
 autocmd Filetype java set omnifunc=v:lua.vim.lsp.omnifunc
 autocmd Filetype proto set omnifunc=v:lua.vim.lsp.omnifunc
@@ -158,11 +102,11 @@ nnoremap <silent> <Leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> gs         <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <Leader>lt <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gW         <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-
-" preview-markdown.vim
-let g:preview_markdown_parser = 'glow'
-let g:preview_markdown_vertical = 1
+nnoremap <silent> <Leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 
 " Ranger
 nnoremap <Leader><CR> :RangerEdit<CR>
 
+if filereadable(expand("~/.config/nvim/google.vim"))
+  source ~/.config/nvim/init.vim
+endif

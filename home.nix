@@ -7,7 +7,6 @@
     EDITOR               = "vim";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
-    P4MERGE              = "/google/data/ro/teams/cider/cider-merge.sh";
   };
   home.username         = "jupblb";
 
@@ -106,9 +105,11 @@
       enable       = true;
       package      = pkgs.neovim-unwrapped.overrideAttrs(old: {
         version = "nightly";
-        src     = builtins.fetchGit {
-          url = https://github.com/neovim/neovim.git;
-          ref = "nightly";
+        src     = pkgs.fetchFromGitHub {
+          owner  = "neovim";
+          repo   = "neovim";
+          rev    = "nightly";
+          sha256 = "05rffvifdcwbmplgxrm2c649x2cg7hzfjnj5vm7fjr48wj695vpa";
         };
       });
       vimAlias     = true;
