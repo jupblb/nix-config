@@ -8,6 +8,7 @@ set shell=bash
 set smartcase
 set termguicolors
 set splitright
+set nohlsearch
 
 " Remap leader key to space
 nnoremap <Space> <Nop>
