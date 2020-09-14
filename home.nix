@@ -31,8 +31,7 @@
       } ];
     };
 
-    fzf.defaultOptions  = [ "--color=light" ];
-    fzf.enable          = true;
+    fzf.enable = true;
 
     git = {
       delta       = {

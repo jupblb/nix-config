@@ -16,4 +16,5 @@ alias vimdiff 'nvim -d'
 
 set -gx BAT_THEME gruvbox
 set -gx EDITOR nvim
+set -gx FZF_DEFAULT_OPTS "--color=light"
 
