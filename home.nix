@@ -3,8 +3,6 @@
 {
   home.packages         = with pkgs; [ gmailctl ranger screen unzip ];
   home.sessionVariables = {
-    BAT_THEME            = "gruvbox";
-    EDITOR               = "vim";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
   };
@@ -31,12 +29,6 @@
           sha256 = "0ppmajynpb9l58xbrcnbp41b66g7p0c9l2nlsvyjwk6d16g4p4gy";
         };
       } ];
-      shellAliases         = with pkgs; {
-        cat       = "${bat}/bin/bat -p --paging=never";
-        less      = "${bat}/bin/bat -p --paging=always";
-        nix-shell = "nix-shell --command fish";
-        ssh       = "env TERM=xterm-256color ssh";
-      };
     };
 
     fzf.defaultOptions  = [ "--color=light" ];
@@ -129,7 +121,7 @@
       directory.truncation_length         = 8;
       prompt_order                        = [
         "username" "hostname" "directory" "git_branch" "git_commit" "git_state"
-        "git_status" "hg_branch" "character"
+        "git_status" "character"
       ];
     };
   };
