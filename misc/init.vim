@@ -107,6 +107,3 @@ nnoremap <silent> <Leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 " Ranger
 nnoremap <Leader><CR> :RangerEdit<CR>
 
-if filereadable(expand("~/.config/nvim/google.vim"))
-  source ~/.config/nvim/google.vim
-endif
