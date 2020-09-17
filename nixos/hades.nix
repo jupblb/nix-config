@@ -21,7 +21,9 @@
   };
 
   hardware.cpu.intel.updateMicrocode = true;
+  hardware.opengl.enable             = true;
   hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+  hardware.pulseaudio.enable         = true;
 
   home-manager.users.jupblb = {
     home.stateVersion = "20.03";
@@ -98,6 +100,8 @@
       method    = "magicpacket";
     } ];
   };
+
+  sound.enable = true;
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 

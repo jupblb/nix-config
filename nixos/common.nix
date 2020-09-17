@@ -26,11 +26,7 @@
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [ vistafonts ];
 
-  hardware = {
-    enableRedistributableFirmware = true;
-    opengl.enable                 = true;
-    pulseaudio.enable             = true;
-  };
+  hardware.enableRedistributableFirmware = true;
 
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
@@ -79,8 +75,6 @@
     ln -sfn ${pkgs.glibc}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
     ln -sfn ${pkgs.stdenv.cc.cc.lib}/lib/* /lib64
   '';
-
-  sound.enable = true;
 
   time.timeZone = "Europe/Warsaw";
 

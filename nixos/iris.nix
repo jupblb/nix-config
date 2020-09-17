@@ -4,17 +4,12 @@ let
   serverIP = "192.168.1.7";
 in {
   boot = {
-    blacklistedKernelModules          = [ "brcmfmac" ];
-    consoleLogLevel                   = 7;
-    kernelPackages                    = pkgs.linuxPackages_rpi4;
-    loader.grub.enable                = false;
-    loader.raspberryPi.enable         = true;
-    loader.raspberryPi.firmwareConfig = ''
-      disable_overscan=1
-      dtparam=audio=on
-      gpu_mem=256
-    '';
-    loader.raspberryPi.version        = 4;
+    blacklistedKernelModules   = [ "brcmfmac" ];
+    consoleLogLevel            = 7;
+    kernelPackages             = pkgs.linuxPackages_rpi4;
+    loader.grub.enable         = false;
+    loader.raspberryPi.enable  = true;
+    loader.raspberryPi.version = 4;
   };
 
   docker-containers.pihole = {
@@ -49,15 +44,6 @@ in {
     "/boot".fsType = "vfat";
     "/data".device = "/dev/disk/by-label/data";
     "/data".fsType = "ext4";
-  };
-
-  hardware = {
-    deviceTree.base         = pkgs.device-tree_rpi;
-    deviceTree.overlays     = [
-      "${pkgs.device-tree_rpi.overlays}/vc4-fkms-v3d.dtbo"
-    ];
-    opengl.setLdLibraryPath = true;
-    opengl.package          = pkgs.mesa_drivers;
   };
 
   imports = [ ./common.nix ];
