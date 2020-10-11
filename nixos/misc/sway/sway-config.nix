@@ -1,19 +1,14 @@
 {
   bemenu, grim, kitty, redshift-wlr, slurp, swaylock, wob, xdg-user-dirs,
-  xsettingsd, writeTextFile
+  writeTextFile
 }:
 
 let
   picture-dir     = "$(${xdg-user-dirs}/bin/xdg-user-dir PICTURES)";
-  xsettingsd-conf = writeTextFile {
-    name = "xsettingsd-config";
-    text = "Gdk/WindowScalingFactor 2\n";
-  };
 in writeTextFile {
   name = "sway-config";
   text = ''
 ### Startup
-exec ${xsettingsd}/bin/xsettingsd -c ${xsettingsd-conf}
 exec --no-startup-id mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob ${wob}/bin/wob
 exec --no-startup-id ${redshift-wlr}/bin/redshift -m wayland -l 51.12:17.05
 
@@ -47,7 +42,6 @@ output * {
   background ${./wallpaper.png} fill
   scale 2
 }
-xwayland force scale 2
 
 input * {
   click_method clickfinger

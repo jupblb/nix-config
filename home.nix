@@ -100,7 +100,7 @@
           owner  = "neovim";
           repo   = "neovim";
           rev    = "nightly";
-          sha256 = "1zs7v2l92gmgl9dg67a4ndinnpklxgzwsyfpwy3yhm44z71zzyhf";
+          sha256 = "0mvxksccxh593x513br2pxx93f66m1fdc616pv5f0zwyplr8ir5x";
         };
       });
       vimAlias     = true;
