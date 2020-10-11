@@ -11,7 +11,7 @@
       };
       in lib.mkIf pkgs.stdenv.isDarwin "${apps}/Applications";
   };
-  home.packages         = with pkgs; [ gmailctl ranger screen unzip ];
+  home.packages         = with pkgs; [ ranger screen unzip ];
   home.sessionVariables = {
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
