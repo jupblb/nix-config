@@ -2,7 +2,14 @@
 
 {
   home.file             = {
-    ".emacs.d/init.el".text = ''(load "default.el")'';
+    ".emacs.d/init.el".text            = ''(load "default.el")'';
+    "Applications/home-manager".source =
+      let apps = pkgs.buildEnv {
+        name        = "home-manager-applications";
+        paths       = config.home.packages;
+        pathsToLink = "/Applications";
+      };
+      in lib.mkIf pkgs.stdenv.isDarwin "${apps}/Applications";
   };
   home.packages         = with pkgs; [ gmailctl ranger screen unzip ];
   home.sessionVariables = {
@@ -123,19 +130,6 @@
       withPython   = false;
       withPython3  = false;
       withRuby     = false;
-    };
-
-    starship.enable                = true;
-    starship.enableFishIntegration = true;
-    starship.settings              = {
-      add_newline                         = false;
-      character.symbol                    = "~>";
-      directory.fish_style_pwd_dir_length = 1;
-      directory.truncation_length         = 8;
-      prompt_order                        = [
-        "username" "hostname" "directory" "git_branch" "git_commit" "git_state"
-        "git_status" "character"
-      ];
     };
   };
 }

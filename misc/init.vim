@@ -84,21 +84,6 @@ lua << EOF
 local nvim_lsp = require 'nvim_lsp'
 nvim_lsp.bashls.setup {}
 nvim_lsp.rnix.setup {}
-
-local f = io.open(os.getenv("HOME") .. '/.local/bin/ciderlsp', "r")
-if f~=nil then
-  io.close(f)
-  local configs  = require 'nvim_lsp/configs'
-  configs.ciderlsp = {
-    default_config = {
-      cmd = {os.getenv("HOME") .. '/.local/bin/ciderlsp', '--tooltag=nvim-lsp' , '--noforward_sync_responses'};
-      filetypes = {'c', 'cpp', 'java', 'python', 'proto', 'textproto', 'go'};
-      root_dir = nvim_lsp.util.root_pattern('BUILD');
-      settings = {};
-    };
-  }
-  nvim_lsp.ciderlsp.setup { on_attach = require'completion'.on_attach }
-end
 EOF
 
 autocmd Filetype java set omnifunc=v:lua.vim.lsp.omnifunc
@@ -122,3 +107,6 @@ nnoremap <silent> <Leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 " Ranger
 nnoremap <Leader><CR> :RangerEdit<CR>
 
+if filereadable(expand("~/.config/nvim/google.vim"))
+ source ~/.config/nvim/google.vim
+endif
