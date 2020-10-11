@@ -28,7 +28,7 @@
       sha256 = "1db07kphm7av81arh8qd8j8dpw37xcfim7nz9km9ya0492250czj";
     }) {
       doomPrivateDir = ./misc/doom-emacs;
-      extraPackages  = epkgs: [ pkgs.fd pkgs.ripgrep ];
+      extraPackages  = epkgs: (with epkgs; []) ++ (with pkgs; [ fd ripgrep ]);
     };
 
     fish = {
@@ -65,7 +65,7 @@
         fetch.prune       = true;
         push.default      = "upstream";
       };
-      userEmail   = "jupblb@google.com";
+      userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
 
