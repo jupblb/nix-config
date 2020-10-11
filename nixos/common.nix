@@ -23,9 +23,6 @@
 
   environment.systemPackages = with pkgs; [ file git htop patchelf unzip ];
 
-  fonts.enableDefaultFonts = true;
-  fonts.fonts              = with pkgs; [ vistafonts ];
-
   hardware.enableRedistributableFirmware = true;
 
   i18n.defaultLocale    = "en_US.UTF-8";

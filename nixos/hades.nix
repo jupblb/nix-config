@@ -20,6 +20,9 @@
     "/boot".fsType = "vfat";
   };
 
+  fonts.enableDefaultFonts = true;
+  fonts.fonts              = with pkgs; [ emacs-all-the-icons-fonts vistafonts ];
+
   hardware.cpu.intel.updateMicrocode = true;
   hardware.opengl.enable             = true;
   hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
@@ -31,8 +34,11 @@
     imports = [ ../home.nix ];
 
     nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
-      vimPlugins  = vimPlugins;
-      wrapNeovim  = wrapNeovim;
+      emacsPackages = emacsPackages.overrideScope' (self: super: {
+        emacs = callPackage ./misc/emacs.nix {};
+      });
+      vimPlugins    = vimPlugins;
+      wrapNeovim    = wrapNeovim;
     };
 
     programs = {
@@ -59,8 +65,8 @@
 
   programs.sway = {
     enable               = true;
-    extraOptions         = with pkgs; [
-      "-c" "${callPackage ./misc/sway/sway-config.nix {}}"
+    extraOptions         = [
+      "-c" "${pkgs.callPackage ./misc/sway/sway-config.nix {}}"
     ];
     extraPackages        = with pkgs; [ imv mpv pavucontrol wl-clipboard ];
     extraSessionCommands = builtins.readFile ./misc/sway/sway.sh;

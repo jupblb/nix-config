@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.file             = {
+    ".emacs.d/init.el".text = ''(load "default.el")'';
+  };
   home.packages         = with pkgs; [ gmailctl ranger screen unzip ];
   home.sessionVariables = {
     MANPAGER             = "vim -c 'set ft=man' -";
@@ -16,6 +19,17 @@
     # Remember to run `bat cache --build` before first run
     bat.enable         = true;
     bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
+
+    emacs.enable  = true;
+    emacs.package = pkgs.callPackage (pkgs.fetchFromGitHub {
+      owner  = "vlaci";
+      repo   = "nix-doom-emacs";
+      rev    = "master";
+      sha256 = "1db07kphm7av81arh8qd8j8dpw37xcfim7nz9km9ya0492250czj";
+    }) {
+      doomPrivateDir = ./misc/doom-emacs;
+      extraPackages  = epkgs: [ pkgs.fd pkgs.ripgrep ];
+    };
 
     fish = {
       enable               = true;
