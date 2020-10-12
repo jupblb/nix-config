@@ -1,7 +1,4 @@
-{
-  atool, glow, imagemagick, jq, lib, makeWrapper, poppler_utils, ranger,
-  symlinkJoin
-}:
+{ atool, glow, jq, lib, makeWrapper, poppler_utils, ranger, symlinkJoin }:
 
 let
   ranger' = ranger.overrideAttrs(old: rec {
@@ -22,10 +19,6 @@ in symlinkJoin {
   paths       = [ ranger' ];
   postBuild   = ''
     wrapProgram "$out/bin/ranger" \
-      --prefix PATH : ${lib.makeBinPath [
-        atool glow imagemagick jq poppler_utils
-      ]} \
-      --set-default LC_ALL "C" \
-      --set-default LC_CTYPE "en_US.UTF-8"
+      --prefix PATH : ${lib.makeBinPath [ atool glow jq poppler_utils ]}
   '';
 }

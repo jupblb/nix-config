@@ -9,6 +9,7 @@
   home.username         = "jupblb";
 
   nixpkgs.config.packageOverrides = pkgs: with pkgs; {
+    glow   = writeScriptBin "glow" "${glow}/bin/glow -s light $@";
     ranger = callPackage ./misc/ranger { ranger = pkgs.ranger; };
   };
 
@@ -87,18 +88,29 @@
         plug.plugins        = with pkgs.vimPlugins; [
           completion-nvim nvim-lspconfig
         ];
-        packages.nvim.start = with pkgs.vimPlugins; [
-          airline
-          editorconfig-vim
-          gruvbox-community
-          fzf-vim
-          ranger-vim
-          vim-better-whitespace vim-jsonnet vim-nix vim-signify
-        ];
+        packages.nvim.start =
+          let glow-nvim = pkgs.vimUtils.buildVimPlugin {
+            pname   = "glow-nvim";
+            version = "2020-10-12";
+            src     = pkgs.fetchFromGitHub {
+              owner  = "npxbr";
+              repo   = "glow.nvim";
+              rev    = "master";
+              sha256 = "0qkvxly52qdxw77mlrwzrjp8i6smzmsd6k4pd7qqq2w8s8y8rda3";
+            };
+          };
+          in with pkgs.vimPlugins; [
+            airline
+            editorconfig-vim
+            glow-nvim gruvbox-community
+            fzf-vim
+            ranger-vim
+            vim-better-whitespace vim-jsonnet vim-markdown vim-nix vim-signify
+          ];
       };
       enable        = true;
       extraPackages = with pkgs; [
-        nodePackages.bash-language-server ripgrep rnix-lsp
+        glow nodePackages.bash-language-server ripgrep rnix-lsp
       ];
       package       = pkgs.neovim-unwrapped.overrideAttrs(old: {
         version = "nightly";
@@ -119,9 +131,7 @@
   };
 
   xdg.configFile."fish/conf.d/plugin-bobthefish.fish".text = lib.mkAfter ''
-    for f in $plugin_dir/*.fish
-      source $f
-    end
+    for f in $plugin_dir/*.fish; source $f; end
   '';
 }
 

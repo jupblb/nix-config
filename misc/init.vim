@@ -76,6 +76,9 @@ nnoremap <Leader>f     :Files<CR>
 nnoremap <Leader>h     :History<CR>
 nnoremap <Leader>r     :RG<CR>
 
+" glow.nvim
+nmap <Leader>m :Glow<CR>
+
 " nvim-lsp
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
