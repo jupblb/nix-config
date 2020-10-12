@@ -102,7 +102,7 @@
           in with pkgs.vimPlugins; [
             airline
             editorconfig-vim
-            glow-nvim gruvbox-community
+            glow-nvim goyo gruvbox-community
             fzf-vim
             ranger-vim
             vim-better-whitespace vim-jsonnet vim-markdown vim-nix vim-signify

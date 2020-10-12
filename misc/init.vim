@@ -79,6 +79,9 @@ nnoremap <Leader>r     :RG<CR>
 " glow.nvim
 nmap <Leader>m :Glow<CR>
 
+" goyo
+nmap <silent><Leader>` :Goyo<CR>
+
 " nvim-lsp
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
