@@ -8,7 +8,8 @@ let
     patches      = [ ./scope.patch ];
     preConfigure = ''
       substituteInPlace ranger/config/rc.conf --replace \
-        "map g? cd /usr/share/doc/ranger" "map g? cd $out/share/doc/ranger"
+        "set automatically_count_files true" \
+        "set automatically_count_files false"
       substituteInPlace ranger/config/rc.conf --replace \
         "set preview_images false" "set preview_images true"
       substituteInPlace ranger/config/rc.conf --replace \
