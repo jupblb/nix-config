@@ -78,7 +78,8 @@
       userName    = "jupblb";
     };
 
-    htop.enable = true;
+    htop.enable  = true;
+    htop.vimMode = true;
 
     kitty.enable      = true;
     kitty.extraConfig = with pkgs; ''
@@ -96,14 +97,8 @@
     '';
 
     neovim = {
-      configure    = {
-        customRC            = let
-          regular = with pkgs; [ ripgrep rnix-lsp ];
-          node    = with pkgs.nodePackages; [ bash-language-server ];
-                              in ''
-            let $PATH      .= ':${lib.makeBinPath (regular ++ node)}'
-            ${builtins.readFile ./misc/init.vim}
-          '';
+      configure     = {
+        customRC            = builtins.readFile ./misc/init.vim;
         plug.plugins        = with pkgs.vimPlugins; [
           completion-nvim nvim-lspconfig
         ];
@@ -116,8 +111,11 @@
           vim-better-whitespace vim-jsonnet vim-nix vim-signify
         ];
       };
-      enable       = true;
-      package      = pkgs.neovim-unwrapped.overrideAttrs(old: {
+      enable        = true;
+      extraPackages = with pkgs; [
+        nodePackages.bash-language-server ripgrep rnix-lsp
+      ];
+      package       = pkgs.neovim-unwrapped.overrideAttrs(old: {
         version = "nightly";
         src     = pkgs.fetchFromGitHub {
           owner  = "neovim";
@@ -126,12 +124,12 @@
           sha256 = "0mvxksccxh593x513br2pxx93f66m1fdc616pv5f0zwyplr8ir5x";
         };
       });
-      vimAlias     = true;
-      vimdiffAlias = true;
-      withNodeJs   = false;
-      withPython   = false;
-      withPython3  = false;
-      withRuby     = false;
+      vimAlias      = true;
+      vimdiffAlias  = true;
+      withNodeJs    = false;
+      withPython    = false;
+      withPython3   = false;
+      withRuby      = false;
     };
   };
 
