@@ -39,8 +39,6 @@
     };
 
     programs = {
-      emacs.package = callPackage ./misc/emacs.nix {};
-
       firefox = {
         enable            = true;
         package           = pkgs.firefox-wayland;

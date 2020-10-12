@@ -17,21 +17,6 @@
     bat.enable         = true;
     bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
 
-    emacs.enable        = true;
-    emacs.extraPackages = epkgs: with epkgs; [
-      doom-modeline
-      evil evil-collection
-      gruvbox-theme
-      org
-      use-package
-      which-key
-
-      (pkgs.runCommand "default.el" {} ''
-        mkdir -p $out/share/emacs/site-lisp
-        cp ${./misc/init.el} $out/share/emacs/site-lisp/default.el
-      '')
-    ];
-
     fish = {
       enable               = true;
       interactiveShellInit = builtins.readFile ./misc/config.fish;
