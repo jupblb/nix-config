@@ -34,14 +34,13 @@
     imports = [ ../home.nix ];
 
     nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
-      emacsPackages = emacsPackages.overrideScope' (self: super: {
-        emacs = callPackage ./misc/emacs.nix {};
-      });
-      vimPlugins    = vimPlugins;
-      wrapNeovim    = wrapNeovim;
+      vimPlugins = vimPlugins;
+      wrapNeovim = wrapNeovim;
     };
 
     programs = {
+      emacs.package = callPackage ./misc/emacs.nix {};
+
       firefox = {
         enable            = true;
         package           = pkgs.firefox-wayland;

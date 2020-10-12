@@ -27,16 +27,20 @@
     bat.enable         = true;
     bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
 
-    emacs.enable  = true;
-    emacs.package = pkgs.callPackage (pkgs.fetchFromGitHub {
-      owner  = "vlaci";
-      repo   = "nix-doom-emacs";
-      rev    = "master";
-      sha256 = "1db07kphm7av81arh8qd8j8dpw37xcfim7nz9km9ya0492250czj";
-    }) {
-      doomPrivateDir = ./misc/doom-emacs;
-      extraPackages  = epkgs: (with epkgs; []) ++ (with pkgs; [ fd ripgrep ]);
-    };
+    emacs.enable        = true;
+    emacs.extraPackages = epkgs: with epkgs; [
+      doom-modeline
+      evil evil-collection
+      gruvbox-theme
+      org
+      use-package
+      which-key
+
+      (pkgs.runCommand "default.el" {} ''
+        mkdir -p $out/share/emacs/site-lisp
+        cp ${./misc/init.el} $out/share/emacs/site-lisp/default.el
+      '')
+    ];
 
     fish = {
       enable               = true;
