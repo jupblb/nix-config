@@ -1,16 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file             = {
-    ".emacs.d/init.el".text            = ''(load "default.el")'';
-    "Applications/home-manager".source =
-      let apps = pkgs.buildEnv {
-        name        = "home-manager-applications";
-        paths       = config.home.packages;
-        pathsToLink = "/Applications";
-      };
-      in lib.mkIf pkgs.stdenv.isDarwin "${apps}/Applications";
-  };
   home.packages         = with pkgs; [ ranger screen unzip ];
   home.sessionVariables = {
     MANPAGER             = "vim -c 'set ft=man' -";
