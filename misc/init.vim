@@ -4,6 +4,7 @@ set ignorecase
 set mouse=a
 set nowrap
 set number
+set relativenumber
 set shell=bash
 set smartcase
 set termguicolors
