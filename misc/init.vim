@@ -114,6 +114,9 @@ nnoremap <silent> <Leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 " Ranger
 nnoremap <Leader><CR> :RangerEdit<CR>
 
+" vim-markdown
+let g:vim_markdown_folding_disabled = 1
+
 "Other settings
 autocmd FileType markdown set colorcolumn=80
 
