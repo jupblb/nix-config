@@ -10,7 +10,6 @@ alias cat 'bat -p --paging=never'
 alias less 'bat -p --paging=always'
 alias nix-shell 'nix-shell --command fish'
 alias ssh 'kitty +kitten ssh'
-alias vim 'nvim'
 
 function fish_greeting; end
 function fish_right_prompt; end
