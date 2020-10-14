@@ -34,6 +34,7 @@
     imports = [ ../home.nix ];
 
     nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
+      bat        = bat;
       vimPlugins = vimPlugins;
       wrapNeovim = wrapNeovim;
     };

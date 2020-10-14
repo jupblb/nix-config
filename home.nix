@@ -3,11 +3,8 @@
 {
   home.packages         = with pkgs; [ ranger screen unzip ];
   home.sessionVariables = {
-    BAT_THEME            = "gruvbox";
-    EDITOR               = "nvim";
-    FZF_DEFAULT_OPTS     = "--color=light";
-    MANPAGER             = "vim -c 'set ft=man' -";
-    NIXPKGS_ALLOW_UNFREE = "1";
+    EDITOR   = "nvim";
+    MANPAGER = "vim -c 'set ft=man' -";
   };
   home.username         = "jupblb";
 
@@ -18,8 +15,8 @@
 
   programs = {
     # Remember to run `bat cache --build` before first run
-    bat.enable         = true;
-    bat.themes.gruvbox = builtins.readFile ./misc/gruvbox.tmTheme;
+    bat.enable = true;
+    bat.config = { theme = "gruvbox-light"; };
 
     fish = {
       enable               = true;
@@ -53,19 +50,10 @@
       };
     };
 
-    fzf.enable = true;
+    fzf.enable         = true;
+    fzf.defaultOptions = [ "--color=light" ];
 
     git = {
-      delta       = {
-        enable  = true;
-        options = {
-          minus-emph-style = "syntax #fa9f86";
-          minus-style      = "syntax #f9d8bc";
-          plus-emph-style  = "syntax #d9d87f";
-          plus-style       = "syntax #eeebba";
-          syntax-theme     = "gruvbox";
-        };
-      };
       enable      = true;
       extraConfig = {
         color.ui          = true;

@@ -21,7 +21,8 @@
     packages   = [ pkgs.terminus_font ];
   };
 
-  environment.systemPackages = with pkgs; [ file git htop patchelf unzip ];
+  environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
+  environment.systemPackages   = with pkgs; [ file git htop patchelf unzip ];
 
   hardware.enableRedistributableFirmware = true;
 
