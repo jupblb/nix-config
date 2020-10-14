@@ -90,11 +90,10 @@
           };
         };
         in with pkgs.vimPlugins; [ {
-            plugin = airline;
+            plugin = lightline-vim;
             config = ''
               set noshowmode
-              let g:airline_powerline_fonts = 1
-              let g:airline_theme = 'gruvbox'
+              let g:lightline = { 'colorscheme': 'gruvbox' }
             '';
           } {
             plugin = completion-nvim;
