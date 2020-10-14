@@ -3,14 +3,17 @@
 {
   home.packages         = with pkgs; [ ranger screen unzip ];
   home.sessionVariables = {
+    BAT_THEME            = "gruvbox";
+    EDITOR               = "nvim";
+    FZF_DEFAULT_OPTS     = "--color=light";
     MANPAGER             = "vim -c 'set ft=man' -";
     NIXPKGS_ALLOW_UNFREE = "1";
   };
   home.username         = "jupblb";
 
-  nixpkgs.config.packageOverrides = pkgs: with pkgs; {
-    glow   = writeScriptBin "glow" "${glow}/bin/glow -s light $@";
-    ranger = callPackage ./misc/ranger { ranger = pkgs.ranger; };
+  nixpkgs.config.packageOverrides = pkgs: {
+    glow   = pkgs.writeScriptBin "glow" "${pkgs.glow}/bin/glow -s light $@";
+    ranger = pkgs.callPackage ./misc/ranger { ranger = pkgs.ranger; };
   };
 
   programs = {
@@ -38,6 +41,16 @@
           sha256 = "1fssb5bqd2d7856gsylf93d28n3rw4rlqkhbg120j5ng27c7v7lq";
         };
       } ];
+      promptInit           = ''
+        set -g theme_nerd_fonts yes
+        set -g theme_color_scheme solarized-light
+      '';
+      shellAliases         = {
+        cat       = "bat -p --paging=never";
+        less      = "bat -p --paging=always";
+        nix-shell = "nix-shell --command fish";
+        ssh       = "kitty +kitten ssh";
+      };
     };
 
     fzf.enable = true;

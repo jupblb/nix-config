@@ -60,14 +60,20 @@
 
   nix.maxJobs = 12;
 
-  programs.sway = {
-    enable               = true;
-    extraOptions         = [
-      "-c" "${pkgs.callPackage ./misc/sway/sway-config.nix {}}"
-    ];
-    extraPackages        = with pkgs; [ imv mpv pavucontrol wl-clipboard ];
-    extraSessionCommands = builtins.readFile ./misc/sway/sway.sh;
-    wrapperFeatures.gtk  = true;
+  programs = {
+    fish.shellInit = ''
+      if test -z "$DISPLAY"; and test (tty) = "/dev/tty1"; exec sway; end
+    '';
+
+    sway = {
+      enable               = true;
+      extraOptions         = [
+        "-c" "${pkgs.callPackage ./misc/sway/sway-config.nix {}}"
+      ];
+      extraPackages        = with pkgs; [ imv mpv pavucontrol wl-clipboard ];
+      extraSessionCommands = builtins.readFile ./misc/sway/sway.sh;
+      wrapperFeatures.gtk  = true;
+    };
   };
 
   security.pam.services.swaylock.text = "auth include login";
