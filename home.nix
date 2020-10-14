@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ ranger screen unzip ];
+  home.packages         = with pkgs; [ htop ranger screen unzip ];
   home.sessionVariables = {
     EDITOR   = "nvim";
     MANPAGER = "vim -c 'set ft=man' -";
@@ -14,7 +14,6 @@
   };
 
   programs = {
-    # Remember to run `bat cache --build` before first run
     bat.enable = true;
     bat.config = { theme = "gruvbox-light"; };
 
@@ -38,10 +37,6 @@
           sha256 = "1fssb5bqd2d7856gsylf93d28n3rw4rlqkhbg120j5ng27c7v7lq";
         };
       } ];
-      promptInit           = ''
-        set -g theme_nerd_fonts yes
-        set -g theme_color_scheme solarized-light
-      '';
       shellAliases         = {
         cat       = "bat -p --paging=never";
         less      = "bat -p --paging=always";
@@ -65,21 +60,20 @@
       userName    = "jupblb";
     };
 
-    htop.enable  = true;
-    htop.vimMode = true;
-
-    kitty.enable      = true;
-    kitty.extraConfig = builtins.readFile(pkgs.fetchurl {
-      url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
-      sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
-    });
-    kitty.settings    = {
-      font_family     = "PragmataPro Mono Liga";
-      font_size       = if pkgs.stdenv.isLinux then 10 else 14;
-      startup_session = builtins.toString(pkgs.writeTextFile {
-        name = "kitty-launch";
-        text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
+    kitty = {
+      enable      = true;
+      extraConfig = builtins.readFile(pkgs.fetchurl {
+        url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
+        sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
       });
+      settings    = {
+        font_family     = "PragmataPro Mono Liga";
+        font_size       = if pkgs.stdenv.isLinux then 10 else 14;
+        startup_session = builtins.toString(pkgs.writeTextFile {
+          name = "kitty-launch";
+          text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
+        });
+      };
     };
 
     neovim = {
@@ -118,7 +112,10 @@
             config = "nmap <Leader>m :Glow<CR>";
           } {
             plugin = goyo;
-            config = "nmap <silent><Leader>` :Goyo<CR>";
+            config = ''
+              let g:goyo_width = 100
+              nmap <silent><Leader>` :Goyo<CR>
+            '';
           } {
             plugin = gruvbox-community;
             config = ''

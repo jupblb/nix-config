@@ -21,7 +21,7 @@
   };
 
   fonts.enableDefaultFonts = true;
-  fonts.fonts              = with pkgs; [ emacs-all-the-icons-fonts vistafonts ];
+  fonts.fonts              = with pkgs; [ vistafonts ];
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.opengl.enable             = true;
@@ -36,7 +36,6 @@
     nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
       bat        = bat;
       vimPlugins = vimPlugins;
-      wrapNeovim = wrapNeovim;
     };
 
     programs = {

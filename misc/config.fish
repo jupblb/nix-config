@@ -8,3 +8,6 @@ end
 function fish_greeting; end
 function fish_right_prompt; end
 
+set -g theme_nerd_fonts yes
+set -g theme_color_scheme solarized-light
+

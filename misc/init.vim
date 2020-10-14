@@ -1,4 +1,5 @@
 set background=light
+set colorcolumn=80
 set clipboard+=unnamedplus
 set ignorecase
 set mouse=a
@@ -19,8 +20,8 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 
+autocmd FileType go,java,sql set colorcolumn=100
 autocmd FileType make set noexpandtab
-autocmd FileType markdown set colorcolumn=80
 
 if filereadable(expand("~/.config/nvim/google.vim"))
   source ~/.config/nvim/google.vim
