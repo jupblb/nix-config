@@ -23,7 +23,7 @@ set tabstop=2
 autocmd FileType go,java,sql set colorcolumn=100
 autocmd FileType make set noexpandtab
 
-if filereadable(expand("~/.config/nvim/google.vim"))
-  source ~/.config/nvim/google.vim
+if filereadable(expand("~/.config/nvim/init.vim"))
+  source ~/.config/nvim/init.vim
 endif
 
