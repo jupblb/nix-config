@@ -30,7 +30,7 @@
         };
       } {
         name = "bobthefish";
-        src = pkgs.fetchFromGitHub {
+        src  = pkgs.fetchFromGitHub {
           owner  = "oh-my-fish";
           repo   = "theme-bobthefish";
           rev    = "a2ad38aa051aaed25ae3bd6129986e7f27d42d7b";
@@ -67,9 +67,10 @@
         sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
       });
       settings    = {
-        font_family     = "PragmataPro Mono Liga";
-        font_size       = if pkgs.stdenv.isLinux then 10 else 14;
-        startup_session = builtins.toString(pkgs.writeTextFile {
+        font_family         = "PragmataPro Mono Liga";
+        font_size           = if pkgs.stdenv.isLinux then 10 else 14;
+        macos_option_as_alt = "yes";
+        startup_session     = builtins.toString(pkgs.writeTextFile {
           name = "kitty-launch";
           text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
         });
