@@ -152,7 +152,16 @@
             nnoremap <silent> <Leader>l <cmd>lua vim.lsp.buf.formatting()<CR>
           '';
         } {
-          plugin = nvim-treesitter;
+          plugin = pkgs.vimUtils.buildVimPlugin {
+            pname   = "nvim-treesitter";
+            version = "2020-10-18";
+            src     = pkgs.fetchFromGitHub {
+              owner  = "nvim-treesitter";
+              repo   = "nvim-treesitter";
+              rev    = "master";
+              sha256 = "1akq19vbyjanwk8n6gm8hjavpvfx107ljlh2iznyrkcsf9821nm9";
+            };
+          };
           config = ''
             packadd nvim-treesitter
             lua <<EOF
