@@ -152,16 +152,7 @@
             nnoremap <silent> <Leader>l <cmd>lua vim.lsp.buf.formatting()<CR>
           '';
         } {
-          plugin = pkgs.vimUtils.buildVimPlugin {
-            pname   = "nvim-treesitter";
-            version = "2020-10-18";
-            src     = pkgs.fetchFromGitHub {
-              owner  = "nvim-treesitter";
-              repo   = "nvim-treesitter";
-              rev    = "master";
-              sha256 = "1akq19vbyjanwk8n6gm8hjavpvfx107ljlh2iznyrkcsf9821nm9";
-            };
-          };
+          plugin = nvim-treesitter;
           config = ''
             packadd nvim-treesitter
             lua <<EOF
@@ -201,8 +192,7 @@
     };
   };
 
-  xdg.configFile."fish/conf.d/plugin-bobthefish.fish".text = lib.mkAfter ''
-    for f in $plugin_dir/*.fish; source $f; end
-  '';
+  xdg.configFile."fish/conf.d/plugin-bobthefish.fish".text =
+    lib.mkAfter "for f in $plugin_dir/*.fish; source $f; end";
 }
 
