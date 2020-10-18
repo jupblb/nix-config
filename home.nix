@@ -79,99 +79,106 @@
 
     neovim = {
       extraConfig   = builtins.readFile ./misc/init.vim;
-      plugins       =
-        let glow-nvim = pkgs.vimUtils.buildVimPlugin {
-          pname   = "glow-nvim";
-          version = "2020-10-12";
-          src     = pkgs.fetchFromGitHub {
-            owner  = "npxbr";
-            repo   = "glow.nvim";
-            rev    = "master";
-            sha256 = "0qkvxly52qdxw77mlrwzrjp8i6smzmsd6k4pd7qqq2w8s8y8rda3";
+      plugins       = with pkgs.vimPlugins; [ {
+          plugin = lightline-vim;
+          config = ''
+            set noshowmode
+            let g:lightline = { 'colorscheme': 'gruvbox' }
+          '';
+        } {
+          plugin = completion-nvim;
+          config = ''
+            packadd completion-nvim
+            set completeopt=menuone,noinsert,noselect
+            set shortmess+=c
+            imap <silent> <C-Space> <Plug>(completion_trigger)
+            inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+            inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+            autocmd BufEnter * lua require'completion'.on_attach()
+          '';
+        } {
+          plugin = pkgs.vimUtils.buildVimPlugin {
+            pname   = "glow-nvim";
+            version = "2020-10-12";
+            src     = pkgs.fetchFromGitHub {
+              owner  = "npxbr";
+              repo   = "glow.nvim";
+              rev    = "master";
+              sha256 = "0qkvxly52qdxw77mlrwzrjp8i6smzmsd6k4pd7qqq2w8s8y8rda3";
+            };
           };
-        };
-        in with pkgs.vimPlugins; [ {
-            plugin = lightline-vim;
-            config = ''
-              set noshowmode
-              let g:lightline = { 'colorscheme': 'gruvbox' }
-            '';
-          } {
-            plugin = completion-nvim;
-            config = ''
-              packadd completion-nvim
-              set completeopt=menuone,noinsert,noselect
-              set shortmess+=c
-              imap <silent> <C-Space> <Plug>(completion_trigger)
-              inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-              inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-              autocmd BufEnter * lua require'completion'.on_attach()
-            '';
-          } {
-            plugin = glow-nvim;
-            config = "nmap <Leader>m :Glow<CR>";
-          } {
-            plugin = goyo;
-            config = ''
-              let g:goyo_width = 100
-              nmap <silent><Leader>` :Goyo<CR>
-            '';
-          } {
-            plugin = gruvbox-community;
-            config = ''
-              let g:gruvbox_contrast_light = 'hard'
-              let g:gruvbox_italic = 1
-              colorscheme gruvbox
-              autocmd VimEnter * highlight clear Normal
-            '';
-          } {
-            plugin = fzf-vim;
-            config = ''
-              autocmd! FileType fzf set laststatus=0 noshowmode noruler
-                  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-              nnoremap <Leader><Tab> :Buffers<CR>
-              nnoremap <Leader>b     :Buffers<CR>
-              nnoremap <Leader>f     :Files<CR>
-              nnoremap <Leader>h     :History<CR>
-              nnoremap <Leader>g     :Rg<CR>
-            '';
-          } {
-            plugin = nvim-lspconfig;
-            config = ''
-              packadd nvim-lspconfig
-              lua require'nvim_lsp'.bashls.setup{}
-              lua require'nvim_lsp'.rnix.setup{}
-              nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-              nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-              nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-              nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-              nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-              nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-              nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-              nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-              nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-              nnoremap <silent> <Leader>r <cmd>lua vim.lsp.buf.rename()<CR>
-              nnoremap <silent> <Leader>l <cmd>lua vim.lsp.buf.formatting()<CR>
-            '';
-          } {
-            plugin = nvim-treesitter;
-            config = ''
-              packadd nvim-treesitter
-              lua <<EOF
-              require'nvim-treesitter.configs'.setup {
-                highlight = { enable = true },
-              }
-              EOF
-            '';
-          } {
-            plugin = ranger-vim;
-            config = "nnoremap <Leader><CR> :RangerEdit<CR>";
-          } {
-            plugin = vim-markdown;
-            config = "let g:vim_markdown_folding_disabled = 1";
-          }
-          editorconfig-vim vim-better-whitespace vim-jsonnet vim-nix vim-signify
-        ];
+          config = "nmap <Leader>m :Glow<CR>";
+        } {
+          plugin = goyo;
+          config = ''
+            let g:goyo_width = 100
+            nmap <silent><Leader>` :Goyo<CR>
+          '';
+        } {
+          plugin = gruvbox-community;
+          config = ''
+            let g:gruvbox_contrast_light = 'hard'
+            let g:gruvbox_italic = 1
+            colorscheme gruvbox
+            autocmd VimEnter * highlight clear Normal
+          '';
+        } {
+          plugin = fzf-vim;
+          config = ''
+            autocmd! FileType fzf set laststatus=0 noshowmode noruler
+                \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+            nnoremap <Leader><Tab> :Buffers<CR>
+            nnoremap <Leader>b     :Buffers<CR>
+            nnoremap <Leader>f     :Files<CR>
+            nnoremap <Leader>h     :History<CR>
+            nnoremap <Leader>g     :Rg<CR>
+          '';
+        } {
+          plugin = nvim-lspconfig;
+          config = ''
+            packadd nvim-lspconfig
+            lua require'nvim_lsp'.bashls.setup{}
+            lua require'nvim_lsp'.rnix.setup{}
+            nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+            nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+            nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+            nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+            nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+            nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+            nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+            nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+            nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+            nnoremap <silent> <Leader>r <cmd>lua vim.lsp.buf.rename()<CR>
+            nnoremap <silent> <Leader>l <cmd>lua vim.lsp.buf.formatting()<CR>
+          '';
+        } {
+          plugin = pkgs.vimUtils.buildVimPlugin {
+            pname   = "nvim-treesitter";
+            version = "2020-10-18";
+            src     = pkgs.fetchFromGitHub {
+              owner  = "nvim-treesitter";
+              repo   = "nvim-treesitter";
+              rev    = "master";
+              sha256 = "1akq19vbyjanwk8n6gm8hjavpvfx107ljlh2iznyrkcsf9821nm9";
+            };
+          };
+          config = ''
+            packadd nvim-treesitter
+            lua <<EOF
+            require'nvim-treesitter.configs'.setup {
+              highlight = { enable = true },
+            }
+            EOF
+          '';
+        } {
+          plugin = ranger-vim;
+          config = "nnoremap <Leader><CR> :RangerEdit<CR>";
+        } {
+          plugin = vim-markdown;
+          config = "let g:vim_markdown_folding_disabled = 1";
+        }
+        editorconfig-vim vim-better-whitespace vim-jsonnet vim-nix vim-signify
+      ];
       enable        = true;
       extraPackages = with pkgs; [
         glow nodePackages.bash-language-server ripgrep rnix-lsp
