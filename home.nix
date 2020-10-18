@@ -154,6 +154,16 @@
               nnoremap <silent> <Leader>l <cmd>lua vim.lsp.buf.formatting()<CR>
             '';
           } {
+            plugin = nvim-treesitter;
+            config = ''
+              packadd nvim-treesitter
+              lua <<EOF
+              require'nvim-treesitter.configs'.setup {
+                highlight = { enable = true },
+              }
+              EOF
+            '';
+          } {
             plugin = ranger-vim;
             config = "nnoremap <Leader><CR> :RangerEdit<CR>";
           } {
