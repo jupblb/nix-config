@@ -169,6 +169,9 @@
               highlight = { enable = true },
             }
             EOF
+            set foldexpr=nvim_treesitter#foldexpr()
+            set foldlevel=20
+            set foldmethod=expr
           '';
         } {
           plugin = ranger-vim;
