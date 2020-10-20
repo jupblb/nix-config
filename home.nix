@@ -49,6 +49,19 @@
     fzf.defaultOptions = [ "--color=light" ];
 
     git = {
+      delta       = {
+        enable  = true;
+        options = {
+          line-numbers            = true;
+          line-numbers-zero-style = "#3c3836";
+          minus-emph-style        = "syntax bold #fa9f86";
+          minus-style             = "syntax bold #f9d8bc";
+          plus-emph-style         = "syntax bold #d9d87f";
+          plus-style              = "syntax bold #eeebba";
+          side-by-side            = true;
+          syntax-theme            = "OneHalfLight";
+        };
+      };
       enable      = true;
       extraConfig = {
         color.ui          = true;
