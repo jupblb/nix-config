@@ -59,7 +59,7 @@
           plus-emph-style         = "syntax bold #d9d87f";
           plus-style              = "syntax bold #eeebba";
           side-by-side            = true;
-          syntax-theme            = "OneHalfLight";
+          syntax-theme            = "Solarized (light)";
         };
       };
       enable      = true;
