@@ -141,7 +141,6 @@
             autocmd! FileType fzf set laststatus=0 noshowmode noruler
                 \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
             nnoremap <Leader><Tab> :Buffers<CR>
-            nnoremap <Leader>b     :Buffers<CR>
             nnoremap <Leader>f     :Files<CR>
             nnoremap <Leader>h     :History<CR>
             nnoremap <Leader>g     :Rg<CR>
@@ -165,35 +164,10 @@
             nnoremap <silent> <Leader>l <cmd>lua vim.lsp.buf.formatting()<CR>
           '';
         } {
-          plugin = pkgs.vimUtils.buildVimPlugin {
-            pname   = "nvim-treesitter";
-            version = "2020-10-18";
-            src     = pkgs.fetchFromGitHub {
-              owner  = "nvim-treesitter";
-              repo   = "nvim-treesitter";
-              rev    = "master";
-              sha256 = "1akq19vbyjanwk8n6gm8hjavpvfx107ljlh2iznyrkcsf9821nm9";
-            };
-          };
-          config = ''
-            packadd nvim-treesitter
-            lua <<EOF
-            require'nvim-treesitter.configs'.setup {
-              highlight = { enable = true },
-            }
-            EOF
-            set foldexpr=nvim_treesitter#foldexpr()
-            set foldlevel=20
-            set foldmethod=expr
-          '';
-        } {
           plugin = ranger-vim;
           config = "nnoremap <Leader><CR> :RangerEdit<CR>";
-        } {
-          plugin = vim-markdown;
-          config = "let g:vim_markdown_folding_disabled = 1";
         }
-        editorconfig-vim vim-better-whitespace vim-jsonnet vim-nix vim-signify
+        editorconfig-vim vim-better-whitespace vim-polyglot vim-signify
       ];
       enable        = true;
       extraPackages = with pkgs; [
