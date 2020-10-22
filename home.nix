@@ -163,6 +163,12 @@
         } {
           plugin = ranger-vim;
           config = "nnoremap <Leader><CR> :RangerEdit<CR>";
+        } {
+          plugin = vimwiki;
+          config = ''
+            let g:vimwiki_list = [{'path': '~/Documents/vimwiki/',
+                \ 'syntax': 'markdown', 'ext': '.md'}]
+          '';
         }
         editorconfig-vim vim-better-whitespace vim-polyglot vim-signify
       ];
