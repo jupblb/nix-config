@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.file             = {
+    ".hgrc".text = "[pager]\npager=${pkgs.gitAndTools.delta}/bin/delta";
+  };
   home.packages         = with pkgs; [ htop ranger screen unzip ];
   home.sessionVariables = {
     EDITOR   = "nvim";
