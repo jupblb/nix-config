@@ -1,14 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file             = {
-    ".hgrc".text = "[pager]\npager=${pkgs.gitAndTools.delta}/bin/delta";
-  };
   home.packages         = with pkgs; [ htop ranger screen unzip ];
-  home.sessionVariables = {
-    EDITOR   = "nvim";
-    MANPAGER = "vim -c 'set ft=man' -";
-  };
+  home.sessionVariables = { EDITOR = "nvim"; };
   home.username         = "jupblb";
 
   nixpkgs.config.packageOverrides = pkgs: {
