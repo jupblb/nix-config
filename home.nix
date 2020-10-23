@@ -6,7 +6,6 @@
   home.username         = "jupblb";
 
   nixpkgs.config.packageOverrides = pkgs: {
-    glow   = pkgs.writeScriptBin "glow" "${pkgs.glow}/bin/glow -s light $@";
     ranger = pkgs.callPackage ./misc/ranger { ranger = pkgs.ranger; };
   };
 
@@ -119,18 +118,6 @@
             autocmd BufEnter * lua require'completion'.on_attach()
           '';
         } {
-          plugin = pkgs.vimUtils.buildVimPlugin {
-            pname   = "glow-nvim";
-            version = "2020-10-12";
-            src     = pkgs.fetchFromGitHub {
-              owner  = "npxbr";
-              repo   = "glow.nvim";
-              rev    = "master";
-              sha256 = "0qkvxly52qdxw77mlrwzrjp8i6smzmsd6k4pd7qqq2w8s8y8rda3";
-            };
-          };
-          config = "nmap <Leader>m :Glow<CR>";
-        } {
           plugin = goyo;
           config = ''
             let g:goyo_width = 100
@@ -169,8 +156,8 @@
             nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
             nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
             nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-            nnoremap <silent> <Leader>r <cmd>lua vim.lsp.buf.rename()<CR>
-            nnoremap <silent> <Leader>l <cmd>lua vim.lsp.buf.formatting()<CR>
+            nnoremap <Leader>r      <cmd>lua vim.lsp.buf.rename()<CR>
+            nnoremap <Leader>l      <cmd>lua vim.lsp.buf.formatting()<CR>
           '';
         } {
           plugin = ranger-vim;
@@ -186,7 +173,7 @@
       ];
       enable        = true;
       extraPackages = with pkgs; [
-        glow nodePackages.bash-language-server ripgrep rnix-lsp
+        nodePackages.bash-language-server ripgrep rnix-lsp
       ];
       package       = pkgs.neovim-unwrapped.overrideAttrs(old: {
         version = "nightly";
