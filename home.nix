@@ -87,7 +87,11 @@
     };
 
     neovim = {
-      extraConfig   = builtins.readFile ./misc/init.vim;
+      extraConfig   = ''
+        packadd completion-nvim
+        packadd nvim-lspconfig
+        ${builtins.readFile ./misc/nvim/init.vim}
+      '';
       plugins       = with pkgs.vimPlugins; [ {
           plugin = lightline-vim;
           config = ''
@@ -96,27 +100,10 @@
           '';
         } {
           plugin = calendar-vim;
-          config = ''
-            nnoremap <Leader>c :Calendar<CR>
-            autocmd FileType calendar nmap <silent> <buffer> <CR> :<C-u>call
-              \ vimwiki#diary#calendar_action(b:calendar.day().get_day(),
-              \ b:calendar.day().get_month(), b:calendar.day().get_year(),
-              \ b:calendar.day().week(), "V")<CR>
-            if filereadable(expand("~/.config/nvim/google.vim"))
-              source ~/.config/nvim/google.vim
-            endif
-          '';
+          config = builtins.readFile ./misc/nvim/calendar-vim.vim;
         } {
           plugin = completion-nvim;
-          config = ''
-            packadd completion-nvim
-            set completeopt=menuone,noinsert,noselect
-            set shortmess+=c
-            imap <silent> <C-Space> <Plug>(completion_trigger)
-            inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-            inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-            autocmd BufEnter * lua require'completion'.on_attach()
-          '';
+          config = builtins.readFile ./misc/nvim/completion-nvim.vim;
         } {
           plugin = goyo;
           config = ''
@@ -125,40 +112,13 @@
           '';
         } {
           plugin = gruvbox-community;
-          config = ''
-            let g:gruvbox_contrast_light = 'hard'
-            let g:gruvbox_italic = 1
-            colorscheme gruvbox
-            autocmd VimEnter * highlight clear Normal
-          '';
+          config = builtins.readFile ./misc/nvim/gruvbox-community.vim;
         } {
           plugin = fzf-vim;
-          config = ''
-            autocmd! FileType fzf set laststatus=0 noshowmode noruler
-                \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-            nnoremap <Leader><Tab> :Buffers<CR>
-            nnoremap <Leader>f     :Files<CR>
-            nnoremap <Leader>h     :History<CR>
-            nnoremap <Leader>g     :Rg<CR>
-          '';
+          config = builtins.readFile ./misc/nvim/fzf-vim.vim;
         } {
           plugin = nvim-lspconfig;
-          config = ''
-            packadd nvim-lspconfig
-            lua require'nvim_lsp'.bashls.setup{}
-            lua require'nvim_lsp'.rnix.setup{}
-            nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-            nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-            nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-            nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-            nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-            nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-            nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-            nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-            nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-            nnoremap <Leader>r      <cmd>lua vim.lsp.buf.rename()<CR>
-            nnoremap <Leader>l      <cmd>lua vim.lsp.buf.formatting()<CR>
-          '';
+          config = builtins.readFile ./misc/nvim/nvim-lspconfig.vim;
         } {
           plugin = ranger-vim;
           config = "nnoremap <Leader><CR> :RangerEdit<CR>";
