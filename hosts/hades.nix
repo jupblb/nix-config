@@ -31,7 +31,7 @@
   home-manager.users.jupblb = {
     home.stateVersion = "20.03";
 
-    imports = [ ../home.nix ];
+    imports = [ ../home-common.nix ];
 
     nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
       bat        = bat;
@@ -43,8 +43,8 @@
         enable            = true;
         package           = pkgs.firefox-wayland;
         profiles."jupblb" = {
-          extraConfig = builtins.readFile ./misc/firefox/user.js;
-          userContent = builtins.readFile ./misc/firefox/user.css;
+          extraConfig = builtins.readFile ../misc/firefox/user.js;
+          userContent = builtins.readFile ../misc/firefox/user.css;
         };
       };
 
@@ -53,7 +53,7 @@
     };
   };
 
-  imports = [ <home-manager/nixos> ./common.nix ];
+  imports = [ <home-manager/nixos> ../nixos-common.nix ];
 
   networking.hostName              = "hades";
   networking.networkmanager.enable = true;
@@ -68,10 +68,10 @@
     sway = {
       enable               = true;
       extraOptions         = [
-        "-c" "${pkgs.callPackage ./misc/sway/sway-config.nix {}}"
+        "-c" "${pkgs.callPackage ../misc/sway/sway-config.nix {}}"
       ];
       extraPackages        = with pkgs; [ imv mpv pavucontrol wl-clipboard ];
-      extraSessionCommands = builtins.readFile ./misc/sway/sway.sh;
+      extraSessionCommands = builtins.readFile ../misc/sway/sway.sh;
       wrapperFeatures.gtk  = true;
     };
   };
@@ -123,4 +123,7 @@
   };
 
   time.hardwareClockInLocalTime = true;
+
+  users.users.jupblb.shell = pkgs.fish;
 }
+

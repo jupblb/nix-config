@@ -22,7 +22,7 @@
   };
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
-  environment.systemPackages   = with pkgs; [ file git htop patchelf unzip ];
+  environment.systemPackages   = with pkgs; [ file git htop unzip ];
 
   hardware.enableRedistributableFirmware = true;
 
@@ -76,6 +76,5 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEtq1CzRgt2HFdkUL7kCx+4r63J9m36CVBtTmIIC4BvN ssh@kielbowi.cz"
     ];
-    shell                       = pkgs.fish;
   };
 }

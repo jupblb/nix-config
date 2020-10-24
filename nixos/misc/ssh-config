@@ -1,9 +1,0 @@
-Host hades
-    HostName jupblb.ddns.net
-    Port 1993
-    User jupblb
-
-Host iris
-    HostName jupblb.ddns.net
-    Port 1994
-    User jupblb

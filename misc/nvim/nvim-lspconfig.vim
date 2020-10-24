@@ -1,3 +1,5 @@
+packadd nvim-lspconfig
+
 lua require'nvim_lsp'.bashls.setup{}
 lua require'nvim_lsp'.rnix.setup{}
 
@@ -12,4 +14,11 @@ nnoremap <silent> gW        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> gd        <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <Leader>r <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> <Leader>l <cmd>lua vim.lsp.buf.formatting()<CR>
+
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 

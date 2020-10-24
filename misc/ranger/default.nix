@@ -1,4 +1,4 @@
-{ atool, glow, jq, lib, makeWrapper, poppler_utils, ranger, symlinkJoin }:
+{ atool, bat, glow, jq, lib, makeWrapper, poppler_utils, ranger, symlinkJoin }:
 
 let
   ranger' = ranger.overrideAttrs(old: rec {
@@ -19,6 +19,7 @@ in symlinkJoin {
   paths       = [ ranger' ];
   postBuild   = ''
     wrapProgram "$out/bin/ranger" \
-      --prefix PATH : ${lib.makeBinPath [ atool glow jq poppler_utils ]}
+      --prefix PATH : ${lib.makeBinPath [ atool bat glow jq poppler_utils ]} \
+      --set-default BAT_THEME "gruvbox-light"
   '';
 }

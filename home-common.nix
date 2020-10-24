@@ -6,25 +6,18 @@
   home.username         = "jupblb";
 
   nixpkgs.config.packageOverrides = pkgs: {
-    ranger = pkgs.callPackage ./misc/ranger { ranger = pkgs.ranger; };
+    gitAndTools = pkgs.gitAndTools // {
+      delta = pkgs.callPackage ./misc/delta.nix {
+        inherit (pkgs.darwin.apple_sdk.frameworks) Security;
+      };
+    };
+    ranger      = pkgs.callPackage ./misc/ranger { ranger = pkgs.ranger; };
   };
 
   programs = {
-    bat.enable = true;
-    bat.config = { theme = "gruvbox-light"; };
-
     fish = {
-      enable               = true;
-      interactiveShellInit = builtins.readFile ./misc/config.fish;
-      plugins              = [ {
-        name = "bass";
-        src  = pkgs.fetchFromGitHub {
-          owner  = "edc";
-          repo   = "bass";
-          rev    = "master";
-          sha256 = "0ppmajynpb9l58xbrcnbp41b66g7p0c9l2nlsvyjwk6d16g4p4gy";
-        };
-      } {
+      enable       = true;
+      plugins      = [ {
         name = "bobthefish";
         src  = pkgs.fetchFromGitHub {
           owner  = "oh-my-fish";
@@ -32,17 +25,29 @@
           rev    = "a2ad38aa051aaed25ae3bd6129986e7f27d42d7b";
           sha256 = "1fssb5bqd2d7856gsylf93d28n3rw4rlqkhbg120j5ng27c7v7lq";
         };
+      } {
+        name = "nix-env";
+        src  = pkgs.fetchFromGitHub {
+          owner  = "lilyball";
+          repo   = "nix-env.fish";
+          rev    = "master";
+          sha256 = "0hvj3zqrx5vhbhcszrgd9cczkn97236zfbx7iwjx3grnk556r53c";
+        };
       } ];
-      shellAliases         = {
-        cat       = "bat -p --paging=never";
-        less      = "bat -p --paging=always";
+      promptInit   = builtins.readFile ./misc/prompt.fish;
+      shellAliases = {
         nix-shell = "nix-shell --command fish";
-        ssh       = "kitty +kitten ssh";
-      };
+        ssh       = "env TERM=xterm-256color ssh";
+      } // (let bat = "${pkgs.bat}/bin/bat --theme=gruvbox-light"; in {
+        cat  = "${bat} -p --paging=never";
+        less = "${bat} -p --paging=always";
+      });
     };
 
-    fzf.enable         = true;
-    fzf.defaultOptions = [ "--color=light" ];
+    fzf = {
+      enable         = true;
+      defaultOptions = [ "--color=light" ];
+    };
 
     git = {
       delta       = {
@@ -50,12 +55,12 @@
         options = {
           line-numbers            = true;
           line-numbers-zero-style = "#3c3836";
-          minus-emph-style        = "syntax bold #fa9f86";
-          minus-style             = "syntax bold #f9d8bc";
-          plus-emph-style         = "syntax bold #d9d87f";
-          plus-style              = "syntax bold #eeebba";
+          minus-emph-style        = "syntax #fa9f86";
+          minus-style             = "syntax #f9d8bc";
+          plus-emph-style         = "syntax #d9d87f";
+          plus-style              = "syntax #eeebba";
           side-by-side            = true;
-          syntax-theme            = "Solarized (light)";
+          syntax-theme            = "gruvbox-light";
         };
       };
       enable      = true;
@@ -63,22 +68,27 @@
         color.ui          = true;
         core.mergeoptions = "--no-edit";
         fetch.prune       = true;
+        pull.rebase       = true;
         push.default      = "upstream";
       };
+      signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
       userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
 
+    gpg.enable = true;
+
     kitty = {
       enable      = true;
-      extraConfig = builtins.readFile(pkgs.fetchurl {
-        url    = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/gruvbox_light.conf";
-        sha256 = "1yvg98vll5yp7nadq2k2q6ri9c9jgk5a5syszbxs7bqpgb27nzha";
-      });
+      extraConfig = builtins.readFile(pkgs.fetchFromGitHub {
+        owner  = "wdomitrz";
+        repo   = "kitty-gruvbox-theme";
+        rev    = "master";
+        sha256 = "0s1jbmw3xzzg00lxkxk4ryhhyxck5an7nmrq5cy9vdp1f1a0lgrr";
+      } + "/gruvbox_light.conf");
       settings    = {
         font_family         = "PragmataPro Mono Liga";
-        font_size           = if pkgs.stdenv.isLinux then 10 else 14;
-        macos_option_as_alt = "yes";
+        font_size           = 10;
         startup_session     = builtins.toString(pkgs.writeTextFile {
           name = "kitty-launch";
           text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
@@ -87,11 +97,7 @@
     };
 
     neovim = {
-      extraConfig   = ''
-        packadd completion-nvim
-        packadd nvim-lspconfig
-        ${builtins.readFile ./misc/nvim/init.vim}
-      '';
+      extraConfig   = builtins.readFile ./misc/nvim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
           plugin = lightline-vim;
           config = ''
@@ -102,14 +108,8 @@
           plugin = calendar-vim;
           config = builtins.readFile ./misc/nvim/calendar-vim.vim;
         } {
-          plugin = completion-nvim;
-          config = builtins.readFile ./misc/nvim/completion-nvim.vim;
-        } {
           plugin = goyo;
-          config = ''
-            let g:goyo_width = 100
-            nmap <silent><Leader>` :Goyo<CR>
-          '';
+          config = "let g:goyo_width = 100 | nmap <silent><Leader>` :Goyo<CR>";
         } {
           plugin = gruvbox-community;
           config = builtins.readFile ./misc/nvim/gruvbox-community.vim;
@@ -129,7 +129,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        editorconfig-vim vim-better-whitespace vim-polyglot vim-signify
+        editorconfig-vim vim-polyglot vim-signify
       ];
       enable        = true;
       extraPackages = with pkgs; [
@@ -137,19 +137,23 @@
       ];
       package       = pkgs.neovim-unwrapped.overrideAttrs(old: {
         version = "nightly";
-        src     = pkgs.fetchFromGitHub {
-          owner  = "neovim";
-          repo   = "neovim";
-          rev    = "nightly";
-          sha256 = "0z56xv5bmjq8ivkrpvfgbhnq8vxvbr7231ldg7bipf273widw55m";
+        src     = builtins.fetchGit {
+          url = https://github.com/neovim/neovim.git;
+          ref = "nightly";
         };
       });
       vimAlias      = true;
       vimdiffAlias  = true;
-      withNodeJs    = false;
       withPython    = false;
       withPython3   = false;
       withRuby      = false;
+    };
+
+    ssh = {
+      compression    = true;
+      controlMaster  = "auto";
+      controlPersist = "yes";
+      enable         = true;
     };
   };
 

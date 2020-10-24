@@ -35,10 +35,11 @@ nnoremap tn :tabnew<CR>
 nnoremap tm :tabm<Space>
 nnoremap td :tabclose<CR>
 
+autocmd BufWinEnter <buffer> match Error /\s\+$/
+autocmd InsertEnter <buffer> match Error /\s\+\%#\@<!$/
+autocmd InsertLeave <buffer> match Error /\s\+$/
+autocmd BufWinLeave <buffer> call clearmatches()
+
 autocmd FileType go,java,sql set colorcolumn=100
 autocmd FileType make set noexpandtab
-
-if filereadable(expand("~/.config/nvim/init.vim"))
-  source ~/.config/nvim/init.vim
-endif
 

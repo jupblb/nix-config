@@ -46,7 +46,7 @@ in {
     "/data".fsType = "ext4";
   };
 
-  imports = [ ./common.nix ];
+  imports = [ ../nixos-common.nix ];
 
   networking = {
     defaultGateway                 = "192.168.1.1";
@@ -111,3 +111,4 @@ in {
 
   virtualisation.docker.enable = true;
 }
+
