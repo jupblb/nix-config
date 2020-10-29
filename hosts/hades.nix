@@ -29,6 +29,7 @@
   hardware.pulseaudio.enable         = true;
 
   home-manager.users.jupblb = {
+    home.packages     = with pkgs; [ pinentry-curses ];
     home.stateVersion = "20.03";
 
     imports = [ ../home-common.nix ];
