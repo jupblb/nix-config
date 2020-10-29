@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ htop ranger screen unzip ];
+  home.packages         = with pkgs; [
+    gitAndTools.git-crypt htop ranger screen unzip
+  ];
   home.sessionVariables = { EDITOR = "nvim"; };
   home.username         = "jupblb";
 
