@@ -5,7 +5,7 @@ autocmd FileType calendar nmap <silent> <buffer> <CR> :<C-u>call
 
 nnoremap <Leader>c :Calendar<CR>
 
-if filereadable(expand("~/.config/nvim/google.vim"))
-  source ~/.config/nvim/google.vim
+if match(readfile(google_calendar), "calendar") != -1
+  execute 'source' google_calendar
 endif
 

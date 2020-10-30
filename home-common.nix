@@ -108,7 +108,10 @@
           '';
         } {
           plugin = calendar-vim;
-          config = builtins.readFile ./misc/nvim/calendar-vim.vim;
+          config = ''
+            let google_calendar = "${./misc/nvim/google-calendar.vim}"
+            ${builtins.readFile ./misc/nvim/calendar-vim.vim}
+          '';
         } {
           plugin = goyo;
           config = "let g:goyo_width = 100 | nmap <silent><Leader>` :Goyo<CR>";
