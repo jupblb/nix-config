@@ -152,10 +152,22 @@
     };
 
     ssh = {
-      compression    = true;
-      controlMaster  = "auto";
-      controlPersist = "yes";
-      enable         = true;
+      compression         = true;
+      controlMaster       = "auto";
+      controlPersist      = "yes";
+      enable              = true;
+      forwardAgent        = true;
+      matchBlocks         =
+        let key = {
+          identitiesOnly = true;
+          identityFile   = [ (builtins.toString ./misc/ssh/id_ed25519) ];
+        };
+        in {
+          "github.com" = key;
+          hades        = key // { hostname = "jupblb.ddns.net"; port = 1993; };
+          iris         = key // { hostname = "jupblb.ddns.net"; port = 1994; };
+        };
+      serverAliveInterval = 30;
     };
   };
 

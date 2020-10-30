@@ -37,7 +37,6 @@
     bash.enableCompletion = true;
     bash.enableLsColors   = true;
     bash.promptInit       = builtins.readFile ./misc/bashrc;
-    ssh.extraConfig       = builtins.readFile ./misc/ssh-config;
     vim.defaultEditor     = true;
   };
 
@@ -74,7 +73,7 @@
     initialPassword             = "changeme";
     isNormalUser                = true;
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEtq1CzRgt2HFdkUL7kCx+4r63J9m36CVBtTmIIC4BvN ssh@kielbowi.cz"
+      (builtins.readFile ./misc/ssh/id_ed25519.pub)
     ];
   };
 }

@@ -1,3 +1,4 @@
 hosts/artemis.nix filter=git-crypt diff=git-crypt
 hosts/demeter.nix filter=git-crypt diff=git-crypt
+misc/ssh/id_ed25519 filter=git-crypt diff=git-crypt
 
