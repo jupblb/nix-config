@@ -19,7 +19,6 @@ in symlinkJoin {
   paths       = [ ranger' ];
   postBuild   = ''
     wrapProgram "$out/bin/ranger" \
-      --prefix PATH : ${lib.makeBinPath [ atool bat glow jq poppler_utils ]} \
-      --set-default BAT_THEME "gruvbox-light"
+      --prefix PATH : ${lib.makeBinPath [ atool bat glow jq poppler_utils ]}
   '';
 }

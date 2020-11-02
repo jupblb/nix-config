@@ -17,6 +17,11 @@
   };
 
   programs = {
+    bat = {
+      config = { theme = "gruvbox-light"; };
+      enable = true;
+    };
+
     fish = {
       enable       = true;
       plugins      = [ {
@@ -38,13 +43,12 @@
       } ];
       promptInit   = builtins.readFile ./misc/prompt.fish;
       shellAliases = {
+        cat       = "bat -p --paging=never";
         nix-shell = "nix-shell --command fish";
+        less      = "bat -p --paging=always";
         ssh       = "env TERM=xterm-256color ssh";
         vim       = "nvim";
-      } // (let bat = "${pkgs.bat}/bin/bat --theme=gruvbox-light"; in {
-        cat  = "${bat} -p --paging=never";
-        less = "${bat} -p --paging=always";
-      });
+      };
     };
 
     fzf = {
