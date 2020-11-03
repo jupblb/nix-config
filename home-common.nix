@@ -117,6 +117,18 @@
             let google_calendar = "${./misc/nvim/google-calendar.vim}"
             ${builtins.readFile ./misc/nvim/calendar-vim.vim}
           '';
+         } {
+          plugin = pkgs.vimUtils.buildVimPlugin {
+            pname   = "glow-nvim";
+            version = "2020-10-12";
+            src     = pkgs.fetchFromGitHub {
+              owner  = "npxbr";
+              repo   = "glow.nvim";
+              rev    = "master";
+              sha256 = "0qkvxly52qdxw77mlrwzrjp8i6smzmsd6k4pd7qqq2w8s8y8rda3";
+            };
+          };
+          config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {
           plugin = goyo;
           config = "let g:goyo_width = 100 | nmap <silent><Leader>` :Goyo<CR>";
@@ -143,7 +155,7 @@
       ];
       enable        = true;
       extraPackages = with pkgs; [
-        nodePackages.bash-language-server ripgrep rnix-lsp
+        glow nodePackages.bash-language-server ripgrep rnix-lsp
       ];
       package       = pkgs.neovim-unwrapped.overrideAttrs(old: {
         version = "nightly";
