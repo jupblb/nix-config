@@ -44,8 +44,8 @@
       promptInit   = builtins.readFile ./misc/prompt.fish;
       shellAliases = {
         cat       = "bat -p --paging=never";
-        nix-shell = "nix-shell --command fish";
         less      = "bat -p --paging=always";
+        nix-shell = "nix-shell --command fish";
         ssh       = "env TERM=xterm-256color ssh";
         vim       = "nvim";
       };
