@@ -1,6 +1,6 @@
 {
-  bemenu, grim, kitty, redshift-wlr, slurp, swaylock, wob, xdg-user-dirs,
-  writeTextFile
+  bemenu, grim, kitty, redshift-wlr, slurp, swaylock, vanilla-dmz, wob,
+  writeTextFile, xdg-user-dirs
 }:
 
 let
@@ -181,6 +181,8 @@ bar {
 
     tray_output none
 }
+
+seat seat0 xcursor_theme Vanilla-DMZ 16
   '';
 }
 

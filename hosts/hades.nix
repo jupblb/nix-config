@@ -11,7 +11,7 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ dropbox-cli ];
+  environment.systemPackages = with pkgs; [ dropbox-cli vanilla-dmz ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
