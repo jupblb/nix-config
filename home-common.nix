@@ -26,22 +26,12 @@
       enable       = true;
       plugins      = [ {
         name = "bobthefish";
-        src  = pkgs.fetchFromGitHub {
-          owner  = "oh-my-fish";
-          repo   = "theme-bobthefish";
-          rev    = "a2ad38aa051aaed25ae3bd6129986e7f27d42d7b";
-          sha256 = "1fssb5bqd2d7856gsylf93d28n3rw4rlqkhbg120j5ng27c7v7lq";
-        };
+        src  = pkgs.callPackage ./misc/fish/theme-bobthefish.nix {};
       } {
         name = "nix-env";
-        src  = pkgs.fetchFromGitHub {
-          owner  = "lilyball";
-          repo   = "nix-env.fish";
-          rev    = "master";
-          sha256 = "0hvj3zqrx5vhbhcszrgd9cczkn97236zfbx7iwjx3grnk556r53c";
-        };
+        src  = pkgs.callPackage ./misc/fish/nix-env.nix {};
       } ];
-      promptInit   = builtins.readFile ./misc/prompt.fish;
+      promptInit   = builtins.readFile ./misc/fish/prompt.fish;
       shellAliases = {
         cat       = "bat -p --paging=never";
         less      = "bat -p --paging=always";
@@ -87,24 +77,20 @@
 
     kitty = {
       enable      = true;
-      extraConfig = builtins.readFile(pkgs.fetchFromGitHub {
-        owner  = "wdomitrz";
-        repo   = "kitty-gruvbox-theme";
-        rev    = "master";
-        sha256 = "0s1jbmw3xzzg00lxkxk4ryhhyxck5an7nmrq5cy9vdp1f1a0lgrr";
-      } + "/gruvbox_light.conf");
+      extraConfig =
+        let pkg = pkgs.callPackage ./misc/kitty/kitty-gruvbox-theme.nix {};
+        in builtins.readFile("${pkg}/gruvbox_light.conf");
       settings    = {
         font_family         = "PragmataPro Mono Liga";
         font_size           = 10;
-        startup_session     = builtins.toString(pkgs.writeTextFile {
-          name = "kitty-launch";
-          text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
-        });
+        startup_session     = builtins.toString(
+          pkgs.callPackage ./misc/kitty/kitty-launch.nix {}
+        );
       };
     };
 
     neovim = {
-      extraConfig   = builtins.readFile ./misc/nvim/init.vim;
+      extraConfig   = builtins.readFile ./misc/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
           plugin = lightline-vim;
           config = ''
@@ -114,33 +100,24 @@
         } {
           plugin = calendar-vim;
           config = ''
-            let google_calendar = "${./misc/nvim/google-calendar.vim}"
-            ${builtins.readFile ./misc/nvim/calendar-vim.vim}
+            let google_calendar = "${./misc/neovim/google-calendar.vim}"
+            ${builtins.readFile ./misc/neovim/calendar-vim.vim}
           '';
          } {
-          plugin = pkgs.vimUtils.buildVimPlugin {
-            pname   = "glow-nvim";
-            version = "2020-10-12";
-            src     = pkgs.fetchFromGitHub {
-              owner  = "npxbr";
-              repo   = "glow.nvim";
-              rev    = "master";
-              sha256 = "0qkvxly52qdxw77mlrwzrjp8i6smzmsd6k4pd7qqq2w8s8y8rda3";
-            };
-          };
+          plugin = pkgs.callPackage ./misc/neovim/glow-nvim.nix {};
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {
           plugin = goyo;
           config = "let g:goyo_width = 100 | nmap <silent><Leader>` :Goyo<CR>";
         } {
           plugin = gruvbox-community;
-          config = builtins.readFile ./misc/nvim/gruvbox-community.vim;
+          config = builtins.readFile ./misc/neovim/gruvbox-community.vim;
         } {
           plugin = fzf-vim;
-          config = builtins.readFile ./misc/nvim/fzf-vim.vim;
+          config = builtins.readFile ./misc/neovim/fzf-vim.vim;
         } {
           plugin = nvim-lspconfig;
-          config = builtins.readFile ./misc/nvim/nvim-lspconfig.vim;
+          config = builtins.readFile ./misc/neovim/nvim-lspconfig.vim;
         } {
           plugin = ranger-vim;
           config = "nnoremap <Leader><CR> :RangerEdit<CR>";
@@ -157,7 +134,7 @@
       extraPackages = with pkgs; [
         glow nodePackages.bash-language-server ripgrep rnix-lsp
       ];
-      package       = pkgs.callPackage ./misc/neovim.nix {
+      package       = pkgs.callPackage ./misc/neovim {
         inherit (pkgs.darwin.apple_sdk.frameworks) Security;
       };
       vimAlias      = true;
@@ -187,7 +164,13 @@
     };
   };
 
-  xdg.configFile."fish/conf.d/plugin-bobthefish.fish".text =
-    lib.mkAfter "for f in $plugin_dir/*.fish; source $f; end";
+  xdg.configFile = {
+    "fish/conf.d/plugin-bobthefish.fish".text =
+      lib.mkAfter "for f in $plugin_dir/*.fish; source $f; end";
+    "hg/hgrc".text                            = ''
+      [pager]
+      pager = ${pkgs.gitAndTools.delta}/bin/delta
+    '';
+  };
 }
 
