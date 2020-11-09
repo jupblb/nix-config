@@ -103,7 +103,10 @@
             let google_calendar = "${./misc/neovim/google-calendar.vim}"
             ${builtins.readFile ./misc/neovim/calendar-vim.vim}
           '';
-         } {
+        } {
+          plugin = completion-nvim;
+          config = builtins.readFile ./misc/neovim/completion-nvim.vim;
+        } {
           plugin = pkgs.callPackage ./misc/neovim/glow-nvim.nix {};
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {
@@ -119,6 +122,12 @@
           plugin = nvim-lspconfig;
           config = builtins.readFile ./misc/neovim/nvim-lspconfig.vim;
         } {
+          plugin = nvim-treesitter;
+          config = builtins.readFile ./misc/neovim/nvim-treesitter.vim;
+        } {
+          plugin = pkgs.callPackage ./misc/neovim/nvim-treesitter-context.nix {};
+          config = "";
+        } {
           plugin = ranger-vim;
           config = "nnoremap <Leader><CR> :RangerEdit<CR>";
         } {
@@ -128,7 +137,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        editorconfig-vim vim-polyglot vim-signify
+        editorconfig-vim vim-signify vim-nix
       ];
       enable        = true;
       extraPackages = with pkgs; [
@@ -164,6 +173,15 @@
     };
   };
 
+  xdg.dataFile   = let grammars = pkgs.tree-sitter.builtGrammars; in {
+#   "nvim/site/parser/bash.so".source   = "${grammars.bash}/parser";
+#   "nvim/site/parser/c.so".source      = "${grammars.c}/parser";
+#   "nvim/site/parser/cpp.so".source    = "${grammars.cpp}/parser";
+#   "nvim/site/parser/json.so".source   = "${grammars.json}/parser";
+#   "nvim/site/parser/lua.so".source    = "${grammars.lua}/parser";
+#   "nvim/site/parser/python.so".source = "${grammars.python}/parser";
+#   "nvim/site/parser/rust.so".source   = "${grammars.rust}/parser";
+  };
   xdg.configFile = {
     "fish/conf.d/plugin-bobthefish.fish".text =
       lib.mkAfter "for f in $plugin_dir/*.fish; source $f; end";

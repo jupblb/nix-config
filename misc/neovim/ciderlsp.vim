@@ -14,6 +14,3 @@ configs.ciderlsp = {
 nvim_lsp.ciderlsp.setup{}
 EOF
 
-autocmd Filetype c,cpp,go,java,python,proto,textproto
-  \ setlocal omnifunc=v:lua.vim.lsp.omnifunc
-

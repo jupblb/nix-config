@@ -10,3 +10,4 @@ vimUtils.buildVimPlugin {
     sha256 = "0qkvxly52qdxw77mlrwzrjp8i6smzmsd6k4pd7qqq2w8s8y8rda3";
   };
 }
+
