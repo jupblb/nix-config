@@ -157,13 +157,9 @@
       extraPackages = with pkgs; [
         glow nodePackages.bash-language-server ripgrep rnix-lsp
       ];
-      package       = pkgs.neovim-unwrapped.overrideAttrs(old: rec {
-        version = "a061d53e18168130aad537a9e8012390834ff8c2";
-        src     = builtins.fetchGit {
-          url = https://github.com/neovim/neovim.git;
-          ref = version;
-        };
-      });
+      package       = pkgs.callPackage ./misc/neovim.nix {
+        inherit (pkgs.darwin.apple_sdk.frameworks) Security;
+      };
       vimAlias      = true;
       vimdiffAlias  = true;
       withPython    = false;
