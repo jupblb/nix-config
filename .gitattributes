@@ -1,6 +1,6 @@
 hosts/artemis.nix filter=git-crypt diff=git-crypt
 hosts/demeter.nix filter=git-crypt diff=git-crypt
-misc/neovim/glug.vim filter=git-crypt diff=git-crypt
-misc/neovim/google-calendar.vim filter=git-crypt diff=git-crypt
-misc/ssh/id_ed25519 filter=git-crypt diff=git-crypt
+config/neovim/glug.vim filter=git-crypt diff=git-crypt
+config/neovim/google-calendar.vim filter=git-crypt diff=git-crypt
+config/ssh/id_ed25519 filter=git-crypt diff=git-crypt
 

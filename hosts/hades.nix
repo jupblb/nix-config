@@ -48,8 +48,8 @@
         enable            = true;
         package           = pkgs.firefox-wayland;
         profiles."jupblb" = {
-          extraConfig = builtins.readFile ../misc/firefox/user.js;
-          userContent = builtins.readFile ../misc/firefox/user.css;
+          extraConfig = builtins.readFile ../config/firefox/user.js;
+          userContent = builtins.readFile ../config/firefox/user.css;
         };
       };
 
@@ -68,10 +68,10 @@
   programs.sway = {
     enable               = true;
     extraOptions         = [
-      "-c" "${pkgs.callPackage ../misc/sway/sway-config.nix {}}"
+      "-c" "${pkgs.callPackage ../config/sway/config.nix {}}"
     ];
     extraPackages        = with pkgs; [ imv mpv pavucontrol wl-clipboard ];
-    extraSessionCommands = builtins.readFile ../misc/sway/sway.sh;
+    extraSessionCommands = builtins.readFile ../config/sway/sway.sh;
     wrapperFeatures.gtk  = true;
   };
 
