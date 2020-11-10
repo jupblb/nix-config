@@ -46,7 +46,7 @@ in {
     "/data".fsType = "ext4";
   };
 
-  imports = [ ../nixos-common.nix ];
+  imports = [ ./common/nixos.nix ];
 
   networking = {
     defaultGateway                 = "192.168.1.1";

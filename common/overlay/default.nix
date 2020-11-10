@@ -4,7 +4,7 @@ self: super: {
     theme-bobthefish = super.callPackage ./fish/theme-bobthefish.nix {};
   };
   gitAndTools    = super.gitAndTools // {
-    delta = super.callPackage ./delta.nix {
+    delta = super.callPackage ./delta {
       inherit (super.darwin.apple_sdk.frameworks) Security;
     };
   };

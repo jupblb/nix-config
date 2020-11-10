@@ -29,10 +29,9 @@
   hardware.pulseaudio.enable         = true;
 
   home-manager.users.jupblb = {
-    home.packages     = with pkgs; [ pinentry-curses ];
     home.stateVersion = "20.03";
 
-    imports = [ ../home-common.nix ];
+    imports = [ ./common/home.nix ];
 
     nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
       bat        = bat;
@@ -44,21 +43,14 @@
         if test -z "$DISPLAY"; and test (tty) = "/dev/tty1"; exec sway; end
       '';
 
-      firefox = {
-        enable            = true;
-        package           = pkgs.firefox-wayland;
-        profiles."jupblb" = {
-          extraConfig = builtins.readFile ../config/firefox/user.js;
-          userContent = builtins.readFile ../config/firefox/user.css;
-        };
-      };
+      firefox.package = pkgs.firefox-wayland;
 
       i3status.enable        = true;
       i3status.enableDefault = true;
     };
   };
 
-  imports = [ <home-manager/nixos> ../nixos-common.nix ];
+  imports = [ <home-manager/nixos> ./common/nixos.nix ];
 
   networking.hostName              = "hades";
   networking.networkmanager.enable = true;
@@ -68,10 +60,10 @@
   programs.sway = {
     enable               = true;
     extraOptions         = [
-      "-c" "${pkgs.callPackage ../config/sway/config.nix {}}"
+      "-c" "${pkgs.callPackage ./config/sway/config.nix {}}"
     ];
     extraPackages        = with pkgs; [ imv mpv pavucontrol wl-clipboard ];
-    extraSessionCommands = builtins.readFile ../config/sway/sway.sh;
+    extraSessionCommands = builtins.readFile ./config/sway/sway.sh;
     wrapperFeatures.gtk  = true;
   };
 

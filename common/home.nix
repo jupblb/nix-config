@@ -15,6 +15,14 @@
       enable = true;
     };
 
+    firefox = {
+      enable            = true;
+      profiles."jupblb" = {
+        extraConfig = builtins.readFile ./config/firefox/user.js;
+        userContent = builtins.readFile ./config/firefox/user.css;
+      };
+    };
+
     fish = {
       enable       = true;
       plugins      = [
@@ -25,6 +33,7 @@
       shellAliases = {
         cat       = "bat -p --paging=never";
         less      = "bat -p --paging=always";
+        ls        = "ls --color=auto --group-directories-first";
         nix-shell = "nix-shell --command fish";
         ssh       = "env TERM=xterm-256color ssh";
         vim       = "nvim";
@@ -74,7 +83,7 @@
           rev    = "master";
           sha256 = "0s1jbmw3xzzg00lxkxk4ryhhyxck5an7nmrq5cy9vdp1f1a0lgrr";
         };
-        in "${pkg}/gruvbox_light.conf";
+        in builtins.readFile "${pkg}/gruvbox_light.conf";
       settings    = {
         font_family         = "PragmataPro Mono Liga";
         font_size           = 10;
@@ -130,7 +139,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        editorconfig-vim treesitter-context vim-signify vim-nix
+        editorconfig-vim treesitter-context vim-fish vim-signify vim-nix
       ];
       enable        = true;
       extraPackages = with pkgs; [
