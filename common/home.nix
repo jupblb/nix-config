@@ -36,7 +36,6 @@
         ls        = "ls --color=auto --group-directories-first";
         nix-shell = "nix-shell --command fish";
         ssh       = "env TERM=xterm-256color ssh";
-        vim       = "nvim";
       };
     };
 
