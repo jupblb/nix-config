@@ -172,6 +172,17 @@
     };
   };
 
+  xdg.dataFile   = with pkgs.tree-sitter.builtGrammars; {
+    "nvim/site/parser/bash.so".source   = "${bash}/parser";
+    "nvim/site/parser/c.so".source      = "${c}/parser";
+    "nvim/site/parser/cpp.so".source    = "${cpp}/parser";
+    "nvim/site/parser/go.so".source     = "${go}/parser";
+    "nvim/site/parser/html.so".source   = "${html}/parser";
+    "nvim/site/parser/java.so".source   = "${java}/parser";
+    "nvim/site/parser/json.so".source   = "${json}/parser";
+    "nvim/site/parser/lua.so".source    = "${lua}/parser";
+    "nvim/site/parser/python.so".source = "${python}/parser";
+  };
   xdg.configFile = {
     "fish/conf.d/plugin-bobthefish.fish".text =
       lib.mkAfter "for f in $plugin_dir/*.fish; source $f; end";
