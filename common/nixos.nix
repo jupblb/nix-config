@@ -25,6 +25,8 @@
   environment.systemPackages   = with pkgs; [ file git htop unzip ];
 
   hardware.enableRedistributableFirmware = true;
+  hardware.opengl.enable                 = true;
+  hardware.pulseaudio.enable             = true;
 
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
@@ -62,6 +64,8 @@
 
     sshguard.enable = true;
   };
+
+  sound.enable = true;
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
     ln -sfn ${pkgs.bashInteractive}/bin/bash /bin/bash
