@@ -31,10 +31,9 @@
 
     imports = [ ./common/home.nix ];
 
-    nixpkgs.config.packageOverrides = pkgs: with import <nixos-unstable> {}; {
-      bat        = bat;
-      vimPlugins = vimPlugins;
-    };
+    nixpkgs.pkgs =
+      let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+      in import (fetchTarball t) {};
 
     programs = {
       fish.shellInit = ''

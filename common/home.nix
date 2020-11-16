@@ -86,7 +86,7 @@
       settings    = {
         font_family         = "PragmataPro Mono Liga";
         font_size           = 10;
-        startup_session     = builtins.toString(pkgs.writeTextFile {
+        startup_session     = toString(pkgs.writeTextFile {
           name = "kitty-launch";
           text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
         });
@@ -161,7 +161,7 @@
       matchBlocks         =
         let key = {
           identitiesOnly = true;
-          identityFile   = [ (builtins.toString ./config/ssh/id_ed25519) ];
+          identityFile   = [ (toString ./config/ssh/id_ed25519) ];
         };
         in {
           "github.com" = key;
