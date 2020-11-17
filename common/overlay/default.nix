@@ -8,9 +8,7 @@ self: super: {
       inherit (super.darwin.apple_sdk.frameworks) Security;
     };
   };
-  neovim-nightly = super.callPackage ./neovim {
-    inherit (super.darwin.apple_sdk.frameworks) Security;
-  };
+  neovim-nightly = super.callPackage ./neovim {};
   ranger         = super.callPackage ./ranger { ranger = super.ranger; };
   vimPlugins     = super.vimPlugins // {
     glow               = super.callPackage ./neovim/glow.nix {};

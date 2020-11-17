@@ -89,12 +89,8 @@
   systemd.services.dropbox = {
     after                        = [ "network.target" ];
     description                  = "Dropbox";
-    environment.QML2_IMPORT_PATH = with pkgs.qt5; ''
-      ${qtbase}${qtbase.qtQmlPrefix}
-    '';
-    environment.QT_PLUGIN_PATH   = with pkgs.qt5; ''
-      ${qtbase}${qtbase.qtPluginPrefix}
-    '';
+    environment.QML2_IMPORT_PATH = with pkgs.qt5.qtbase; "${bin}${qtQmlPrefix}";
+    environment.QT_PLUGIN_PATH   = with pkgs.qt5.qtbase; "${bin}${qtQmlPrefix}";
     serviceConfig                = {
       ExecStart     = "${pkgs.dropbox}/bin/dropbox";
       ExecReload    = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
