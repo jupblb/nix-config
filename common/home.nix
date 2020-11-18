@@ -182,7 +182,7 @@
   xdg.configFile = {
     "fish/conf.d/plugin-bobthefish.fish".text =
       lib.mkAfter "for f in $plugin_dir/*.fish; source $f; end";
-    "hg/hgrc".text                            = ''
+    ".hgrc".text                              = ''
       [pager]
       pager = ${pkgs.gitAndTools.delta}/bin/delta
     '';
