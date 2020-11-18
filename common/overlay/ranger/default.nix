@@ -1,6 +1,6 @@
 { atool, bat, glow, jq, lib, poppler_utils, ranger }:
 
-ranger.overrideAttrs(old: rec {
+ranger.overrideAttrs(_: {
   makeWrapperArgs = [
     "--prefix PATH : ${lib.makeBinPath [ atool bat glow jq poppler_utils ]}"
   ];

@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.file             = {
+    ".hgrc".text = "[pager]\npager = ${pkgs.gitAndTools.delta}/bin/delta";
+  };
   home.packages         = with pkgs; [
     gitAndTools.git-crypt htop ranger screen unzip
   ];
@@ -25,10 +28,8 @@
 
     fish = {
       enable       = true;
-      plugins      = [
-        { name = "bobthefish"; src = pkgs.fishPlugins.theme-bobthefish; }
-        { name = "nix-env"; src = pkgs.fishPlugins.nix-env; }
-      ];
+      plugins      = lib.mapAttrsToList (name: pkg: { name = name; src = pkg; })
+        pkgs.fishPlugins;
       promptInit   = builtins.readFile ./config/prompt.fish;
       shellAliases = {
         cat       = "bat -p --paging=never";
@@ -179,13 +180,5 @@
         "${pkgs.tree-sitter.builtGrammars."${lang}"}/parser";
       langs = [ "bash" "c" "cpp" "go" "html" "java" "json" "lua" "python" ];
     in lib.mapAttrs (_: g: { source = g; }) (lib.listToAttrs (map link langs));
-  xdg.configFile = {
-    "fish/conf.d/plugin-bobthefish.fish".text =
-      lib.mkAfter "for f in $plugin_dir/*.fish; source $f; end";
-    ".hgrc".text                              = ''
-      [pager]
-      pager = ${pkgs.gitAndTools.delta}/bin/delta
-    '';
-  };
 }
 

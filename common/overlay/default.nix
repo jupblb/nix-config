@@ -1,7 +1,7 @@
 self: super: {
   fishPlugins    = {
-    nix-env          = super.callPackage ./fish/nix-env.nix {};
-    theme-bobthefish = super.callPackage ./fish/theme-bobthefish.nix {};
+    nix-env    = super.callPackage ./fish/nix-env.nix {};
+    bobthefish = super.callPackage ./fish/bobthefish.nix {};
   };
   gitAndTools    = super.gitAndTools // {
     delta = super.callPackage ./delta {
