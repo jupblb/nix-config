@@ -5,7 +5,7 @@
     ".hgrc".text = "[pager]\npager = ${pkgs.gitAndTools.delta}/bin/delta";
   };
   home.packages         = with pkgs; [
-    gitAndTools.git-crypt htop ranger screen unzip
+    gitAndTools.git-crypt htop ranger screen
   ];
   home.sessionVariables = { EDITOR = "nvim"; };
   home.username         = "jupblb";
