@@ -21,8 +21,8 @@
     firefox = {
       enable            = true;
       profiles."jupblb" = {
-        extraConfig = builtins.readFile ./config/firefox/user.js;
-        userContent = builtins.readFile ./config/firefox/user.css;
+        extraConfig = builtins.readFile ../config/firefox/user.js;
+        userContent = builtins.readFile ../config/firefox/user.css;
       };
     };
 
@@ -30,7 +30,7 @@
       enable       = true;
       plugins      = lib.mapAttrsToList (name: pkg: { name = name; src = pkg; })
         pkgs.fishPlugins;
-      promptInit   = builtins.readFile ./config/prompt.fish;
+      promptInit   = builtins.readFile ../config/prompt.fish;
       shellAliases = {
         cat       = "bat -p --paging=never";
         less      = "bat -p --paging=always";
@@ -95,7 +95,7 @@
     };
 
     neovim = {
-      extraConfig   = builtins.readFile ./config/neovim/init.vim;
+      extraConfig   = builtins.readFile ../config/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
           plugin = lightline-vim;
           config = ''
@@ -105,12 +105,12 @@
         } {
           plugin = calendar-vim;
           config = ''
-            let google_calendar = "${./config/neovim/google-calendar.vim}"
-            ${builtins.readFile ./config/neovim/calendar-vim.vim}
+            let google_calendar = "${../config/neovim/google-calendar.vim}"
+            ${builtins.readFile ../config/neovim/calendar-vim.vim}
           '';
         } {
           plugin = completion-nvim;
-          config = builtins.readFile ./config/neovim/completion-nvim.vim;
+          config = builtins.readFile ../config/neovim/completion-nvim.vim;
         } {
           plugin = glow;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
@@ -119,16 +119,16 @@
           config = "let g:goyo_width = 100 | nmap <silent><Leader>` :Goyo<CR>";
         } {
           plugin = gruvbox-community;
-          config = builtins.readFile ./config/neovim/gruvbox-community.vim;
+          config = builtins.readFile ../config/neovim/gruvbox-community.vim;
         } {
           plugin = fzf-vim;
-          config = builtins.readFile ./config/neovim/fzf-vim.vim;
+          config = builtins.readFile ../config/neovim/fzf-vim.vim;
         } {
           plugin = nvim-lspconfig;
-          config = builtins.readFile ./config/neovim/nvim-lspconfig.vim;
+          config = builtins.readFile ../config/neovim/nvim-lspconfig.vim;
         } {
           plugin = nvim-treesitter;
-          config = builtins.readFile ./config/neovim/nvim-treesitter.vim;
+          config = builtins.readFile ../config/neovim/nvim-treesitter.vim;
         } {
           plugin = ranger-vim;
           config = "nnoremap <Leader><CR> :RangerEdit<CR>";
@@ -162,7 +162,7 @@
       matchBlocks         =
         let key = {
           identitiesOnly = true;
-          identityFile   = [ (toString ./config/ssh/id_ed25519) ];
+          identityFile   = [ (toString ../config/ssh/id_ed25519) ];
         };
         in {
           "github.com" = key;

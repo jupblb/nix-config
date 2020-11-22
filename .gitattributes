@@ -1,6 +1,6 @@
 artemis.nix filter=git-crypt diff=git-crypt
 demeter.nix filter=git-crypt diff=git-crypt
 config/neovim/glug.vim filter=git-crypt diff=git-crypt
-common/config/neovim/google-calendar.vim filter=git-crypt diff=git-crypt
-common/config/ssh/id_ed25519 filter=git-crypt diff=git-crypt
+config/neovim/google-calendar.vim filter=git-crypt diff=git-crypt
+config/ssh/id_ed25519 filter=git-crypt diff=git-crypt
 

@@ -38,7 +38,7 @@
   programs = {
     bash.enableCompletion = true;
     bash.enableLsColors   = true;
-    bash.promptInit       = builtins.readFile ./config/bashrc;
+    bash.promptInit       = builtins.readFile ../config/bashrc;
     gnupg.agent.enable    = true;
     vim.defaultEditor     = true;
   };
@@ -78,7 +78,7 @@
     initialPassword             = "changeme";
     isNormalUser                = true;
     openssh.authorizedKeys.keys = [
-      (builtins.readFile ./config/ssh/id_ed25519.pub)
+      (builtins.readFile ../config/ssh/id_ed25519.pub)
     ];
   };
 }
