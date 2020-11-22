@@ -31,9 +31,9 @@
 
     imports = [ ./common/home.nix ];
 
-    nixpkgs.pkgs =
+    nixpkgs.config.packageOverrides = _:
       let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      in import (fetchTarball t) {};
+      in (import (fetchTarball t) {});
 
     programs = {
       fish.shellInit = ''
@@ -47,7 +47,10 @@
     };
   };
 
-  imports = [ <home-manager/nixos> ./common/nixos.nix ];
+  imports =
+    let
+      t = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+    in [ "${fetchTarball t}/nixos" ./common/nixos.nix ];
 
   networking.hostName              = "hades";
   networking.networkmanager.enable = true;

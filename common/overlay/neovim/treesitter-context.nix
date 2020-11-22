@@ -7,7 +7,7 @@ vimUtils.buildVimPlugin {
     owner  = "romgrk";
     repo   = "nvim-treesitter-context";
     rev    = "master";
-    sha256 = "0h3lc1i0kppjaq9iha7wp3wc0103h6r8c7s0ih7xsxpdl16rp5rh";
+    sha256 = "04mjl32gahaw2xky8yaghmgakiiy47dcjj6k4p793xfcs1kf4bsh";
   };
 }
 
