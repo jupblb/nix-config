@@ -45,8 +45,11 @@
       let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
       in (import (fetchTarball t) {});
 
-    programs.firefox.package = pkgs.firefox-wayland;
-    programs.kitty.settings  = { hide_window_decorations = "yes"; };
+    programs = {
+      firefox.enableGnomeExtensions = true;
+      firefox.package               = pkgs.firefox-wayland;
+      kitty.settings                = { hide_window_decorations = "yes"; };
+    };
   };
 
   imports =
@@ -85,8 +88,8 @@
     xserver = {
       enable                            = true;
       desktopManager.gnome3.enable      = true;
-      desktopManager.gnome3.sessionPath = with pkgs.gnomeExtensions; [
-        impatience sound-output-device-chooser
+      desktopManager.gnome3.sessionPath = with pkgs.gnome3; [
+        gnome-screenshot
       ];
       displayManager.autoLogin.enable   = true;
       displayManager.autoLogin.user     = "jupblb";
