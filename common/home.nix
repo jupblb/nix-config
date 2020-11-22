@@ -73,16 +73,8 @@
     gpg.enable = true;
 
     kitty = {
-      enable      = true;
-      extraConfig =
-        let pkg = pkgs.fetchFromGitHub {
-          owner  = "wdomitrz";
-          repo   = "kitty-gruvbox-theme";
-          rev    = "master";
-          sha256 = "0s1jbmw3xzzg00lxkxk4ryhhyxck5an7nmrq5cy9vdp1f1a0lgrr";
-        };
-        in builtins.readFile "${pkg}/gruvbox_light.conf";
-      settings    = {
+      enable   = true;
+      settings = {
         clipboard_control   = "write-clipboard write-primary no-append";
         font_family         = "PragmataPro Mono Liga";
         font_size           = 10;
