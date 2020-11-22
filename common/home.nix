@@ -166,11 +166,9 @@
 
     tmux = {
       baseIndex                 = 1;
-      clock24                   = true;
       disableConfirmationPrompt = true;
       enable                    = true;
       extraConfig               = builtins.readFile ../config/tmux.conf;
-      historyLimit              = 100000;
       keyMode                   = "vi";
       plugins                   = with pkgs.tmuxPlugins; [
         pain-control vim-tmux-navigator yank
