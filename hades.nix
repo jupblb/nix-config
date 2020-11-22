@@ -11,14 +11,7 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.gnome3.excludePackages = with pkgs.gnome3; [
-    baobab
-    geary gedit gnome-calculator gnome-characters gnome-clocks gnome-contacts
-      gnome-disk-utility gnome-music gnome-photos gnome-terminal gnome-weather
-    simple-scan
-    totem
-  ];
-  environment.systemPackages         = with pkgs; [ dropbox-cli ];
+  environment.systemPackages = with pkgs; [ dropbox-cli steam ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -76,11 +69,11 @@
     fstrim.enable = true;
 
     gnome3 = {
-      chrome-gnome-shell.enable                 = true;
-      experimental-features.realtime-scheduling = true;
-      gnome-online-accounts.enable              = true;
-      gnome-settings-daemon.enable              = true;
-      sushi.enable                              = true;
+      chrome-gnome-shell.enable    = true;
+      core-utilities.enable        = false;
+      gnome-online-accounts.enable = true;
+      gnome-settings-daemon.enable = true;
+      sushi.enable                 = true;
     };
 
     wakeonlan.interfaces = [ {
