@@ -4,9 +4,7 @@
   home.file             = {
     ".hgrc".text = "[pager]\npager = ${pkgs.gitAndTools.delta}/bin/delta";
   };
-  home.packages         = with pkgs; [
-    gitAndTools.git-crypt htop ranger screen
-  ];
+  home.packages         = with pkgs; [ gitAndTools.git-crypt htop ranger ];
   home.sessionVariables = { EDITOR = "nvim"; };
   home.username         = "jupblb";
 
@@ -85,11 +83,12 @@
         };
         in builtins.readFile "${pkg}/gruvbox_light.conf";
       settings    = {
+        clipboard_control   = "write-clipboard write-primary no-append";
         font_family         = "PragmataPro Mono Liga";
         font_size           = 10;
         startup_session     = toString(pkgs.writeTextFile {
           name = "kitty-launch";
-          text = "launch fish -C '${pkgs.fortune}/bin/fortune -sa'";
+          text = "launch fish -C 'tmux && exit'";
         });
       };
     };
@@ -140,6 +139,7 @@
           '';
         }
         editorconfig-vim treesitter-context vim-fish vim-signify vim-nix
+          vim-tmux-navigator
       ];
       enable        = true;
       extraPackages = with pkgs; [
@@ -170,6 +170,21 @@
           iris         = key // { hostname = "jupblb.ddns.net"; port = 1994; };
         };
       serverAliveInterval = 30;
+    };
+
+    tmux = {
+      baseIndex                 = 1;
+      clock24                   = true;
+      disableConfirmationPrompt = true;
+      enable                    = true;
+      extraConfig               = builtins.readFile ../config/tmux.conf;
+      historyLimit              = 100000;
+      keyMode                   = "vi";
+      plugins                   = with pkgs.tmuxPlugins; [
+        pain-control vim-tmux-navigator yank
+      ];
+      shortcut                  = "Space";
+      terminal                  = "tmux-256color";
     };
   };
 

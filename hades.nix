@@ -46,6 +46,7 @@
       in (import (fetchTarball t) {});
 
     programs.firefox.package = pkgs.firefox-wayland;
+    programs.kitty.settings  = { hide_window_decorations = "yes"; };
   };
 
   imports =
