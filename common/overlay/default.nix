@@ -1,5 +1,6 @@
 self: super: {
   fishPlugins    = {
+    gruvbox    = super.callPackage ./fish/gruvbox.nix {};
     nix-env    = super.callPackage ./fish/nix-env.nix {};
     bobthefish = super.callPackage ./fish/bobthefish.nix {};
   };
