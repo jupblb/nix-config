@@ -36,12 +36,11 @@
   nixpkgs.config.allowUnfree = true;
 
   programs = {
-    bash.enableCompletion      = true;
-    bash.enableLsColors        = true;
-    bash.promptInit            = builtins.readFile ./config/bashrc;
-    gnupg.agent.enable         = true;
-    gnupg.agent.pinentryFlavor = "gnome3";
-    vim.defaultEditor          = true;
+    bash.enableCompletion = true;
+    bash.enableLsColors   = true;
+    bash.promptInit       = builtins.readFile ./config/bashrc;
+    gnupg.agent.enable    = true;
+    vim.defaultEditor     = true;
   };
 
   services = {

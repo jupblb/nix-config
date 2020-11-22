@@ -11,7 +11,14 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ dropbox-cli ];
+  environment.gnome3.excludePackages = with pkgs.gnome3; [
+    baobab
+    geary gedit gnome-calculator gnome-characters gnome-clocks gnome-contacts
+      gnome-disk-utility gnome-music gnome-photos gnome-terminal gnome-weather
+    simple-scan
+    totem
+  ];
+  environment.systemPackages         = with pkgs; [ dropbox-cli ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -23,8 +30,18 @@
   fonts.enableDefaultFonts = true;
   fonts.fonts              = with pkgs; [ vistafonts ];
 
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.opengl.extraPackages      = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+  hardware = {
+    cpu.intel.updateMicrocode = true;
+
+    opengl = {
+      driSupport         = true;
+      driSupport32Bit    = true;
+      extraPackages      = with pkgs; [ amdvlk libvdpau-va-gl vaapiVdpau ];
+      extraPackages32    = with pkgs.pkgsi686Linux; [ libva ];
+    };
+
+    pulseaudio.support32Bit = true;
+  };
 
   home-manager.users.jupblb = {
     home.stateVersion = "20.03";
@@ -35,16 +52,7 @@
       let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
       in (import (fetchTarball t) {});
 
-    programs = {
-      fish.shellInit = ''
-        if test -z "$DISPLAY"; and test (tty) = "/dev/tty1"; exec sway; end
-      '';
-
-      firefox.package = pkgs.firefox-wayland;
-
-      i3status.enable        = true;
-      i3status.enableDefault = true;
-    };
+    programs.firefox.package = pkgs.firefox-wayland;
   };
 
   imports =
@@ -57,18 +65,6 @@
 
   nix.maxJobs = 12;
 
-  programs.sway = {
-    enable               = true;
-    extraOptions         = [
-      "-c" "${pkgs.callPackage ./config/sway/config.nix {}}"
-    ];
-    extraPackages        = with pkgs; [ imv mpv pavucontrol wl-clipboard ];
-    extraSessionCommands = builtins.readFile ./config/sway/sway.sh;
-    wrapperFeatures.gtk  = true;
-  };
-
-  security.pam.services.swaylock.text = "auth include login";
-
   services = {
     apcupsd.enable     = true;
     apcupsd.configText = ''
@@ -79,10 +75,30 @@
 
     fstrim.enable = true;
 
+    gnome3 = {
+      chrome-gnome-shell.enable                 = true;
+      experimental-features.realtime-scheduling = true;
+      gnome-online-accounts.enable              = true;
+      gnome-settings-daemon.enable              = true;
+      sushi.enable                              = true;
+    };
+
     wakeonlan.interfaces = [ {
       interface = "eno2";
       method    = "magicpacket";
     } ];
+
+    xserver = {
+      enable                            = true;
+      desktopManager.gnome3.enable      = true;
+      desktopManager.gnome3.sessionPath = with pkgs.gnomeExtensions; [
+        impatience sound-output-device-chooser
+      ];
+      displayManager.autoLogin.enable   = true;
+      displayManager.autoLogin.user     = "jupblb";
+      displayManager.gdm.enable         = true;
+      videoDrivers                      = [ "amdgpu" ];
+    };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
