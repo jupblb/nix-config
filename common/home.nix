@@ -80,10 +80,9 @@
         clipboard_control   = "write-clipboard write-primary no-append";
         font_family         = "PragmataPro Mono Liga";
         font_size           = 10;
-        startup_session     = toString(pkgs.writeTextFile {
-          name = "kitty-launch";
-          text = "launch fish -C 'tmux && exit'";
-        });
+        startup_session     = toString(pkgs.writeText "kitty-launch" ''
+          launch fish -C 'tmux && exit'";
+        '');
       };
     };
 
@@ -97,7 +96,7 @@
           *)      ${bat}/bin/bat -p --color always "$1";;
         esac
       '';
-      settings         = { hidden  = true; tabstop = 4; };
+      settings         = { hidden = true; tabstop = 4; };
     };
 
     neovim = {
