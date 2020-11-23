@@ -1,4 +1,4 @@
-{ fetchFromGitHub, symlinkJoin, writeTextFile }:
+{ fetchFromGitHub }:
 
 fetchFromGitHub {
   owner  = "Jomik";
