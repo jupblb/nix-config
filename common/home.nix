@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file             = {
-    ".hgrc".text = "[pager]\npager = ${pkgs.gitAndTools.delta}/bin/delta";
-  };
   home.packages         = with pkgs; [ gitAndTools.git-crypt ];
   home.sessionVariables = { EDITOR = "nvim"; };
   home.username         = "jupblb";
@@ -30,11 +27,10 @@
         pkgs.fishPlugins;
       promptInit   = builtins.readFile ../config/prompt.fish;
       shellAliases = {
-        cat       = "bat -p --paging=never";
-        less      = "bat -p --paging=always";
-        ls        = "ls --color=auto --group-directories-first";
-        nix-shell = "nix-shell --command fish";
-        ssh       = "env TERM=xterm-256color ssh";
+        cat  = "bat -p --paging=never";
+        less = "bat -p --paging=always";
+        ls   = "ls --color=auto --group-directories-first";
+        ssh  = "env TERM=xterm-256color ssh";
       };
     };
 
@@ -81,7 +77,7 @@
         font_family         = "PragmataPro Mono Liga";
         font_size           = 10;
         startup_session     = toString(pkgs.writeText "kitty-launch" ''
-          launch fish -C 'tmux && exit'";
+          launch fish -C "tmux && exit";
         '');
       };
     };
@@ -97,6 +93,13 @@
         esac
       '';
       settings         = { hidden = true; tabstop = 4; };
+    };
+
+    mercurial = {
+      enable      = true;
+      extraConfig = { pager.pager = "${pkgs.gitAndTools.delta}/bin/delta"; };
+      userEmail   = "mpkielbowicz@gmail.com";
+      userName    = "jupblb";
     };
 
     neovim = {
