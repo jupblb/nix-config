@@ -10,7 +10,6 @@ self: super: {
     };
   };
   neovim-nightly = super.callPackage ./neovim {};
-  ranger         = super.callPackage ./ranger { ranger = super.ranger; };
   vimPlugins     = super.vimPlugins // {
     glow               = super.callPackage ./neovim/glow.nix {};
     treesitter-context = super.callPackage ./neovim/treesitter-context.nix {};

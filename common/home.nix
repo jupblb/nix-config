@@ -4,7 +4,7 @@
   home.file             = {
     ".hgrc".text = "[pager]\npager = ${pkgs.gitAndTools.delta}/bin/delta";
   };
-  home.packages         = with pkgs; [ gitAndTools.git-crypt htop ranger ];
+  home.packages         = with pkgs; [ gitAndTools.git-crypt ];
   home.sessionVariables = { EDITOR = "nvim"; };
   home.username         = "jupblb";
 
@@ -72,6 +72,8 @@
 
     gpg.enable = true;
 
+    htop.enable = true;
+
     kitty = {
       enable   = true;
       settings = {
@@ -83,6 +85,19 @@
           text = "launch fish -C 'tmux && exit'";
         });
       };
+    };
+
+    lf = {
+      enable           = true;
+      previewer.source = with pkgs; writeShellScript "lf-preview" ''
+        case "$1" in
+          *.json) ${jq}/bin/jq --color-output . "$1";;
+          *.md)   ${glow}/bin/glow -s light - "$1";;
+          *.pdf)  ${poppler_utils}/bin/pdftotext "$1" -;;
+          *)      ${bat}/bin/bat -p --color always "$1";;
+        esac
+      '';
+      settings         = { hidden  = true; tabstop = 4; };
     };
 
     neovim = {
@@ -106,23 +121,20 @@
           plugin = glow;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {
-          plugin = goyo;
-          config = "let g:goyo_width = 100 | nmap <silent><Leader>` :Goyo<CR>";
-        } {
           plugin = gruvbox-community;
           config = builtins.readFile ../config/neovim/gruvbox-community.vim;
         } {
           plugin = fzf-vim;
           config = builtins.readFile ../config/neovim/fzf-vim.vim;
         } {
+          plugin = lf-vim;
+          config = builtins.readFile ../config/neovim/lf.vim;
+        } {
           plugin = nvim-lspconfig;
           config = builtins.readFile ../config/neovim/nvim-lspconfig.vim;
         } {
           plugin = nvim-treesitter;
           config = builtins.readFile ../config/neovim/nvim-treesitter.vim;
-        } {
-          plugin = ranger-vim;
-          config = "nnoremap <Leader><CR> :RangerEdit<CR>";
         } {
           plugin = vimwiki;
           config = ''
