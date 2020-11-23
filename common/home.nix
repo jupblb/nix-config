@@ -22,11 +22,12 @@
     };
 
     fish = {
-      enable       = true;
-      plugins      = lib.mapAttrsToList (name: pkg: { name = name; src = pkg; })
-        pkgs.fishPlugins;
-      promptInit   = builtins.readFile ../config/prompt.fish;
-      shellAliases = {
+      enable               = true;
+      interactiveShellInit = "theme_gruvbox light hard";
+      plugins              = lib.mapAttrsToList
+        (name: pkg: { name = name; src = pkg; }) pkgs.fishPlugins;
+      promptInit           = builtins.readFile ../config/prompt.fish;
+      shellAliases         = {
         cat  = "bat -p --paging=never";
         less = "bat -p --paging=always";
         ls   = "ls --color=auto --group-directories-first";
