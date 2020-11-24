@@ -143,7 +143,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        editorconfig-vim treesitter-context vim-fish vim-signify vim-nix
+        editorconfig-vim nvim-treesitter-context vim-fish vim-signify vim-nix
           vim-tmux-navigator
       ];
       enable        = true;

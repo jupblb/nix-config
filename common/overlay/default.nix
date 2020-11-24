@@ -11,7 +11,6 @@ self: super: {
   };
   neovim-nightly = super.callPackage ./neovim {};
   vimPlugins     = super.vimPlugins // {
-    glow               = super.callPackage ./neovim/glow.nix {};
-    treesitter-context = super.callPackage ./neovim/treesitter-context.nix {};
+    glow = super.callPackage ./neovim/glow.nix {};
   };
 }
