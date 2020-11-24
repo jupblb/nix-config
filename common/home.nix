@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ gitAndTools.git-crypt ];
+  home.packages         = with pkgs; [ bottom gitAndTools.git-crypt ];
   home.sessionVariables = { EDITOR = "nvim"; };
   home.username         = "jupblb";
 
@@ -68,8 +68,6 @@
     };
 
     gpg.enable = true;
-
-    htop.enable = true;
 
     kitty = {
       enable   = true;
