@@ -1,7 +1,7 @@
 packadd nvim-lspconfig
 
-lua require'nvim_lsp'.bashls.setup{}
-lua require'nvim_lsp'.rnix.setup{}
+lua require'lspconfig'.bashls.setup{}
+lua require'lspconfig'.rnix.setup{}
 
 nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>

@@ -1,8 +1,8 @@
 packadd nvim-lspconfig
 
 lua << EOF
-local nvim_lsp = require 'nvim_lsp'
-local configs  = require 'nvim_lsp/configs'
+local nvim_lsp = require 'lspconfig'
+local configs  = require 'lspconfig/configs'
 configs.ciderlsp = {
   default_config = {
     cmd = {'ciderlsp', '--tooltag=nvim-lsp' , '--noforward_sync_responses'};
