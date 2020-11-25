@@ -72,10 +72,10 @@
     kitty = {
       enable   = true;
       settings = {
-        clipboard_control   = "write-clipboard write-primary no-append";
-        font_family         = "PragmataPro Mono Liga";
-        font_size           = 10;
-        startup_session     = toString(pkgs.writeText "kitty-launch" ''
+        clipboard_control = "write-clipboard write-primary no-append";
+        font_family       = "PragmataPro Mono Liga";
+        font_size         = 10;
+        startup_session   = toString(pkgs.writeText "kitty-launch" ''
           launch fish -C "tmux && exit";
         '');
       };
@@ -110,12 +110,6 @@
             let g:lightline = { 'colorscheme': 'gruvbox' }
           '';
         } {
-          plugin = calendar-vim;
-          config = ''
-            let google_calendar = "${../config/neovim/google-calendar.vim}"
-            ${builtins.readFile ../config/neovim/calendar-vim.vim}
-          '';
-        } {
           plugin = completion-nvim;
           config = builtins.readFile ../config/neovim/completion-nvim.vim;
         } {
@@ -129,7 +123,7 @@
           config = builtins.readFile ../config/neovim/fzf-vim.vim;
         } {
           plugin = lf-vim;
-          config = builtins.readFile ../config/neovim/lf.vim;
+          config = "let g:lf_replace_netrw = 1 | map <Leader><CR> :Lf<CR>";
         } {
           plugin = nvim-lspconfig;
           config = builtins.readFile ../config/neovim/nvim-lspconfig.vim;
@@ -143,8 +137,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        editorconfig-vim nvim-treesitter-context vim-fish vim-signify vim-nix
-          vim-tmux-navigator
+        vim-fish vim-signify vim-nix vim-tmux-navigator
       ];
       enable        = true;
       extraPackages = with pkgs; [
@@ -184,7 +177,7 @@
       extraConfig               = builtins.readFile ../config/tmux.conf;
       keyMode                   = "vi";
       plugins                   = with pkgs.tmuxPlugins; [
-        pain-control vim-tmux-navigator yank
+        pain-control vim-tmux-navigator
       ];
       shortcut                  = "Space";
       terminal                  = "tmux-256color";
