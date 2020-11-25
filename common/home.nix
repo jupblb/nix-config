@@ -123,7 +123,7 @@
           config = builtins.readFile ../config/neovim/fzf-vim.vim;
         } {
           plugin = lf-vim;
-          config = "let g:lf_replace_netrw = 1 | map <Leader><CR> :Lf<CR>";
+          config = builtins.readFile ../config/neovim/lf.vim;
         } {
           plugin = nvim-lspconfig;
           config = builtins.readFile ../config/neovim/nvim-lspconfig.vim;
