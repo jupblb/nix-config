@@ -6,5 +6,5 @@ neovim-unwrapped.overrideAttrs(old: rec {
     url = https://github.com/neovim/neovim.git;
     ref = version;
   };
-  version     = "nightly";
+  version     = "master";
 })
