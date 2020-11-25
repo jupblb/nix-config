@@ -128,6 +128,9 @@
           plugin = nvim-lspconfig;
           config = builtins.readFile ../config/neovim/nvim-lspconfig.vim;
         } {
+          plugin = nvim-lsputils;
+          config = builtins.readFile ../config/neovim/nvim-lsputils.vim;
+        } {
           plugin = nvim-treesitter;
           config = builtins.readFile ../config/neovim/nvim-treesitter.vim;
         } {
@@ -137,7 +140,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-fish vim-signify vim-nix vim-tmux-navigator
+        popfix vim-fish vim-signify vim-nix vim-tmux-navigator
       ];
       enable        = true;
       extraPackages = with pkgs; [
