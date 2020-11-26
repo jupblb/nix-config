@@ -137,7 +137,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        popfix vim-fish vim-signify vim-nix vim-tmux-navigator
+        vim-fish vim-signify vim-nix vim-tmux-navigator
       ];
       enable        = true;
       extraPackages = with pkgs; [

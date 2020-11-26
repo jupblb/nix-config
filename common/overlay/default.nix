@@ -11,6 +11,9 @@ self: super: {
   };
   neovim-nightly = super.callPackage ./neovim {};
   vimPlugins     = super.vimPlugins // {
-    glow = super.callPackage ./neovim/glow.nix {};
+    glow          = super.callPackage ./neovim/glow.nix {};
+    nvim-lsputils = super.callPackage ./neovim/nvim-lsputils.nix {
+      inherit (super.vimPlugins) nvim-lsputils popfix;
+    };
   };
 }
