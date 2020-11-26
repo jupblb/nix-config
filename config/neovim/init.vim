@@ -1,12 +1,14 @@
 set background=light
-set colorcolumn=80
 set clipboard+=unnamedplus
+set colorcolumn=80
+set completeopt=menuone,noinsert,noselect
 set ignorecase
 set mouse=a
 set nowrap
 set number
 set relativenumber
 set shell=bash
+set shortmess+=c
 set smartcase
 set termguicolors
 set splitright
@@ -26,14 +28,12 @@ nnoremap <leader>3 3gt
 nnoremap <leader>4 4gt
 nnoremap <leader>5 5gt
 
-nnoremap th :tabfirst<CR>
-nnoremap tk :tabnext<CR>
-nnoremap tj :tabprev<CR>
-nnoremap tl :tablast<CR>
-nnoremap tt :tabedit<Space>
 nnoremap tn :tabnew<CR>
-nnoremap tm :tabm<Space>
 nnoremap td :tabclose<CR>
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 autocmd BufWinEnter <buffer> match Error /\s\+$/
 autocmd InsertEnter <buffer> match Error /\s\+\%#\@<!$/

@@ -110,9 +110,6 @@
             let g:lightline = { 'colorscheme': 'gruvbox' }
           '';
         } {
-          plugin = completion-nvim;
-          config = builtins.readFile ../config/neovim/completion-nvim.vim;
-        } {
           plugin = glow;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {

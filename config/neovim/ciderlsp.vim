@@ -11,6 +11,11 @@ configs.ciderlsp = {
     settings = {};
   };
 }
-nvim_lsp.ciderlsp.setup{}
+
+local function set_lsp_omnifunc(_)
+  vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+end
+
+nvim_lsp.ciderlsp.setup{on_attach=set_lsp_omnifunc}
 EOF
 
