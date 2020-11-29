@@ -10,6 +10,7 @@ self: super: {
     };
   };
   neovim-nightly = super.callPackage ./neovim {};
+  pragmata-pro   = super.callPackage ./pragmata-pro {};
   vimPlugins     = super.vimPlugins // {
     glow          = super.callPackage ./neovim/glow.nix {};
     nvim-lsputils = super.callPackage ./neovim/nvim-lsputils.nix {

@@ -71,9 +71,12 @@
 
     kitty = {
       enable   = true;
+      font     = {
+        package = pkgs.pragmata-pro;
+        name    = "PragmataPro Mono Liga";
+      };
       settings = {
         clipboard_control = "write-clipboard write-primary no-append";
-        font_family       = "PragmataPro Mono Liga";
         font_size         = 10;
         startup_session   = toString(pkgs.writeText "kitty-launch" ''
           launch fish -C "tmux && exit";
