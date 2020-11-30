@@ -140,7 +140,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-fish vim-signify vim-nix vim-tmux-navigator
+        vim-fish vim-jsonnet vim-signify vim-nix vim-tmux-navigator
       ];
       enable        = true;
       extraPackages = with pkgs; [
