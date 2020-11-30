@@ -88,10 +88,11 @@
       enable           = true;
       previewer.source = with pkgs; writeShellScript "lf-preview" ''
         case "$1" in
-          *.json) ${jq}/bin/jq --color-output . "$1";;
-          *.md)   ${glow}/bin/glow -s light - "$1";;
-          *.pdf)  ${poppler_utils}/bin/pdftotext "$1" -;;
-          *)      ${bat}/bin/bat -p --color always "$1";;
+          *.json)       ${jq}/bin/jq --color-output . "$1";;
+          *.md)         ${glow}/bin/glow -s light - "$1";;
+          *.pdf)        ${poppler_utils}/bin/pdftotext "$1" -;;
+          *.tar*|*.zip) ${atool}/bin/atool --list -- "$1";;
+          *)            ${bat}/bin/bat -p --color always "$1";;
         esac
       '';
       settings         = { hidden = true; tabstop = 4; };
