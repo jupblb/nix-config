@@ -15,18 +15,18 @@
       "928374" "9d0006" "79740e" "b57614"
       "076678" "8f3f71" "427b58" "3c3836"
     ];
-    earlySetup = true;
-    font       = "ter-232n";
     keyMap     = "pl";
-    packages   = [ pkgs.terminus_font ];
   };
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
-  environment.systemPackages   = with pkgs; [ file git htop unzip ];
+  environment.systemPackages   = with pkgs; [ bottom file git unzip ];
 
-  hardware.enableRedistributableFirmware = true;
-  hardware.opengl.enable                 = true;
-  hardware.pulseaudio.enable             = true;
+  hardware = {
+    enableRedistributableFirmware = true;
+    opengl.enable                 = true;
+    pulseaudio.enable             = true;
+    video.hidpi.enable            = true;
+  };
 
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
