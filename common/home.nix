@@ -114,7 +114,7 @@
             let g:lightline = { 'colorscheme': 'gruvbox' }
           '';
         } {
-          plugin = glow;
+          plugin = glow-nvim;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {
           plugin = gruvbox-community;
