@@ -54,7 +54,8 @@
 
   imports =
     let
-      t = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+      url = "https://github.com/nix-community/home-manager/archive/${tar}";
+      tar = "release-20.09.tar.gz";
     in [ "${fetchTarball t}/nixos" ./common/nixos.nix ];
 
   networking.hostName              = "hades";
