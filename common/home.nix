@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ bottom gitAndTools.git-crypt ];
+  home.packages         = with pkgs; [ bottom gitAndTools.git-crypt ripgrep ];
   home.sessionVariables = { EDITOR = "nvim"; };
   home.username         = "jupblb";
 
@@ -121,19 +121,19 @@
           config = builtins.readFile ../config/neovim/gruvbox-community.vim;
         } {
           plugin = fzf-vim;
-          config = builtins.readFile ../config/neovim/fzf-vim.vim;
+          config = builtins.readFile ../config/neovim/fzf.vim;
         } {
           plugin = lf-vim;
           config = builtins.readFile ../config/neovim/lf.vim;
         } {
           plugin = nvim-lspconfig;
-          config = builtins.readFile ../config/neovim/nvim-lspconfig.vim;
+          config = builtins.readFile ../config/neovim/lspconfig.vim;
         } {
           plugin = nvim-lsputils;
-          config = builtins.readFile ../config/neovim/nvim-lsputils.vim;
+          config = builtins.readFile ../config/neovim/lsputils.vim;
         } {
           plugin = nvim-treesitter;
-          config = builtins.readFile ../config/neovim/nvim-treesitter.vim;
+          config = builtins.readFile ../config/neovim/treesitter.vim;
         } {
           plugin = vimwiki;
           config = ''
@@ -141,6 +141,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
+        nvim-treesitter-refactor
         vim-fish vim-jsonnet vim-signify vim-nix vim-tmux-navigator
       ];
       enable        = true;

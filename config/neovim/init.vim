@@ -4,15 +4,16 @@ set colorcolumn=80
 set completeopt=menuone,noinsert,noselect
 set ignorecase
 set mouse=a
+set nohlsearch
 set nowrap
 set number
 set relativenumber
 set shell=bash
 set shortmess+=c
+set splitright
 set smartcase
 set termguicolors
-set splitright
-set nohlsearch
+set updatetime=500
 
 nnoremap <Space> <Nop>
 let mapleader="\<Space>"
