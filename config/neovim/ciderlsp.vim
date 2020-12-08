@@ -10,6 +10,9 @@ require'lspconfig/configs'.ciderlsp = {
     settings = {};
   };
 }
+local function lsp_attach(_)
+  vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
+end
 lspconfig.ciderlsp.setup{on_attach=lsp_attach}
 EOF
 
