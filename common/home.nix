@@ -127,12 +127,17 @@
           config = builtins.readFile ../config/neovim/lf.vim;
         } {
           plugin = nvim-lspconfig;
-          config = builtins.readFile ../config/neovim/lspconfig.vim;
+          config = ''
+            packadd nvim-lspconfig
+            luafile ${../config/neovim/lspconfig.lua}
+          '';
         } {
           plugin = nvim-lsputils;
           config = builtins.readFile ../config/neovim/lsputils.vim;
         } {
-          plugin = nvim-treesitter;
+          plugin = nvim-treesitter.overrideAttrs(_: {
+            dependencies = [ nvim-treesitter-refactor ];
+          });
           config = builtins.readFile ../config/neovim/treesitter.vim;
         } {
           plugin = vimwiki;
@@ -141,7 +146,6 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        nvim-treesitter-refactor
         vim-fish vim-jsonnet vim-signify vim-nix vim-tmux-navigator
       ];
       enable        = true;
