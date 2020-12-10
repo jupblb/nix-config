@@ -1,9 +1,5 @@
 self: super: {
-  fishPlugins    = {
-    gruvbox    = super.callPackage ./fish/gruvbox.nix {};
-    nix-env    = super.callPackage ./fish/nix-env.nix {};
-    bobthefish = super.callPackage ./fish/bobthefish.nix {};
-  };
+  fishPlugins    = import ./fish { inherit (super) callPackage; };
   gitAndTools    = super.gitAndTools // {
     delta = super.callPackage ./delta {
       inherit (super.darwin.apple_sdk.frameworks) Security;
