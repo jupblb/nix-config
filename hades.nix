@@ -64,13 +64,6 @@
   nix.maxJobs = 12;
 
   services = {
-    apcupsd.enable     = true;
-    apcupsd.configText = ''
-      UPSCABLE usb
-      UPSTYPE usb
-      DEVICE
-    '';
-
     fstrim.enable = true;
 
     gnome3 = {

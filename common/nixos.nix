@@ -46,6 +46,13 @@
   services = {
     acpid.enable = true;
 
+    apcupsd.enable     = true;
+    apcupsd.configText = ''
+      UPSCABLE usb
+      UPSTYPE usb
+      DEVICE
+    '';
+
     mingetty.autologinUser = "jupblb";
 
     openssh = {
