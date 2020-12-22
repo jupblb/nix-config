@@ -56,7 +56,7 @@
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
       tar = "release-20.09.tar.gz";
-    in [ "${fetchTarball t}/nixos" ./common/nixos.nix ];
+    in [ "${fetchTarball url}/nixos" ./common/nixos.nix ];
 
   networking.hostName              = "hades";
   networking.networkmanager.enable = true;
