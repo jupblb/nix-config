@@ -61,10 +61,10 @@ in {
   networking = {
     defaultGateway                 = "192.168.1.1";
     firewall.allowedTCPPorts       = [
-      53 67 80 111 443 2049 4000 4001 4002 9091
+      53 67 80 111 443 2049 4000 4001 4002
     ];
     firewall.allowedUDPPorts       = [
-      53 67 80 111 443 2049 4000 4001 4002 9091
+      53 67 80 111 443 2049 4000 4001 4002
     ];
     hostName                       = "iris";
     interfaces.eth0.ipv4.addresses = [
@@ -88,14 +88,16 @@ in {
     };
 
     transmission = {
-      enable   = true;
-      group    = "users";
-      settings = {
+      enable       = true;
+      group        = "users";
+      openFirewall = true;
+      settings     = {
         download-dir           = "/data/transmission";
         incomplete-dir         = "/data/transmission/.incomplete";
         incomplete-dir-enabled = true;
         ratio-limit            = 0;
         ratio-limit-enabled    = true;
+        rpc-host-whitelist     = "iris";
         rpc-whitelist          = "127.0.0.1,192.168.*.*";
       };
     };
