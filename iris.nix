@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  serverIP = "192.168.1.7";
-in {
+{
   boot = {
     blacklistedKernelModules          = [ "brcmfmac" ];
     consoleLogLevel                   = 7;
@@ -24,7 +22,7 @@ in {
       "/var/lib/dnsmasq/.d:/etc/dnsmasq.d/"
     ];
     environment        = {
-      ServerIP    = serverIP;
+      ServerIP    = "192.168.1.7";
       WEBPASSWORD = "changeme";
       TZ          = "Europe/Warsaw";
     };
@@ -68,7 +66,7 @@ in {
     ];
     hostName                       = "iris";
     interfaces.eth0.ipv4.addresses = [
-      { address = serverIP; prefixLength = 24; }
+      { address = "192.168.1.7"; prefixLength = 24; }
     ];
     nameservers                    = [ "1.1.1.1" "8.8.8.8" ];
     wireless.enable                = false;
@@ -85,6 +83,12 @@ in {
       server.lockdPort  = 4001;
       server.mountdPort = 4002;
       server.statdPort  = 4000;
+    };
+
+    plex = {
+      enable   = true;
+      group    = "users";
+      openFirewall = true;
     };
 
     transmission = {
