@@ -146,11 +146,11 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-fish vim-jsonnet vim-signify vim-nix vim-tmux-navigator
+        vim-fish vim-jsonnet vim-signify vim-tmux-navigator
       ];
       enable        = true;
       extraPackages = with pkgs; [
-        glow nodePackages.bash-language-server ripgrep rnix-lsp
+        gcc glow nodePackages.bash-language-server ripgrep rnix-lsp
       ];
       package       = pkgs.neovim-nightly;
       vimAlias      = true;
@@ -192,13 +192,5 @@
       terminal                  = "tmux-256color";
     };
   };
-
-  xdg.dataFile   =
-    let
-      link  = lang: lib.nameValuePair
-        "nvim/site/parser/${lang}.so"
-        "${pkgs.tree-sitter.builtGrammars."${lang}"}/parser";
-      langs = [ "bash" "c" "cpp" "go" "html" "java" "json" "lua" "python" ];
-    in lib.mapAttrs (_: g: { source = g; }) (lib.listToAttrs (map link langs));
 }
 

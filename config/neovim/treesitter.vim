@@ -3,6 +3,7 @@ set foldmethod=expr
 set foldlevel=5
 
 lua require'nvim-treesitter.configs'.setup {
+  \   ensure_installed = "maintained",
   \   indent = { enable = true },
   \   highlight = { enable = true },
   \   refactor = {
