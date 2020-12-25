@@ -65,6 +65,15 @@
       servers             = [ "1.1.1.1" "8.8.8.8" ];
     };
 
+    nginx = {
+      enable                 = true;
+      virtualHosts.localhost = {
+	locations."/transmission" = {
+	  proxyPass = "http://127.0.0.1:9091/transmission";
+	};
+      };
+    };
+
     nfs = {
       server.enable     = true;
       server.exports    = ''
