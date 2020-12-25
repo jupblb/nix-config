@@ -68,9 +68,9 @@
     nginx = {
       enable                 = true;
       virtualHosts.localhost = {
-	locations."/transmission" = {
-	  proxyPass = "http://127.0.0.1:9091/transmission";
-	};
+        locations."/transmission" = {
+          proxyPass = "http://127.0.0.1:9091/transmission";
+        };
       };
     };
 
