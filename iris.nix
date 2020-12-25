@@ -94,8 +94,6 @@
         incomplete-dir-enabled = true;
         ratio-limit            = 0;
         ratio-limit-enabled    = true;
-        rpc-host-whitelist     = "iris";
-        rpc-whitelist          = "127.0.0.1,192.168.*.*";
       };
     };
   };
