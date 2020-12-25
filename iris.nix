@@ -15,29 +15,6 @@
     loader.raspberryPi.version        = 4;
   };
 
-  docker-containers.pihole = {
-    image              = "pihole/pihole:latest";
-    volumes            = [
-      "/var/lib/pihole/:/etc/pihole/"
-      "/var/lib/dnsmasq/.d:/etc/dnsmasq.d/"
-    ];
-    environment        = {
-      ServerIP    = "192.168.1.7";
-      WEBPASSWORD = "changeme";
-      TZ          = "Europe/Warsaw";
-    };
-    extraDockerOptions = [
-      "--cap-add=NET_ADMIN"
-      "--cap-add=NET_BIND_SERVICE"
-      "--cap-add=NET_RAW"
-      "--dns=127.0.0.1"
-      "--dns=1.1.1.1"
-      "--net=host"
-      "--privileged"
-    ];
-    workdir            = "/var/lib/pihole/";
-  };
-
   environment.systemPackages = with pkgs; [ wol ];
 
   fileSystems = {
@@ -75,6 +52,19 @@
   nix.maxJobs = 2;
 
   services = {
+    dnsmasq = {
+      enable              = true;
+      extraConfig         =
+        let url =
+          "https://github.com/notracking/hosts-blocklists/raw/master/dnsmasq/dnsmasq.blacklist.txt";
+        in ''
+          ${builtins.readFile ./config/dnsmasq.conf}
+          conf-file=${builtins.fetchurl url}
+        '';
+      resolveLocalQueries = false;
+      servers             = [ "1.1.1.1" "8.8.8.8" ];
+    };
+
     nfs = {
       server.enable     = true;
       server.exports    = ''
@@ -116,9 +106,5 @@
     };
     startAt       = "*:0/15";
   };
-
-  users.users.jupblb.extraGroups = [ "docker" ];
-
-  virtualisation.docker.enable = true;
 }
 
