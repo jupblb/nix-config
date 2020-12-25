@@ -85,12 +85,6 @@
       server.statdPort  = 4000;
     };
 
-    plex = {
-      enable   = true;
-      group    = "users";
-      openFirewall = true;
-    };
-
     transmission = {
       enable       = true;
       group        = "users";
