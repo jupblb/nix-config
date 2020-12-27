@@ -69,6 +69,18 @@
     };
 
     sshguard.enable = true;
+
+    syncthing = {
+      enable              = true;
+      declarative.devices = {
+        iris.id  =
+          "24Q2MFE-4ONJZ5U-3GFUM4T-XTKCS42-55V33SU-YUZTVBR-UXOJ4WK-MUQD3AD";
+        hades.id =
+          "T6KMRM3-MLYTCIX-QKVNUHG-X6G7LET-U7D5C4A-YO25UQK-3FMF6BO-M7ZAQAM";
+      };
+      group               = "users";
+      openDefaultPorts    = true;
+    };
   };
 
   sound.enable = true;

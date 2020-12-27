@@ -36,10 +36,10 @@
   networking = {
     defaultGateway                 = "192.168.1.1";
     firewall.allowedTCPPorts       = [
-      53 67 80 111 443 2049 4000 4001 4002
+      53 67 80 111 443 2049 4000 4001 4002 22067 22070
     ];
     firewall.allowedUDPPorts       = [
-      53 67 80 111 443 2049 4000 4001 4002
+      53 67 80 111 443 2049 4000 4001 4002 22067 22070
     ];
     hostName                       = "iris";
     interfaces.eth0.ipv4.addresses = [
@@ -68,8 +68,14 @@
     nginx = {
       enable                 = true;
       virtualHosts.localhost = {
-        locations."/transmission" = {
-          proxyPass = "http://127.0.0.1:9091/transmission";
+        locations = {
+          "/syncthing/"    = {
+            extraConfig = "proxy_set_header Host localhost;";
+            proxyPass   = "http://127.0.0.1:8384/";
+          };
+          "/transmission" = {
+            proxyPass = "http://127.0.0.1:9091/transmission";
+          };
         };
       };
     };
@@ -82,6 +88,27 @@
       server.lockdPort  = 4001;
       server.mountdPort = 4002;
       server.statdPort  = 4000;
+    };
+
+    syncthing = {
+      declarative = {
+        folders         = {
+          "/data/syncthing" = {
+            devices    = [ "hades" ];
+            id         = "sync";
+            versioning = {
+              params = { keep = "5"; };
+              type   = "simple";
+            };
+          };
+        };
+        overrideDevices = false;
+      };
+      relay = {
+        enable        = true;
+        listenAddress = "0.0.0.0";
+        pools         = [ "" ];
+      };
     };
 
     transmission = {

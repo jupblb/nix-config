@@ -11,7 +11,7 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ dropbox-cli steam ];
+  environment.systemPackages = with pkgs; [ dropbox-cli syncthing-gtk steam ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -72,6 +72,14 @@
       gnome-online-accounts.enable = true;
       gnome-settings-daemon.enable = true;
       sushi.enable                 = true;
+    };
+
+    syncthing.declarative.folders = {
+      "/srv/syncthing" = {
+        devices        = [ "iris" ];
+        id             = "sync";
+        rescanInterval = 180;
+      };
     };
 
     wakeonlan.interfaces = [ {
