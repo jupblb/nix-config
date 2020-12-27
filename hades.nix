@@ -91,7 +91,7 @@
       enable                            = true;
       desktopManager.gnome3.enable      = true;
       desktopManager.gnome3.sessionPath = with pkgs.gnome3; [
-        gnome-screenshot
+        gnome-screenshot nautilus shotwell
       ];
       displayManager.autoLogin.enable   = true;
       displayManager.autoLogin.user     = "jupblb";
