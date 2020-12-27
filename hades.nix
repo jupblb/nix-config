@@ -11,8 +11,6 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ dropbox-cli steam ];
-
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
@@ -27,13 +25,10 @@
     cpu.intel.updateMicrocode = true;
 
     opengl = {
-      driSupport         = true;
-      driSupport32Bit    = true;
-      extraPackages      = with pkgs; [ amdvlk libvdpau-va-gl vaapiVdpau ];
-      extraPackages32    = with pkgs.pkgsi686Linux; [ libva ];
+      driSupport      = true;
+      extraPackages   = with pkgs; [ amdvlk libvdpau-va-gl vaapiVdpau ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
-
-    pulseaudio.support32Bit = true;
   };
 
   home-manager.users.jupblb = {
@@ -50,6 +45,11 @@
       firefox.package               = pkgs.firefox-wayland;
       kitty.settings                = { hide_window_decorations = "yes"; };
     };
+
+    services.dropbox = {
+      enable = true;
+      path   = "/srv/dropbox";
+    };
   };
 
   imports =
@@ -62,6 +62,8 @@
   networking.networkmanager.enable = true;
 
   nix.maxJobs = 12;
+
+  programs.steam.enable = true;
 
   services = {
     fstrim.enable = true;
@@ -103,24 +105,6 @@
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   system.stateVersion = "20.03";
-
-  systemd.services.dropbox = {
-    after                        = [ "network.target" ];
-    description                  = "Dropbox";
-    environment.QML2_IMPORT_PATH = with pkgs.qt5.qtbase; "${bin}${qtQmlPrefix}";
-    environment.QT_PLUGIN_PATH   = with pkgs.qt5.qtbase; "${bin}${qtQmlPrefix}";
-    serviceConfig                = {
-      ExecStart     = "${pkgs.dropbox}/bin/dropbox";
-      ExecReload    = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
-      KillMode      = "control-group";
-      Nice          = 10;
-      PrivateTmp    = true;
-      ProtectSystem = "full";
-      Restart       = "on-failure";
-      User          = "jupblb";
-    };
-    wantedBy                     = [ "default.target" ];
-  };
 
   time.hardwareClockInLocalTime = true;
 
