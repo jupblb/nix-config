@@ -106,6 +106,14 @@
             type   = "simple";
           };
         };
+        "/nfs/syncthing/jupblb-workspace" = {
+          devices    = [ "hades" ];
+          id         = "jupblb-workspace";
+          versioning = {
+            params = { maxAge = 604800; };
+            type   = "staggered";
+          };
+        };
       };
       relay               = {
         enable        = true;

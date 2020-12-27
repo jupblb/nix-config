@@ -86,6 +86,11 @@
           id             = "jupblb";
           rescanInterval = 180;
         };
+        "/home/jupblb/Workspace" = {
+          devices        = [ "iris" ];
+          id             = "jupblb-workspace";
+          rescanInterval = 180;
+        };
       };
       user                = "jupblb";
     };
