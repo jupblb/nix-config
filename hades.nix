@@ -11,6 +11,8 @@
     loader.systemd-boot.enable      = true;
   };
 
+  environment.systemPackages = with pkgs; [ mpv ];
+
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
@@ -72,6 +74,8 @@
       gnome-settings-daemon.enable = true;
       sushi.enable                 = true;
     };
+
+    gvfs.enable = true;
 
     syncthing = {
       configDir           = "/home/jupblb/.config/syncthing";
