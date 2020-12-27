@@ -91,20 +91,17 @@
     };
 
     syncthing = {
-      declarative = {
-        folders         = {
-          "/data/syncthing" = {
-            devices    = [ "hades" ];
-            id         = "sync";
-            versioning = {
-              params = { keep = "5"; };
-              type   = "simple";
-            };
+      declarative.folders = {
+        "/data/syncthing" = {
+          devices    = [ "hades" ];
+          id         = "sync";
+          versioning = {
+            params = { keep = "5"; };
+            type   = "simple";
           };
         };
-        overrideDevices = false;
       };
-      relay = {
+      relay               = {
         enable        = true;
         listenAddress = "0.0.0.0";
         pools         = [ "" ];

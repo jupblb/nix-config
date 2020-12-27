@@ -74,7 +74,7 @@
     };
 
     syncthing = {
-      configDir           = "/home/jupblb/config/syncthing";
+      configDir           = "/home/jupblb/.config/syncthing";
       dataDir             = "/home/jupblb/.local/share/syncthing";
       declarative.folders = {
         "/home/jupblb/Syncthing" = {
