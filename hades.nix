@@ -11,7 +11,7 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ dropbox-cli syncthing-gtk steam ];
+  environment.systemPackages = with pkgs; [ dropbox-cli steam ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
