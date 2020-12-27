@@ -83,7 +83,7 @@
       declarative.folders = {
         "/home/jupblb/Syncthing" = {
           devices        = [ "iris" ];
-          id             = "sync";
+          id             = "jupblb";
           rescanInterval = 180;
         };
       };

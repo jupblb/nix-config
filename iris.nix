@@ -18,12 +18,14 @@
   environment.systemPackages = with pkgs; [ wol ];
 
   fileSystems = {
-    "/".device     = "/dev/disk/by-label/NIXOS_SD";
-    "/".fsType     = "ext4";
-    "/boot".device = "/dev/disk/by-label/NIXOS_BOOT";
-    "/boot".fsType = "vfat";
-    "/data".device = "/dev/disk/by-label/data";
-    "/data".fsType = "ext4";
+    "/".device              = "/dev/disk/by-label/NIXOS_SD";
+    "/".fsType              = "ext4";
+    "/boot".device          = "/dev/disk/by-label/NIXOS_BOOT";
+    "/boot".fsType          = "vfat";
+    "/nfs".device           = "/dev/disk/by-label/data";
+    "/nfs".fsType           = "ext4";
+    "/nfs/pictures".device  = "/nfs/syncthing/jupblb/Pictures/album";
+    "/nfs/pictures".options = [ "bind" ];
   };
 
   hardware = {
@@ -83,7 +85,11 @@
     nfs = {
       server.enable     = true;
       server.exports    = ''
-        /data/nfs *(rw,sync,insecure,nohide,crossmnt,fsid=0,subtree_check)
+        /nfs *(rw,fsid=0,no_subtree_check)
+        /nfs/movies *(rw,nohide,insecure,no_subtree_check)
+        /nfs/pictures *(rw,nohide,insecure,no_subtree_check)
+        /nfs/shows *(rw,nohide,insecure,no_subtree_check)
+        /nfs/transmission *(rw,nohide,insecure,no_subtree_check)
       '';
       server.lockdPort  = 4001;
       server.mountdPort = 4002;
@@ -92,9 +98,9 @@
 
     syncthing = {
       declarative.folders = {
-        "/data/syncthing" = {
+        "/nfs/syncthing/jupblb" = {
           devices    = [ "hades" ];
-          id         = "sync";
+          id         = "jupblb";
           versioning = {
             params = { keep = "5"; };
             type   = "simple";
@@ -113,8 +119,8 @@
       group        = "users";
       openFirewall = true;
       settings     = {
-        download-dir           = "/data/transmission";
-        incomplete-dir         = "/data/transmission/.incomplete";
+        download-dir           = "/nfs/transmission";
+        incomplete-dir         = "/nfs/transmission/.incomplete";
         incomplete-dir-enabled = true;
         ratio-limit            = 0;
         ratio-limit-enabled    = true;
