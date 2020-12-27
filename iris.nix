@@ -110,7 +110,7 @@
           devices    = [ "hades" ];
           id         = "jupblb-workspace";
           versioning = {
-            params = { maxAge = 604800; };
+            params = { maxAge = "604800"; };
             type   = "staggered";
           };
         };
