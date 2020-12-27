@@ -76,7 +76,7 @@
         iris.id  =
           "24Q2MFE-4ONJZ5U-3GFUM4T-XTKCS42-55V33SU-YUZTVBR-UXOJ4WK-MUQD3AD";
         hades.id =
-          "T6KMRM3-MLYTCIX-QKVNUHG-X6G7LET-U7D5C4A-YO25UQK-3FMF6BO-M7ZAQAM";
+          "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
       };
       group               = "users";
       openDefaultPorts    = true;

@@ -46,10 +46,7 @@
       kitty.settings                = { hide_window_decorations = "yes"; };
     };
 
-    services.dropbox = {
-      enable = true;
-      path   = "/srv/dropbox";
-    };
+    services.dropbox.enable = true;
   };
 
   imports =
@@ -76,12 +73,17 @@
       sushi.enable                 = true;
     };
 
-    syncthing.declarative.folders = {
-      "/srv/syncthing" = {
-        devices        = [ "iris" ];
-        id             = "sync";
-        rescanInterval = 180;
+    syncthing = {
+      configDir           = "/home/jupblb/config/syncthing";
+      dataDir             = "/home/jupblb/.local/share/syncthing";
+      declarative.folders = {
+        "/home/jupblb/Syncthing" = {
+          devices        = [ "iris" ];
+          id             = "sync";
+          rescanInterval = 180;
+        };
       };
+      user                = "jupblb";
     };
 
     wakeonlan.interfaces = [ {
