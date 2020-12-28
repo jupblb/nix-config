@@ -4,6 +4,9 @@
   boot = {
     blacklistedKernelModules          = [ "brcmfmac" ];
     consoleLogLevel                   = 7;
+    kernel.sysctl                     = {
+      "fs.inotify.max_user_watches" = "204800";
+    };
     kernelPackages                    = pkgs.linuxPackages_rpi4;
     loader.grub.enable                = false;
     loader.raspberryPi.enable         = true;
