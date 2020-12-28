@@ -80,9 +80,13 @@
     syncthing = {
       configDir           = "/home/jupblb/.config/syncthing";
       dataDir             = "/home/jupblb/.local/share/syncthing";
-      declarative.folders = {
-        "jupblb/Documents".path = "/home/jupblb/Documents";
-        "jupblb/Pictures".path  = "/home/jupblb/Pictures";
+      declarative = {
+        cert    = toString ./config/syncthing/hades/cert.pem;
+        folders = {
+          "jupblb/Documents".path = "/home/jupblb/Documents";
+          "jupblb/Pictures".path  = "/home/jupblb/Pictures";
+        };
+        key     = toString ./config/syncthing/hades/key.pem;
       };
       user                = "jupblb";
     };
