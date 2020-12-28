@@ -84,12 +84,11 @@
         "/home/jupblb/Syncthing" = {
           devices        = [ "iris" ];
           id             = "jupblb";
-          rescanInterval = 180;
         };
         "/home/jupblb/Workspace" = {
           devices        = [ "iris" ];
           id             = "jupblb-workspace";
-          rescanInterval = 180;
+          watchDelay     = 300;
         };
       };
       user                = "jupblb";

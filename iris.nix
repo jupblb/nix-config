@@ -116,6 +116,7 @@
             params = { maxAge = "604800"; };
             type   = "staggered";
           };
+          watchDelay = 300;
         };
       };
       relay               = {
