@@ -41,9 +41,15 @@
       in (import (fetchTarball t) {});
 
     programs = {
-      firefox.enableGnomeExtensions = true;
-      firefox.package               = pkgs.firefox-wayland;
-      kitty.settings                = { hide_window_decorations = "yes"; };
+      firefox        = {
+        enableGnomeExtensions         = true;
+        profiles."jupblb".extraConfig = ''
+          user_pref("widget.wayland-dmabuf-vaapi.enabled", true);
+          user_pref("gfx.webrender.enabled", true);
+        '';
+        package                       = pkgs.firefox-wayland;
+      };
+      kitty.settings = { hide_window_decorations = "yes"; };
     };
 
     services.dropbox.enable = true;
