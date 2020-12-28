@@ -99,23 +99,36 @@
       server.statdPort  = 4000;
     };
 
+    ssmtp = {
+      authPassFile = toString ./config/gmail.key;
+      authUser     = "mpkielbowicz@gmail.com";
+      enable       = true;
+      hostName     = "smtp.gmail.com:587";
+      useSTARTTLS  = true;
+      useTLS       = true;
+    };
+
     syncthing = {
-      declarative.folders = 
-        let simpleVersioning = {
-          params = { keep = "5"; };
-          type   = "simple";
-        };
-        in {
-          "jupblb/Documents" = {
-            path       = "/nfs/syncthing/jupblb/Documents";
-            versioning = simpleVersioning;
+      declarative = {
+        cert    = toString ./config/syncthing/iris/cert.pem;
+        folders =
+          let simpleVersioning = {
+            params = { keep = "5"; };
+            type   = "simple";
           };
-          "jupblb/Pictures" = {
-            path       = "/nfs/syncthing/jupblb/Pictures";
-            versioning = simpleVersioning;
+          in {
+            "jupblb/Documents" = {
+              path       = "/nfs/syncthing/jupblb/Documents";
+              versioning = simpleVersioning;
+            };
+            "jupblb/Pictures" = {
+              path       = "/nfs/syncthing/jupblb/Pictures";
+              versioning = simpleVersioning;
+            };
           };
-        };
-      relay               = {
+        key     = toString ./config/syncthing/iris/key.pem;
+      };
+      relay       = {
         enable        = true;
         listenAddress = "0.0.0.0";
         pools         = [ "" ];

@@ -19,7 +19,7 @@
   };
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
-  environment.systemPackages   = with pkgs; [ file git unzip ];
+  environment.systemPackages   = with pkgs; [ file git gitAndTools.git-crypt unzip ];
 
   hardware = {
     enableRedistributableFirmware = true;
