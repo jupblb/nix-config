@@ -99,6 +99,15 @@
       server.statdPort  = 4000;
     };
 
+    smartd = {
+      enable        = true;
+      notifications = {
+        mail.enable    = true;
+        mail.recipient = "mpkielbowicz@gmail.com";
+        test           = true;
+      };
+    };
+
     ssmtp = {
       authPassFile = toString ./config/gmail.key;
       authUser     = "mpkielbowicz@gmail.com";
