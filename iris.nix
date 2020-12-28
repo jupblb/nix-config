@@ -74,6 +74,10 @@
       enable                 = true;
       virtualHosts.localhost = {
         locations = {
+          "/files/"           = {
+            alias       = "/nfs/";
+            extraConfig = "autoindex on;";
+          };
           "/syncthing/"    = {
             extraConfig = "proxy_set_header Host localhost;";
             proxyPass   = "http://127.0.0.1:8384/";
