@@ -51,6 +51,8 @@
       UPSCABLE usb
       UPSTYPE usb
       DEVICE
+      BATTERYLEVEL 10
+      MINUTES 5
     '';
 
     mingetty.autologinUser = "jupblb";
