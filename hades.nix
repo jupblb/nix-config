@@ -11,8 +11,6 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ mpv ];
-
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
@@ -100,7 +98,7 @@
       enable                            = true;
       desktopManager.gnome3.enable      = true;
       desktopManager.gnome3.sessionPath = with pkgs.gnome3; [
-        gnome-screenshot nautilus shotwell
+        gnome-screenshot nautilus shotwell totem
       ];
       displayManager.autoLogin.enable   = true;
       displayManager.autoLogin.user     = "jupblb";
