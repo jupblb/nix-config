@@ -74,11 +74,17 @@
 
     syncthing = {
       enable              = true;
-      declarative.devices = {
-        iris.id  =
-          "24Q2MFE-4ONJZ5U-3GFUM4T-XTKCS42-55V33SU-YUZTVBR-UXOJ4WK-MUQD3AD";
-        hades.id =
-          "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
+      declarative = {
+        devices = {
+          hades.id =
+            "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
+          iris.id  =
+            "24Q2MFE-4ONJZ5U-3GFUM4T-XTKCS42-55V33SU-YUZTVBR-UXOJ4WK-MUQD3AD";
+        };
+        folders = {
+          "jupblb/Documents".devices = [ "hades" "iris" ];
+          "jupblb/Pictures".devices  = [ "hades" "iris" ];
+        };
       };
       group               = "users";
       openDefaultPorts    = true;

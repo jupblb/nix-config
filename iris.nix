@@ -100,25 +100,21 @@
     };
 
     syncthing = {
-      declarative.folders = {
-        "/nfs/syncthing/jupblb" = {
-          devices    = [ "hades" ];
-          id         = "jupblb";
-          versioning = {
-            params = { keep = "5"; };
-            type   = "simple";
+      declarative.folders = 
+        let simpleVersioning = {
+          params = { keep = "5"; };
+          type   = "simple";
+        };
+        in {
+          "jupblb/Documents" = {
+            path       = "/nfs/syncthing/jupblb/Documents";
+            versioning = simpleVersioning;
+          };
+          "jupblb/Pictures" = {
+            path       = "/nfs/syncthing/jupblb/Pictures";
+            versioning = simpleVersioning;
           };
         };
-        "/nfs/syncthing/jupblb-workspace" = {
-          devices    = [ "hades" ];
-          id         = "jupblb-workspace";
-          versioning = {
-            params = { maxAge = "604800"; };
-            type   = "staggered";
-          };
-          watchDelay = 300;
-        };
-      };
       relay               = {
         enable        = true;
         listenAddress = "0.0.0.0";
