@@ -55,8 +55,6 @@
       MINUTES 5
     '';
 
-    mingetty.autologinUser = "jupblb";
-
     openssh = {
       openFirewall           = true;
       enable                 = true;
