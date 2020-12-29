@@ -89,18 +89,18 @@
       };
     };
 
-    nfs = {
-      server.enable     = true;
-      server.exports    = ''
+    nfs.server = {
+      enable     = true;
+      exports    = ''
         /nfs *(rw,fsid=0,no_subtree_check)
         /nfs/movies *(rw,nohide,insecure,no_subtree_check)
         /nfs/pictures *(rw,nohide,insecure,no_subtree_check)
         /nfs/shows *(rw,nohide,insecure,no_subtree_check)
         /nfs/transmission *(rw,nohide,insecure,no_subtree_check)
       '';
-      server.lockdPort  = 4001;
-      server.mountdPort = 4002;
-      server.statdPort  = 4000;
+      lockdPort  = 4001;
+      mountdPort = 4002;
+      statdPort  = 4000;
     };
 
     smartd = {
