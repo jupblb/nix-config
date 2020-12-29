@@ -76,13 +76,15 @@
       enable              = true;
       declarative = {
         devices = {
-          hades.id =
+          artemis.id =
+            "XKAGTTE-T22BOZ7-X7Z447S-IMFGOXM-FNOMAQD-LZFI2RQ-AKOMDZL-B5A2JA2";
+          hades.id   =
             "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
-          iris.id  =
+          iris.id    =
             "24Q2MFE-4ONJZ5U-3GFUM4T-XTKCS42-55V33SU-YUZTVBR-UXOJ4WK-MUQD3AD";
         };
         folders = {
-          "jupblb/Documents".devices = [ "hades" "iris" ];
+          "jupblb/Documents".devices = [ "artemis" "hades" "iris" ];
           "jupblb/Pictures".devices  = [ "hades" "iris" ];
         };
       };
