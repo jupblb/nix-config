@@ -36,6 +36,8 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
+autocmd BufRead,BufNewFile *.nix set filetype=nix
+
 autocmd BufWinEnter <buffer> match Error /\s\+$/
 autocmd InsertEnter <buffer> match Error /\s\+\%#\@<!$/
 autocmd InsertLeave <buffer> match Error /\s\+$/
