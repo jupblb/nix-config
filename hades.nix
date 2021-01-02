@@ -104,7 +104,7 @@
       enable                            = true;
       desktopManager.gnome3.enable      = true;
       desktopManager.gnome3.sessionPath = with pkgs.gnome3; [
-        gnome-screenshot nautilus shotwell totem
+        evince gnome-screenshot nautilus shotwell totem
       ];
       displayManager.autoLogin.enable   = true;
       displayManager.autoLogin.user     = "jupblb";
