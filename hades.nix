@@ -66,6 +66,7 @@
 
   nix.maxJobs = 12;
 
+  programs.fish.enable = true;
   programs.steam.enable = true;
 
   services = {
