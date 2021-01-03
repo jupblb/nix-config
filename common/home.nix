@@ -148,12 +148,20 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-fish vim-jsonnet vim-signify vim-tmux-navigator
+        vim-css-color vim-fish vim-jsonnet vim-signify vim-tmux-navigator
       ];
       enable        = true;
-      extraPackages = with pkgs; [
-        gcc glow nodePackages.bash-language-server ripgrep rnix-lsp
-      ];
+      extraPackages =
+        let
+          packages        = with pkgs; [ gcc glow metals ripgrep rnix-lsp ];
+          nodePackages    = with pkgs.nodePackages; [
+            bash-language-server
+            typescript-language-server
+            vim-language-server vscode-css-languageserver-bin
+              vscode-html-languageserver-bin vscode-json-languageserver-bin
+            yaml-language-server
+          ];
+        in packages ++ nodePackages;
       package       = pkgs.neovim-nightly;
       vimAlias      = true;
       vimdiffAlias  = true;
@@ -195,4 +203,3 @@
     };
   };
 }
-

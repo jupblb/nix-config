@@ -26,13 +26,22 @@ local function lsp_attach(_)
   vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 end
 
-lspconfig.bashls.setup{}
-lspconfig.rnix.setup{}
+lspconfig.bashls.setup{on_attach=lsp_attach}
+lspconfig.cssls.setup{on_attach=lsp_attach}
+lspconfig.html.setup{on_attach=lsp_attach}
+lspconfig.jsonls.setup{on_attach=lsp_attach}
+lspconfig.metals.setup{on_attach=lsp_attach}
+lspconfig.tsserver.setup{on_attach=lsp_attach}
+lspconfig.rnix.setup{on_attach=lsp_attach}
+lspconfig.vimls.setup{on_attach=lsp_attach}
+lspconfig.yamlls.setup{on_attach=lsp_attach}
 
 if os.execute('which ciderlsp') == 0 then
   lspconfig.ciderlsp.setup{on_attach=lsp_attach}
 end
+if os.execute('which haskell-language-server') == 0 then
+  lspconfig.hls.setup{on_attach=lsp_attach}
+end
 if os.execute('which pyls') == 0 then
   lspconfig.pyls.setup{on_attach=lsp_attach}
 end
-
