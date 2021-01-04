@@ -20,7 +20,9 @@
   };
 
   fonts.enableDefaultFonts = true;
-  fonts.fonts              = with pkgs; [ vistafonts ];
+  fonts.fonts              = with pkgs; [
+    emacs-all-the-icons-fonts vistafonts
+  ];
 
   hardware = {
     cpu.intel.updateMicrocode = true;
@@ -47,6 +49,7 @@
         '';
         package                       = pkgs.firefox-wayland;
       };
+
       kitty.settings = { hide_window_decorations = "yes"; };
     };
 

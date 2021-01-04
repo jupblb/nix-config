@@ -13,6 +13,10 @@
       enable = true;
     };
 
+    emacs = {
+      enable = true;
+    };
+
     firefox = {
       enable            = true;
       profiles."jupblb" = {
@@ -29,6 +33,7 @@
       promptInit           = builtins.readFile ../config/prompt.fish;
       shellAliases         = {
         cat  = "bat -p --paging=never";
+        doom = "~/.config/emacs/bin/doom";
         less = "bat -p --paging=always";
         ls   = "ls --color=auto --group-directories-first";
         ssh  = "env TERM=xterm-256color ssh";
