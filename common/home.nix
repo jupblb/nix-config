@@ -2,7 +2,10 @@
 
 {
   home.packages         = with pkgs; [ gitAndTools.git-crypt ripgrep ];
-  home.sessionVariables = { EDITOR = "nvim"; };
+  home.sessionVariables = {
+    DOOMDIR = ../config/doom;
+    EDITOR  = "nvim";
+  };
   home.username         = "jupblb";
 
   nixpkgs.overlays = [ (import ./overlay) ];
