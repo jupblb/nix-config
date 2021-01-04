@@ -14,7 +14,11 @@
     };
 
     emacs = {
-      enable = true;
+      enable        = true;
+      extraPackages = epkgs:
+        let
+          packages = with pkgs; [ gnumake fd pandoc shellcheck ];
+        in packages;
     };
 
     firefox = {
