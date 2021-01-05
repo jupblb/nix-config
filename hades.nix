@@ -25,6 +25,8 @@
   ];
 
   hardware = {
+    bluetooth.enable = true;
+
     cpu.intel.updateMicrocode = true;
 
     opengl = {
@@ -34,7 +36,11 @@
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
 
-    pulseaudio.enable = true;
+    pulseaudio = {
+      enable       = true;
+      extraModules = [ pkgs.pulseaudio-modules-bt ];
+      package      = pkgs.pulseaudioFull;
+    };
   };
 
   home-manager.users.jupblb = {

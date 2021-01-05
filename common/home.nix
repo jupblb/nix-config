@@ -18,10 +18,8 @@
 
     emacs = {
       enable        = true;
-      extraPackages = epkgs:
-        let
-          packages = with pkgs; [ gnumake fd pandoc shellcheck ];
-        in packages;
+      extraPackages = epkgs: [ epkgs.vterm ];
+      package       = pkgs.emacs-wrapped;
     };
 
     firefox = {
