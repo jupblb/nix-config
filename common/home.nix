@@ -3,8 +3,9 @@
 {
   home.packages         = with pkgs; [ gitAndTools.git-crypt ripgrep ];
   home.sessionVariables = {
-    DOOMDIR = ../config/doom;
-    EDITOR  = "nvim";
+    DOOMDIR      = ../config/doom;
+    DOOMLOCALDIR = "~/.local/share/doom";
+    EDITOR       = "nvim";
   };
   home.username         = "jupblb";
 
@@ -18,7 +19,7 @@
 
     emacs = {
       enable        = true;
-      extraPackages = epkgs: [ epkgs.vterm ];
+      extraPackages = epkgs: with epkgs; [ vterm ];
       package       = pkgs.emacs-wrapped;
     };
 
@@ -211,5 +212,10 @@
       shortcut                  = "Space";
       terminal                  = "tmux-256color";
     };
+  };
+
+  xdg.configFile."emacs".source = builtins.fetchGit {
+    ref = "develop";
+    url = https://github.com/hlissner/doom-emacs.git;
   };
 }
