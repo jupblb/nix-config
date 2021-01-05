@@ -26,7 +26,7 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   home-manager.users.jupblb = {
-    firefox.enable = lib.mkForce false;
+    programs.firefox.enable = lib.mkForce false;
   };
 
   imports = [ ./common/nixos.nix ];

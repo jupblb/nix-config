@@ -20,7 +20,7 @@
   };
 
   home-manager.users.jupblb = {
-    imports = [ ./common/home.nix ];
+    imports = [ ./home.nix ];
 
     nixpkgs.config.packageOverrides = _:
       let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
