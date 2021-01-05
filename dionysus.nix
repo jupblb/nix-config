@@ -2,7 +2,9 @@
 
 {
   boot = {
-    initrd.availableKernelModules   = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+    initrd.availableKernelModules   = [
+      "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"
+    ];
     kernel.sysctl                   = {
       "fs.inotify.max_user_watches" = "204800";
     };
@@ -17,24 +19,26 @@
     "/".fsType     = "xfs";
     "/boot".device = "/dev/disk/by-uuid/E668-E8D2";
     "/boot".fsType = "vfat";
+    "/data".device = "/dev/disk/by-label/data";
+    "/data".fsType = "ext4";
   };
 
   imports = [ ./common/nixos.nix ];
 
   networking = {
-    defaultGateway                 = "192.168.1.1";
-    firewall.allowedTCPPorts       = [
+    defaultGateway                   = "192.168.1.1";
+    firewall.allowedTCPPorts         = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
     ];
-    firewall.allowedUDPPorts       = [
+    firewall.allowedUDPPorts         = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
     ];
-    hostName                       = "dionysus";
+    hostName                         = "dionysus";
     interfaces.enp8s0.ipv4.addresses = [
       { address = "192.168.1.4"; prefixLength = 24; }
     ];
-    nameservers                    = [ "1.1.1.1" "8.8.8.8" ];
-    wireless.enable                = false;
+    nameservers                      = [ "1.1.1.1" "8.8.8.8" ];
+    wireless.enable                  = false;
   };
 
   programs.gnupg.agent.pinentryFlavor = "curses";
@@ -57,11 +61,11 @@
       enable                 = false;
       virtualHosts.localhost = {
         locations = {
-          "/files/"           = {
+          "/nfs/"         = {
             alias       = "/nfs/";
             extraConfig = "autoindex on;";
           };
-          "/syncthing/"    = {
+          "/syncthing/"   = {
             extraConfig = "proxy_set_header Host localhost;";
             proxyPass   = "http://127.0.0.1:8384/";
           };
@@ -73,7 +77,7 @@
     };
 
     nfs.server = {
-      enable     = true;
+      enable     = false;
       exports    = ''
         /nfs *(rw,fsid=0,no_subtree_check)
         /nfs/movies *(rw,nohide,insecure,no_subtree_check)
