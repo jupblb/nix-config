@@ -10,15 +10,31 @@
   console.keyMap = "pl";
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
-  environment.systemPackages   = with pkgs; [ file git gitAndTools.git-crypt unzip ];
+  environment.systemPackages   = with pkgs; [
+    file git gitAndTools.git-crypt unzip
+  ];
 
   hardware = {
     enableRedistributableFirmware = true;
     video.hidpi.enable            = true;
   };
 
+  home-manager.users.jupblb = {
+    imports = [ ./common/home.nix ];
+
+    nixpkgs.config.packageOverrides = _:
+      let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+      in (import (fetchTarball t) {});
+  };
+
   i18n.defaultLocale    = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
+
+  imports =
+    let
+      url = "https://github.com/nix-community/home-manager/archive/${tar}";
+      tar = "release-20.09.tar.gz";
+    in [ "${fetchTarball url}/nixos" ];
 
   networking.useDHCP = false;
 
@@ -28,6 +44,7 @@
     bash.enableCompletion = true;
     bash.enableLsColors   = true;
     bash.promptInit       = builtins.readFile ../config/bashrc;
+    fish.enable           = true;
     gnupg.agent.enable    = true;
     vim.defaultEditor     = true;
   };
@@ -43,6 +60,8 @@
       BATTERYLEVEL 10
       MINUTES 5
     '';
+
+    fstrim.enable = true;
 
     openssh = {
       openFirewall           = true;
@@ -89,5 +108,6 @@
     openssh.authorizedKeys.keys = [
       (builtins.readFile ../config/ssh/id_ed25519.pub)
     ];
+    shell                       = pkgs.fish;
   };
 }

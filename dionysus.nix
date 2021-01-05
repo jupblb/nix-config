@@ -23,6 +23,12 @@
     "/data".fsType = "ext4";
   };
 
+  hardware.cpu.amd.updateMicrocode = true;
+
+  home-manager.users.jupblb = {
+    firefox.enable = lib.mkForce false;
+  };
+
   imports = [ ./common/nixos.nix ];
 
   networking = {
@@ -167,5 +173,7 @@
     };
     startAt       = "*:0/15";
   };
+
+  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 }
 

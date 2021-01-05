@@ -27,7 +27,7 @@
 
     opengl = {
       driSupport      = true;
-      enable = true;
+      enable          = true;
       extraPackages   = with pkgs; [ amdvlk libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
@@ -37,12 +37,6 @@
 
   home-manager.users.jupblb = {
     home.stateVersion = "20.03";
-
-    imports = [ ./common/home.nix ];
-
-    nixpkgs.config.packageOverrides = _:
-      let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      in (import (fetchTarball t) {});
 
     programs = {
       firefox        = {
@@ -59,23 +53,14 @@
     services.dropbox.enable = true;
   };
 
-  imports =
-    let
-      url = "https://github.com/nix-community/home-manager/archive/${tar}";
-      tar = "release-20.09.tar.gz";
-    in [ "${fetchTarball url}/nixos" ./common/nixos.nix ];
+  imports = [ ./common/nixos.nix ];
 
   networking.hostName              = "hades";
   networking.networkmanager.enable = true;
 
-  nix.maxJobs = 12;
-
-  programs.fish.enable = true;
   programs.steam.enable = true;
 
   services = {
-    fstrim.enable = true;
-
     gnome3 = {
       chrome-gnome-shell.enable    = true;
       core-utilities.enable        = false;
@@ -132,6 +117,5 @@
   time.hardwareClockInLocalTime = true;
 
   users.users.jupblb.extraGroups = [ "lp" ];
-  users.users.jupblb.shell       = pkgs.fish;
 }
 
