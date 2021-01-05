@@ -7,6 +7,7 @@
     ];
     initrd.kernelModules            = [ "amdgpu" ];
     kernelPackages                  = pkgs.linuxPackages_latest;
+    kernelParams                    = [ "mitigations=off" ];
     loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot.enable      = true;
   };
@@ -26,9 +27,12 @@
 
     opengl = {
       driSupport      = true;
+      enable = true;
       extraPackages   = with pkgs; [ amdvlk libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
+
+    pulseaudio.enable = true;
   };
 
   home-manager.users.jupblb = {
@@ -82,6 +86,11 @@
 
     gvfs.enable = true;
 
+    printing = {
+      drivers = with pkgs; [ samsung-unified-linux-driver_1_00_37 ];
+      enable  = true;
+    };
+
     syncthing = {
       configDir           = "/home/jupblb/.config/syncthing";
       dataDir             = "/home/jupblb/.local/share/syncthing";
@@ -114,12 +123,15 @@
     };
   };
 
+  sound.enable = true;
+
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   system.stateVersion = "20.03";
 
   time.hardwareClockInLocalTime = true;
 
-  users.users.jupblb.shell = pkgs.fish;
+  users.users.jupblb.extraGroups = [ "lp" ];
+  users.users.jupblb.shell       = pkgs.fish;
 }
 
