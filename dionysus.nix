@@ -102,14 +102,14 @@
       enable                 = true;
       virtualHosts.localhost = {
         locations = {
-          "/downloads"  = {
+          "/transmission" = {
             proxyPass = "http://127.0.0.1:9091/transmission";
           };
-          "/nfs/"       = {
+          "/nfs/"         = {
             alias       = "/nfs/";
             extraConfig = "autoindex on;";
           };
-          "/syncthing/" = {
+          "/syncthing/"   = {
             extraConfig = "proxy_set_header Host localhost;";
             proxyPass   = "http://127.0.0.1:8384/";
           };
