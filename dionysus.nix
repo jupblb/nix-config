@@ -10,6 +10,7 @@
     };
     loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot.enable      = true;
+    supportedFilesystems            = [ "zfs" ];
   };
 
   environment.systemPackages = with pkgs; [ wol ];
@@ -61,6 +62,7 @@
     firewall.allowedUDPPorts         = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
     ];
+    hostId                           = "ce5e3a09";
     hostName                         = "dionysus";
     interfaces.enp8s0.ipv4.addresses = [
       { address = "192.168.1.4"; prefixLength = 24; }
