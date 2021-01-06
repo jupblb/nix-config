@@ -185,6 +185,11 @@
       settings     = { ratio-limit = 0; ratio-limit-enabled = true; };
       user         = "jupblb";
     };
+
+    zfs.autoScrub = {
+      enable = true;
+      interval = "daily";
+    };
   };
 
   system.stateVersion = "20.09";
