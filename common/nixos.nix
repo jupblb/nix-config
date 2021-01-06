@@ -77,14 +77,20 @@
       enable              = true;
       declarative = {
         devices = {
-          artemis.id  =
+          artemis.id   =
             "XKAGTTE-T22BOZ7-X7Z447S-IMFGOXM-FNOMAQD-LZFI2RQ-AKOMDZL-B5A2JA2";
-          dionysus.id =
+          dionysus.id  =
             "AUAEQVM-GLWFEY7-ISXW5C6-5FSTG6O-J4D7FI2-LZC7NVM-7AQP4GT-TUBMYA6";
-          hades.id    =
+          domci-mac.id =
+            "RJGQXK6-PVF3555-5U3Y6MK-ADF2SH3-I7VF5UK-U56PSCR-PZJEAF5-5QFZHQ2";
+          hades.id     =
             "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
         };
         folders = {
+          "domci/Documents".devices  = [ "dionysus" "domci-mac" ];
+          "domci/Downloads".devices  = [ "dionysus" "domci-mac" ];
+          "domci/Pictures".devices   = [ "dionysus" "domci-mac" ];
+          "domci/Videos".devices     = [ "dionysus" "domci-mac" ];
           "jupblb/Documents".devices = [ "artemis" "dionysus" "hades"];
           "jupblb/Pictures".devices  = [ "dionysus" "hades" ];
         };

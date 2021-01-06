@@ -159,6 +159,21 @@
             type   = "simple";
           };
           in {
+            "domci/Documents" = {
+              path       = "/backup/domci/Documents";
+              versioning = simpleVersioning;
+            };
+            "domci/Downloads" = {
+              path = "/backup/domci/Downloads";
+            };
+            "domci/Pictures" = {
+              path       = "/backup/domci/Pictures";
+              versioning = simpleVersioning;
+            };
+            "domci/Videos" = {
+              path       = "/backup/domci/Videos";
+              versioning = simpleVersioning;
+            };
             "jupblb/Documents" = {
               path       = "/backup/jupblb/Documents";
               versioning = simpleVersioning;
