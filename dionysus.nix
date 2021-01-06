@@ -15,18 +15,40 @@
   environment.systemPackages = with pkgs; [ wol ];
 
   fileSystems = {
-    "/".device     = "/dev/disk/by-label/nixos";
-    "/".fsType     = "xfs";
-    "/boot".device = "/dev/disk/by-uuid/E668-E8D2";
-    "/boot".fsType = "vfat";
-    "/data".device = "/dev/disk/by-label/data";
-    "/data".fsType = "ext4";
+    "/" = {
+      device = "/dev/disk/by-label/nixos";
+      fsType = "xfs";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/E668-E8D2";
+      fsType = "vfat";
+    };
+    "/data" = {
+      device = "/dev/disk/by-label/data";
+      fsType = "ext4";
+    };
+    "/nfs/downloads" = {
+      device  = "/home/jupblb/Downloads";
+      options = [ "bind" ];
+    };
+    "/nfs/movies" = {
+      device  = "/data/movies";
+      options = [ "bind" ];
+    };
+    "/nfs/shows" = {
+      device  = "/data/shows";
+      options = [ "bind" ];
+    };
   };
 
   hardware.cpu.amd.updateMicrocode = true;
 
   home-manager.users.jupblb = {
-    programs.firefox.enable = lib.mkForce false;
+    programs = {
+      firefox.enable   = lib.mkForce false;
+      mercurial.enable = lib.mkForce false;
+      tmux.enable      = lib.mkForce false;
+    };
   };
 
   imports = [ ./common/nixos.nix ];
@@ -51,45 +73,43 @@
 
   services = {
     dnsmasq = {
-      enable              = false;
+      enable              = true;
       extraConfig         =
-        let url =
-          "https://github.com/notracking/hosts-blocklists/raw/master/dnsmasq/dnsmasq.blacklist.txt";
+        let git = "https://github.com/notracking/hosts-blocklists/raw/master";
         in ''
           ${builtins.readFile ./config/dnsmasq.conf}
-          conf-file=${builtins.fetchurl url}
+          conf-file=${builtins.fetchurl "${git}/dnsmasq/dnsmasq.blacklist.txt"}
         '';
       resolveLocalQueries = false;
       servers             = [ "1.1.1.1" "8.8.8.8" ];
     };
 
     nginx = {
-      enable                 = false;
+      enable                 = true;
       virtualHosts.localhost = {
         locations = {
-          "/nfs/"         = {
+          "/downloads"  = {
+            proxyPass = "http://127.0.0.1:9091/transmission";
+          };
+          "/nfs/"       = {
             alias       = "/nfs/";
             extraConfig = "autoindex on;";
           };
-          "/syncthing/"   = {
+          "/syncthing/" = {
             extraConfig = "proxy_set_header Host localhost;";
             proxyPass   = "http://127.0.0.1:8384/";
-          };
-          "/transmission" = {
-            proxyPass = "http://127.0.0.1:9091/transmission";
           };
         };
       };
     };
 
     nfs.server = {
-      enable     = false;
+      enable     = true;
       exports    = ''
         /nfs *(rw,fsid=0,no_subtree_check)
+        /nfs/downloads *(rw,nohide,insecure,no_subtree_check)
         /nfs/movies *(rw,nohide,insecure,no_subtree_check)
-        /nfs/pictures *(rw,nohide,insecure,no_subtree_check)
         /nfs/shows *(rw,nohide,insecure,no_subtree_check)
-        /nfs/transmission *(rw,nohide,insecure,no_subtree_check)
       '';
       lockdPort  = 4001;
       mountdPort = 4002;
@@ -98,6 +118,7 @@
 
     smartd = {
       enable        = true;
+      extraOptions  = [ "--interval=7200" "-A /var/log/smartd/" ];
       notifications = {
         mail.enable    = true;
         mail.recipient = "mpkielbowicz@gmail.com";
@@ -116,7 +137,7 @@
 
     syncthing = {
       declarative = {
-        cert    = toString ./config/syncthing/iris/cert.pem;
+#       cert    = toString ./config/syncthing/dionysus/cert.pem;
         folders =
           let simpleVersioning = {
             params = { keep = "5"; };
@@ -132,7 +153,7 @@
               versioning = simpleVersioning;
             };
           };
-        key     = toString ./config/syncthing/iris/key.pem;
+#       key     = toString ./config/syncthing/dionysus/key.pem;
       };
       enable      = lib.mkForce false;
       relay       = {
@@ -143,16 +164,12 @@
     };
 
     transmission = {
-      enable       = false;
+      enable       = true;
       group        = "users";
+      home         = "/home/jupblb";
       openFirewall = true;
-      settings     = {
-        download-dir           = "/nfs/transmission";
-        incomplete-dir         = "/nfs/transmission/.incomplete";
-        incomplete-dir-enabled = true;
-        ratio-limit            = 0;
-        ratio-limit-enabled    = true;
-      };
+      settings     = { ratio-limit = 0; ratio-limit-enabled = true; };
+      user         = "jupblb";
     };
   };
 
