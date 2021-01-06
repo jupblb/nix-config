@@ -77,16 +77,16 @@
       enable              = true;
       declarative = {
         devices = {
-          artemis.id =
+          artemis.id  =
             "XKAGTTE-T22BOZ7-X7Z447S-IMFGOXM-FNOMAQD-LZFI2RQ-AKOMDZL-B5A2JA2";
-          hades.id   =
+          dionysus.id =
+            "AUAEQVM-GLWFEY7-ISXW5C6-5FSTG6O-J4D7FI2-LZC7NVM-7AQP4GT-TUBMYA6";
+          hades.id    =
             "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
-          iris.id    =
-            "24Q2MFE-4ONJZ5U-3GFUM4T-XTKCS42-55V33SU-YUZTVBR-UXOJ4WK-MUQD3AD";
         };
         folders = {
-          "jupblb/Documents".devices = [ "artemis" "hades" "iris" ];
-          "jupblb/Pictures".devices  = [ "hades" "iris" ];
+          "jupblb/Documents".devices = [ "artemis" "dionysus" "hades"];
+          "jupblb/Pictures".devices  = [ "dionysus" "hades" ];
         };
       };
       group               = "users";

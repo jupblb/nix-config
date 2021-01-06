@@ -3,7 +3,7 @@
 {
   boot = {
     initrd.availableKernelModules   = [
-      "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"
+      "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci"
     ];
     kernel.sysctl                   = {
       "fs.inotify.max_user_watches" = "204800";
@@ -20,6 +20,11 @@
       device = "/dev/disk/by-label/nixos";
       fsType = "xfs";
     };
+    "/backup" = {
+      device  = "backup";
+      fsType  = "zfs";
+      options = [ "rw" "xattr" "posixacl" "noauto" ];
+    };
     "/boot" = {
       device = "/dev/disk/by-uuid/E668-E8D2";
       fsType = "vfat";
@@ -30,14 +35,17 @@
     };
     "/nfs/downloads" = {
       device  = "/home/jupblb/Downloads";
+      fsType  = "none";
       options = [ "bind" ];
     };
     "/nfs/movies" = {
       device  = "/data/movies";
+      fsType  = "none";
       options = [ "bind" ];
     };
     "/nfs/shows" = {
       device  = "/data/shows";
+      fsType  = "none";
       options = [ "bind" ];
     };
   };
@@ -119,7 +127,7 @@
     };
 
     smartd = {
-      enable        = true;
+      enable        = false;
       extraOptions  = [ "--interval=7200" "-A /var/log/smartd/" ];
       notifications = {
         mail.enable    = true;
@@ -139,7 +147,7 @@
 
     syncthing = {
       declarative = {
-#       cert    = toString ./config/syncthing/dionysus/cert.pem;
+        cert    = toString ./config/syncthing/dionysus/cert.pem;
         folders =
           let simpleVersioning = {
             params = { keep = "5"; };
@@ -147,17 +155,16 @@
           };
           in {
             "jupblb/Documents" = {
-              path       = "/nfs/syncthing/jupblb/Documents";
+              path       = "/backup/jupblb/Documents";
               versioning = simpleVersioning;
             };
             "jupblb/Pictures" = {
-              path       = "/nfs/syncthing/jupblb/Pictures";
+              path       = "/backup/jupblb/Pictures";
               versioning = simpleVersioning;
             };
           };
-#       key     = toString ./config/syncthing/dionysus/key.pem;
+        key     = toString ./config/syncthing/dionysus/key.pem;
       };
-      enable      = lib.mkForce false;
       relay       = {
         enable        = true;
         listenAddress = "0.0.0.0";
@@ -177,21 +184,35 @@
 
   system.stateVersion = "20.09";
 
-  systemd.services.checkip = {
-    after         = [ "network.target" ];
-    description   = "Public IP checker";
-    script        = with pkgs; ''
-      ${curl}/bin/curl ipinfo.io/ip >> ~/ip.txt
-      ${gawk}/bin/awk '!seen[$0]++' ~/ip.txt > ~/ip.txt.next
-      mv ~/ip.txt.next ~/ip.txt
-    '';
-    serviceConfig = {
-      ProtectSystem = "full";
-      Type          = "oneshot";
-      User          = "jupblb";
+  systemd.services =
+    let waitForZfs = {
+      serviceConfig         = {
+        ExecStartPre = lib.mkDefault "+${pkgs.writers.writeBash "check-zfs" ''
+          test -e /backup/.mounted
+        ''}";
+        RestartSec   = 30;
+      };
+      startLimitIntervalSec = 0;
     };
-    startAt       = "*:0/15";
-  };
+    in {
+      checkip    = {
+        after         = [ "network.target" ];
+        description   = "Public IP checker";
+        script        = with pkgs; ''
+          ${curl}/bin/curl ipinfo.io/ip >> ~/ip.txt
+          ${gawk}/bin/awk '!seen[$0]++' ~/ip.txt > ~/ip.txt.next
+          mv ~/ip.txt.next ~/ip.txt
+        '';
+        serviceConfig = {
+          ProtectSystem = "full";
+          Type          = "oneshot";
+          User          = "jupblb";
+        };
+        startAt       = "*:0/15";
+      };
+      nfs-server = waitForZfs;
+      syncthing  = waitForZfs;
+    };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 }
