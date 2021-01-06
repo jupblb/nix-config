@@ -132,7 +132,7 @@
     };
 
     smartd = {
-      enable        = false;
+      enable        = true;
       extraOptions  = [ "--interval=7200" "-A /var/log/smartd/" ];
       notifications = {
         mail.enable    = true;
