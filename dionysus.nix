@@ -16,19 +16,19 @@
   environment.systemPackages = with pkgs; [ wol ];
 
   fileSystems = {
-    "/" = {
+    "/"              = {
       device = "/dev/disk/by-label/nixos";
       fsType = "xfs";
     };
-    "/backup" = {
+    "/backup"        = {
       device  = "backup";
       fsType  = "zfs";
     };
-    "/boot" = {
+    "/boot"          = {
       device = "/dev/disk/by-uuid/E668-E8D2";
       fsType = "vfat";
     };
-    "/data" = {
+    "/data"          = {
       device = "/dev/disk/by-label/data";
       fsType = "ext4";
     };
@@ -37,17 +37,17 @@
       fsType  = "none";
       options = [ "bind" ];
     };
-    "/nfs/movies" = {
+    "/nfs/movies"    = {
       device  = "/data/movies";
       fsType  = "none";
       options = [ "bind" ];
     };
-    "/nfs/pictures" = {
+    "/nfs/pictures"  = {
       device  = "/backup/jupblb/Pictures/album";
       fsType  = "none";
       options = [ "bind" ];
     };
-    "/nfs/shows" = {
+    "/nfs/shows"     = {
       device  = "/data/shows";
       fsType  = "none";
       options = [ "bind" ];
@@ -202,7 +202,7 @@
     };
 
     zfs.autoScrub = {
-      enable = true;
+      enable   = true;
       interval = "daily";
     };
   };
