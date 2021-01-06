@@ -52,6 +52,7 @@
 
   programs.gnupg.agent.pinentryFlavor = "curses";
 
+  services.apcupsd.enable   = lib.mkForce false;
   services.syncthing.enable = lib.mkForce false;
 }
 

@@ -68,7 +68,6 @@
       enable                 = true;
       passwordAuthentication = false;
       permitRootLogin        = "no";
-      ports                  = [ 22 1993 ];
     };
 
     sshguard.enable = true;
