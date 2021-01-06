@@ -52,13 +52,6 @@
 
   programs.gnupg.agent.pinentryFlavor = "curses";
 
-  services.syncthing = {
-    enable = lib.mkForce false;
-    relay  = {
-      enable        = true;
-      listenAddress = "0.0.0.0";
-      pools         = [ "" ];
-    };
-  };
+  services.syncthing.enable = lib.mkForce false;
 }
 

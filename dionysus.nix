@@ -43,6 +43,11 @@
       fsType  = "none";
       options = [ "bind" ];
     };
+    "/nfs/pictures" = {
+      device  = "/backup/jupblb/Pictures/album";
+      fsType  = "none";
+      options = [ "bind" ];
+    };
     "/nfs/shows" = {
       device  = "/data/shows";
       fsType  = "none";
@@ -119,6 +124,7 @@
         /nfs *(rw,fsid=0,no_subtree_check)
         /nfs/downloads *(rw,nohide,insecure,no_subtree_check)
         /nfs/movies *(rw,nohide,insecure,no_subtree_check)
+        /nfs/pictures *(rw,nohide,insecure,no_subtree_check)
         /nfs/shows *(rw,nohide,insecure,no_subtree_check)
       '';
       lockdPort  = 4001;
