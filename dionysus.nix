@@ -23,7 +23,6 @@
     "/backup" = {
       device  = "backup";
       fsType  = "zfs";
-      options = [ "rw" "xattr" "posixacl" "noauto" ];
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/E668-E8D2";
@@ -190,35 +189,21 @@
 
   system.stateVersion = "20.09";
 
-  systemd.services =
-    let waitForZfs = {
-      serviceConfig         = {
-        ExecStartPre = lib.mkDefault "+${pkgs.writers.writeBash "check-zfs" ''
-          test -e /backup/.mounted
-        ''}";
-        RestartSec   = 30;
-      };
-      startLimitIntervalSec = 0;
+  systemd.services.checkip    = {
+    after         = [ "network.target" ];
+    description   = "Public IP checker";
+    script        = with pkgs; ''
+      ${curl}/bin/curl ipinfo.io/ip >> ~/ip.txt
+      ${gawk}/bin/awk '!seen[$0]++' ~/ip.txt > ~/ip.txt.next
+      mv ~/ip.txt.next ~/ip.txt
+    '';
+    serviceConfig = {
+      ProtectSystem = "full";
+      Type          = "oneshot";
+      User          = "jupblb";
     };
-    in {
-      checkip    = {
-        after         = [ "network.target" ];
-        description   = "Public IP checker";
-        script        = with pkgs; ''
-          ${curl}/bin/curl ipinfo.io/ip >> ~/ip.txt
-          ${gawk}/bin/awk '!seen[$0]++' ~/ip.txt > ~/ip.txt.next
-          mv ~/ip.txt.next ~/ip.txt
-        '';
-        serviceConfig = {
-          ProtectSystem = "full";
-          Type          = "oneshot";
-          User          = "jupblb";
-        };
-        startAt       = "*:0/15";
-      };
-      nfs-server = waitForZfs;
-      syncthing  = waitForZfs;
-    };
+    startAt       = "*:0/15";
+  };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 }
