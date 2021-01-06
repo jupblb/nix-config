@@ -182,9 +182,9 @@
           identityFile   = [ (toString ../config/ssh/id_ed25519) ];
         };
         in {
+          dionysus     = key // { hostname = "jupblb.ddns.net"; port = 1995; };
           "github.com" = key;
           hades        = key // { hostname = "jupblb.ddns.net"; port = 1993; };
-          iris         = key // { hostname = "jupblb.ddns.net"; port = 1994; };
         };
       serverAliveInterval = 30;
     };
