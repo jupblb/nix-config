@@ -102,16 +102,22 @@
       enable                 = true;
       virtualHosts.localhost = {
         locations = {
-          "/transmission" = {
-            proxyPass = "http://127.0.0.1:9091/transmission";
-          };
           "/nfs/"         = {
             alias       = "/nfs/";
             extraConfig = "autoindex on;";
           };
+          "/plex" = {
+            proxyPass = "http://127.0.0.1/web";
+          };
           "/syncthing/"   = {
             extraConfig = "proxy_set_header Host localhost;";
             proxyPass   = "http://127.0.0.1:8384/";
+          };
+          "/transmission" = {
+            proxyPass = "http://127.0.0.1:9091/transmission";
+          };
+          "/web/" = {
+            proxyPass = "http://127.0.0.1:32400";
           };
         };
       };
@@ -129,6 +135,12 @@
       lockdPort  = 4001;
       mountdPort = 4002;
       statdPort  = 4000;
+    };
+
+    plex = {
+      enable       = true;
+      group        = "users";
+      openFirewall = true;
     };
 
     smartd = {
