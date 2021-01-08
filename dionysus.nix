@@ -42,11 +42,6 @@
       fsType  = "none";
       options = [ "bind" ];
     };
-    "/nfs/pictures"  = {
-      device  = "/backup/jupblb/Pictures/album";
-      fsType  = "none";
-      options = [ "bind" ];
-    };
     "/nfs/shows"     = {
       device  = "/data/shows";
       fsType  = "none";
@@ -69,7 +64,7 @@
   networking = {
     defaultGateway                   = "192.168.1.1";
     firewall.allowedTCPPorts         = [
-      53 67 80 111 443 2049 4000 4001 4002 22067 22070
+      53 67 80 111 443 2049 4000 4001 4002 8181 22067 22070
     ];
     firewall.allowedUDPPorts         = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
@@ -129,7 +124,6 @@
         /nfs *(rw,fsid=0,no_subtree_check)
         /nfs/downloads *(rw,nohide,insecure,no_subtree_check)
         /nfs/movies *(rw,nohide,insecure,no_subtree_check)
-        /nfs/pictures *(rw,nohide,insecure,no_subtree_check)
         /nfs/shows *(rw,nohide,insecure,no_subtree_check)
       '';
       lockdPort  = 4001;
@@ -203,6 +197,8 @@
         pools         = [ "" ];
       };
     };
+
+    tautulli.enable = true;
 
     transmission = {
       enable       = true;
