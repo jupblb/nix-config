@@ -52,3 +52,7 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+(define-key global-map (kbd "C-h") #'evil-window-left)
+(define-key global-map (kbd "C-j") #'evil-window-down)
+(define-key global-map (kbd "C-k") #'evil-window-up)
+(define-key global-map (kbd "C-l") #'evil-window-right)
