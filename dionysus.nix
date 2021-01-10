@@ -64,7 +64,7 @@
   networking = {
     defaultGateway                   = "192.168.1.1";
     firewall.allowedTCPPorts         = [
-      53 67 80 111 443 2049 4000 4001 4002 8181 22067 22070
+      53 67 80 111 443 2049 4000 4001 4002 8181 8448 22067 22070
     ];
     firewall.allowedUDPPorts         = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
@@ -93,27 +93,52 @@
       servers             = [ "1.1.1.1" "8.8.8.8" ];
     };
 
+    matrix-synapse = {
+      database_type       = "sqlite3";
+      enable              = true;
+#     enable_registration = true;
+      extraConfig         = ''
+        trusted_key_servers:
+          - server_name: "matrix.org"
+      '';
+      listeners           = [ {
+        port        = 8448;
+        resources   = [ {
+          compress = true;
+          names    = [ "client" "webclient" ];
+        } {
+          compress = false;
+          names    = [ "federation" ];
+        } ];
+        tls         = false;
+        x_forwarded = true;
+      } ];
+      no_tls              = true;
+      registration_shared_secret = "local";
+      servers             = { "test.org" = {}; };
+    };
+
     nginx = {
-      enable                 = true;
-      virtualHosts.localhost = {
-        locations = {
-          "/nfs/"         = {
-            alias       = "/nfs/";
-            extraConfig = "autoindex on;";
-          };
-          "/plex" = {
-            proxyPass = "http://127.0.0.1/web";
-          };
-          "/syncthing/"   = {
-            extraConfig = "proxy_set_header Host localhost;";
-            proxyPass   = "http://127.0.0.1:8384/";
-          };
-          "/transmission" = {
-            proxyPass = "http://127.0.0.1:9091/transmission";
-          };
-          "/web/" = {
-            proxyPass = "http://127.0.0.1:32400";
-          };
+      enable                           = true;
+      recommendedGzipSettings          = true;
+      recommendedOptimisation          = true;
+      virtualHosts.localhost.locations = {
+        "/nfs/"         = {
+          alias       = "/nfs/";
+          extraConfig = "autoindex on;";
+        };
+        "/plex" = {
+          proxyPass = "http://127.0.0.1/web";
+        };
+        "/syncthing/"   = {
+          extraConfig = "proxy_set_header Host localhost;";
+          proxyPass   = "http://127.0.0.1:8384/";
+        };
+        "/transmission" = {
+          proxyPass = "http://127.0.0.1:9091/transmission";
+        };
+        "/web/" = {
+          proxyPass = "http://127.0.0.1:32400";
         };
       };
     };
