@@ -53,6 +53,7 @@
 
   home-manager.users.jupblb = {
     programs = {
+      emacs.enable     = lib.mkForce false;
       firefox.enable   = lib.mkForce false;
       mercurial.enable = lib.mkForce false;
       tmux.enable      = lib.mkForce false;
