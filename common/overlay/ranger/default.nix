@@ -9,9 +9,5 @@ ranger.overrideAttrs(_: {
     substituteInPlace ranger/config/rc.conf --replace \
       "set automatically_count_files true" \
       "set automatically_count_files false"
-    substituteInPlace ranger/config/rc.conf --replace \
-      "set preview_images false" "set preview_images true"
-    substituteInPlace ranger/config/rc.conf --replace \
-      "set preview_images_method w3m" "set preview_images_method kitty"
   '';
 })
