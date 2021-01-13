@@ -92,7 +92,7 @@
         clipboard_control = "write-clipboard write-primary no-append";
         font_size         = 10;
         startup_session   = toString(pkgs.writeText "kitty-launch" ''
-          launch fish -C "tmux && exit";
+          launch ${pkgs.fish}/bin/fish -C "tmux && exit";
         '');
       };
     };
