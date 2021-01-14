@@ -79,6 +79,7 @@
     wireless.enable                  = false;
   };
 
+  programs.adb.enable                 = true;
   programs.gnupg.agent.pinentryFlavor = "curses";
 
   services = {
@@ -235,5 +236,7 @@
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
+
+  users.users.jupblb.extraGroups = [ "adbusers" ];
 }
 
