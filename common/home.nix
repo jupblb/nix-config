@@ -19,7 +19,7 @@
 
     emacs = {
       enable        = true;
-      extraPackages = epkgs: with epkgs; [ vterm ];
+      extraPackages = epkgs: with epkgs; [ langtool vterm ];
       package       = pkgs.emacs-wrapped;
     };
 
