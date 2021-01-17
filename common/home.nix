@@ -33,6 +33,9 @@
 
     fish = {
       enable               = true;
+      functions            = {
+        ssh = "TERM=screen-256color command ssh $argv";
+      };
       interactiveShellInit = "theme_gruvbox light hard";
       plugins              = lib.mapAttrsToList
         (name: pkg: { name = name; src = pkg; }) pkgs.fishPlugins;
@@ -42,7 +45,6 @@
         doom = "~/.config/emacs/bin/doom";
         less = "bat -p --paging=always";
         ls   = "ls --color=auto --group-directories-first";
-        ssh  = "env TERM=xterm-256color ssh";
       };
     };
 
