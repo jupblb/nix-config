@@ -17,6 +17,8 @@
       enable = true;
     };
 
+    chromium.enable = true;
+
     emacs = {
       enable        = true;
       extraPackages = epkgs: with epkgs; [ langtool vterm ];

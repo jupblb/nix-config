@@ -40,9 +40,9 @@ let
   ];
   python3Packages' = with python3Packages; [ isort nose pytest ];
 in symlinkJoin {
-  name        = "emacs-wrapped";
   buildInputs = [ makeWrapper ];
   meta        = emacs.meta;
+  name        = "emacs-wrapped";
   paths       = [ emacs ];
   postBuild   = ''
     wrapProgram $out/bin/emacs \

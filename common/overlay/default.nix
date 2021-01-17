@@ -1,6 +1,7 @@
-self: super: {
+self: super: rec {
   emacs-wrapped    = super.callPackage ./emacs {};
-  fish-foreign-env = super.fishPlugins.foreign-env;
+  chromium-wayland = super.callPackage ./chromium-wayland/default.nix {};
+  fish-foreign-env = fishPlugins.foreign-env;
   fishPlugins      = import ./fish { inherit (super) callPackage; };
   neovim-nightly   = super.callPackage ./neovim {};
   pragmata-pro     = super.callPackage ./pragmata-pro {};
