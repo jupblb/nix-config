@@ -54,7 +54,10 @@
         package                       = pkgs.firefox-wayland;
       };
 
-      kitty.settings = { hide_window_decorations = "yes"; };
+      kitty.settings = {
+        hide_window_decorations = "yes";
+        linux_display_server    = "wayland";
+      };
     };
 
     services.dropbox.enable = true;
