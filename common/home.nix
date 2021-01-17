@@ -23,14 +23,6 @@
       package       = pkgs.emacs-wrapped;
     };
 
-    firefox = {
-      enable            = true;
-      profiles."jupblb" = {
-        extraConfig = builtins.readFile ../config/firefox/user.js;
-        userContent = builtins.readFile ../config/firefox/user.css;
-      };
-    };
-
     fish = {
       enable               = true;
       functions            = {

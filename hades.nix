@@ -46,6 +46,7 @@
 
     programs = {
       firefox        = {
+        enable = true;
         enableGnomeExtensions         = true;
         profiles."jupblb".extraConfig = ''
           user_pref("widget.wayland-dmabuf-vaapi.enabled", true);
