@@ -25,9 +25,6 @@
 
     fish = {
       enable               = true;
-      functions            = {
-        ssh = "TERM=screen-256color command ssh $argv";
-      };
       interactiveShellInit = "theme_gruvbox light hard";
       plugins              = lib.mapAttrsToList
         (name: pkg: { name = name; src = pkg; }) pkgs.fishPlugins;
@@ -190,7 +187,7 @@
         pain-control vim-tmux-navigator
       ];
       shortcut                  = "Space";
-      terminal                  = "tmux-256color";
+      terminal                  = "screen-256color";
     };
   };
 

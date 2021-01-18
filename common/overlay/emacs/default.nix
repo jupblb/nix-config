@@ -4,6 +4,7 @@
   emacs,
   fd,
   gocode, gomodifytags, gopls, gore, gotests,
+  hunspellDicts, hunspellWithDicts,
   jdk11, jq,
   lib,
   makeWrapper, mdl, metals,
@@ -17,11 +18,13 @@ let
   aspell           = aspellWithDicts(d: with d; [
     en en-computers en-science
   ]);
+  hunspell         = hunspellWithDicts(with hunspellDicts; [ en_US-large ]);
   packages         = [
     aspell
     cargo ccls clang cmake
     fd
     gocode gomodifytags gopls gore gotests
+    hunspell
     jdk11 jq
     mdl metals
     nixfmt
