@@ -8,6 +8,7 @@
     kernel.sysctl                   = {
       "fs.inotify.max_user_watches" = "204800";
     };
+    kernelModules                   = [ "kvm-amd" ];
     loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot.enable      = true;
     supportedFilesystems            = [ "zfs" ];
@@ -138,6 +139,8 @@
       openFirewall = true;
     };
 
+    qemuGuest.enable = true;
+
     smartd = {
       enable        = true;
       extraOptions  = [ "--interval=7200" "-A /var/log/smartd/" ];
@@ -218,24 +221,59 @@
 
   system.stateVersion = "20.09";
 
-  systemd.services.checkip    = {
-    after         = [ "network.target" ];
-    description   = "Public IP checker";
-    script        = with pkgs; ''
-      ${curl}/bin/curl ipinfo.io/ip >> ~/ip.txt
-      ${gawk}/bin/awk '!seen[$0]++' ~/ip.txt > ~/ip.txt.next
-      mv ~/ip.txt.next ~/ip.txt
-    '';
-    serviceConfig = {
-      ProtectSystem = "full";
-      Type          = "oneshot";
-      User          = "jupblb";
+  systemd.services = {
+    azethvm = let vmName = "azethvm"; in {
+      after         = [ "libvirtd.service" ];
+      requires      = [ "libvirtd.service" ];
+      wantedBy      = [ "multi-user.target" ];
+      serviceConfig = {
+        Type            = "oneshot";
+        RemainAfterExit = "yes";
+      };
+      script        = pkgs.callPackage ./config/azethvm.xml.nix {
+        name        = vmName;
+        cpus        = "2";
+        memory      = "1024";
+        hostNic     = "enp8s0";
+        mac         = "52:54:00:b8:5c:10";
+        volume      = toString /home/jupblb/azethvm.raw;
+        passthrough = { vendor = "0x1058"; product = "0x25a3"; };
+      };
+      preStart      = "sleep 10";
+      preStop       = let virsh = "${pkgs.libvirt}/bin/virsh"; in ''
+        ${virsh} shutdown '${vmName}'
+        let "timeout = $(date +%s) + 30"
+        while [ "$(${virsh} list --name | grep --count '^${vmName}$')" -gt 0 ]; do
+          if [ "$(date +%s)" -ge "$timeout" ]; then
+            ${virsh} destroy '${vmName}'
+          else
+            sleep 0.5
+          fi
+        done
+      '';
     };
-    startAt       = "*:0/15";
+
+    checkip = {
+      after         = [ "network.target" ];
+      description   = "Public IP checker";
+      script        = with pkgs; ''
+        ${curl}/bin/curl ipinfo.io/ip >> ~/ip.txt
+        ${gawk}/bin/awk '!seen[$0]++' ~/ip.txt > ~/ip.txt.next
+        mv ~/ip.txt.next ~/ip.txt
+      '';
+      serviceConfig = {
+        ProtectSystem = "full";
+        Type          = "oneshot";
+        User          = "jupblb";
+      };
+      startAt       = "*:0/15";
+    };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   users.users.jupblb.extraGroups = [ "adbusers" ];
+
+  virtualisation.libvirtd.enable = true;
 }
 
