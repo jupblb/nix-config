@@ -37,20 +37,8 @@ let xml = writeText "libvirt-guest-${name}.xml" ''
         <target dev="vda" bus="virtio"/>
         <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
       </disk>
-      <controller type="usb" index="0" model="ich9-ehci1">
-        <address type="pci" domain="0x0000" bus="0x00" slot="0x1d" function="0x7"/>
-      </controller>
-      <controller type="usb" index="0" model="ich9-uhci1">
-        <master startport="0"/>
-        <address type="pci" domain="0x0000" bus="0x00" slot="0x1d" function="0x0" multifunction="on"/>
-      </controller>
-      <controller type="usb" index="0" model="ich9-uhci2">
-        <master startport="2"/>
-        <address type="pci" domain="0x0000" bus="0x00" slot="0x1d" function="0x1"/>
-      </controller>
-      <controller type="usb" index="0" model="ich9-uhci3">
-        <master startport="4"/>
-        <address type="pci" domain="0x0000" bus="0x00" slot="0x1d" function="0x2"/>
+      <controller type="usb" index="0" model="qemu-xhci" ports="15">
+        <address type="pci" domain="0x0000" bus="0x06" slot="0x00" function="0x0"/>
       </controller>
       <controller type="sata" index="0">
         <address type="pci" domain="0x0000" bus="0x00" slot="0x1f" function="0x2"/>
@@ -91,7 +79,7 @@ let xml = writeText "libvirt-guest-${name}.xml" ''
       </controller>
       <interface type="direct">
         <mac address="${mac}"/>
-        <source network="default"/>
+        <source dev="${hostNic}" mode="bridge"/>
         <model type="virtio"/>
         <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
       </interface>
@@ -114,7 +102,7 @@ let xml = writeText "libvirt-guest-${name}.xml" ''
           <vendor id="${passthrough.vendor}"/>
           <product id="${passthrough.product}"/>
         </source>
-        <address type="usb" bus="0" port="4"/>
+        <address type="usb" bus="0" port="1"/>
       </hostdev>
       <memballoon model="virtio">
         <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
