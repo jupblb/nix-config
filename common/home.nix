@@ -72,10 +72,11 @@
     gpg.enable = true;
 
     htop = {
-      enable           = true;
-      hideThreads      = true;
-      showCpuFrequency = true;
-      vimMode          = true;
+      colorScheme         = 3;
+      enable              = true;
+      hideThreads         = true;
+      hideUserlandThreads = true;
+      showCpuFrequency    = true;
     };
 
     kitty = {
