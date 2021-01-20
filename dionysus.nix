@@ -142,6 +142,13 @@
     qemuGuest.enable = true;
 
     smartd = {
+      autodetect    = false;
+      devices       = [
+        { device = "/dev/disk/by-id/ata-ST8000VN0022-2EL112_ZA1DT3QD"; }
+        { device = "/dev/disk/by-id/ata-WDC_WD10EALX-009BA0_WD-WCATR7252252"; }
+        { device = "/dev/disk/by-id/ata-WDC_WD10EALX-009BA0_WD-WCATR9032259"; }
+        { device = "/dev/nvme0n1"; }
+      ];
       enable        = true;
       extraOptions  = [ "--interval=7200" "-A /var/log/smartd/" ];
       notifications = {
