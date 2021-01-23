@@ -9,7 +9,10 @@
   };
   home.username         = "jupblb";
 
-  nixpkgs.overlays = [ (import ./overlay) ];
+  nixpkgs.overlays = [
+    (import ./overlay)
+    (self: super: { fish-foreign-env = pkgs.fishPlugins.foreign-env; })
+  ];
 
   programs = {
     bat = {
