@@ -42,6 +42,7 @@
   networking.useDHCP = false;
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays           = [ (import ./overlay) ];
 
   programs = {
     bash.enableCompletion = true;

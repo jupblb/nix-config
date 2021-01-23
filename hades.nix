@@ -45,7 +45,15 @@
     home.stateVersion = "20.03";
 
     programs = {
-      firefox        = {
+      chromium = {
+        enable     = true;
+        extensions = [
+          "aeblfdkhhhdcdjpifhhbdiojplfjncoa" "cjpalhdlnbpafiamejdnhcphjbkeiagm"
+        ];
+        package    = pkgs.chromium-wayland;
+      };
+
+      firefox = {
         enable = true;
         enableGnomeExtensions         = true;
         profiles."jupblb".extraConfig = ''
