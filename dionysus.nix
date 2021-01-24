@@ -222,7 +222,7 @@
 
     zfs.autoScrub = {
       enable   = true;
-      interval = "daily";
+      interval = "monthly";
     };
   };
 
