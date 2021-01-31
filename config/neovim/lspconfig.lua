@@ -36,12 +36,12 @@ lspconfig.rnix.setup{on_attach=lsp_attach}
 lspconfig.vimls.setup{on_attach=lsp_attach}
 lspconfig.yamlls.setup{on_attach=lsp_attach}
 
-if os.execute('which ciderlsp') == 0 then
+if vim.fn.executable('ciderlsp') == 1 then
   lspconfig.ciderlsp.setup{on_attach=lsp_attach}
 end
-if os.execute('which haskell-language-server') == 0 then
+if vim.fn.executable('haskell-language-server') == 1 then
   lspconfig.hls.setup{on_attach=lsp_attach}
 end
-if os.execute('which pyls') == 0 then
+if vim.fn.executable('pyls') == 1 then
   lspconfig.pyls.setup{on_attach=lsp_attach}
 end
