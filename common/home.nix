@@ -150,7 +150,9 @@
       enable        = true;
       extraPackages =
         let
-          packages        = with pkgs; [ gcc glow metals ripgrep rnix-lsp ];
+          packages        = with pkgs; [
+            gcc glow gopls metals ripgrep rnix-lsp
+          ];
           nodePackages    = with pkgs.nodePackages; [
             bash-language-server
             typescript-language-server

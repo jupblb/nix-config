@@ -26,22 +26,23 @@ local function lsp_attach(_)
   vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 end
 
-lspconfig.bashls.setup{on_attach=lsp_attach}
-lspconfig.cssls.setup{on_attach=lsp_attach}
-lspconfig.html.setup{on_attach=lsp_attach}
-lspconfig.jsonls.setup{on_attach=lsp_attach}
-lspconfig.metals.setup{on_attach=lsp_attach}
-lspconfig.tsserver.setup{on_attach=lsp_attach}
-lspconfig.rnix.setup{on_attach=lsp_attach}
-lspconfig.vimls.setup{on_attach=lsp_attach}
-lspconfig.yamlls.setup{on_attach=lsp_attach}
+lspconfig.bashls.setup{on_attach = lsp_attach}
+lspconfig.cssls.setup{on_attach = lsp_attach}
+lspconfig.gopls.setup{on_attach = lsp_attach}
+lspconfig.html.setup{on_attach = lsp_attach}
+lspconfig.jsonls.setup{on_attach = lsp_attach}
+lspconfig.metals.setup{on_attach = lsp_attach}
+lspconfig.tsserver.setup{on_attach = lsp_attach}
+lspconfig.rnix.setup{on_attach = lsp_attach}
+lspconfig.vimls.setup{on_attach = lsp_attach}
+lspconfig.yamlls.setup{on_attach = lsp_attach}
 
 if vim.fn.executable('ciderlsp') == 1 then
-  lspconfig.ciderlsp.setup{on_attach=lsp_attach}
+  lspconfig.ciderlsp.setup{on_attach = lsp_attach}
 end
 if vim.fn.executable('haskell-language-server') == 1 then
-  lspconfig.hls.setup{on_attach=lsp_attach}
+  lspconfig.hls.setup{on_attach = lsp_attach}
 end
 if vim.fn.executable('pyls') == 1 then
-  lspconfig.pyls.setup{on_attach=lsp_attach}
+  lspconfig.pyls.setup{on_attach = lsp_attach}
 end
