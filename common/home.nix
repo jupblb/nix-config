@@ -36,7 +36,7 @@
         cat  = "bat -p --paging=never";
         doom = "~/.config/emacs/bin/doom";
         less = "bat -p --paging=always";
-        ls   = "ls --color=auto --group-directories-first";
+        ls   = "${pkgs.exa}/bin/exa";
       };
     };
 
