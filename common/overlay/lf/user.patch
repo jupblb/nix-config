@@ -1,0 +1,21 @@
+diff --git a/os.go b/os.go
+index 4f6483c..81e11b1 100644
+--- a/os.go
++++ b/os.go
+@@ -59,10 +59,14 @@ func init() {
+	if err != nil {
+		log.Printf("user: %s", err)
+		if os.Getenv("HOME") == "" {
+-			log.Print("$HOME variable is empty or not set")
++			panic("$HOME variable is empty or not set")
+		}
+		if os.Getenv("USER") == "" {
+-			log.Print("$USER variable is empty or not set")
++			panic("$USER variable is empty or not set")
++		}
++		u = &user.User{
++			Username: os.Getenv("USER"),
++			HomeDir:  os.Getenv("HOME"),
+		}
+	}
+	gUser = u
