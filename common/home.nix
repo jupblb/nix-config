@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ gitAndTools.git-crypt ranger ripgrep ];
+  home.packages         = with pkgs; [ gitAndTools.git-crypt ripgrep ];
   home.sessionVariables = {
     DOOMDIR      = ../config/doom;
     DOOMLOCALDIR = "~/.local/share/doom";
@@ -82,6 +82,24 @@
       showCpuFrequency    = true;
     };
 
+    lf = {
+      enable      = true;
+      extraConfig = builtins.readFile ../config/lfrc.sh;
+      previewer   = {
+        keybinding = "i";
+        source     = with pkgs; writeShellScript "lf-preview" ''
+          case "$1" in
+            *.json)       ${jq}/bin/jq --color-output . "$1";;
+            *.md)         ${glow}/bin/glow -s light - "$1";;
+            *.pdf)        ${poppler_utils}/bin/pdftotext "$1" -;;
+            *.tar*|*.zip) ${atool}/bin/atool --list -- "$1";;
+            *)            ${bat}/bin/bat --style=numbers --color always "$1";;
+          esac
+        '';
+      };
+      settings    = { hidden = true; tabstop = 4; };
+    };
+
     kitty = {
       enable   = true;
       font     = {
@@ -122,6 +140,9 @@
           plugin = fzf-vim;
           config = builtins.readFile ../config/neovim/fzf.vim;
         } {
+          plugin = lf-vim;
+          config = builtins.readFile ../config/neovim/lf.vim;
+        } {
           plugin = nvim-lspconfig;
           config = ''
             packadd nvim-lspconfig
@@ -135,9 +156,6 @@
             dependencies = [ nvim-treesitter-refactor ];
           });
           config = builtins.readFile ../config/neovim/treesitter.vim;
-        } {
-          plugin = ranger-vim;
-          config = builtins.readFile ../config/neovim/ranger.vim;
         } {
           plugin = vimwiki;
           config = ''
