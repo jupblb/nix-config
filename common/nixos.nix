@@ -117,6 +117,6 @@
     openssh.authorizedKeys.keys = [
       (builtins.readFile ../config/ssh/id_ed25519.pub)
     ];
-    shell                       = pkgs.fish;
+    shell                       = pkgs.bashInteractive;
   };
 }

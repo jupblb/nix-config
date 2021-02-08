@@ -82,6 +82,21 @@
       showCpuFrequency    = true;
     };
 
+    kitty = {
+      enable   = true;
+      font     = {
+        package = pkgs.pragmata-pro;
+        name    = "PragmataPro Mono Liga";
+      };
+      settings = {
+        clipboard_control = "write-clipboard write-primary no-append";
+        font_size         = 10;
+        startup_session   = toString(pkgs.writeText "kitty-launch" ''
+          launch ${pkgs.fish}/bin/fish -i -c "${pkgs.tmux}/bin/tmux; and exit"
+        '');
+      };
+    };
+
     lf = {
       enable      = true;
       extraConfig = builtins.readFile ../config/lfrc.sh;
@@ -98,21 +113,6 @@
         '';
       };
       settings    = { hidden = true; tabstop = 4; };
-    };
-
-    kitty = {
-      enable   = true;
-      font     = {
-        package = pkgs.pragmata-pro;
-        name    = "PragmataPro Mono Liga";
-      };
-      settings = {
-        clipboard_control = "write-clipboard write-primary no-append";
-        font_size         = 10;
-        startup_session   = toString(pkgs.writeText "kitty-launch" ''
-          launch ${pkgs.fish}/bin/fish -C "tmux && exit";
-        '');
-      };
     };
 
     mercurial = {
@@ -215,6 +215,8 @@
       plugins                   = with pkgs.tmuxPlugins; [
         pain-control vim-tmux-navigator
       ];
+      sensibleOnTop             = false;
+      shell                     = "${pkgs.fish}/bin/fish";
       shortcut                  = "Space";
       terminal                  = "screen-256color";
     };
