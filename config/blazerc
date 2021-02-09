@@ -1,0 +1,2 @@
+build --config=dogfood_opt_in
+build -c opt
