@@ -23,15 +23,6 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 
-nnoremap <leader>1 1gt
-nnoremap <leader>2 2gt
-nnoremap <leader>3 3gt
-nnoremap <leader>4 4gt
-nnoremap <leader>5 5gt
-
-nnoremap tn :tabnew<CR>
-nnoremap td :tabclose<CR>
-
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -45,4 +36,3 @@ autocmd BufWinLeave <buffer> call clearmatches()
 
 autocmd FileType go,java,sql set colorcolumn=100
 autocmd FileType make set noexpandtab
-
