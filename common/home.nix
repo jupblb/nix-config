@@ -89,10 +89,12 @@
         name    = "PragmataPro Mono Liga";
       };
       settings = {
+        background        = "#f9f5d7";
         clipboard_control = "write-clipboard write-primary no-append";
         font_size         = 10;
+        foreground        = "#282828";
         startup_session   = toString(pkgs.writeText "kitty-launch" ''
-          launch ${pkgs.fish}/bin/fish -i -c "${pkgs.tmux}/bin/tmux; and exit"
+          launch ${pkgs.fish}/bin/fish -c "${pkgs.tmux}/bin/tmux; and exit"
         '');
       };
     };
