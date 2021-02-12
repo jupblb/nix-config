@@ -142,7 +142,7 @@
           plugin = fzf-vim;
           config = builtins.readFile ../config/neovim/fzf.vim;
         } {
-          plugin = lf-vim;
+          plugin = lf-vim.overrideAttrs(_: { dependencies = [ vim-bbye ]; });
           config = builtins.readFile ../config/neovim/lf.vim;
         } {
           plugin = nvim-lspconfig;
