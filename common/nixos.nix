@@ -81,7 +81,7 @@
       declarative = {
         devices = {
           artemis.id   =
-            "XKAGTTE-T22BOZ7-X7Z447S-IMFGOXM-FNOMAQD-LZFI2RQ-AKOMDZL-B5A2JA2";
+            "IZVLNXF-53N6C2N-JZJ3AOH-EUOQOFY-JM4CTK7-36EQ4LI-TQC576X-PTTKZAH";
           dionysus.id  =
             "AUAEQVM-GLWFEY7-ISXW5C6-5FSTG6O-J4D7FI2-LZC7NVM-7AQP4GT-TUBMYA6";
           domci-mac.id =
