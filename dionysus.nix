@@ -63,26 +63,22 @@
   imports = [ ./common/nixos.nix ];
 
   networking = {
-    bridges = {
-      "vmbr0" = {
-        interfaces = [ "enp8s0" ];
-      };
-    };
-    defaultGateway                   = "192.168.1.1";
-    firewall.allowedTCPPorts         = [
+    bridges."vmbr0".interfaces      = [ "enp8s0" ];
+    defaultGateway                  = "192.168.1.1";
+    firewall.allowedTCPPorts        = [
       53 67 80 111 443 2049 4000 4001 4002 8181 22067 22070
     ];
-    firewall.allowedUDPPorts         = [
+    firewall.allowedUDPPorts        = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
     ];
-    hostId                           = "ce5e3a09";
-    hostName                         = "dionysus";
-    interfaces.enp8s0.useDHCP = false;
+    hostId                          = "ce5e3a09";
+    hostName                        = "dionysus";
+    interfaces.enp8s0.useDHCP       = false;
     interfaces.vmbr0.ipv4.addresses = [
       { address = "192.168.1.4"; prefixLength = 24; }
     ];
-    nameservers                      = [ "1.1.1.1" "8.8.8.8" ];
-    wireless.enable                  = false;
+    nameservers                     = [ "1.1.1.1" "8.8.8.8" ];
+    wireless.enable                 = false;
   };
 
   programs.adb.enable                 = true;
