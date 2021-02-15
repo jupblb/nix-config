@@ -1,4 +1,4 @@
-{ cpus, hostNic, libvirt, mac, memory, name, passthrough, volume, writeText }:
+{ cpus, bridge, libvirt, mac, memory, name, passthrough, volume, writeText }:
 
 let xml = writeText "libvirt-guest-${name}.xml" ''
   <domain type="kvm">
@@ -77,9 +77,9 @@ let xml = writeText "libvirt-guest-${name}.xml" ''
       <controller type="virtio-serial" index="0">
         <address type="pci" domain="0x0000" bus="0x02" slot="0x00" function="0x0"/>
       </controller>
-      <interface type="direct">
+      <interface type="bridge">
         <mac address="${mac}"/>
-        <source dev="${hostNic}" mode="bridge"/>
+        <source bridge="${bridge}"/>
         <model type="virtio"/>
         <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
       </interface>
