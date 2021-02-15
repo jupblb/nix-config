@@ -241,7 +241,6 @@
         name        = vmName;
         cpus        = "2";
         memory      = "1024";
-        hostNic     = "enp8s0";
         mac         = "52:54:00:b8:5c:10";
         volume      = toString /home/jupblb/azethvm.raw;
         passthrough = { vendor = "0x1058"; product = "0x25a3"; };
