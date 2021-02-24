@@ -120,7 +120,7 @@
       enable      = true;
       extraConfig = builtins.readFile ../config/lfrc.sh;
       previewer   = {
-        keybinding = "i";
+        keybinding = "`";
         source     = with pkgs; writeShellScript "lf-preview" ''
           case "$1" in
             *.json)       ${jq}/bin/jq --color-output . "$1";;
