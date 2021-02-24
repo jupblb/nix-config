@@ -103,35 +103,24 @@
       };
       settings    = {
         allow_remote_control = "yes";
-        background        = "#f9f5d7";
-        clipboard_control = "write-clipboard write-primary no-append";
-        enabled_layouts   = "splits";
-        enable_audio_bell = "no";
-        font_size         = 10;
-        foreground        = "#282828";
-        listen_on         = "unix:/tmp/kitty";
-        scrollback_pager  = ''
+        background           = "#f9f5d7";
+        clipboard_control    = "write-clipboard write-primary no-append";
+        enabled_layouts      = "splits";
+        enable_audio_bell    = "no";
+        font_size            = 10;
+        foreground           = "#282828";
+        listen_on            = "unix:/tmp/kitty";
+        scrollback_pager     = ''
           nvim -R -c 'setlocal ft=man' -c 'autocmd VimEnter * normal G{}'
         '';
-        shell             = "${pkgs.fish}/bin/fish";
+        shell                = "${pkgs.fish}/bin/fish";
       };
     };
 
     lf = {
       enable      = true;
       extraConfig = builtins.readFile ../config/lfrc.sh;
-      previewer   = {
-        keybinding = "`";
-        source     = with pkgs; writeShellScript "lf-preview" ''
-          case "$1" in
-            *.json)       ${jq}/bin/jq --color-output . "$1";;
-            *.md)         ${glow}/bin/glow -s light - "$1";;
-            *.pdf)        ${poppler_utils}/bin/pdftotext "$1" -;;
-            *.tar*|*.zip) ${atool}/bin/atool --list -- "$1";;
-            *)            ${bat}/bin/bat --style=numbers --color always "$1";;
-          esac
-        '';
-      };
+      previewer   = { keybinding = "`"; source = pkgs.lf-previewer; };
       settings    = { hidden = true; tabstop = 4; };
     };
 
