@@ -83,19 +83,36 @@
     };
 
     kitty = {
-      enable   = true;
-      font     = {
+      enable      = true;
+      font        = {
         package = pkgs.pragmata-pro;
         name    = "PragmataPro Mono Liga";
       };
-      settings = {
+      keybindings = {
+        "ctrl+shift+'" = "launch --location=hsplit";
+        "ctrl+shift+;" = "launch --location=vsplit";
+        "ctrl+shift+`" = "show_scrollback";
+        "ctrl+shift+h" = "move_window left";
+        "ctrl+shift+j" = "move_window bottom";
+        "ctrl+shift+k" = "move_window top";
+        "ctrl+shift+l" = "move_window right";
+        "ctrl+h"       = "kitten pass_keys.py neighboring_window left ctrl+h";
+        "ctrl+j"       = "kitten pass_keys.py neighboring_window bottom ctrl+j";
+        "ctrl+k"       = "kitten pass_keys.py neighboring_window top ctrl+k";
+        "ctrl+l"       = "kitten pass_keys.py neighboring_window right ctrl+l";
+      };
+      settings    = {
         background        = "#f9f5d7";
         clipboard_control = "write-clipboard write-primary no-append";
+        editor            = "nvim";
+        enabled_layouts   = "splits";
+        enable_audio_bell = "no";
         font_size         = 10;
         foreground        = "#282828";
-        startup_session   = toString(pkgs.writeText "kitty-launch" ''
-          launch ${pkgs.fish}/bin/fish -c "${pkgs.tmux}/bin/tmux; and exit"
-        '');
+        scrollback_pager  = ''
+          nvim -R -c 'setlocal ft=man' -c 'autocmd VimEnter * normal G{}'
+        '';
+        shell             = "${pkgs.fish}/bin/fish";
       };
     };
 
@@ -165,7 +182,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-css-color vim-fish vim-jsonnet vim-signify vim-tmux-navigator
+        vim-css-color vim-fish vim-jsonnet vim-kitty-navigator vim-signify
       ];
       enable        = true;
       extraPackages =
@@ -207,25 +224,21 @@
         };
       serverAliveInterval = 30;
     };
-
-    tmux = {
-      baseIndex                 = 1;
-      disableConfirmationPrompt = true;
-      enable                    = true;
-      extraConfig               = builtins.readFile ../config/tmux.conf;
-      keyMode                   = "vi";
-      plugins                   = with pkgs.tmuxPlugins; [
-        pain-control vim-tmux-navigator
-      ];
-      sensibleOnTop             = false;
-      shell                     = "${pkgs.fish}/bin/fish";
-      shortcut                  = "Space";
-      terminal                  = "screen-256color";
-    };
   };
 
-  xdg.configFile."emacs".source = builtins.fetchGit {
-    ref = "develop";
-    url = https://github.com/hlissner/doom-emacs.git;
+  xdg.configFile = {
+    "kitty"        = {
+      recursive = true;
+      source    = pkgs.fetchFromGitHub {
+        owner  = "knubie";
+        repo   = "vim-kitty-navigator";
+        rev    = "master";
+        sha256 = "1885gwbv2a4bwwydn129hd7xjgqp0cfjqkm0zw8lfylxgxadg0zb";
+      };
+    };
+    "emacs".source = builtins.fetchGit {
+      ref = "develop";
+      url = https://github.com/hlissner/doom-emacs.git;
+    };
   };
 }
