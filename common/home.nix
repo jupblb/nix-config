@@ -102,13 +102,14 @@
         "ctrl+l"       = "kitten pass_keys.py neighboring_window right ctrl+l";
       };
       settings    = {
+        allow_remote_control = "yes";
         background        = "#f9f5d7";
         clipboard_control = "write-clipboard write-primary no-append";
-        editor            = "nvim";
         enabled_layouts   = "splits";
         enable_audio_bell = "no";
         font_size         = 10;
         foreground        = "#282828";
+        listen_on         = "unix:/tmp/kitty";
         scrollback_pager  = ''
           nvim -R -c 'setlocal ft=man' -c 'autocmd VimEnter * normal G{}'
         '';
@@ -176,13 +177,16 @@
           });
           config = builtins.readFile ../config/neovim/treesitter.vim;
         } {
+          plugin = vim-kitty-navigator;
+          config = "set title | set titlestring=%t\\ -\\ nvim";
+        } {
           plugin = vimwiki;
           config = ''
             let g:vimwiki_list = [{'path': '~/Documents/vimwiki/',
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-css-color vim-fish vim-jsonnet vim-kitty-navigator vim-signify
+        vim-css-color vim-fish vim-jsonnet vim-signify
       ];
       enable        = true;
       extraPackages =
