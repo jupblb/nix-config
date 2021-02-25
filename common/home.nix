@@ -96,10 +96,10 @@
         "ctrl+shift+j" = "move_window bottom";
         "ctrl+shift+k" = "move_window top";
         "ctrl+shift+l" = "move_window right";
-        "ctrl+h"       = "kitten pass_keys.py neighboring_window left ctrl+h";
-        "ctrl+j"       = "kitten pass_keys.py neighboring_window bottom ctrl+j";
-        "ctrl+k"       = "kitten pass_keys.py neighboring_window top ctrl+k";
-        "ctrl+l"       = "kitten pass_keys.py neighboring_window right ctrl+l";
+        "ctrl+h"       = "neighboring_window left";
+        "ctrl+j"       = "neighboring_window bottom";
+        "ctrl+k"       = "neighboring_window top";
+        "ctrl+l"       = "neighboring_window right";
       };
       settings    = {
         allow_remote_control = "yes";
@@ -218,19 +218,8 @@
     };
   };
 
-  xdg.configFile = {
-    "kitty"        = {
-      recursive = true;
-      source    = pkgs.fetchFromGitHub {
-        owner  = "knubie";
-        repo   = "vim-kitty-navigator";
-        rev    = "master";
-        sha256 = "1885gwbv2a4bwwydn129hd7xjgqp0cfjqkm0zw8lfylxgxadg0zb";
-      };
-    };
-    "emacs".source = builtins.fetchGit {
-      ref = "develop";
-      url = https://github.com/hlissner/doom-emacs.git;
-    };
+  xdg.configFile."emacs".source = builtins.fetchGit {
+    ref = "develop";
+    url = https://github.com/hlissner/doom-emacs.git;
   };
 }

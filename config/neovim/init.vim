@@ -13,8 +13,6 @@ set shortmess+=c
 set splitright
 set smartcase
 set termguicolors
-set title
-set titlestring=%t\ -\ nvim
 set updatetime=500
 
 nnoremap <Space> <Nop>

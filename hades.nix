@@ -67,8 +67,6 @@
         hide_window_decorations = "yes";
         linux_display_server    = "wayland";
       };
-
-      neovim.plugins = with pkgs.vimPlugins; [ vim-kitty-navigator ];
     };
 
     services.dropbox.enable = true;
