@@ -166,9 +166,6 @@
           });
           config = builtins.readFile ../config/neovim/treesitter.vim;
         } {
-          plugin = vim-kitty-navigator;
-          config = "set title | set titlestring=%t\\ -\\ nvim";
-        } {
           plugin = vimwiki;
           config = ''
             let g:vimwiki_list = [{'path': '~/Documents/vimwiki/',
