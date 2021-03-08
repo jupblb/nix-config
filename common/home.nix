@@ -102,18 +102,17 @@
         "ctrl+l"       = "neighboring_window right";
       };
       settings    = {
-        allow_remote_control = "yes";
-        background           = "#f9f5d7";
-        clipboard_control    = "write-clipboard write-primary no-append";
-        enabled_layouts      = "splits";
-        enable_audio_bell    = "no";
-        font_size            = 10;
-        foreground           = "#282828";
-        listen_on            = "unix:/tmp/kitty";
-        scrollback_pager     = ''
+        background                    = "#f9f5d7";
+        clipboard_control             = "write-clipboard write-primary no-append";
+        enabled_layouts               = "splits";
+        enable_audio_bell             = "no";
+        font_size                     = 10;
+        foreground                    = "#282828";
+        scrollback_pager              = ''
           nvim -R -c 'setlocal ft=man' -c 'autocmd VimEnter * normal G{}'
         '';
-        shell                = "${pkgs.fish}/bin/fish";
+        scrollback_pager_history_size = 4096;
+        shell                         = "${pkgs.fish}/bin/fish";
       };
     };
 
