@@ -133,11 +133,11 @@
     neovim = {
       extraConfig   = builtins.readFile ../config/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
-          plugin = lightline-vim;
-          config = ''
-            set noshowmode
-            let g:lightline = { 'colorscheme': 'gruvbox' }
-          '';
+          plugin = fzf-vim;
+          config = builtins.readFile ../config/neovim/fzf.vim;
+        } {
+          plugin = fzf-lsp-nvim;
+          config = "lua require'fzf_lsp'.setup()";
         } {
           plugin = glow-nvim;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
@@ -145,22 +145,19 @@
           plugin = gruvbox-community;
           config = builtins.readFile ../config/neovim/gruvbox-community.vim;
         } {
-          plugin = fzf-vim;
-          config = builtins.readFile ../config/neovim/fzf.vim;
-        } {
           plugin = lf-vim.overrideAttrs(_: {
             dependencies = [ vim-floaterm ];
           });
           config = builtins.readFile ../config/neovim/lf.vim;
         } {
-          plugin = nvim-lspconfig;
+          plugin = lightline-vim;
           config = ''
-            packadd nvim-lspconfig
-            luafile ${../config/neovim/lspconfig.lua}
+            set noshowmode
+            let g:lightline = { 'colorscheme': 'gruvbox' }
           '';
         } {
-          plugin = nvim-lsputils;
-          config = builtins.readFile ../config/neovim/lsputils.vim;
+          plugin = nvim-lspconfig;
+          config = "luafile ${../config/neovim/lspconfig.lua}";
         } {
           plugin = nvim-treesitter.overrideAttrs(_: {
             dependencies = [ nvim-treesitter-refactor ];
