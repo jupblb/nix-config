@@ -145,9 +145,7 @@
           plugin = gruvbox-community;
           config = builtins.readFile ../config/neovim/gruvbox-community.vim;
         } {
-          plugin = lf-vim.overrideAttrs(_: {
-            dependencies = [ vim-floaterm ];
-          });
+          plugin = lf-vim;
           config = builtins.readFile ../config/neovim/lf.vim;
         } {
           plugin = lightline-vim;

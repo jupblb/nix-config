@@ -7,4 +7,9 @@ self: super: rec {
   htop             = super.callPackage ./htop { htop = super.htop; };
   neovim-nightly   = super.callPackage ./neovim {};
   pragmata-pro     = super.callPackage ./pragmata-pro {};
+  vimPlugins       = super.vimPlugins // {
+    lf-vim = super.callPackage ./neovim/lf-vim.nix {
+      inherit (super.vimPlugins) lf-vim vim-bbye;
+    };
+  };
 }
