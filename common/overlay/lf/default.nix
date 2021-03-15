@@ -1,5 +1,3 @@
-{ lf, lib }:
+{ lf }:
 
-lf.overrideAttrs(old: {
-  patches = (lib.optional (old ? patches) old.patches) ++ [ ./user.patch ];
-})
+lf.overrideAttrs(_: { patches = [ ./user.patch ]; })
