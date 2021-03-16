@@ -136,9 +136,6 @@
           plugin = fzf-vim;
           config = builtins.readFile ../config/neovim/fzf.vim;
         } {
-          plugin = fzf-lsp-nvim;
-          config = "lua require'fzf_lsp'.setup()";
-        } {
           plugin = glow-nvim;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {
@@ -154,7 +151,9 @@
             let g:lightline = { 'colorscheme': 'gruvbox' }
           '';
         } {
-          plugin = nvim-lspconfig;
+          plugin = nvim-lspconfig.overrideAttrs(_: {
+            dependencies = [ fzf-lsp-nvim ];
+          });
           config = "luafile ${../config/neovim/lspconfig.lua}";
         } {
           plugin = nvim-treesitter.overrideAttrs(_: {

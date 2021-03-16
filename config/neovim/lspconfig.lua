@@ -11,17 +11,17 @@ lspconfigs.ciderlsp = {
 }
 
 local function lsp_attach(_)
-  vim.api.nvim_buf_set_keymap(0,'n','<C-]>','<cmd>lua vim.lsp.buf.definition()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<Leader>la','<cmd>lua vim.lsp.buf.code_action()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<Leader>ld','<cmd>lua vim.lsp.buf.document_symbol()<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','<C-]>',':Definitions<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','<Leader>la',':CodeActions<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','<Leader>ld',':DocumentSymbols!<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','<Leader>lf','<cmd>lua vim.lsp.buf.formatting()<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','<Leader>lr','<cmd>lua vim.lsp.buf.rename()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<Leader>lw','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','<Leader>lw',':WorkspaceSymbols!<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','K','<cmd>lua vim.lsp.buf.hover()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','gi','<cmd>lua vim.lsp.buf.implementation()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','gr','<cmd>lua vim.lsp.buf.references()<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','gi',':Implementations!<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','gr',':References!<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','gt',':TypeDefinitions<CR>',{noremap = true})
 
   vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 end
