@@ -23,6 +23,8 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 
+let g:python_recommended_style = 0
+
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
