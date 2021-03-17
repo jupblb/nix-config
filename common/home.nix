@@ -152,7 +152,7 @@
           '';
         } {
           plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ fzf-lsp-nvim ];
+            dependencies = [ completion-nvim fzf-lsp-nvim ];
           });
           config = "luafile ${../config/neovim/lspconfig.lua}";
         } {

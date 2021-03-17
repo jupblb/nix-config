@@ -1,3 +1,4 @@
+local completion = require'completion'
 local lspconfig = require'lspconfig'
 local lspconfigs = require'lspconfig/configs'
 
@@ -23,7 +24,7 @@ local function lsp_attach(_)
   vim.api.nvim_buf_set_keymap(0,'n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','gt',':TypeDefinitions<CR>',{noremap = true})
 
-  vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
+  completion.on_attach()
 end
 
 lspconfig.bashls.setup{on_attach = lsp_attach}
