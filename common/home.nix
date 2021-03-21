@@ -41,8 +41,11 @@
     };
 
     fzf = {
-      enable         = true;
-      defaultOptions = [ "--color=light" ];
+      enable            = true;
+      defaultCommand    = "${pkgs.fd}/bin/fd --hidden --type f";
+      defaultOptions    = [ "--color=light" ];
+      fileWidgetCommand = "${pkgs.fd}/bin/fd --hidden";
+      fileWidgetOptions = [ "--preview 'bat --color=always -pp {}'" ];
     };
 
     git = {
