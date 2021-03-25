@@ -170,7 +170,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-css-color vim-fish vim-jsonnet vim-signify
+        vim-css-color vim-fish vim-go vim-jsonnet vim-signify
       ];
       enable        = true;
       extraPackages =
