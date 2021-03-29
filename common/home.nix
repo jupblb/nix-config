@@ -106,7 +106,8 @@
       };
       settings    = {
         background                    = "#f9f5d7";
-        clipboard_control             = "write-clipboard write-primary no-append";
+        clipboard_control             =
+          "write-clipboard write-primary no-append";
         enabled_layouts               = "splits";
         enable_audio_bell             = "no";
         font_size                     = 10;
@@ -170,7 +171,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-css-color vim-fish vim-go vim-jsonnet vim-signify
+        vim-eunuch vim-fish vim-fugitive vim-go vim-jsonnet vim-signify
       ];
       enable        = true;
       extraPackages =
