@@ -11,6 +11,9 @@ lspconfigs.ciderlsp = {
   };
 }
 
+vim.api.nvim_set_var('completion_enable_auto_popup', 0)
+vim.api.nvim_set_keymap('i','<C-Space>',[[<cmd>lua require'completion'.triggerCompletion()<CR>]],{noremap = true})
+
 local function lsp_attach(_)
   vim.api.nvim_buf_set_keymap(0,'n','<C-]>',':Definitions<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','<Leader>la',':CodeActions<CR>',{noremap = true})
