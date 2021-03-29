@@ -16,9 +16,9 @@ vim.api.nvim_set_keymap('i','<C-Space>',[[<cmd>lua require'completion'.triggerCo
 
 local function lsp_attach(_)
   vim.api.nvim_buf_set_keymap(0,'n','<C-]>',':Definitions<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<Leader>la',':CodeActions<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','<A-CR>',':CodeActions<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','<Leader>ld',':DocumentSymbols!<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<Leader>lf','<cmd>lua vim.lsp.buf.formatting()<CR>',{noremap = true})
+  vim.api.nvim_buf_set_keymap(0,'n','<A-l>','<cmd>lua vim.lsp.buf.formatting()<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','<Leader>lr','<cmd>lua vim.lsp.buf.rename()<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','<Leader>lw',':WorkspaceSymbols!<CR>',{noremap = true})
   vim.api.nvim_buf_set_keymap(0,'n','K','<cmd>lua vim.lsp.buf.hover()<CR>',{noremap = true})

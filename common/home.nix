@@ -155,6 +155,11 @@
             let g:lightline = { 'colorscheme': 'gruvbox' }
           '';
         } {
+          plugin = nerdtree.overrideAttrs(_: {
+            dependencies = [ nerdtree-git-plugin ];
+          });
+          config = builtins.readFile ../config/neovim/nerdtree.vim;
+        } {
           plugin = nvim-lspconfig.overrideAttrs(_: {
             dependencies = [ completion-nvim fzf-lsp-nvim ];
           });
@@ -171,7 +176,8 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-eunuch vim-fish vim-fugitive vim-go vim-jsonnet vim-signify
+        vim-css-color vim-eunuch vim-fish vim-fugitive vim-go vim-jsonnet
+          vim-signify
       ];
       enable        = true;
       extraPackages =
