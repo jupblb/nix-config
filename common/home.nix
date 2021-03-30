@@ -78,7 +78,6 @@
     gpg.enable = true;
 
     htop = {
-      colorScheme         = 3;
       enable              = true;
       hideThreads         = true;
       hideUserlandThreads = true;
