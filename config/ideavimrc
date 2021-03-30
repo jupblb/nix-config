@@ -16,7 +16,7 @@ nnoremap <Leader>] :action GotoRelated<CR>
 nnoremap <Leader>gi :action GotoImplementation<CR>
 nnoremap <Leader>o :action OptimizeImports<CR>
 nnoremap <Leader>T :NERDTreeFocus<CR>
-nnoremap <Leader>tt :NERDTreeToggle<CR>
+nnoremap <Leader>t :NERDTreeToggle<CR>
 nnoremap <A-l> :action ReformatCode<CR>
 nnoremap <Leader>lr :action RenameElement<CR>
 nnoremap gr :action ShowUsages<CR>

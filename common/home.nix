@@ -158,7 +158,7 @@
           plugin = nerdtree.overrideAttrs(_: {
             dependencies = [ nerdtree-git-plugin ];
           });
-          config = builtins.readFile ../config/neovim/nerdtree.vim;
+          config = "nnoremap <Leader>t :NERDTreeMirror<CR>:NERDTreeToggle<CR>";
         } {
           plugin = nvim-lspconfig.overrideAttrs(_: {
             dependencies = [ completion-nvim fzf-lsp-nvim ];
