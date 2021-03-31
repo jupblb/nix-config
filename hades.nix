@@ -12,6 +12,8 @@
     loader.systemd-boot.enable      = true;
   };
 
+  environment.systemPackages = with pkgs; [ chromium-wayland spotify ];
+
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
@@ -45,14 +47,6 @@
     home.stateVersion = "20.03";
 
     programs = {
-      chromium = {
-        enable     = true;
-        extensions = [
-          "aeblfdkhhhdcdjpifhhbdiojplfjncoa" "cjpalhdlnbpafiamejdnhcphjbkeiagm"
-        ];
-        package    = pkgs.chromium-wayland;
-      };
-
       firefox = {
         enable = true;
         enableGnomeExtensions         = true;
@@ -77,7 +71,24 @@
   networking.hostName              = "hades";
   networking.networkmanager.enable = true;
 
-  programs.steam.enable = true;
+  programs = {
+    chromium = {
+      enable     = true;
+      extensions = [
+        "aeblfdkhhhdcdjpifhhbdiojplfjncoa"
+        "cjpalhdlnbpafiamejdnhcphjbkeiagm"
+        "fihnjjcciajhdojfnbdddfaoknhalnja"
+        "lcbjdhceifofjlpecfpeimnnphbcjgnc"
+      ];
+      extraOpts  = {
+        "DefaultPopupsSetting" = 2;
+        "SpellcheckEnabled"    = true;
+        "SpellcheckLanguage"   = [ "pl" "en-US" ];
+      };
+    };
+
+    steam.enable = true;
+  };
 
   services = {
     gnome3 = {

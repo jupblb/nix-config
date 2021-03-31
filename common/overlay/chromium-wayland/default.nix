@@ -1,20 +1,11 @@
-{ chromium, gtk3, makeWrapper, symlinkJoin, wrapGAppsHook }:
+{ chromium, makeWrapper, symlinkJoin, wrapGAppsHook }:
 
-let
-  chromium'  = chromium.overrideAttrs(old: {
-    buildInputs       = old.buildInputs ++ [ gtk3 ];
-    nativeBuildInputs = [ wrapGAppsHook ];
-  });
-  chromium'' = chromium'.override {
-    enableVaapi    = true;
-    enableWideVine = true;
-  };
-in symlinkJoin {
-  buildInputs = [ makeWrapper ];
-  name        = "chromium-wayland";
-  paths       = [ chromium'' ];
-  postBuild   = ''
-    wrapProgram $out/bin/chromium \
-      --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland"
-  '';
+let chromium' = chromium.overrideAttrs(_: {
+  nativeBuildInputs = [ wrapGAppsHook ];
+});
+in chromium'.override {
+  commandLineArgs     =
+    "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+  enableVaapi         = true;
+  enableWideVine      = true;
 }
