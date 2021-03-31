@@ -9,10 +9,7 @@
   };
   home.username         = "jupblb";
 
-  nixpkgs.overlays = [
-    (import ./overlay)
-    (self: super: { fish-foreign-env = pkgs.fishPlugins.foreign-env; })
-  ];
+  nixpkgs.overlays = [ (import ./overlay) ];
 
   programs = {
     bat = {
@@ -27,12 +24,11 @@
     };
 
     fish = {
-      enable               = true;
-      interactiveShellInit = "theme_gruvbox light hard";
-      plugins              = lib.mapAttrsToList
+      enable       = true;
+      plugins      = lib.mapAttrsToList
         (name: pkg: { name = name; src = pkg; }) pkgs.fishPlugins;
-      promptInit           = builtins.readFile ../config/prompt.fish;
-      shellAliases         = {
+      promptInit   = builtins.readFile ../config/prompt.fish;
+      shellAliases = {
         cat  = "bat -p --paging=never";
         doom = "~/.config/emacs/bin/doom";
         less = "bat -p --paging=always";
