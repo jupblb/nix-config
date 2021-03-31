@@ -66,6 +66,11 @@
     services = {
       dropbox.enable = true;
 
+      gpg-agent = {
+        enable         = true;
+        pinentryFlavor = "gnome3";
+      };
+
       spotifyd = {
         enable          = true;
         package         = pkgs.spotifyd.override { withPulseAudio = true; };
