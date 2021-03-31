@@ -73,13 +73,17 @@
 
       spotifyd = {
         enable          = true;
-        package         = pkgs.spotifyd.override { withPulseAudio = true; };
+        package         = pkgs.spotifyd.override {
+          withMpris = true;
+          withPulseAudio = true;
+        };
         settings.global = {
-          username    = "mpkielbowicz@gmail.com";
-          password    = builtins.readFile ./config/spotify.key;
           backend     = "pulseaudio";
           bitrate     = "320";
           device_name = "hades";
+          password    = builtins.readFile ./config/spotify.key;
+          use_mpris   = "true";
+          username    = "mpkielbowicz@gmail.com";
         };
       };
     };
