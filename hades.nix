@@ -12,7 +12,7 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ chromium-wayland spotify ];
+  environment.systemPackages = with pkgs; [ chromium-wayland ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -63,7 +63,21 @@
       };
     };
 
-    services.dropbox.enable = true;
+    services = {
+      dropbox.enable = true;
+
+      spotifyd = {
+        enable          = true;
+        package         = pkgs.spotifyd.override { withPulseAudio = true; };
+        settings.global = {
+          username    = "mpkielbowicz@gmail.com";
+          password    = builtins.readFile ./config/spotify.key;
+          backend     = "pulseaudio";
+          bitrate     = "320";
+          device_name = "hades";
+        };
+      };
+    };
   };
 
   imports = [ ./common/nixos.nix ];
