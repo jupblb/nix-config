@@ -143,6 +143,11 @@
       user                = "jupblb";
     };
 
+    udev.extraRules = ''
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="8087", ATTRS{idProduct}=="0aaa",\
+        ATTR{authorized}="0"
+    '';
+
     wakeonlan.interfaces = [ {
       interface = "eno2";
       method    = "magicpacket";
