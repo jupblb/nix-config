@@ -108,7 +108,7 @@
         font_size                     = 10;
         foreground                    = "#282828";
         scrollback_pager              = ''
-          nvim -R -c 'setlocal ft=man' -c 'autocmd VimEnter * normal G{}'
+          nvim -c 'setl ft=man | call clearmatches() | autocmd VimEnter * norm G{}'
         '';
         scrollback_pager_history_size = 4096;
         shell                         = "${pkgs.fish}/bin/fish";
