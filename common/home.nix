@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [ gitAndTools.git-crypt ripgrep ];
+  home.packages         = with pkgs; [
+    ammonite gitAndTools.git-crypt gore ripgrep
+  ];
   home.sessionVariables = {
     DOOMDIR      = ../config/doom;
     DOOMLOCALDIR = "~/.local/share/doom";
@@ -70,6 +72,8 @@
       userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
+
+    go.enable = true;
 
     gpg.enable = true;
 
