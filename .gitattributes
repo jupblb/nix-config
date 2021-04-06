@@ -3,6 +3,7 @@ demeter.nix filter=git-crypt diff=git-crypt
 common/overlay/pragmata-pro/PragmataPro0.828.zip filter=git-crypt diff=git-crypt
 config/*.key filter=git-crypt diff=git-crypt
 config/gmailctl.jsonnet filter=git-crypt diff=git-crypt
+config/neovim/calendar.vim filter=git-crypt diff=git-crypt
 config/neovim/glug.vim filter=git-crypt diff=git-crypt
 config/ssh/id_ed25519 filter=git-crypt diff=git-crypt
 config/syncthing/** filter=git-crypt diff=git-crypt
