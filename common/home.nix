@@ -10,7 +10,7 @@
       DOOMDIR      = ../config/doom;
       DOOMLOCALDIR = "~/.local/share/doom";
       EDITOR       = "nvim";
-      GOPATH       = "~/.local/share/go";
+      GOPATH       = "\$HOME/.local/share/go";
     };
     username         = "jupblb";
   };
