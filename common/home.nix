@@ -1,15 +1,19 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages         = with pkgs; [
-    ammonite gitAndTools.git-crypt gore ripgrep
-  ];
-  home.sessionVariables = {
-    DOOMDIR      = ../config/doom;
-    DOOMLOCALDIR = "~/.local/share/doom";
-    EDITOR       = "nvim";
+  home = {
+    file             = { ".ammonite/predef.sc".source = pkgs.ammonite-predef; };
+    packages         = with pkgs; [
+      ammonite gitAndTools.git-crypt gore ripgrep
+    ];
+    sessionVariables = {
+      DOOMDIR      = ../config/doom;
+      DOOMLOCALDIR = "~/.local/share/doom";
+      EDITOR       = "nvim";
+      GOPATH       = "~/.local/share/go";
+    };
+    username         = "jupblb";
   };
-  home.username         = "jupblb";
 
   nixpkgs.overlays = [ (import ./overlay) ];
 
