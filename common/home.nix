@@ -2,13 +2,18 @@
 
 {
   home = {
-    file             = { ".ammonite/predef.sc".source = pkgs.ammonite-predef; };
+    file             = {
+      ".ammonite/predef.sc".source = pkgs.fetchurl {
+        url    = https://git.io/vHaKQ;
+        sha256 = "1kir3j5z3drkihx1hysdcmjaiacz840qpwbz70v4k62jr95mz3jp";
+      };
+    };
     packages         = with pkgs; [
       ammonite gitAndTools.git-crypt gore ripgrep
     ];
     sessionVariables = {
       DOOMDIR      = ../config/doom;
-      DOOMLOCALDIR = "~/.local/share/doom";
+      DOOMLOCALDIR = "\$HOME/.local/share/doom";
       EDITOR       = "nvim";
       GOPATH       = "\$HOME/.local/share/go";
     };
@@ -115,9 +120,8 @@
         enable_audio_bell             = "no";
         font_size                     = 10;
         foreground                    = "#282828";
-        scrollback_pager              = ''
-          nvim -c 'setl ft=man | call clearmatches() | autocmd VimEnter * norm G{}'
-        '';
+        scrollback_pager              =
+          "nvim -c 'setl ft=man | call clearmatches() | autocmd VimEnter * norm G{}'";
         scrollback_pager_history_size = 4096;
         shell                         = "${pkgs.fish}/bin/fish";
       };
@@ -186,10 +190,11 @@
       extraPackages =
         let
           packages        = with pkgs; [
-            gcc glow gopls metals ripgrep rnix-lsp
+            gcc glow gopls metals ripgrep rnix-lsp tree-sitter
           ];
           nodePackages    = with pkgs.nodePackages; [
             bash-language-server
+            npm
             typescript-language-server
             vim-language-server vscode-css-languageserver-bin
               vscode-html-languageserver-bin vscode-json-languageserver-bin
@@ -199,6 +204,7 @@
       package       = pkgs.neovim-nightly;
       vimAlias      = true;
       vimdiffAlias  = true;
+      withNodeJs    = true;
       withPython    = false;
       withPython3   = false;
       withRuby      = false;

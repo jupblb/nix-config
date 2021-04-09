@@ -1,4 +1,4 @@
-{ chromium, makeWrapper, symlinkJoin, wrapGAppsHook }:
+{ chromium, wrapGAppsHook }:
 
 let chromium' = chromium.overrideAttrs(_: {
   nativeBuildInputs = [ wrapGAppsHook ];
