@@ -16,6 +16,7 @@
       DOOMLOCALDIR = "\$HOME/.local/share/doom";
       EDITOR       = "nvim";
       GOPATH       = "\$HOME/.local/share/go";
+      GOROOT       = "${pkgs.go}/share/go";
     };
     username         = "jupblb";
   };
