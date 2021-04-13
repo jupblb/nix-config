@@ -44,6 +44,7 @@
         cat  = "bat -p --paging=never";
         doom = "~/.config/emacs/bin/doom";
         less = "bat -p --paging=always";
+        ll   = "${pkgs.exa}/bin/exa -la --icons";
         ls   = "${pkgs.exa}/bin/exa";
       };
     };
