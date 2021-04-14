@@ -160,20 +160,15 @@
           plugin = lf-vim;
           config = builtins.readFile ../config/neovim/lf.vim;
         } {
-          plugin = lightline-vim;
-          config = ''
-            set noshowmode
-            let g:lightline = { 'colorscheme': 'gruvbox' }
-          '';
+          plugin = lualine-nvim;
+          config = "luafile ${../config/neovim/lualine.lua}";
         } {
           plugin = nvim-lspconfig.overrideAttrs(_: {
             dependencies = [ completion-nvim fzf-lsp-nvim ];
           });
           config = "luafile ${../config/neovim/lspconfig.lua}";
         } {
-          plugin = nvim-tree-lua.overrideAttrs(_: {
-            dependencies = [ nvim-web-devicons ];
-          });
+          plugin = nvim-tree-lua;
           config = builtins.readFile ../config/neovim/nvim-tree.vim;
         } {
           plugin = nvim-treesitter.overrideAttrs(_: {
@@ -187,8 +182,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        vim-css-color vim-eunuch vim-fish vim-fugitive vim-go vim-jsonnet
-          vim-signify
+        nvim-web-devicons vim-fish vim-fugitive vim-go vim-jsonnet vim-signify
       ];
       enable        = true;
       extraPackages =
