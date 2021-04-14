@@ -15,7 +15,6 @@
       DOOMDIR      = ../config/doom;
       DOOMLOCALDIR = "\$HOME/.local/share/doom";
       EDITOR       = "nvim";
-      GOPATH       = "\$HOME/.local/share/go";
       GOROOT       = "${pkgs.go}/share/go";
     };
     username         = "jupblb";
@@ -84,7 +83,10 @@
       userName    = "jupblb";
     };
 
-    go.enable = true;
+    go = {
+      enable = true;
+      goPath = ".local/share/go";
+    };
 
     gpg.enable = true;
 
