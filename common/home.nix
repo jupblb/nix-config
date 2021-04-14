@@ -166,15 +166,15 @@
             let g:lightline = { 'colorscheme': 'gruvbox' }
           '';
         } {
-          plugin = nerdtree.overrideAttrs(_: {
-            dependencies = [ nerdtree-git-plugin ];
-          });
-          config = "nnoremap <Leader>t :NERDTreeMirror<CR>:NERDTreeToggle<CR>";
-        } {
           plugin = nvim-lspconfig.overrideAttrs(_: {
             dependencies = [ completion-nvim fzf-lsp-nvim ];
           });
           config = "luafile ${../config/neovim/lspconfig.lua}";
+        } {
+          plugin = nvim-tree-lua.overrideAttrs(_: {
+            dependencies = [ nvim-web-devicons ];
+          });
+          config = builtins.readFile ../config/neovim/nvim-tree.vim;
         } {
           plugin = nvim-treesitter.overrideAttrs(_: {
             dependencies = [ nvim-treesitter-refactor ];
