@@ -49,6 +49,6 @@ gruvbox_light.inactive = {
 }
 
 require('lualine').setup{
-  extensions = { 'fugitive', 'fzf', 'nvim-tree' },
+  extensions = { 'fugitive', 'nvim-tree' },
   options = { theme = gruvbox_light }
 }

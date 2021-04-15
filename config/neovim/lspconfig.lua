@@ -14,18 +14,27 @@ lspconfigs.ciderlsp = {
 vim.api.nvim_set_var('completion_enable_auto_popup', 0)
 vim.api.nvim_set_keymap('i','<C-Space>',[[<cmd>lua require'completion'.triggerCompletion()<CR>]],{noremap = true})
 
-local function lsp_attach(_)
-  vim.api.nvim_buf_set_keymap(0,'n','<C-]>',':Definitions<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<A-CR>',':CodeActions<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<Leader>ld',':DocumentSymbols!<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<A-l>','<cmd>lua vim.lsp.buf.formatting()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<Leader>lr','<cmd>lua vim.lsp.buf.rename()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','<Leader>lw',':WorkspaceSymbols!<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','K','<cmd>lua vim.lsp.buf.hover()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','gi',':Implementations!<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','gr',':References!<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>',{noremap = true})
-  vim.api.nvim_buf_set_keymap(0,'n','gt',':TypeDefinitions<CR>',{noremap = true})
+local function lsp_attach(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local opts = { noremap=true, silent=true }
+
+  buf_set_keymap('n','<C-]>','<cmd>lua vim.lsp.buf.definition()<CR>',opts)
+  buf_set_keymap('n','<A-CR>','<cmd>Telescope lsp_code_actions<CR>',opts)
+  buf_set_keymap('n','<Leader>ld','<cmd>Telescope lsp_document_symbols<CR>',opts)
+  buf_set_keymap('n','<Leader>lr','<cmd>lua vim.lsp.buf.rename()<CR>',opts)
+  buf_set_keymap('n','<Leader>lw','<cmd>Telescope lsp_workspace_symbols<CR>',opts)
+  buf_set_keymap('n','K','<cmd>lua vim.lsp.buf.hover()<CR>',opts)
+  buf_set_keymap('n','gi','<cmd>lua vim.lsp.buf.implementation()<CR>',opts)
+  buf_set_keymap('n','gr','<cmd>Telescope lsp_references<CR>',opts)
+  buf_set_keymap('n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>',opts)
+  buf_set_keymap('n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>',opts)
+
+  if client.resolved_capabilities.document_formatting then
+    buf_set_keymap("n", "<A-l>", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  end
+  if client.resolved_capabilities.document_range_formatting then
+    buf_set_keymap("v", "<A-l>", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+  end
 
   completion.on_attach()
 end

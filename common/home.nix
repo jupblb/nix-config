@@ -149,9 +149,6 @@
     neovim = {
       extraConfig   = builtins.readFile ../config/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
-          plugin = fzf-vim;
-          config = builtins.readFile ../config/neovim/fzf.vim;
-        } {
           plugin = glow-nvim;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {
@@ -165,7 +162,7 @@
           config = "luafile ${../config/neovim/lualine.lua}";
         } {
           plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ completion-nvim fzf-lsp-nvim ];
+            dependencies = [ completion-nvim ];
           });
           config = "luafile ${../config/neovim/lspconfig.lua}";
         } {
@@ -176,6 +173,11 @@
             dependencies = [ nvim-treesitter-refactor ];
           });
           config = builtins.readFile ../config/neovim/treesitter.vim;
+        } {
+          plugin = telescope-nvim.overrideAttrs(_: {
+            dependencies = [ plenary-nvim popup-nvim ];
+          });
+          config = "luafile ${../config/neovim/telescope.lua}";
         } {
           plugin = vimwiki;
           config = ''
@@ -229,8 +231,14 @@
     };
   };
 
-  xdg.configFile."emacs".source = builtins.fetchGit {
-    ref = "develop";
-    url = https://github.com/hlissner/doom-emacs.git;
+  xdg.configFile = {
+    "emacs".source         = builtins.fetchGit {
+      ref = "develop";
+      url = https://github.com/hlissner/doom-emacs.git;
+    };
+    "nvim/plenary/nix.lua" = {
+      target = "nvim/data/plenary/filetypes/nix.lua";
+      text   = "return { extension = { ['nix'] = 'nix' } }";
+    };
   };
 }
