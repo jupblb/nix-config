@@ -15,6 +15,7 @@
       DOOMDIR      = ../config/doom;
       DOOMLOCALDIR = "\$HOME/.local/share/doom";
       EDITOR       = "nvim";
+      LF_ICONS     = "\"${builtins.readFile ../config/lf/lf-icons.cfg}\"";
       GOROOT       = "${pkgs.go}/share/go";
     };
     username         = "jupblb";
@@ -133,9 +134,9 @@
 
     lf = {
       enable      = true;
-      extraConfig = builtins.readFile ../config/lfrc.sh;
+      extraConfig = builtins.readFile ../config/lf/lfrc.sh;
       previewer   = { keybinding = "`"; source = pkgs.lf-previewer; };
-      settings    = { hidden = true; tabstop = 4; };
+      settings    = { hidden = true; icons = true; tabstop = 4; };
     };
 
     mercurial = {
