@@ -12,11 +12,9 @@
       ammonite gitAndTools.git-crypt gore ripgrep
     ];
     sessionVariables = {
-      DOOMDIR      = ../config/doom;
-      DOOMLOCALDIR = "\$HOME/.local/share/doom";
-      EDITOR       = "nvim";
-      LF_ICONS     = "\"${builtins.readFile ../config/lf/lf-icons.cfg}\"";
-      GOROOT       = "${pkgs.go}/share/go";
+      EDITOR   = "nvim";
+      LF_ICONS = "\"${builtins.readFile ../config/lf/lf-icons.cfg}\"";
+      GOROOT   = "${pkgs.go}/share/go";
     };
     username         = "jupblb";
   };
@@ -29,12 +27,6 @@
       enable = true;
     };
 
-    emacs = {
-      enable        = true;
-      extraPackages = epkgs: with epkgs; [ langtool vterm ];
-      package       = pkgs.emacs-wrapped;
-    };
-
     fish = {
       enable       = true;
       plugins      = lib.mapAttrsToList
@@ -42,7 +34,6 @@
       promptInit   = builtins.readFile ../config/prompt.fish;
       shellAliases = {
         cat  = "bat -p --paging=never";
-        doom = "~/.config/emacs/bin/doom";
         less = "bat -p --paging=always";
         ll   = "${pkgs.exa}/bin/exa -la --icons";
         ls   = "${pkgs.exa}/bin/exa";
@@ -231,14 +222,6 @@
     };
   };
 
-  xdg.configFile = {
-    "emacs".source         = builtins.fetchGit {
-      ref = "develop";
-      url = https://github.com/hlissner/doom-emacs.git;
-    };
-    "nvim/plenary/nix.lua" = {
-      target = "nvim/data/plenary/filetypes/nix.lua";
-      text   = "return { extension = { ['nix'] = 'nix' } }";
-    };
-  };
+  xdg.configFile."nvim/data/plenary/filetypes/nix.lua".text =
+    "return { extension = { ['nix'] = 'nix' } }";
 }
