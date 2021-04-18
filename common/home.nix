@@ -182,7 +182,7 @@
       extraPackages =
         let
           packages        = with pkgs; [
-            gcc glow gopls metals ripgrep rnix-lsp tree-sitter
+            fd gcc glow gopls metals ripgrep rnix-lsp tree-sitter
           ];
           nodePackages    = with pkgs.nodePackages; [
             bash-language-server
