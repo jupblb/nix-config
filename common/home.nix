@@ -143,8 +143,8 @@
           plugin = glow-nvim;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
         } {
-          plugin = gruvbox-community;
-          config = builtins.readFile ../config/neovim/gruvbox-community.vim;
+          plugin = gruvbox-nvim;
+          config = builtins.readFile ../config/neovim/gruvbox.vim;
         } {
           plugin = lf-vim;
           config = builtins.readFile ../config/neovim/lf.vim;
