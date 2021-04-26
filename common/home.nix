@@ -34,6 +34,7 @@
       promptInit   = builtins.readFile ../config/prompt.fish;
       shellAliases = {
         cat  = "bat -p --paging=never";
+        diff = "delta";
         less = "bat -p --paging=always";
         ll   = "${pkgs.exa}/bin/exa -la --icons";
         ls   = "${pkgs.exa}/bin/exa";
