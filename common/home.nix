@@ -50,6 +50,7 @@
     };
 
     git = {
+      aliases     = { amend = "commit -a --amend --no-edit"; };
       delta       = {
         enable  = true;
         options = {
