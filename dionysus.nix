@@ -230,14 +230,17 @@
   system.stateVersion = "20.09";
 
   systemd.services = {
-    azethvm = let vmName = "azethvm"; in {
+    auto-suspend = {
+      description   = "Auto suspend";
+      script        = "rtcwake -m mem --date 9:00";
+      serviceConfig = { Type = "oneshot"; User = "root"; };
+      startAt       = "*-*-* 00:00:00";
+    };
+    azethvm      = let vmName = "azethvm"; in {
       after         = [ "libvirtd.service" ];
       requires      = [ "libvirtd.service" ];
       wantedBy      = [ "multi-user.target" ];
-      serviceConfig = {
-        Type            = "oneshot";
-        RemainAfterExit = "yes";
-      };
+      serviceConfig = { Type = "oneshot"; RemainAfterExit = "yes"; };
       script        = pkgs.callPackage ./config/azethvm.xml.nix {
         name        = vmName;
         cpus        = "2";
@@ -261,7 +264,7 @@
       '';
     };
 
-    checkip = {
+    checkip      = {
       after         = [ "network.target" ];
       description   = "Public IP checker";
       script        = with pkgs; ''
