@@ -166,9 +166,7 @@
           });
           config = builtins.readFile ../config/neovim/treesitter.vim;
         } {
-          plugin = telescope-nvim.overrideAttrs(_: {
-            dependencies = [ plenary-nvim popup-nvim ];
-          });
+          plugin = telescope-nvim;
           config = "luafile ${../config/neovim/telescope.lua}";
         } {
           plugin = vimwiki;
@@ -177,7 +175,8 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        nvim-web-devicons vim-fish vim-fugitive vim-go vim-jsonnet vim-signify
+        commentary fugitive nvim-web-devicons vim-fish vim-go vim-jsonnet
+          vim-signify
       ];
       enable        = true;
       extraPackages =
