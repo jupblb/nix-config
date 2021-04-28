@@ -7,7 +7,7 @@ vimUtils.buildVimPlugin rec {
     owner  = "npxbr";
     repo   = "gruvbox.nvim";
     rev    = version;
-    sha256 = "0y2w4w4dqnffyhc955770327q4vayb65r295zf7pd1sirgpbd05q";
+    sha256 = "04d8knfhidxdm8lzc15hklq1mm6i5kmdkik4iln4cbhd3cg33iqy";
   };
   version      = "main";
 }
