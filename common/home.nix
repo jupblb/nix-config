@@ -167,7 +167,9 @@
           });
           config = builtins.readFile ../config/neovim/treesitter.vim;
         } {
-          plugin = telescope-nvim;
+          plugin = telescope-nvim.overrideAttrs(old: {
+            dependencies = old.dependencies ++ [ telescope-fzy-native-nvim ];
+          });
           config = "luafile ${../config/neovim/telescope.lua}";
         } {
           plugin = vimwiki;
@@ -222,7 +224,4 @@
       serverAliveInterval = 30;
     };
   };
-
-  xdg.configFile."nvim/data/plenary/filetypes/nix.lua".text =
-    "return { extension = { ['nix'] = 'nix' } }";
 }
