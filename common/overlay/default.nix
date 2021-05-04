@@ -8,9 +8,6 @@ self: super: rec {
   neovim-nightly   = super.callPackage ./neovim {};
   pragmata-pro     = super.callPackage ./pragmata-pro {};
   vimPlugins       = super.vimPlugins // {
-    gruvbox-nvim = super.callPackage ./neovim/gruvbox-nvim.nix {
-      inherit (super.vimPlugins) lush-nvim;
-    };
     lf-vim       = super.callPackage ./neovim/lf-vim.nix {
       inherit (super.vimPlugins) lf-vim vim-bbye;
     };
