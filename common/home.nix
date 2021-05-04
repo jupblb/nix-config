@@ -154,9 +154,10 @@
           plugin = lualine-nvim;
           config = "luafile ${../config/neovim/lualine.lua}";
         } {
-          plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ completion-nvim ];
-          });
+          plugin = nvim-compe;
+          config = "luafile ${../config/neovim/compe.lua}";
+        } {
+          plugin = nvim-lspconfig;
           config = "luafile ${../config/neovim/lspconfig.lua}";
         } {
           plugin = nvim-tree-lua;

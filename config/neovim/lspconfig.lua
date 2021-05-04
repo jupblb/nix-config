@@ -1,4 +1,3 @@
-local completion = require'completion'
 local lspconfig = require'lspconfig'
 local lspconfigs = require'lspconfig/configs'
 
@@ -10,9 +9,6 @@ lspconfigs.ciderlsp = {
     settings = {};
   };
 }
-
-vim.api.nvim_set_var('completion_enable_auto_popup', 0)
-vim.api.nvim_set_keymap('i','<C-Space>',[[<cmd>lua require'completion'.triggerCompletion()<CR>]],{noremap = true})
 
 local function lsp_attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -37,8 +33,6 @@ local function lsp_attach(client, bufnr)
   if client.resolved_capabilities.document_range_formatting then
     buf_set_keymap("v", "<A-l>", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
-
-  completion.on_attach()
 end
 
 lspconfig.bashls.setup{on_attach = lsp_attach}

@@ -1,7 +1,6 @@
 set background=light
 set clipboard+=unnamedplus
 set colorcolumn=80
-set completeopt=menuone,noinsert,noselect
 set ignorecase
 set mouse=a
 set nohlsearch
