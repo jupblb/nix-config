@@ -6,6 +6,7 @@ require'compe'.setup {
     nvim_lua = true;
     -- nvim_treesitter = true;
     path = true;
+    tabnine = true;
   };
 }
 

@@ -19,7 +19,8 @@
     username         = "jupblb";
   };
 
-  nixpkgs.overlays = [ (import ./overlay) ];
+  nixpkgs.config.allowUnfreePredicate = pkg: (lib.getName pkg) == "tabnine";
+  nixpkgs.overlays                    = [ (import ./overlay) ];
 
   programs = {
     bat = {
@@ -154,7 +155,9 @@
           plugin = lualine-nvim;
           config = "luafile ${../config/neovim/lualine.lua}";
         } {
-          plugin = nvim-compe;
+          plugin = nvim-compe.overrideAttrs(_: {
+            dependencies = [ compe-tabnine ];
+          });
           config = "luafile ${../config/neovim/compe.lua}";
         } {
           plugin = nvim-lspconfig;

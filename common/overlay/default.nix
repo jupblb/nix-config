@@ -8,7 +8,12 @@ self: super: rec {
   neovim-nightly   = super.callPackage ./neovim {};
   pragmata-pro     = super.callPackage ./pragmata-pro {};
   vimPlugins       = super.vimPlugins // {
-    lf-vim       = super.callPackage ./neovim/lf-vim.nix {
+    compe-tabnine = super.vimPlugins.compe-tabnine.overrideAttrs(old: {
+      postFixup = old.postFixup + ''
+        ln -s ${super.tabnine}/bin/TabNine-deep-* $target/binaries/
+      '';
+    });
+    lf-vim        = super.callPackage ./neovim/lf-vim.nix {
       inherit (super.vimPlugins) lf-vim vim-bbye;
     };
   };
