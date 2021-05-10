@@ -152,7 +152,9 @@
           plugin = lf-vim;
           config = builtins.readFile ../config/neovim/lf.vim;
         } {
-          plugin = lualine-nvim;
+          plugin = lualine-nvim.overrideAttrs(_: {
+            dependencies = [ nvim-web-devicons ];
+          });
           config = "luafile ${../config/neovim/lualine.lua}";
         } {
           plugin = nvim-compe.overrideAttrs(_: {
@@ -163,7 +165,9 @@
           plugin = nvim-lspconfig;
           config = "luafile ${../config/neovim/lspconfig.lua}";
         } {
-          plugin = nvim-tree-lua;
+          plugin = nvim-tree-lua.overrideAttrs(_: {
+            dependencies = [ nvim-web-devicons ];
+          });
           config = builtins.readFile ../config/neovim/nvim-tree.vim;
         } {
           plugin = nvim-treesitter.overrideAttrs(_: {
@@ -172,7 +176,9 @@
           config = builtins.readFile ../config/neovim/treesitter.vim;
         } {
           plugin = telescope-nvim.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [ telescope-fzy-native-nvim ];
+            dependencies = old.dependencies ++ [
+              nvim-web-devicons telescope-fzy-native-nvim
+            ];
           });
           config = "luafile ${../config/neovim/telescope.lua}";
         } {
@@ -182,8 +188,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        commentary fugitive nvim-web-devicons vim-fish vim-go vim-jsonnet
-          vim-signify
+        commentary fugitive sleuth vim-go vim-signify
       ];
       enable        = true;
       extraPackages =
@@ -196,7 +201,7 @@
             npm
             typescript-language-server
             vim-language-server vscode-css-languageserver-bin
-              vscode-html-languageserver-bin vscode-json-languageserver-bin
+              vscode-html-languageserver-bin vscode-json-languageserver
             yaml-language-server
           ];
         in packages ++ nodePackages;
