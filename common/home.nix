@@ -213,6 +213,11 @@
       withRuby      = false;
     };
 
+    nix-index = {
+      enable                = true;
+      enableFishIntegration = true;
+    };
+
     ssh = {
       compression         = true;
       controlMaster       = "auto";
