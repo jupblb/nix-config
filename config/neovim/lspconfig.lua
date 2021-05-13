@@ -40,7 +40,10 @@ lspconfig.cssls.setup{on_attach = lsp_attach}
 lspconfig.gopls.setup{on_attach = lsp_attach}
 lspconfig.html.setup{on_attach = lsp_attach}
 lspconfig.jsonls.setup{on_attach = lsp_attach}
-lspconfig.metals.setup{on_attach = lsp_attach}
+lspconfig.metals.setup{
+  on_attach = lsp_attach;
+  root_dir = lspconfig.util.root_pattern("build.sbt", "build.sc", "build.gradle", "pom.xml", ".git")
+}
 lspconfig.tsserver.setup{on_attach = lsp_attach}
 lspconfig.rnix.setup{on_attach = lsp_attach}
 lspconfig.vimls.setup{on_attach = lsp_attach}
