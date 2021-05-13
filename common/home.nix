@@ -168,7 +168,7 @@
           plugin = nvim-tree-lua.overrideAttrs(_: {
             dependencies = [ nvim-web-devicons ];
           });
-          config = builtins.readFile ../config/neovim/nvim-tree.vim;
+          config = builtins.readFile ../config/neovim/tree.vim;
         } {
           plugin = nvim-treesitter.overrideAttrs(_: {
             dependencies = [ nvim-treesitter-refactor ];
