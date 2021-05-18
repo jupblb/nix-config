@@ -7,6 +7,12 @@ telescope.setup{
   defaults = {
     mappings = { i = { ["<esc>"] = actions.close } },
 --    layout_strategy = "vertical"
+  },
+  extensions = {
+    fzy_native = {
+      override_file_sorter = true,
+      override_generic_sorter = true
+    }
   }
 }
 telescope.load_extension('fzy_native')
@@ -19,6 +25,7 @@ vim.api.nvim_set_keymap('n', '<Leader>hf', '<Cmd>Telescope oldfiles<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>hj', '<Cmd>Telescope marks<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>hs', '<Cmd>Telescope search_history<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>s', '<Cmd>Telescope live_grep<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>S', '<Cmd>Telescope grep_string search=""<CR>', opts)
 
 delta_git_commits = function(opts)
   opts = opts or {}

@@ -180,7 +180,10 @@
               nvim-web-devicons telescope-fzy-native-nvim
             ];
           });
-          config = "luafile ${../config/neovim/telescope.lua}";
+          config = ''
+            luafile ${../config/neovim/telescope.lua}
+            command! -nargs=1 Rg Telescope grep_string search=<args>
+          '';
         } {
           plugin = vimwiki;
           config = ''
