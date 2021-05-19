@@ -8,7 +8,6 @@ set mouse=a
 set nohlsearch
 set nowrap
 set number
-set relativenumber
 set shell=bash
 set shortmess+=c
 set showbreak=↪
