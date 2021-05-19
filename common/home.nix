@@ -86,10 +86,12 @@
     gpg.enable = true;
 
     htop = {
-      enable              = true;
-      hideThreads         = true;
-      hideUserlandThreads = true;
-      showCpuFrequency    = true;
+      enable   = true;
+      settings = {
+        hide_threads          = true;
+        hide_userland_threads = true;
+        show_cpu_frequency    = true;
+      };
     };
 
     kitty = {
