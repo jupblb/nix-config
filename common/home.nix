@@ -193,7 +193,7 @@
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
         }
-        commentary fugitive sleuth vim-go vim-signify
+        vim-commentary vim-fugitive vim-go vim-signify vim-sleuth
       ];
       enable        = true;
       extraPackages =
