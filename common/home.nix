@@ -23,6 +23,13 @@
   nixpkgs.overlays                    = [ (import ./overlay) ];
 
   programs = {
+    bash = {
+      enable         = true;
+      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
+      shellOptions   = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
+      initExtra      = builtins.readFile ../config/bashrc;
+    };
+
     bat = {
       config = { theme = "gruvbox-light"; };
       enable = true;
@@ -35,7 +42,6 @@
       promptInit   = builtins.readFile ../config/prompt.fish;
       shellAliases = {
         cat  = "bat -p --paging=never";
-        diff = "delta";
         less = "bat -p --paging=always";
         ll   = "${pkgs.exa}/bin/exa -la --icons";
         ls   = "${pkgs.exa}/bin/exa";
@@ -240,6 +246,59 @@
           hades        = key // { hostname = "jupblb.ddns.net"; port = 1993; };
         };
       serverAliveInterval = 30;
+    };
+
+    starship = {
+      enable   = true;
+      settings = {
+        add_newline = false;
+        directory   = {
+          read_only = " ";
+          truncation_length = 8;
+          truncation_symbol = "…/";
+        };
+        format      =
+          let
+            git    = [ "git_branch" "git_commit" "git_state" "git_status" ];
+            line   = prefix ++ git ++ lang ++ suffix;
+            lang   = [ "golang" "java" "lua" "nodejs" "python" "rust" "scala" ];
+            prefix = [
+              "username" "hostname" "shlvl" "kubernetes" "directory" "nix_shell"
+            ];
+            suffix = [ "gcloud" "status" "shell" ];
+          in lib.concatMapStrings (e: "$" + e) line;
+        gcloud      = {
+          format         = "[ $region]($style) ";
+          region_aliases = {
+            "europe-west1" = "eu-west1";
+            "europe-west2" = "eu-west2";
+            "europe-west3" = "eu-west3";
+          };
+        };
+        git_status  = {
+         conflicted = " ";
+         modified   = " ";
+         staged     = " ";
+         stashed    = " ";
+         untracked  = " ";
+        };
+        golang      = { format = "[ ]($style) "; };
+        java        = { format = "[ ]($style) "; };
+        kubernetes  = { disabled = false; };
+        lua         = { format = "[ ]($style) "; };
+        nix_shell   = { format = "[ ]($style) "; };
+        nodejs      = { format = "[ ]($style) "; };
+        python      = { format = "[ ]($style) "; python_binary = []; };
+        rust        = { format = "[ ]($style) "; };
+        scala       = { format = "[ ]($style) "; };
+        shell       = {
+          bash_indicator = "\\$";
+          disabled       = false;
+          fish_indicator = "~>";
+        };
+        shlvl       = { disabled = false; symbol = " "; };
+        status      = { disabled = false; symbol = " "; };
+      };
     };
   };
 
