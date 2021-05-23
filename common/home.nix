@@ -242,4 +242,6 @@
       serverAliveInterval = 30;
     };
   };
+
+  xdg.enable = true;
 }
