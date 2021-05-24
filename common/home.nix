@@ -97,8 +97,9 @@
     kitty = {
       enable      = true;
       font        = {
-        package = pkgs.pragmata-pro;
         name    = "PragmataPro Mono Liga";
+        package = pkgs.pragmata-pro;
+        size    = 10;
       };
       keybindings = {
         "ctrl+shift+'" = "launch --location=hsplit";
@@ -119,7 +120,6 @@
           "write-clipboard write-primary no-append";
         enabled_layouts               = "splits";
         enable_audio_bell             = "no";
-        font_size                     = 10;
         foreground                    = "#282828";
         scrollback_pager              =
           "nvim -c 'setl ft=man | call clearmatches() | autocmd VimEnter * norm G{}'";
