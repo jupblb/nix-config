@@ -42,7 +42,7 @@
         cat  = "bat -p --paging=never";
         less = "bat -p --paging=always";
         ll   = "${pkgs.exa}/bin/exa -la --icons";
-        ls   = "${pkgs.exa}/bin/exa";
+        ls   = "${pkgs.exa}/bin/exa --group-directories-first";
       };
     };
 
