@@ -257,15 +257,15 @@
         };
         format      =
           let
+            lang   = [ "golang" "java" "lua" "nodejs" "python" "rust" "scala" ];
+            line   = prefix ++ vcs ++ lang ++ [ "nix_shell" "status" "shell" ];
+            prefix = [ "hostname" "shlvl" "gcloud" "kubernetes" "directory" ];
             vcs    = [
               "git_branch" "git_commit" "git_state" "git_status" "hg_branch"
             ];
-            line   = prefix ++ vcs ++ lang ++ [ "nix_shell" "status" "shell" ];
-            lang   = [ "golang" "java" "lua" "nodejs" "python" "rust" "scala" ];
-            prefix = [ "hostname" "shlvl" "gcloud" "kubernetes" "directory" ];
           in lib.concatMapStrings (e: "$" + e) line;
         gcloud      = {
-          format         = "[( $region)]($style) ";
+          format         = "[( $project(/$region) )]($style)";
           region_aliases = {
             "europe-west1" = "eu-west1";
             "europe-west2" = "eu-west2";
@@ -294,7 +294,7 @@
           disabled       = false;
           fish_indicator = "~>";
         };
-        shlvl       = { disabled = false; symbol = " "; };
+        shlvl       = { disabled = false; symbol = " "; };
         status      = { disabled = false; symbol = " "; };
       };
     };
