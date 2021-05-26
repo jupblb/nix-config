@@ -251,22 +251,21 @@
       settings = {
         add_newline = false;
         directory   = {
-          read_only = " ";
+          read_only         = " ";
           truncation_length = 8;
           truncation_symbol = "…/";
         };
         format      =
           let
-            git    = [ "git_branch" "git_commit" "git_state" "git_status" ];
-            line   = prefix ++ git ++ lang ++ suffix;
-            lang   = [ "golang" "java" "lua" "nodejs" "python" "rust" "scala" ];
-            prefix = [
-              "username" "hostname" "shlvl" "kubernetes" "directory" "nix_shell"
+            vcs    = [
+              "git_branch" "git_commit" "git_state" "git_status" "hg_branch"
             ];
-            suffix = [ "gcloud" "status" "shell" ];
+            line   = prefix ++ vcs ++ lang ++ [ "nix_shell" "status" "shell" ];
+            lang   = [ "golang" "java" "lua" "nodejs" "python" "rust" "scala" ];
+            prefix = [ "hostname" "shlvl" "gcloud" "kubernetes" "directory" ];
           in lib.concatMapStrings (e: "$" + e) line;
         gcloud      = {
-          format         = "[ $region]($style) ";
+          format         = "[( $region)]($style) ";
           region_aliases = {
             "europe-west1" = "eu-west1";
             "europe-west2" = "eu-west2";
@@ -281,6 +280,7 @@
          untracked  = " ";
         };
         golang      = { format = "[ ]($style) "; };
+        hg_branch   = { disabled = false; };
         java        = { format = "[ ]($style) "; };
         kubernetes  = { disabled = false; };
         lua         = { format = "[ ]($style) "; };
