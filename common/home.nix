@@ -8,9 +8,7 @@
         sha256 = "1kir3j5z3drkihx1hysdcmjaiacz840qpwbz70v4k62jr95mz3jp";
       };
     };
-    packages         = with pkgs; [
-      ammonite gitAndTools.git-crypt gore ripgrep
-    ];
+    packages         = with pkgs; [ ammonite git-crypt gore ripgrep ];
     sessionVariables = {
       EDITOR   = "nvim";
       LF_ICONS = "\"${builtins.readFile ../config/lf/lf-icons.cfg}\"";
