@@ -1,4 +1,10 @@
 self: super: with super; {
+  ammonite         = ammonite // {
+    predef = pkgs.fetchurl {
+      url    = https://git.io/vHaKQ;
+      sha256 = "1kir3j5z3drkihx1hysdcmjaiacz840qpwbz70v4k62jr95mz3jp";
+    };
+  };
   chromium-wayland = callPackage ./chromium-wayland/default.nix {};
   fishPlugins      = import ./fish { inherit (super) callPackage; };
   delta            = callPackage ./delta { delta = super.delta; };

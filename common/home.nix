@@ -2,12 +2,7 @@
 
 {
   home = {
-    file             = {
-      ".ammonite/predef.sc".source = pkgs.fetchurl {
-        url    = https://git.io/vHaKQ;
-        sha256 = "1kir3j5z3drkihx1hysdcmjaiacz840qpwbz70v4k62jr95mz3jp";
-      };
-    };
+    file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs; [ ammonite git-crypt gore ripgrep ];
     sessionVariables = {
       EDITOR   = "nvim";
@@ -99,11 +94,7 @@
 
     htop = {
       enable   = true;
-      settings = {
-        hide_threads          = true;
-        hide_userland_threads = true;
-        show_cpu_frequency    = true;
-      };
+      settings = { hide_threads = true; hide_userland_threads = true; };
     };
 
     kitty = {
@@ -230,10 +221,7 @@
       withRuby      = false;
     };
 
-    nix-index = {
-      enable                = true;
-      enableFishIntegration = true;
-    };
+    nix-index.enable = true;
 
     ssh = {
       compression         = true;
