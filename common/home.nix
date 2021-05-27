@@ -33,16 +33,24 @@
       enable = true;
     };
 
+    exa.enable = true;
+
     fish = {
       enable       = true;
+      functions    = {
+        fish_greeting =
+          "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
+        ls            = ''
+          set PATH ${pkgs.exa}/bin $PATH
+          ${builtins.readFile ../config/fish/ls.fish}
+        '';
+      };
       plugins      = lib.mapAttrsToList
         (name: pkg: { name = name; src = pkg; }) pkgs.fishPlugins;
-      promptInit   = builtins.readFile ../config/prompt.fish;
+      promptInit   = "theme_gruvbox light hard";
       shellAliases = {
         cat  = "bat -p --paging=never";
         less = "bat -p --paging=always";
-        ll   = "${pkgs.exa}/bin/exa -la --icons";
-        ls   = "${pkgs.exa}/bin/exa --group-directories-first";
       };
     };
 
@@ -257,26 +265,17 @@
         };
         format      =
           let
+            git    = map (s: "git_" + s) [ "branch" "commit" "state" "status" ];
             lang   = [ "golang" "java" "lua" "nodejs" "python" "rust" "scala" ];
-            line   = prefix ++ vcs ++ lang ++ [ "nix_shell" "status" "shell" ];
-            prefix = [ "hostname" "shlvl" "gcloud" "kubernetes" "directory" ];
-            vcs    = [
-              "git_branch" "git_commit" "git_state" "git_status" "hg_branch"
-            ];
+            line   = prefix ++ git ++ lang ++ [ "nix_shell" "status" "shell" ];
+            prefix = [ "hostname" "shlvl" "directory" "hg_branch" ];
           in lib.concatMapStrings (e: "$" + e) line;
-        gcloud      = {
-          format         = "[( $project(/$region) )]($style)";
-          region_aliases = {
-            "europe-west1" = "eu-west1";
-            "europe-west2" = "eu-west2";
-            "europe-west3" = "eu-west3";
-          };
-        };
         git_branch  = { symbol = " "; };
         git_status  = {
           ahead      = " ";
           behind     = " ";
           conflicted = " ";
+          deleted    = "";
           diverged   = " ";
           modified   = " ";
           staged     = " ";
@@ -286,7 +285,6 @@
         golang      = { format = "[ ]($style) "; };
         hg_branch   = { disabled = false; symbol = " "; };
         java        = { format = "[ ]($style) "; };
-        kubernetes  = { disabled = false; };
         lua         = { format = "[ ]($style) "; };
         nix_shell   = { format = "[ ]($style) "; };
         nodejs      = { format = "[ ]($style) "; };
