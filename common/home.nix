@@ -272,15 +272,19 @@
             "europe-west3" = "eu-west3";
           };
         };
+        git_branch  = { symbol = " "; };
         git_status  = {
-         conflicted = " ";
-         modified   = " ";
-         staged     = " ";
-         stashed    = " ";
-         untracked  = " ";
+          ahead      = " ";
+          behind     = " ";
+          conflicted = " ";
+          diverged   = " ";
+          modified   = " ";
+          staged     = " ";
+          stashed    = " ";
+          untracked  = " ";
         };
         golang      = { format = "[ ]($style) "; };
-        hg_branch   = { disabled = false; };
+        hg_branch   = { disabled = false; symbol = " "; };
         java        = { format = "[ ]($style) "; };
         kubernetes  = { disabled = false; };
         lua         = { format = "[ ]($style) "; };
