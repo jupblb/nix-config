@@ -254,8 +254,7 @@
         format      =
           let
             git    = map (s: "git_" + s) [ "branch" "commit" "state" "status" ];
-            lang   = [ "golang" "java" "lua" "nodejs" "python" "rust" "scala" ];
-            line   = prefix ++ git ++ lang ++ [ "nix_shell" "status" "shell" ];
+            line   = prefix ++ git  ++ [ "nix_shell" "status" "shell" ];
             prefix = [ "hostname" "shlvl" "directory" "hg_branch" ];
           in lib.concatMapStrings (e: "$" + e) line;
         git_branch  = { symbol = " "; };
@@ -270,15 +269,8 @@
           stashed    = " ";
           untracked  = " ";
         };
-        golang      = { format = "[ ]($style) "; };
         hg_branch   = { disabled = false; symbol = " "; };
-        java        = { format = "[ ]($style) "; };
-        lua         = { format = "[ ]($style) "; };
         nix_shell   = { format = "[ ]($style) "; };
-        nodejs      = { format = "[ ]($style) "; };
-        python      = { format = "[ ]($style) "; python_binary = []; };
-        rust        = { format = "[ ]($style) "; };
-        scala       = { format = "[ ]($style) "; };
         shell       = {
           bash_indicator = "\\$";
           disabled       = false;
