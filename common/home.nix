@@ -148,55 +148,55 @@
     neovim = {
       extraConfig   = builtins.readFile ../config/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
-          plugin = glow-nvim;
           config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
+          plugin = glow-nvim;
         } {
-          plugin = gruvbox-community;
           config = builtins.readFile ../config/neovim/gruvbox.vim;
+          plugin = gruvbox-community;
         } {
-          plugin = lf-vim;
           config = builtins.readFile ../config/neovim/lf.vim;
+          plugin = lf-vim;
         } {
+          config = "luafile ${../config/neovim/lualine.lua}";
           plugin = lualine-nvim.overrideAttrs(_: {
             dependencies = [ nvim-web-devicons ];
           });
-          config = "luafile ${../config/neovim/lualine.lua}";
         } {
+          config = "luafile ${../config/neovim/compe.lua}";
           plugin = nvim-compe.overrideAttrs(_: {
             dependencies = [ compe-tabnine ];
           });
-          config = "luafile ${../config/neovim/compe.lua}";
         } {
-          plugin = nvim-lspconfig;
           config = "luafile ${../config/neovim/lspconfig.lua}";
+          plugin = nvim-lspconfig;
         } {
+          config = builtins.readFile ../config/neovim/tree.vim;
           plugin = nvim-tree-lua.overrideAttrs(_: {
             dependencies = [ nvim-web-devicons ];
           });
-          config = builtins.readFile ../config/neovim/tree.vim;
         } {
+          config = builtins.readFile ../config/neovim/treesitter.vim;
           plugin = nvim-treesitter.overrideAttrs(_: {
             dependencies = [ nvim-treesitter-refactor ];
           });
-          config = builtins.readFile ../config/neovim/treesitter.vim;
         } {
+          config = ''
+            luafile ${../config/neovim/telescope.lua}
+            command! -nargs=1 Rg Telescope grep_string search=<args>
+          '';
           plugin = telescope-nvim.overrideAttrs(old: {
             dependencies = old.dependencies ++ [
               nvim-web-devicons telescope-fzy-native-nvim
             ];
           });
-          config = ''
-            luafile ${../config/neovim/telescope.lua}
-            command! -nargs=1 Rg Telescope grep_string search=<args>
-          '';
         } {
-          plugin = vimwiki;
           config = ''
             let g:vimwiki_list = [{'path': '~/Documents/vimwiki/',
                 \ 'syntax': 'markdown', 'ext': '.md'}]
           '';
+          plugin = vimwiki;
         }
-        vim-commentary vim-fugitive vim-go vim-signify vim-sleuth
+        vim-go vim-signify vim-sleuth
       ];
       enable        = true;
       extraPackages =

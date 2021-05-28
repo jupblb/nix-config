@@ -15,12 +15,11 @@ self: super: with super; {
   neovim-nightly   = callPackage ./neovim {};
   pragmata-pro     = callPackage ./pragmata-pro {};
   vimPlugins       = vimPlugins // {
-    compe-tabnine = vimPlugins.compe-tabnine.overrideAttrs(old: {
-      postFixup = old.postFixup + ''
-        ln -s ${tabnine}/bin/TabNine-deep-* $target/binaries/
-      '';
-    });
-    lf-vim        = callPackage ./neovim/lf-vim.nix {
+    compe-tabnine    = callPackage ./neovim/compe-tabnine.nix {
+      inherit (vimPlugins) compe-tabnine;
+    };
+    google-filetypes = callPackage ./neovim/google-filetypes.nix {};
+    lf-vim           = callPackage ./neovim/lf-vim.nix {
       inherit (vimPlugins) lf-vim vim-bbye;
     };
   };
