@@ -9,8 +9,14 @@ self: super: with super; {
   fishPlugins      = import ./fish { inherit (super) callPackage; };
   delta            = callPackage ./delta { delta = super.delta; };
   k8s-test-infra   = callPackage ./kubernetes/test-infra.nix {};
-  lf               = callPackage ./lf { lf = super.lf; };
-  lf-previewer     = callPackage ./lf/previewer.nix {};
+  lf               = (callPackage ./lf { lf = super.lf; }) // {
+    lfcd-fish = pkgs.fetchurl {
+      url    =
+        https://raw.githubusercontent.com/gokcehan/lf/master/etc/lfcd.fish;
+      sha256 = "16lagjvrm0wg7ddywv1l4l0b9cw8mvd7lfhyq6p454m93x15y4m3";
+    };
+    previewer = callPackage ./lf/previewer.nix {};
+  };
   htop             = callPackage ./htop { htop = super.htop; };
   neovim-nightly   = callPackage ./neovim {};
   pragmata-pro     = callPackage ./pragmata-pro {};

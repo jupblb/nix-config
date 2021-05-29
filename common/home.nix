@@ -35,6 +35,7 @@
       functions    = {
         fish_greeting =
           "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
+        lfcd          = ''${builtins.readFile pkgs.lf.lfcd-fish} lfcd $argv'';
         ls            = ''
           set PATH ${pkgs.exa}/bin $PATH
           ${builtins.readFile ../config/fish/ls.fish}
@@ -134,7 +135,7 @@
     lf = {
       enable      = true;
       extraConfig = builtins.readFile ../config/lf/lfrc.sh;
-      previewer   = { keybinding = "`"; source = pkgs.lf-previewer; };
+      previewer   = { keybinding = "`"; source = pkgs.lf.previewer; };
       settings    = { hidden = true; icons = true; tabstop = 4; };
     };
 
