@@ -251,7 +251,7 @@
       settings = {
         add_newline = false;
         directory   = {
-          read_only         = " ";
+          read_only         = " ";
           truncation_length = 8;
           truncation_symbol = "…/";
         };
@@ -266,7 +266,7 @@
           ahead      = " ";
           behind     = " ";
           conflicted = " ";
-          deleted    = "";
+          deleted    = " ";
           diverged   = " ";
           modified   = " ";
           staged     = " ";

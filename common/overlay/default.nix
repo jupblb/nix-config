@@ -7,7 +7,6 @@ self: super: with super; {
   };
   chromium-wayland = callPackage ./chromium-wayland/default.nix {};
   fishPlugins      = import ./fish { inherit (super) callPackage; };
-  delta            = callPackage ./delta { delta = super.delta; };
   k8s-test-infra   = callPackage ./kubernetes/test-infra.nix {};
   lf               = (callPackage ./lf { lf = super.lf; }) // {
     lfcd-fish = pkgs.fetchurl {
