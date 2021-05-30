@@ -4,11 +4,7 @@
   home = {
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs; [ ammonite git-crypt gore ripgrep ];
-    sessionVariables = {
-      EDITOR   = "nvim";
-      LF_ICONS = "\"${builtins.readFile ../config/lf/lf-icons.cfg}\"";
-      GOROOT   = "${pkgs.go}/share/go";
-    };
+    sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
     username         = "jupblb";
   };
 
@@ -31,20 +27,23 @@
     exa.enable = true;
 
     fish = {
-      enable       = true;
-      functions    = {
+      enable               = true;
+      functions            = {
         fish_greeting =
           "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
-        lfcd          = ''${builtins.readFile pkgs.lf.lfcd-fish} lfcd $argv'';
+        lfcd          = "${builtins.readFile pkgs.lf.lfcd-fish} lfcd $argv";
         ls            = ''
           set PATH ${pkgs.exa}/bin $PATH
           ${builtins.readFile ../config/fish/ls.fish}
         '';
       };
-      plugins      = lib.mapAttrsToList
+      plugins              = lib.mapAttrsToList
         (name: pkg: { name = name; src = pkg; }) pkgs.fishPlugins;
-      promptInit   = "theme_gruvbox light hard";
-      shellAliases = {
+      interactiveShellInit = ''
+        set -gx LF_ICONS "${builtins.readFile ../config/lf/lf-icons.cfg}"
+        theme_gruvbox light hard
+      '';
+      shellAliases         = {
         cat  = "bat -p --paging=never";
         less = "bat -p --paging=always";
       };
@@ -259,7 +258,7 @@
           let
             git    = map (s: "git_" + s) [ "branch" "commit" "state" "status" ];
             line   = prefix ++ git  ++ [ "nix_shell" "status" "shell" ];
-            prefix = [ "hostname" "shlvl" "directory" "hg_branch" ];
+            prefix = [ "shlvl" "hostname" "directory" "hg_branch" ];
           in lib.concatMapStrings (e: "$" + e) line;
         git_branch  = { symbol = " "; };
         git_status  = {
@@ -274,6 +273,7 @@
           untracked  = " ";
         };
         hg_branch   = { disabled = false; symbol = " "; };
+        hostname    = { format = "[($hostname:)]($style)"; };
         nix_shell   = { format = "[ ]($style) "; };
         shell       = {
           bash_indicator = "\\$";
