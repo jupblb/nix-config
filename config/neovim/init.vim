@@ -17,6 +17,8 @@ set tabstop=2
 set termguicolors
 set updatetime=500
 
+map q: <Nop>
+nnoremap Q <Nop>
 nnoremap <Space> <Nop>
 let mapleader="\<Space>"
 
