@@ -38,7 +38,7 @@
         '';
       };
       plugins              = lib.mapAttrsToList
-        (name: pkg: { name = name; src = pkg; }) pkgs.fishPlugins;
+        (name: pkg: { name = name; src = pkg; }) pkgs.fish-plugins;
       interactiveShellInit = ''
         set -gx LF_ICONS "${builtins.readFile ../config/lf/lf-icons.cfg}"
         theme_gruvbox light hard

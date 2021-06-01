@@ -5,8 +5,8 @@ self: super: with super; {
       sha256 = "1kir3j5z3drkihx1hysdcmjaiacz840qpwbz70v4k62jr95mz3jp";
     };
   };
-  chromium-wayland = callPackage ./chromium-wayland/default.nix {};
-  fishPlugins      = import ./fish { inherit (super) callPackage; };
+  chromium-wayland = callPackage ./chromium-wayland {};
+  fish-plugins     = import ./fish { inherit (super) callPackage; };
   k8s-test-infra   = callPackage ./kubernetes/test-infra.nix {};
   lf               = callPackage ./lf { lf = super.lf; };
   htop             = callPackage ./htop { htop = super.htop; };
