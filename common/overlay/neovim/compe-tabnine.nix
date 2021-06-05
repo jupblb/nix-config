@@ -1,22 +1,19 @@
-{ compe-tabnine, fetchurl, stdenv, tabnine }:
+{ compe-tabnine, system, tabnine }:
 
-let
-  tabnine-version = builtins.readFile(fetchurl {
-    url    = https://update.tabnine.com/bundles/version;
-    sha256 = "18mzcw4lsbrbsap4fr22chsbpl775qkch3faq81726ag0z0dv01b";
+let tabnine' =
+  let tabnine-version = builtins.readFile(builtins.fetchurl {
+    url = https://update.tabnine.com/bundles/version;
   });
-  tabnine'        = tabnine.overrideAttrs(_: {
+  in tabnine.overrideAttrs(_: {
     version = tabnine-version;
-    src     =
-      if stdenv.hostPlatform.system == "x86_64-darwin" then fetchurl {
-        url    = "https://update.tabnine.com/bundles/${tabnine-version}/x86_64-apple-darwin/TabNine.zip";
-        sha256 = "0lx4400ix1g7jlb4bkwmyyjh3dzhd7dz34bpc5gf6ycy3hvavk0m";
-      }
-      else if stdenv.hostPlatform.system == "x86_64-linux" then fetchurl {
-        url    = "https://update.tabnine.com/bundles/${tabnine-version}/x86_64-unknown-linux-musl/TabNine.zip";
-        sha256 = "06b9qvb50aj7418xghnd1vpdx5vci9dx8m52cq204ma8fsgqf0dw";
-      }
-      else throw "Not supported on ${stdenv.hostPlatform.system}";
+    src     = builtins.fetchurl {
+      url = let prefix = "https://update.tabnine.com/bundles"; in
+        if system == "x86_64-darwin" then
+          "${prefix}/${tabnine-version}/x86_64-apple-darwin/TabNine.zip"
+        else if system == "x86_64-linux" then
+          "${prefix}/${tabnine-version}/x86_64-unknown-linux-musl/TabNine.zip"
+        else throw "Not supported on ${system}";
+    };
   });
 in compe-tabnine.overrideAttrs(_: {
   buildInputs = [ tabnine' ];

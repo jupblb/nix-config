@@ -15,6 +15,7 @@ self: super: with super; {
   vimPlugins       = vimPlugins // {
     compe-tabnine    = callPackage ./neovim/compe-tabnine.nix {
       inherit (vimPlugins) compe-tabnine;
+      inherit (stdenv.hostPlatform) system;
     };
     google-filetypes = callPackage ./neovim/google-filetypes.nix {};
     lf-vim           = callPackage ./neovim/lf-vim.nix {
