@@ -6,8 +6,7 @@ fi
 export PS1="\[\e[0;32m\]\u@\h \[\e[0;37m\]\w\[\e[0;34m\] $ \[\e[0m\]"
 
 # After each command, append to the history file and reread it
-export PROMPT_COMMAND=\
-				"${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'} history -a; history -c; history -r"
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'} history -a; history -c; history -r"
 
 # Perform file completion in a case insensitive fashion
 bind "set completion-ignore-case on"

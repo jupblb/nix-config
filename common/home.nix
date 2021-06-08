@@ -261,8 +261,8 @@
         format      =
           let
             git    = map (s: "git_" + s) [ "branch" "commit" "state" "status" ];
-            line   = prefix ++ git  ++ [ "nix_shell" "status" "shell" ];
-            prefix = [ "shlvl" "hostname" "directory" "hg_branch" ];
+            line   = prefix ++ [ "hg_branch" ] ++ git  ++ [ "status" "shell" ];
+            prefix = [ "shlvl" "nix_shell"  "hostname" "directory" ];
           in lib.concatMapStrings (e: "$" + e) line;
         git_branch  = { symbol = " "; };
         git_status  = {
