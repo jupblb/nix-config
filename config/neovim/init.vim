@@ -1,6 +1,7 @@
 set background=light
 set clipboard+=unnamedplus
 set colorcolumn=80
+set cursorline
 set ignorecase
 set list
 set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
