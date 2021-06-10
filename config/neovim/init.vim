@@ -17,6 +17,7 @@ set smartcase
 set tabstop=2
 set termguicolors
 set updatetime=500
+set wrap
 
 map q: <Nop>
 nnoremap Q <Nop>
