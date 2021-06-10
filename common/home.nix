@@ -165,9 +165,7 @@
           plugin = lf-vim;
         } {
           config = "luafile ${../config/neovim/lualine.lua}";
-          plugin = lualine-nvim.overrideAttrs(_: {
-            dependencies = [ nvim-web-devicons ];
-          });
+          plugin = lualine-nvim;
         } {
           config = "luafile ${../config/neovim/compe.lua}";
           plugin = nvim-compe.overrideAttrs(_: {
@@ -178,23 +176,22 @@
           plugin = nvim-lspconfig;
         } {
           config = builtins.readFile ../config/neovim/tree.vim;
-          plugin = nvim-tree-lua.overrideAttrs(_: {
-            dependencies = [ nvim-web-devicons ];
-          });
+          plugin = nvim-tree-lua;
         } {
           config = builtins.readFile ../config/neovim/treesitter.vim;
           plugin = nvim-treesitter.overrideAttrs(_: {
             dependencies = [ nvim-treesitter-refactor ];
           });
         } {
+          config = "luafile ${../config/neovim/devicons.lua}";
+          plugin = nvim-web-devicons;
+        } {
           config = ''
             luafile ${../config/neovim/telescope.lua}
             command! -nargs=1 Rg Telescope grep_string search=<args>
           '';
           plugin = telescope-nvim.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [
-              nvim-web-devicons telescope-fzy-native-nvim
-            ];
+            dependencies = old.dependencies ++ [ telescope-fzy-native-nvim ];
           });
         } {
           config = ''
