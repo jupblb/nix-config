@@ -10,7 +10,7 @@ require'compe'.setup {
   };
 }
 
-vim.o.completeopt = "menuone,noselect"
+vim.opt.completeopt = {'menuone', 'noselect'}
 
 local opts = { expr=true, noremap=true, silent=true }
 vim.api.nvim_set_keymap("i", "<C-Space>", "compe#complete()", opts)
