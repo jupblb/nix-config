@@ -22,7 +22,7 @@ set wrap
 map q: <Nop>
 nnoremap Q <Nop>
 nnoremap <Space> <Nop>
-let mapleader="\<Space>"
+map <Space> <Leader>
 
 nnoremap <Leader>/ :set hls!<CR>
 

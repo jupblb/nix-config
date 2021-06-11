@@ -151,11 +151,7 @@
     neovim = {
       extraConfig   = builtins.readFile ../config/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
-          config = ''
-            " Temporary fix for regression
-            nnoremap <Space> <Nop> | let mapleader="\<Space>"
-            let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>
-          '';
+          config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
           plugin = glow-nvim;
         } {
           config = builtins.readFile ../config/neovim/gruvbox.vim;
