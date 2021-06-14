@@ -8,7 +8,10 @@ lua require'nvim-treesitter.configs'.setup {
   \   indent = { enable = true },
   \   highlight = { enable = true },
   \   refactor = {
-  \     highlight_definitions = { enable = true }
+  \     highlight_definitions = { enable = true },
+  \     navigation = {
+  \       enable = true,
+  \       keymaps = { goto_definition_lsp_fallback = '<C-]>' }
+  \     }
   \   }
   \ }
-

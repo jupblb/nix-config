@@ -1,4 +1,4 @@
-{ makeWrapper, neovim-unwrapped, tree-sitter }:
+{ neovim-unwrapped, tree-sitter }:
 
 neovim-unwrapped.overrideAttrs(old: rec {
   buildInputs = old.buildInputs ++ [ tree-sitter ];
