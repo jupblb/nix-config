@@ -155,7 +155,7 @@
           plugin = glow-nvim;
         } {
           config = builtins.readFile ../config/neovim/gruvbox.vim;
-          plugin = gruvbox-community;
+          plugin = gruvbox-nvim;
         } {
           config = builtins.readFile ../config/neovim/lf.vim;
           plugin = lf-vim;
