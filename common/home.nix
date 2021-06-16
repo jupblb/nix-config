@@ -205,11 +205,7 @@
             fd gcc glow gopls metals ripgrep rnix-lsp tree-sitter
           ];
           nodePackages    = with pkgs.nodePackages; [
-            bash-language-server
-            npm
-            typescript-language-server
-            vim-language-server vscode-css-languageserver-bin
-              vscode-html-languageserver-bin vscode-json-languageserver
+            bash-language-server npm vim-language-server
           ];
         in packages ++ nodePackages;
       package       = pkgs.neovim-nightly;
