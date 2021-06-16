@@ -3,29 +3,31 @@ local builtin = require('telescope.builtin')
 local previewers = require('telescope.previewers')
 local telescope = require('telescope')
 
-telescope.setup{
+telescope.setup {
   defaults = {
     mappings = { i = { ["<esc>"] = actions.close } },
---    layout_strategy = "vertical"
+    layout_strategy = "flex",
+    layout_defaults = {
+      flex = { flip_columns = 160 },
+      vertical = { preview_height = 0.5 }
+    }
   },
   extensions = {
-    fzy_native = {
-      override_file_sorter = true,
-      override_generic_sorter = true
-    }
+    fzf_writer = { use_highlighter = true },
+    fzy_native = { override_generic_sorter = true }
   }
 }
 telescope.load_extension('fzy_native')
 
 local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap('n', '<Leader><Tab>', '<Cmd>Telescope buffers show_all_buffers=true<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>f', '<Cmd>Telescope find_files<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>hc', '<Cmd>Telescope command_history<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>hf', '<Cmd>Telescope oldfiles<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>hj', '<Cmd>Telescope marks<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>hs', '<Cmd>Telescope search_history<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>s', '<Cmd>Telescope live_grep<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>S', '<Cmd>Telescope grep_string search=""<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader><CR>', '<Cmd>Telescope file_browser hidden=true<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader><Tab>', '<Cmd>Telescope buffers<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>f', '<Cmd>lua require("telescope").extensions.fzf_writer.files()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>h', '<Cmd>Telescope oldfiles<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>m', '<Cmd>Telescope marks<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>s', '<Cmd>lua require("telescope").extensions.fzf_writer.grep()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>S', '<Cmd>lua require("telescope").extensions.fzf_writer.staged_grep()<CR>', opts)
 
 delta_git_commits = function(opts)
   opts = opts or {}

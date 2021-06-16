@@ -1,7 +1,7 @@
 require'compe'.setup {
   source = {
     buffer = true;
-    emoji = true;
+    emoji = false;
     nvim_lsp = true;
     nvim_lua = true;
     -- nvim_treesitter = true;

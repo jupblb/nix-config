@@ -12,14 +12,18 @@ self: super: with super; {
   htop             = callPackage ./htop { htop = super.htop; };
   neovim-nightly   = callPackage ./neovim {};
   pragmata-pro     = callPackage ./pragmata-pro {};
+  ripgrep          =
+    let rg_12 = builtins.fetchurl
+      https://raw.githubusercontent.com/NixOS/nixpkgs/85f96822a05180cbfd5195e7034615b427f78f01/pkgs/tools/text/ripgrep/default.nix;
+    in callPackage rg_12 { inherit (darwin.apple_sdk.frameworks) Security; };
   vimPlugins       = vimPlugins // {
     compe-tabnine    = callPackage ./neovim/compe-tabnine.nix {
       inherit (vimPlugins) compe-tabnine;
       inherit (stdenv.hostPlatform) system;
     };
     google-filetypes = callPackage ./neovim/google-filetypes.nix {};
-    lf-vim           = callPackage ./neovim/lf-vim.nix {
-      inherit (vimPlugins) lf-vim vim-bbye;
+    nvim-bqf         = callPackage ./neovim/nvim-bqf.nix {
+      inherit (vimPlugins) nvim-bqf;
     };
   };
 }

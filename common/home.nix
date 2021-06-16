@@ -157,11 +157,14 @@
           config = builtins.readFile ../config/neovim/gruvbox.vim;
           plugin = gruvbox-nvim;
         } {
-          config = builtins.readFile ../config/neovim/lf.vim;
-          plugin = lf-vim;
+          config = builtins.readFile ../config/neovim/hop.vim;
+          plugin = hop-nvim;
         } {
           config = "luafile ${../config/neovim/lualine.lua}";
           plugin = lualine-nvim;
+        } {
+          config = "lua require('bqf').setup({ preview = { wrap = true } })";
+          plugin = nvim-bqf;
         } {
           config = "luafile ${../config/neovim/compe.lua}";
           plugin = nvim-compe.overrideAttrs(_: {
@@ -174,7 +177,7 @@
           config = builtins.readFile ../config/neovim/tree.vim;
           plugin = nvim-tree-lua;
         } {
-          config = builtins.readFile ../config/neovim/treesitter.vim;
+          config = "luafile ${../config/neovim/treesitter.lua}";
           plugin = nvim-treesitter.overrideAttrs(_: {
             dependencies = [ nvim-treesitter-refactor ];
           });
@@ -182,13 +185,17 @@
           config = "luafile ${../config/neovim/devicons.lua}";
           plugin = nvim-web-devicons;
         } {
-          config = ''
-            luafile ${../config/neovim/telescope.lua}
-            command! -nargs=1 Rg Telescope grep_string search=<args>
-          '';
+          config = "luafile ${../config/neovim/telescope.lua}";
           plugin = telescope-nvim.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [ telescope-fzy-native-nvim ];
+            dependencies = old.dependencies ++
+              [ telescope-fzf-writer-nvim telescope-fzy-native-nvim ];
           });
+        } {
+          config = ''
+            nnoremap <Leader>r :Grepper -tool rg<CR>
+            nnoremap <Leader>R :Grepper -tool rg -buffer<CR>
+          '';
+          plugin = vim-grepper;
         } {
           config = ''
             let g:vimwiki_list = [{'path': '~/Documents/vimwiki/',
@@ -196,17 +203,15 @@
           '';
           plugin = vimwiki;
         }
-        vim-go vim-signify vim-sleuth
+        vim-cool vim-go vim-signify vim-sleuth
       ];
       enable        = true;
       extraPackages =
         let
-          packages        = with pkgs; [
-            fd gcc glow gopls metals ripgrep rnix-lsp tree-sitter
-          ];
-          nodePackages    = with pkgs.nodePackages; [
-            bash-language-server npm vim-language-server
-          ];
+          packages     = with pkgs;
+            [ fd gcc glow gopls metals ripgrep rnix-lsp tree-sitter ];
+          nodePackages = with pkgs.nodePackages;
+            [ bash-language-server npm vim-language-server ];
         in packages ++ nodePackages;
       package       = pkgs.neovim-nightly;
       vimAlias      = true;

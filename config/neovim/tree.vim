@@ -8,3 +8,4 @@ let g:nvim_tree_width = 42
 let g:nvim_tree_width_allow_resize = 1
 
 nnoremap <Leader>t :NvimTreeToggle<CR>
+nnoremap <Leader>T :NvimTreeFindFile<CR>

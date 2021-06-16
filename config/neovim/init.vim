@@ -6,7 +6,6 @@ set ignorecase
 set list
 set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set mouse=a
-set nohlsearch
 set nowrap
 set number
 set shell=bash
@@ -23,8 +22,6 @@ map q: <Nop>
 nnoremap Q <Nop>
 nnoremap <Space> <Nop>
 map <Space> <Leader>
-
-nnoremap <Leader>/ :set hls!<CR>
 
 autocmd BufRead,BufNewFile *.fish set filetype=fish
 autocmd BufRead,BufNewFile *.nix set filetype=nix
