@@ -52,7 +52,7 @@ lspconfig.rnix.setup{on_attach = lsp_attach}
 lspconfig.vimls.setup{on_attach = lsp_attach}
 lspconfig.yamlls.setup{on_attach = lsp_attach}
 
-if vim.fn.executable('ciderlsp') == 1 then
+if vim.fn.executable('ciderlsp') == 1 and vim.fn.getcwd():find('/google/') then
   lspconfig.ciderlsp.setup{on_attach = lsp_attach}
 end
 if vim.fn.executable('haskell-language-server') == 1 then
