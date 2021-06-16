@@ -50,7 +50,6 @@ lspconfig.metals.setup{
 lspconfig.tsserver.setup{on_attach = lsp_attach}
 lspconfig.rnix.setup{on_attach = lsp_attach}
 lspconfig.vimls.setup{on_attach = lsp_attach}
-lspconfig.yamlls.setup{on_attach = lsp_attach}
 
 if vim.fn.executable('ciderlsp') == 1 and vim.fn.getcwd():find('/google/') then
   lspconfig.ciderlsp.setup{on_attach = lsp_attach}

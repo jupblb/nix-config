@@ -6,7 +6,7 @@ lua require'nvim-treesitter.configs'.setup {
   \   ensure_installed = "maintained",
   \   ignore_install = { "gdscript", "ocamllex" },
   \   indent = { enable = true },
-  \   highlight = { enable = true },
+  \   highlight = { enable = true, disable = { "yaml" } },
   \   refactor = {
   \     highlight_definitions = { enable = true },
   \     navigation = {
