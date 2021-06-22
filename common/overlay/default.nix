@@ -7,7 +7,6 @@ self: super: with super; {
   };
   chromium-wayland = callPackage ./chromium-wayland {};
   fish-plugins     = import ./fish { inherit (super) callPackage; };
-  k8s-test-infra   = callPackage ./kubernetes/test-infra.nix {};
   lf               = callPackage ./lf { lf = super.lf; };
   htop             = callPackage ./htop { htop = super.htop; };
   neovim-nightly   = callPackage ./neovim {};
@@ -21,7 +20,6 @@ self: super: with super; {
       inherit (vimPlugins) compe-tabnine;
       inherit (stdenv.hostPlatform) system;
     };
-    google-filetypes = callPackage ./neovim/google-filetypes.nix {};
     nvim-bqf         = callPackage ./neovim/nvim-bqf.nix {
       inherit (vimPlugins) nvim-bqf;
     };
