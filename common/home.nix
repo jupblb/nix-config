@@ -79,6 +79,7 @@
         fetch.prune       = true;
         pull.rebase       = true;
         push.default      = "upstream";
+        submodule.recurse = true;
       };
       signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
       userEmail   = "mpkielbowicz@gmail.com";
