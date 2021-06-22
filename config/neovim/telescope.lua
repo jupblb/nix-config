@@ -3,8 +3,21 @@ local builtin = require('telescope.builtin')
 local previewers = require('telescope.previewers')
 local telescope = require('telescope')
 
+local custom_buffer_previewer = function(filepath, bufnr, opts)
+  opts = opts or {}
+  if opts.use_ft_detect == nil then
+    local ft = require('plenary.filetype').detect(filepath)
+    if ft == 'yaml' then
+      opts.use_ft_detect = false
+      require('telescope.previewers.utils').regex_highlighter(bufnr, ft)
+    end
+  end
+  previewers.buffer_previewer_maker(filepath, bufnr, opts)
+end
+
 telescope.setup {
   defaults = {
+    buffer_previewer_maker = custom_buffer_previewer,
     mappings = { i = { ["<esc>"] = actions.close } },
     layout_strategy = "flex",
     layout_defaults = {
