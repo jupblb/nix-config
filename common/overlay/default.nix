@@ -5,7 +5,7 @@ self: super: with super; {
       sha256 = "1kir3j5z3drkihx1hysdcmjaiacz840qpwbz70v4k62jr95mz3jp";
     };
   };
-  chromium-wayland = callPackage ./chromium-wayland {};
+  chromium-wayland = callPackage ./chromium-wayland.nix {};
   fish-plugins     = import ./fish { inherit (super) callPackage; };
   lf               = callPackage ./lf { lf = super.lf; };
   htop             = callPackage ./htop { htop = super.htop; };
@@ -16,11 +16,11 @@ self: super: with super; {
       https://raw.githubusercontent.com/NixOS/nixpkgs/85f96822a05180cbfd5195e7034615b427f78f01/pkgs/tools/text/ripgrep/default.nix;
     in callPackage rg_12 { inherit (darwin.apple_sdk.frameworks) Security; };
   vimPlugins       = vimPlugins // {
-    compe-tabnine    = callPackage ./neovim/compe-tabnine.nix {
+    compe-tabnine = callPackage ./neovim/compe-tabnine.nix {
       inherit (vimPlugins) compe-tabnine;
       inherit (stdenv.hostPlatform) system;
     };
-    nvim-bqf         = callPackage ./neovim/nvim-bqf.nix {
+    nvim-bqf      = callPackage ./neovim/nvim-bqf.nix {
       inherit (vimPlugins) nvim-bqf;
     };
   };
