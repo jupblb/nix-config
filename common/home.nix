@@ -90,10 +90,7 @@
       goPath = "${config.xdg.dataHome}/go";
     };
 
-    gpg = {
-      enable  = true;
-      homedir = "${config.xdg.dataHome}/gnupg";
-    };
+    gpg.enable = true;
 
     htop = {
       enable   = true;

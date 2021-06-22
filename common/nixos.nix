@@ -39,7 +39,7 @@
   imports =
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
-      tar = "release-20.09.tar.gz";
+      tar = "release-21.05.tar.gz";
     in [ "${fetchTarball url}/nixos" ];
 
   networking.useDHCP = false;
