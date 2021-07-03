@@ -6,7 +6,8 @@ self: super: with super; {
     };
   };
   chromium-wayland = callPackage ./chromium-wayland.nix {};
-  fish-plugins     = import ./fish { inherit (super) callPackage; };
+  fish             = callPackage ./fish { fish = super.fish; };
+  fish-plugins     = import ./fish/plugins { inherit (super) callPackage; };
   lf               = callPackage ./lf { lf = super.lf; };
   htop             = callPackage ./htop { htop = super.htop; };
   neovim-nightly   = callPackage ./neovim {};
