@@ -4,8 +4,7 @@ let chromium' = chromium.overrideAttrs(_: {
   nativeBuildInputs = [ wrapGAppsHook ];
 });
 in chromium'.override {
-  commandLineArgs     =
+  commandLineArgs =
     "--enable-features=UseOzonePlatform --ozone-platform=wayland";
-  enableVaapi         = true;
-  enableWideVine      = true;
+  enableWideVine  = true;
 }

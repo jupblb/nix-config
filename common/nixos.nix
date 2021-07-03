@@ -10,7 +10,7 @@
   console.keyMap = "pl";
 
   environment.sessionVariables = {
-    LD_LIBRARY_PATH      = "${pkgs.stdenv.cc.cc.lib}/lib/";
+#   LD_LIBRARY_PATH      = "${pkgs.stdenv.cc.cc.lib}/lib/";
     NIXPKGS_ALLOW_UNFREE = "1";
   };
   environment.systemPackages   = with pkgs; [

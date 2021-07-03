@@ -48,7 +48,6 @@
     programs = {
       firefox = {
         enable = true;
-        enableGnomeExtensions         = true;
         profiles."jupblb".extraConfig = ''
           user_pref("widget.wayland-dmabuf-vaapi.enabled", true);
           user_pref("gfx.webrender.enabled", true);
@@ -113,7 +112,7 @@
   };
 
   services = {
-    gnome3 = {
+    gnome = {
       chrome-gnome-shell.enable    = true;
       core-utilities.enable        = false;
       gnome-online-accounts.enable = true;
@@ -154,8 +153,8 @@
 
     xserver = {
       enable                            = true;
-      desktopManager.gnome3.enable      = true;
-      desktopManager.gnome3.sessionPath = with pkgs.gnome3; [
+      desktopManager.gnome.enable      = true;
+      desktopManager.gnome.sessionPath = with pkgs.gnome3; [
         evince gnome-screenshot nautilus shotwell totem
       ];
       displayManager.autoLogin.enable   = true;
