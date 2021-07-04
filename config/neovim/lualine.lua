@@ -1,5 +1,10 @@
 require('lualine').setup {
   extensions = { 'fugitive', 'nvim-tree', 'quickfix' },
   options = { theme = 'gruvbox_light' },
-  sections = { lualine_x = {'encoding', 'filetype'} }
+  sections = {
+    lualine_b = {'branch', 'diff'},
+    lualine_x = { require('lsp-status').status },
+    lualine_y = {'encoding', 'filetype'},
+    lualine_z = {'progress', 'location'}
+  }
 }

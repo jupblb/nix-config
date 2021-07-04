@@ -1,5 +1,8 @@
 local lspconfig = require'lspconfig'
 local lspconfigs = require'lspconfig/configs'
+local lsp_status = require('lsp-status')
+
+lsp_status.register_progress()
 
 lspconfigs.ciderlsp = {
   default_config = {
@@ -38,23 +41,34 @@ local function lsp_attach(client, bufnr)
     buf_set_keymap("v", "<A-l>", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     buf_set_keymap("v", "<Leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
+
+  lsp_status.on_attach(client)
 end
 
-lspconfig.bashls.setup{on_attach = lsp_attach}
-lspconfig.gopls.setup{on_attach = lsp_attach}
+local servers = { "bashls", "gopls", "rnix", "vimls" }
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup {
+    capabilities = lsp_status.capabilities,
+    flags = { debounce_text_changes = 150 },
+    on_attach = lsp_attach
+  }
+end
+
 lspconfig.metals.setup{
   on_attach = lsp_attach;
   root_dir = lspconfig.util.root_pattern("build.sbt", "build.sc", "build.gradle", "pom.xml", ".git")
 }
-lspconfig.rnix.setup{on_attach = lsp_attach}
-lspconfig.vimls.setup{on_attach = lsp_attach}
 
 if vim.fn.executable('ciderlsp') == 1 and vim.fn.getcwd():find('/google/') then
-  lspconfig.ciderlsp.setup{on_attach = lsp_attach}
-end
-if vim.fn.executable('haskell-language-server') == 1 then
-  lspconfig.hls.setup{on_attach = lsp_attach}
+  lspconfig.ciderlsp.setup {
+    flags = { debounce_text_changes = 150 },
+    on_attach = lsp_attach
+  }
 end
 if vim.fn.executable('pyls') == 1 then
-  lspconfig.pyls.setup{on_attach = lsp_attach}
+  lspconfig.pyls.setup {
+    capabilities = lsp_status.capabilities,
+    flags = { debounce_text_changes = 150 },
+    on_attach = lsp_attach
+  }
 end

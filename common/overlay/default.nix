@@ -21,8 +21,5 @@ self: super: with super; {
       inherit (vimPlugins) compe-tabnine;
       inherit (stdenv.hostPlatform) system;
     };
-    nvim-bqf      = callPackage ./neovim/nvim-bqf.nix {
-      inherit (vimPlugins) nvim-bqf;
-    };
   };
 }

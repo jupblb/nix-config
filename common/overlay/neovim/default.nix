@@ -1,10 +1,9 @@
-{ neovim-unwrapped, tree-sitter }:
+{ neovim-unwrapped }:
 
-neovim-unwrapped.overrideAttrs(old: rec {
-  buildInputs = old.buildInputs ++ [ tree-sitter ];
-  src         = builtins.fetchGit {
+neovim-unwrapped.overrideAttrs(_: rec {
+  src     = builtins.fetchGit {
     ref = version;
     url = https://github.com/neovim/neovim.git;
   };
-  version     = "nightly";
+  version = "nightly";
 })

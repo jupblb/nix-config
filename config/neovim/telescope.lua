@@ -19,11 +19,11 @@ telescope.setup {
   defaults = {
     buffer_previewer_maker = custom_buffer_previewer,
     mappings = { i = { ["<esc>"] = actions.close } },
-    layout_strategy = "flex",
-    layout_defaults = {
+    layout_config = {
       flex = { flip_columns = 160 },
       vertical = { preview_height = 0.5 }
-    }
+    },
+    layout_strategy = "flex"
   },
   extensions = {
     fzf_writer = { use_highlighter = true },

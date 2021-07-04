@@ -159,7 +159,9 @@
           plugin = hop-nvim;
         } {
           config = "luafile ${../config/neovim/lualine.lua}";
-          plugin = lualine-nvim;
+          plugin = lualine-nvim.overrideAttrs(_: {
+            dependencies = [ lsp-status-nvim ];
+          });
         } {
           config = "lua require('bqf').setup({ preview = { wrap = true } })";
           plugin = nvim-bqf;
@@ -170,7 +172,9 @@
           });
         } {
           config = "luafile ${../config/neovim/lspconfig.lua}";
-          plugin = nvim-lspconfig;
+          plugin = nvim-lspconfig.overrideAttrs(_: {
+            dependencies = [ lsp-status-nvim ];
+          });
         } {
           config = builtins.readFile ../config/neovim/tree.vim;
           plugin = nvim-tree-lua;
