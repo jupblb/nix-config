@@ -3,7 +3,7 @@
 {
   home = {
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
-    packages         = with pkgs; [ ammonite git-crypt gore ripgrep ];
+    packages         = with pkgs; [ ammonite gh git-crypt gore ripgrep ];
     sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
     username         = "jupblb";
   };
@@ -170,6 +170,12 @@
           plugin = nvim-compe.overrideAttrs(_: {
             dependencies = [ compe-tabnine ];
           });
+        } {
+          config = ''
+            call sign_define('LightBulbSign', { "text": " ", "texthl": "LspDiagnosticsDefaultInformation" })
+            autocmd CursorHold,CursorHoldI * lua require('nvim-lightbulb').update_lightbulb()
+          '';
+          plugin = nvim-lightbulb;
         } {
           config = "luafile ${../config/neovim/lspconfig.lua}";
           plugin = nvim-lspconfig.overrideAttrs(_: {
