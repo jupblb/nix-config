@@ -58,7 +58,11 @@
     };
 
     git = {
-      aliases     = { amend = "commit -a --amend --no-edit"; };
+      aliases     = {
+        amend = "commit -a --amend --no-edit";
+        line  = "!sh -c 'git log -L$2,+1:\${GIT_PREFIX:-./}$1' -";
+        lines = "!sh -c 'git log -L$2,$3:\${GIT_PREFIX:-./}$1' -";
+      };
       delta       = {
         enable  = true;
         options = {
