@@ -1,17 +1,7 @@
-local lspconfig = require'lspconfig'
-local lspconfigs = require'lspconfig/configs'
+local lspconfig = require('lspconfig')
 local lsp_status = require('lsp-status')
 
 lsp_status.register_progress()
-
-lspconfigs.ciderlsp = {
-  default_config = {
-    cmd = {'ciderlsp', '--tooltag=nvim-lsp' , '--noforward_sync_responses'};
-    filetypes = {'bzl', 'c', 'cpp', 'go', 'java', 'python', 'proto', 'sql', 'textproto'};
-    root_dir = lspconfig.util.root_pattern('BUILD');
-    settings = {};
-  };
-}
 
 local function lsp_attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -45,30 +35,25 @@ local function lsp_attach(client, bufnr)
   lsp_status.on_attach(client)
 end
 
+lspconfig.util.default_config = vim.tbl_extend(
+  "force",
+  lspconfig.util.default_config,
+  {
+    capabilities = lsp_status.capabilities,
+    flags = { debounce_text_changes = 100 },
+    on_attach = lsp_attach
+  }
+)
+
 local servers = { "bashls", "gopls", "rnix", "vimls" }
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    capabilities = lsp_status.capabilities,
-    flags = { debounce_text_changes = 150 },
-    on_attach = lsp_attach
-  }
+  lspconfig[lsp].setup {}
 end
 
-lspconfig.metals.setup{
-  on_attach = lsp_attach;
-  root_dir = lspconfig.util.root_pattern("build.sbt", "build.sc", "build.gradle", "pom.xml", ".git")
+lspconfig.metals.setup {
+  root_dir = lspconfig.util.root_pattern("build.sbt", "build.sc", ".git")
 }
 
-if vim.fn.executable('ciderlsp') == 1 and vim.fn.getcwd():find('/google/') then
-  lspconfig.ciderlsp.setup {
-    flags = { debounce_text_changes = 150 },
-    on_attach = lsp_attach
-  }
-end
 if vim.fn.executable('pyls') == 1 then
-  lspconfig.pyls.setup {
-    capabilities = lsp_status.capabilities,
-    flags = { debounce_text_changes = 150 },
-    on_attach = lsp_attach
-  }
+  lspconfig.pyls.setup {}
 end
