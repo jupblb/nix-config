@@ -170,6 +170,9 @@
           config = "lua require('bqf').setup({ preview = { wrap = true } })";
           plugin = nvim-bqf;
         } {
+          config = "set termguicolors | lua require('colorizer').setup()";
+          plugin = nvim-colorizer-lua;
+        } {
           config = "luafile ${../config/neovim/compe.lua}";
           plugin = nvim-compe.overrideAttrs(_: {
             dependencies = [ compe-tabnine ];
@@ -222,8 +225,12 @@
         let
           packages     = with pkgs;
             [ fd gcc glow gopls metals ripgrep rnix-lsp tree-sitter ];
-          nodePackages = with pkgs.nodePackages;
-            [ bash-language-server npm vim-language-server ];
+          nodePackages = with pkgs.nodePackages; [
+            bash-language-server
+            npm
+            typescript-language-server
+            vscode-css-languageserver-bin vscode-html-languageserver-bin
+          ];
         in packages ++ nodePackages;
       package       = pkgs.neovim-nightly;
       vimAlias      = true;

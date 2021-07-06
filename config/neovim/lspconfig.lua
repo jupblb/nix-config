@@ -45,7 +45,7 @@ lspconfig.util.default_config = vim.tbl_extend(
   }
 )
 
-local servers = { "bashls", "gopls", "rnix", "vimls" }
+local servers = { "bashls", "cssls", "gopls", "html", "rnix", "tsserver" }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {}
 end
