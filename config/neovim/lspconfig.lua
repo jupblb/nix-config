@@ -1,6 +1,11 @@
 local lspconfig = require('lspconfig')
 local lsp_status = require('lsp-status')
 
+lsp_status.config({
+  indicator_errors = ' ',
+  indicator_hint = '!',
+  status_symbol = ''
+})
 lsp_status.register_progress()
 
 local function lsp_attach(client, bufnr)

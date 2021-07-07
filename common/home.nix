@@ -212,10 +212,7 @@
           '';
           plugin = vim-grepper;
         } {
-          config = ''
-            let g:vimwiki_list = [{'path': '~/Documents/vimwiki/',
-                \ 'syntax': 'markdown', 'ext': '.md'}]
-          '';
+          config = "let g:vimwiki_key_mappings = { 'all_maps': 0 }";
           plugin = vimwiki;
         }
         vim-cool vim-go vim-signify vim-sleuth
