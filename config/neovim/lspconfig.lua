@@ -12,8 +12,7 @@ local function lsp_attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local opts = { noremap=true, silent=true }
 
--- using goto_definition_lsp_fallback in nvim-treesitter-refactor
---   buf_set_keymap('n','<C-]>','<cmd>lua vim.lsp.buf.definition()<CR>',opts)
+  buf_set_keymap('n','<C-]>','<cmd>lua vim.lsp.buf.definition()<CR>',opts)
   buf_set_keymap('n','<A-CR>','<cmd>Telescope lsp_code_actions<CR>',opts)
   buf_set_keymap('n','<Leader>ld','<cmd>Telescope lsp_document_diagnostics<CR>',opts)
   buf_set_keymap('n','<Leader>lD','<cmd>Telescope lsp_workspace_diagnostics<CR>',opts)
