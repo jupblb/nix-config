@@ -6,7 +6,6 @@ self: super: with super; {
     };
   };
   chromium-wayland = callPackage ./chromium-wayland.nix {};
-  fish             = callPackage ./fish { fish = super.fish; };
   fish-plugins     = import ./fish/plugins { inherit (super) callPackage; };
   lf               = callPackage ./lf { lf = super.lf; };
   htop             = callPackage ./htop { htop = super.htop; };
@@ -21,5 +20,6 @@ self: super: with super; {
       inherit (vimPlugins) compe-tabnine;
       inherit (stdenv.hostPlatform) system;
     };
+    luatab-nvim   = callPackage ./neovim/luatab.nix {};
   };
 }

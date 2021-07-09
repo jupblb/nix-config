@@ -167,6 +167,9 @@
             dependencies = [ lsp-status-nvim ];
           });
         } {
+          config = "luafile ${../config/neovim/luatab.lua}";
+          plugin = luatab-nvim;
+        } {
           config = "lua require('bqf').setup({ preview = { wrap = true } })";
           plugin = nvim-bqf;
         } {
