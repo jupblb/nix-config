@@ -153,6 +153,9 @@
     neovim = {
       extraConfig   = builtins.readFile ../config/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
+          config = "lua require('gitsigns').setup()";
+          plugin = gitsigns-nvim;
+        } {
           config = "let $GLOW_STYLE = 'light'";
           plugin = glow-nvim;
         } {
@@ -203,6 +206,9 @@
           config = builtins.readFile ../config/neovim/trouble.vim;
           plugin = trouble-nvim;
         } {
+          config = "let g:go_fmt_fail_silently = 0";
+          plugin = vim-go;
+        } {
           config = ''
             nnoremap <Leader>r :Grepper -noopen -tool rg<CR>
             nnoremap <Leader>R :Grepper -buffer -noopen -noquickfix -tool rg<CR>
@@ -212,7 +218,7 @@
           config = "let g:vimwiki_key_mappings = { 'all_maps': 0 }";
           plugin = vimwiki;
         }
-        vim-cool vim-go vim-sleuth
+        vim-cool vim-sleuth
       ];
       enable        = true;
       extraPackages =

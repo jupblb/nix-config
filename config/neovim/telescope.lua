@@ -40,7 +40,7 @@ vim.api.nvim_set_keymap('n', '<Leader><CR>', '<Cmd>Telescope file_browser hidden
 vim.api.nvim_set_keymap('n', '<Leader><Tab>', '<Cmd>Telescope buffers<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>f', '<Cmd>lua require("telescope").extensions.fzf_writer.files()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>h', '<Cmd>Telescope oldfiles<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>o', '<Cmd>Telescope oldfiles<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>m', '<Cmd>Telescope marks<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>s', '<Cmd>lua require("telescope").extensions.fzf_writer.grep()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>S', '<Cmd>lua require("telescope").extensions.fzf_writer.staged_grep()<CR>', opts)
