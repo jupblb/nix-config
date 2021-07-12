@@ -2,6 +2,7 @@ local actions = require('telescope.actions')
 local builtin = require('telescope.builtin')
 local previewers = require('telescope.previewers')
 local telescope = require('telescope')
+local trouble = require("trouble.providers.telescope")
 
 local custom_buffer_previewer = function(filepath, bufnr, opts)
   opts = opts or {}
@@ -18,7 +19,9 @@ end
 telescope.setup {
   defaults = {
     buffer_previewer_maker = custom_buffer_previewer,
-    mappings = { i = { ["<esc>"] = actions.close } },
+    mappings = {
+      i = { ["<esc>"] = actions.close, ["<c-t>"] = trouble.open_with_trouble }
+    },
     layout_config = {
       flex = { flip_columns = 160 },
       vertical = { preview_height = 0.5 }

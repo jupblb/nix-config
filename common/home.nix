@@ -153,7 +153,7 @@
     neovim = {
       extraConfig   = builtins.readFile ../config/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
-          config = "let $GLOW_STYLE = 'light' | nmap <Leader>m :Glow<CR>";
+          config = "let $GLOW_STYLE = 'light'";
           plugin = glow-nvim;
         } {
           config = builtins.readFile ../config/neovim/gruvbox.vim;
@@ -170,9 +170,6 @@
           config = "luafile ${../config/neovim/luatab.lua}";
           plugin = luatab-nvim;
         } {
-          config = "lua require('bqf').setup({ preview = { wrap = true } })";
-          plugin = nvim-bqf;
-        } {
           config = "set termguicolors | lua require('colorizer').setup()";
           plugin = nvim-colorizer-lua;
         } {
@@ -180,12 +177,6 @@
           plugin = nvim-compe.overrideAttrs(_: {
             dependencies = [ compe-tabnine ];
           });
-        } {
-          config = ''
-            call sign_define('LightBulbSign', { "text": " ", "texthl": "LspDiagnosticsDefaultInformation" })
-            autocmd CursorHold,CursorHoldI * lua require('nvim-lightbulb').update_lightbulb()
-          '';
-          plugin = nvim-lightbulb;
         } {
           config = "luafile ${../config/neovim/lspconfig.lua}";
           plugin = nvim-lspconfig.overrideAttrs(_: {
@@ -209,16 +200,19 @@
               [ telescope-fzf-writer-nvim telescope-fzy-native-nvim ];
           });
         } {
+          config = builtins.readFile ../config/neovim/trouble.vim;
+          plugin = trouble-nvim;
+        } {
           config = ''
-            nnoremap <Leader>r :Grepper -tool rg<CR>
-            nnoremap <Leader>R :Grepper -tool rg -buffer<CR>
+            nnoremap <Leader>r :Grepper -noopen -tool rg<CR>
+            nnoremap <Leader>R :Grepper -buffer -noopen -noquickfix -tool rg<CR>
           '';
           plugin = vim-grepper;
         } {
           config = "let g:vimwiki_key_mappings = { 'all_maps': 0 }";
           plugin = vimwiki;
         }
-        vim-cool vim-go vim-signify vim-sleuth
+        vim-cool vim-go vim-sleuth
       ];
       enable        = true;
       extraPackages =

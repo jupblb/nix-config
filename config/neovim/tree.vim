@@ -26,10 +26,10 @@ let g:nvim_tree_icons = {
     \   'symlink_open': "",
     \   },
     \   'lsp': {
-    \     'hint': "",
+    \     'hint': "",
     \     'info': "",
     \     'warning': "",
-    \     'error': "",
+    \     'error': "",
     \   }
     \ }
 let g:nvim_tree_lsp_diagnostics = 1
