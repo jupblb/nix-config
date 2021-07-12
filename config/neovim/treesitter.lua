@@ -9,3 +9,5 @@ require('nvim-treesitter.configs').setup {
     smart_rename = { enable = true, smart_rename = "<Leader>lr" }
   }
 }
+
+vim.api.nvim_command("autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f")
