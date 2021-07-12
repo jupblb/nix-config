@@ -153,9 +153,6 @@
     neovim = {
       extraConfig   = builtins.readFile ../config/neovim/init.vim;
       plugins       = with pkgs.vimPlugins; [ {
-          config = "lua require('gitsigns').setup()";
-          plugin = gitsigns-nvim;
-        } {
           config = "let $GLOW_STYLE = 'light'";
           plugin = glow-nvim;
         } {
@@ -215,10 +212,13 @@
           '';
           plugin = vim-grepper;
         } {
+          config = "let g:signify_priority = 4";
+          plugin = vim-signify;
+        } {
           config = "let g:vimwiki_key_mappings = { 'all_maps': 0 }";
           plugin = vimwiki;
         }
-        vim-cool vim-sleuth
+        git-messenger-vim vim-cool vim-sleuth
       ];
       enable        = true;
       extraPackages =
