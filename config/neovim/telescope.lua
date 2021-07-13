@@ -42,8 +42,8 @@ vim.api.nvim_set_keymap('n', '<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_f
 vim.api.nvim_set_keymap('n', '<Leader>f', '<Cmd>lua require("telescope").extensions.fzf_writer.files()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>o', '<Cmd>Telescope oldfiles<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>m', '<Cmd>Telescope marks<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>s', '<Cmd>lua require("telescope").extensions.fzf_writer.grep()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>S', '<Cmd>lua require("telescope").extensions.fzf_writer.staged_grep()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>s', '<Cmd>lua require("telescope").extensions.fzf_writer.staged_grep()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>S', '<Cmd>lua require("telescope").extensions.fzf_writer.grep()<CR>', opts)
 
 delta_git_commits = function(opts)
   opts = opts or {}
