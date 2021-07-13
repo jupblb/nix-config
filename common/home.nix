@@ -145,7 +145,10 @@
 
     mercurial = {
       enable      = true;
-      extraConfig = { pager.pager = "${pkgs.gitAndTools.delta}/bin/delta"; };
+      extraConfig = {
+        extensions.beautifygraph = "";
+        pager.pager              = "${pkgs.gitAndTools.delta}/bin/delta";
+      };
       userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
