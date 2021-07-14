@@ -1,0 +1,19 @@
+diff --git a/plugin/grepper.vim b/plugin/grepper.vim
+index 73e4e36..56086b6 100644
+--- a/plugin/grepper.vim
++++ b/plugin/grepper.vim
+@@ -1009,13 +1009,7 @@ function! s:finish_up(flags)
+ 
+   " Also open if the side mode is off and the list contains any invalid entry.
+   if a:flags.open || (has_errors && !a:flags.side)
+-    execute (qf ? 'botright copen' : 'lopen') (size > 10 ? 10 : size)
+-    let w:quickfix_title = cmdline
+-    setlocal nowrap
+-
+-    if !a:flags.switch
+-      call feedkeys("\<c-w>p", 'n')
+-    endif
++    execute (qf ? 'Trouble quickfix' : 'Trouble loclist')
+   endif
+ 
+   redraw

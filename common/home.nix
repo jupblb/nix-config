@@ -210,10 +210,12 @@
           plugin = vim-go;
         } {
           config = ''
-            nnoremap <Leader>r :Grepper -noopen -tool rg<CR>
-            nnoremap <Leader>R :Grepper -buffer -noopen -noquickfix -tool rg<CR>
+            nnoremap <Leader>r :Grepper -tool rg<CR>
+            nnoremap <Leader>R :Grepper -buffer -noquickfix -tool rg<CR>
           '';
-          plugin = vim-grepper;
+          plugin = vim-grepper.overrideAttrs(_: {
+            patches = [ ../config/neovim/grepper.diff ];
+          });
         } {
           config = "let g:signify_priority = 4";
           plugin = vim-signify;
