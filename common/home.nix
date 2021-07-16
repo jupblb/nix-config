@@ -217,7 +217,7 @@
             patches = [ ../config/neovim/grepper.diff ];
           });
         } {
-          config = "let g:signify_priority = 4";
+          config = builtins.readFile ../config/neovim/signify.vim;
           plugin = vim-signify;
         } {
           config = "let g:vimwiki_key_mappings = { 'all_maps': 0 }";
