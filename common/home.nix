@@ -206,7 +206,7 @@
           config = builtins.readFile ../config/neovim/trouble.vim;
           plugin = trouble-nvim;
         } {
-          config = "let g:go_fmt_fail_silently = 0";
+          config = "let g:go_fmt_fail_silently = 1";
           plugin = vim-go;
         } {
           config = ''
