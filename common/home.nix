@@ -3,7 +3,7 @@
 {
   home = {
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
-    packages         = with pkgs; [ ammonite gh git-crypt gore ripgrep ];
+    packages         = with pkgs; [ ammonite gh git-crypt ripgrep ];
     sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
     username         = "jupblb";
   };
@@ -154,56 +154,56 @@
     };
 
     neovim = {
-      extraConfig   = builtins.readFile ../config/neovim/init.vim;
+      extraConfig   = "source ${toString ../config/neovim/init.vim}";
       plugins       = with pkgs.vimPlugins; [ {
           config = "let $GLOW_STYLE = 'light'";
           plugin = glow-nvim;
         } {
-          config = builtins.readFile ../config/neovim/gruvbox.vim;
+          config = "source ${toString ../config/neovim/gruvbox.vim}";
           plugin = gruvbox-nvim;
         } {
-          config = builtins.readFile ../config/neovim/hop.vim;
+          config = "source ${toString ../config/neovim/hop.vim}";
           plugin = hop-nvim;
         } {
-          config = "luafile ${../config/neovim/lualine.lua}";
+          config = "luafile ${toString ../config/neovim/lualine.lua}";
           plugin = lualine-nvim.overrideAttrs(_: {
             dependencies = [ lsp-status-nvim ];
           });
         } {
-          config = "luafile ${../config/neovim/luatab.lua}";
+          config = "luafile ${toString ../config/neovim/luatab.lua}";
           plugin = luatab-nvim;
         } {
           config = "set termguicolors | lua require('colorizer').setup()";
           plugin = nvim-colorizer-lua;
         } {
-          config = "luafile ${../config/neovim/compe.lua}";
+          config = "luafile ${toString ../config/neovim/compe.lua}";
           plugin = nvim-compe.overrideAttrs(_: {
             dependencies = [ compe-tabnine ];
           });
         } {
-          config = "luafile ${../config/neovim/lspconfig.lua}";
+          config = "luafile ${toString ../config/neovim/lspconfig.lua}";
           plugin = nvim-lspconfig.overrideAttrs(_: {
             dependencies = [ lsp-status-nvim ];
           });
         } {
-          config = builtins.readFile ../config/neovim/tree.vim;
+          config = "source ${toString ../config/neovim/tree.vim}";
           plugin = nvim-tree-lua;
         } {
-          config = "luafile ${../config/neovim/treesitter.lua}";
+          config = "luafile ${toString ../config/neovim/treesitter.lua}";
           plugin = nvim-treesitter.overrideAttrs(_: {
             dependencies = [ nvim-treesitter-refactor ];
           });
         } {
-          config = "luafile ${../config/neovim/devicons.lua}";
+          config = "luafile ${toString ../config/neovim/devicons.lua}";
           plugin = nvim-web-devicons;
         } {
-          config = "luafile ${../config/neovim/telescope.lua}";
+          config = "luafile ${toString ../config/neovim/telescope.lua}";
           plugin = telescope-nvim.overrideAttrs(old: {
             dependencies = old.dependencies ++
               [ telescope-fzf-writer-nvim telescope-fzy-native-nvim ];
           });
         } {
-          config = builtins.readFile ../config/neovim/trouble.vim;
+          config = "source ${toString ../config/neovim/trouble.vim}";
           plugin = trouble-nvim;
         } {
           config = "let g:go_fmt_fail_silently = 1";
@@ -217,7 +217,7 @@
             patches = [ ../config/neovim/grepper.diff ];
           });
         } {
-          config = builtins.readFile ../config/neovim/signify.vim;
+          config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
         } {
           config = "let g:vimwiki_key_mappings = { 'all_maps': 0 }";
@@ -271,7 +271,7 @@
       settings = {
         add_newline = false;
         directory   = {
-          read_only         = " ";
+          read_only         = " ";
           truncation_length = 8;
           truncation_symbol = "…/";
         };
