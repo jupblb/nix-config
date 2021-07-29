@@ -159,8 +159,8 @@
           config = "let $GLOW_STYLE = 'light'";
           plugin = glow-nvim;
         } {
-          config = "source ${toString ../config/neovim/gruvbox.vim}";
-          plugin = gruvbox-nvim;
+          config = "source ${toString ../config/neovim/gruvbox-material.vim}";
+          plugin = gruvbox-material;
         } {
           config = "source ${toString ../config/neovim/hop.vim}";
           plugin = hop-nvim;
@@ -170,7 +170,7 @@
             dependencies = [ lsp-status-nvim ];
           });
         } {
-          config = "luafile ${toString ../config/neovim/luatab.lua}";
+          config = "lua vim.o.tabline = '%!v:lua.require\\'luatab\\'.tabline()'";
           plugin = luatab-nvim;
         } {
           config = "set termguicolors | lua require('colorizer').setup()";

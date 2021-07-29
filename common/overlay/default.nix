@@ -16,10 +16,11 @@ self: super: with super; {
       https://raw.githubusercontent.com/NixOS/nixpkgs/85f96822a05180cbfd5195e7034615b427f78f01/pkgs/tools/text/ripgrep/default.nix;
     in callPackage rg_12 { inherit (darwin.apple_sdk.frameworks) Security; };
   vimPlugins       = vimPlugins // {
-    compe-tabnine = callPackage ./neovim/compe-tabnine.nix {
+    compe-tabnine    = callPackage ./neovim/compe-tabnine.nix {
       inherit (vimPlugins) compe-tabnine;
       inherit (stdenv.hostPlatform) system;
     };
-    luatab-nvim   = callPackage ./neovim/luatab.nix {};
+    gruvbox-material = callPackage ./neovim/gruvbox-material.nix {};
+    luatab-nvim      = callPackage ./neovim/luatab.nix {};
   };
 }
