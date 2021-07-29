@@ -220,8 +220,8 @@
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
         } {
-          config = "let g:vimwiki_key_mappings = { 'all_maps': 0 }";
-          plugin = vimwiki;
+          config = "source ${toString ../config/neovim/mkdx.vim}";
+          plugin = mkdx;
         }
         git-messenger-vim vim-cool vim-sleuth
       ];
