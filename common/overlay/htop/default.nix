@@ -1,3 +1,3 @@
 { htop }:
 
-htop.overrideAttrs(_: { patches = [ ./vim.patch ]; })
+htop.overrideAttrs(_: { patches = [ ./vim.diff ]; })

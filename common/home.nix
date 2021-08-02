@@ -154,8 +154,61 @@
     };
 
     neovim = {
+      coc           = {
+        enable   = true;
+        settings = {
+          codeLens       = { enable = true; };
+          diagnostic     = {
+            errorSign         = " ";
+            hintSign          = " ";
+            infoSign          = " ";
+            virtualText       = true;
+            virtualTextPrefix = "  ";
+            warningSign       = " ";
+          };
+          eslint         = {
+            packageManager = "${pkgs.nodePackages.npm}/bin/npm";
+          };
+          go             = { goplsPath = "${pkgs.gopls}/bin/gopls"; };
+          languageserver = {
+            bash = {
+              args      = [ "start" ];
+              command   =
+                "${pkgs.nodePackages.bash-language-server}/bin/bash-language-server";
+              filetypes = [ "sh" ];
+            };
+            nix  = {
+              command   = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+              filetypes = [ "nix" ];
+            };
+          };
+          metals         = {
+            gradleScript                      = "${pkgs.gradle}/bin/gradle";
+            javaHome                          = "${pkgs.openjdk8}";
+            mavenScript                       = "${pkgs.maven}/bin/mvn";
+            millScript                        = "${pkgs.mill}/bin/mill";
+            sbtScript                         = "${pkgs.sbt}/bin/sbt";
+            showImplicitArguments             = true;
+            showImplicitConversionsAndClasses = true;
+            statusBarEnabled                  = true;
+          };
+          npm.binPath    = "${pkgs.nodePackages.npm}/bin/npm";
+          suggest        = { enablePreselect = true; };
+          tabnine        = { binary_path = "${pkgs.tabnine}/bin/TabNine"; };
+          tsserver       = { npm = "${pkgs.nodePackages.npm}/bin/npm"; };
+        };
+      };
       extraConfig   = "source ${toString ../config/neovim/init.vim}";
       plugins       = with pkgs.vimPlugins; [ {
+          config = "source ${toString ../config/neovim/coc.vim}";
+          plugin = coc-nvim.overrideAttrs(_: {
+            dependencies = [
+              coc-css coc-eslint coc-go coc-html coc-json coc-markdownlint
+                coc-metals coc-tabnine coc-tsserver
+              telescope-coc
+            ];
+          });
+        } {
           config = "let $GLOW_STYLE = 'light'";
           plugin = glow-nvim;
         } {
@@ -166,33 +219,20 @@
           plugin = hop-nvim;
         } {
           config = "luafile ${toString ../config/neovim/lualine.lua}";
-          plugin = lualine-nvim.overrideAttrs(_: {
-            dependencies = [ lsp-status-nvim ];
-          });
+          plugin = lualine-nvim;
         } {
           config = "lua vim.o.tabline = '%!v:lua.require\\'luatab\\'.tabline()'";
           plugin = luatab-nvim;
-        } {
-          config = "set termguicolors | lua require('colorizer').setup()";
-          plugin = nvim-colorizer-lua;
-        } {
-          config = "luafile ${toString ../config/neovim/compe.lua}";
-          plugin = nvim-compe.overrideAttrs(_: {
-            dependencies = [ compe-tabnine ];
-          });
-        } {
-          config = "luafile ${toString ../config/neovim/lspconfig.lua}";
-          plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ lsp-status-nvim ];
-          });
         } {
           config = "source ${toString ../config/neovim/tree.vim}";
           plugin = nvim-tree-lua;
         } {
           config = "luafile ${toString ../config/neovim/treesitter.lua}";
-          plugin = nvim-treesitter.overrideAttrs(_: {
-            dependencies = [ nvim-treesitter-refactor ];
-          });
+          plugin =
+            let nvim-treesitter' = nvim-treesitter.overrideAttrs(_: {
+              dependencies = [ nvim-treesitter-refactor ];
+            });
+            in nvim-treesitter'.withPlugins(_: pkgs.tree-sitter.allGrammars);
         } {
           config = "luafile ${toString ../config/neovim/devicons.lua}";
           plugin = nvim-web-devicons;
@@ -205,9 +245,6 @@
         } {
           config = "source ${toString ../config/neovim/trouble.vim}";
           plugin = trouble-nvim;
-        } {
-          config = "let g:go_fmt_fail_silently = 1";
-          plugin = vim-go;
         } {
           config = ''
             nnoremap <Leader>r :Grepper -tool rg<CR>
@@ -223,21 +260,10 @@
           config = "source ${toString ../config/neovim/mkdx.vim}";
           plugin = mkdx;
         }
-        git-messenger-vim vim-cool vim-sleuth
+        git-messenger-vim vim-cool vim-css-color vim-sleuth
       ];
       enable        = true;
-      extraPackages =
-        let
-          packages     = with pkgs;
-            [ fd gcc glow gopls metals ripgrep rnix-lsp tree-sitter ];
-          nodePackages = with pkgs.nodePackages; [
-            bash-language-server
-            npm
-            typescript-language-server
-            vscode-css-languageserver-bin vscode-html-languageserver-bin
-          ];
-        in packages ++ nodePackages;
-      package       = pkgs.neovim-nightly;
+      extraPackages = with pkgs; [ fd glow ripgrep ];
       vimAlias      = true;
       vimdiffAlias  = true;
       withNodeJs    = true;

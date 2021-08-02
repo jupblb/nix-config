@@ -13,7 +13,7 @@ set showbreak=↪
 set splitright
 set smartcase
 set tabstop=2
-set updatetime=500
+set termguicolors
 set wrap
 
 map q: <Nop>
@@ -24,4 +24,7 @@ map <Space> <Leader>
 autocmd BufRead,BufNewFile *.fish set filetype=fish
 autocmd BufRead,BufNewFile *.nix set filetype=nix
 autocmd BufRead,BufNewFile *.sc set filetype=scala
+
 autocmd FileType go,java,sql set colorcolumn=100
+autocmd FileType json syntax match Comment +\/\/.\+$+
+autocmd FileType scss setl iskeyword+=@-@

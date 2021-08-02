@@ -34,6 +34,7 @@ telescope.setup {
   }
 }
 telescope.load_extension('fzy_native')
+telescope.load_extension('coc')
 
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<Leader><CR>', '<Cmd>Telescope file_browser hidden=true<CR>', opts)
