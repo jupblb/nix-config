@@ -157,7 +157,6 @@
       coc           = {
         enable   = true;
         settings = {
-          codeLens       = { enable = true; };
           diagnostic     = {
             errorSign         = " ";
             hintSign          = " ";
