@@ -181,6 +181,13 @@
               filetypes = [ "nix" ];
             };
           };
+          markdownlint   = {
+            config = {
+              blanks-around-fences   = false;
+              blanks-around-lists    = false;
+              line-length            = { code_blocks = false; };
+            };
+          };
           metals         = {
             gradleScript                      = "${pkgs.gradle}/bin/gradle";
             javaHome                          = "${pkgs.openjdk8}";
