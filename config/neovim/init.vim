@@ -14,6 +14,7 @@ set splitright
 set smartcase
 set tabstop=2
 set termguicolors
+set virtualedit=all
 set wrap
 
 map q: <Nop>
