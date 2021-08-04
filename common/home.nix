@@ -123,12 +123,14 @@
         "ctrl+l"       = "neighboring_window right";
       };
       settings    = {
+        allow_remote_control          = "socket-only";
         background                    = "#f9f5d7";
         clipboard_control             =
           "write-clipboard write-primary no-append";
         enabled_layouts               = "splits";
         enable_audio_bell             = "no";
         foreground                    = "#282828";
+        listen_on                     = "unix:/tmp/kitty";
         scrollback_pager              =
           "nvim -c 'setl ft=man | call clearmatches() | autocmd VimEnter * norm G{}'";
         scrollback_pager_history_size = 4096;
@@ -274,6 +276,9 @@
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
+        } {
+          config = "luafile ${toString ../config/neovim/zen-mode.lua}";
+          plugin = zen-mode-nvim;
         }
         git-messenger-vim vim-cool vim-sleuth
       ];
