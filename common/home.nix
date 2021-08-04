@@ -215,6 +215,9 @@
             ];
           });
         } {
+          config = "let g:colorizer_auto_color = 1";
+          plugin = colorizer;
+        } {
           config = "let $GLOW_STYLE = 'light'";
           plugin = glow-nvim;
         } {
@@ -229,6 +232,12 @@
         } {
           config = "lua vim.o.tabline = '%!v:lua.require\\'luatab\\'.tabline()'";
           plugin = luatab-nvim;
+        } {
+          config = "source ${toString ../config/neovim/mkdx.vim}";
+          plugin = mkdx;
+        } {
+          config = "nnoremap <Leader>L :lua require('nabla').action()<CR>";
+          plugin = nabla-nvim;
         } {
           config = "source ${toString ../config/neovim/tree.vim}";
           plugin = nvim-tree-lua;
@@ -252,6 +261,9 @@
           config = "source ${toString ../config/neovim/trouble.vim}";
           plugin = trouble-nvim;
         } {
+          config = "vnoremap <C-v> :VBox<CR>";
+          plugin = venn-nvim;
+        } {
           config = ''
             nnoremap <Leader>r :Grepper -tool rg<CR>
             nnoremap <Leader>R :Grepper -buffer -noquickfix -tool rg<CR>
@@ -262,11 +274,8 @@
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
-        } {
-          config = "source ${toString ../config/neovim/mkdx.vim}";
-          plugin = mkdx;
         }
-        git-messenger-vim vim-cool vim-css-color vim-sleuth
+        git-messenger-vim vim-cool vim-sleuth
       ];
       enable        = true;
       extraPackages = with pkgs; [ fd glow ripgrep ];

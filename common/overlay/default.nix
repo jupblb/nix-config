@@ -20,6 +20,8 @@ self: super: with super; {
   };
   vimPlugins       = vimPlugins // {
     luatab-nvim   = callPackage ./neovim/luatab.nix {};
+    nabla-nvim    = callPackage ./neovim/nabla.nix {};
     telescope-coc = callPackage ./neovim/telescope-coc.nix {};
+    venn-nvim     = callPackage ./neovim/venn.nix {};
   };
 }
