@@ -11,9 +11,16 @@ require('lualine').setup {
       color_added = '#8ec07c',
       color_modified = '#f9f5d7',
       color_removed = '#fb4934'
-    }},
+    } },
     lualine_c = { {'filename', path = 1 } },
-    lualine_x = { { 'diagnostics', sources = { 'coc' } } },
+    lualine_x = { {
+      'diagnostics',
+      color_error = '#cc241d',
+      color_warn = '#d79921',
+      color_info = '#7c6f64',
+      color_hint = '#98971a',
+      sources = { 'coc' }
+    } },
     lualine_y = {'encoding', { 'filetype', colored = false } },
     lualine_z = {'progress', 'location'}
   }
