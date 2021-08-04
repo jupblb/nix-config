@@ -19,8 +19,7 @@ self: super: with super; {
     tabnine = super.tabnine;
   };
   vimPlugins       = vimPlugins // {
-    gruvbox-material = callPackage ./neovim/gruvbox-material.nix {};
-    luatab-nvim      = callPackage ./neovim/luatab.nix {};
-    telescope-coc    = callPackage ./neovim/telescope-coc.nix {};
+    luatab-nvim   = callPackage ./neovim/luatab.nix {};
+    telescope-coc = callPackage ./neovim/telescope-coc.nix {};
   };
 }
