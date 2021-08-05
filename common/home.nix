@@ -250,10 +250,11 @@
         } {
           config = "luafile ${toString ../config/neovim/treesitter.lua}";
           plugin =
-            let nvim-treesitter' = nvim-treesitter.overrideAttrs(_: {
+            let nvim-treesitter' =
+              nvim-treesitter.withPlugins(_: pkgs.tree-sitter.allGrammars);
+            in nvim-treesitter'.overrideAttrs(_: {
               dependencies = [ nvim-treesitter-refactor ];
             });
-            in nvim-treesitter'.withPlugins(_: pkgs.tree-sitter.allGrammars);
         } {
           config = "luafile ${toString ../config/neovim/devicons.lua}";
           plugin = nvim-web-devicons;

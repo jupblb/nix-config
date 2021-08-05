@@ -3,8 +3,7 @@ require('nvim-treesitter.configs').setup {
   highlight = { enable = true, disable = { "yaml" } },
   refactor = {
     highlight_definitions = { enable = true },
-    navigation = { enable = true, keymaps = { goto_definition = 'gd' } },
-    smart_rename = { enable = true, smart_rename = "<Leader>lr" }
+    navigation = { enable = true, keymaps = { goto_definition = 'gd' } }
   }
 }
 
