@@ -187,12 +187,13 @@
             config = {
               blanks-around-fences   = false;
               blanks-around-lists    = false;
-              line-length            = { code_blocks = false; };
+              line-length            = { code_blocks = false; tables = false; };
+              no-bare-urls           = false;
             };
           };
           metals         = {
             gradleScript                      = "${pkgs.gradle}/bin/gradle";
-            javaHome                          = "${pkgs.openjdk8}";
+            javaHome                          = "${pkgs.openjdk11}";
             mavenScript                       = "${pkgs.maven}/bin/mvn";
             millScript                        = "${pkgs.mill}/bin/mill";
             sbtScript                         = "${pkgs.sbt}/bin/sbt";
@@ -202,7 +203,10 @@
           };
           npm.binPath    = "${pkgs.nodePackages.npm}/bin/npm";
           suggest        = { enablePreselect = true; };
-          tabnine        = { binary_path = "${pkgs.tabnine}/bin/TabNine"; };
+          tabnine        = {
+            binary_path       = "${pkgs.tabnine}/bin/TabNine";
+            disable_filetypes = [ "go" "scala" ];
+          };
           tsserver       = { npm = "${pkgs.nodePackages.npm}/bin/npm"; };
         };
       };
