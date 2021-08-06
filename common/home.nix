@@ -281,9 +281,6 @@
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
-        } {
-          config = "luafile ${toString ../config/neovim/zen-mode.lua}";
-          plugin = zen-mode-nvim;
         }
         git-messenger-vim vim-cool vim-sleuth
       ];

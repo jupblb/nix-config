@@ -23,6 +23,5 @@ self: super: with super; {
     nabla-nvim    = callPackage ./neovim/nabla.nix {};
     telescope-coc = callPackage ./neovim/telescope-coc.nix {};
     venn-nvim     = callPackage ./neovim/venn.nix {};
-    zen-mode-nvim = callPackage ./neovim/zen-mode.nix {};
   };
 }
