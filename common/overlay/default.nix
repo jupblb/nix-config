@@ -14,10 +14,6 @@ self: super: with super; {
     let rg_12 = builtins.fetchurl
       https://raw.githubusercontent.com/NixOS/nixpkgs/85f96822a05180cbfd5195e7034615b427f78f01/pkgs/tools/text/ripgrep/default.nix;
     in callPackage rg_12 { inherit (darwin.apple_sdk.frameworks) Security; };
-  tabnine          = callPackage ./tabnine.nix {
-    inherit (stdenv.hostPlatform) system;
-    tabnine = super.tabnine;
-  };
   vimPlugins       = vimPlugins // {
     luatab-nvim   = callPackage ./neovim/luatab.nix {};
     nabla-nvim    = callPackage ./neovim/nabla.nix {};

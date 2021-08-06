@@ -158,7 +158,7 @@
     neovim = {
       coc           = {
         enable   = true;
-        settings = {
+        settings = rec {
           diagnostic     = {
             errorSign         = " ";
             hintSign          = " ";
@@ -167,9 +167,7 @@
             virtualTextPrefix = "  ";
             warningSign       = " ";
           };
-          eslint         = {
-            packageManager = "${pkgs.nodePackages.npm}/bin/npm";
-          };
+          eslint         = { packageManager = npm.binPath; };
           go             = { goplsPath = "${pkgs.gopls}/bin/gopls"; };
           languageserver = {
             bash = {
@@ -207,7 +205,7 @@
             binary_path       = "${pkgs.tabnine}/bin/TabNine";
             disable_filetypes = [ "go" "scala" ];
           };
-          tsserver       = { npm = "${pkgs.nodePackages.npm}/bin/npm"; };
+          tsserver       = { npm = npm.binPath; };
         };
       };
       extraConfig   = "source ${toString ../config/neovim/init.vim}";
