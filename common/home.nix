@@ -216,9 +216,6 @@
             ];
           });
         } {
-          config = "let g:colorizer_auto_color = 1";
-          plugin = colorizer;
-        } {
           config = "let $GLOW_STYLE = 'light'";
           plugin = glow-nvim;
         } {
@@ -239,6 +236,9 @@
         } {
           config = "nnoremap <Leader>L :lua require('nabla').action()<CR>";
           plugin = nabla-nvim;
+        } {
+          config = "lua require('colorizer').setup()";
+          plugin = nvim-colorizer-lua;
         } {
           config = "source ${toString ../config/neovim/tree.vim}";
           plugin = nvim-tree-lua;
