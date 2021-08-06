@@ -1,9 +1,7 @@
 let g:nvim_tree_auto_close = 1
-let g:nvim_tree_disable_netrw = 0
 let g:nvim_tree_git_hl = 1
 let g:nvim_tree_gitignore = 1
 let g:nvim_tree_group_empty = 1
-let g:nvim_tree_hijack_netrw = 0
 let g:nvim_tree_icon_padding = '  '
 let g:nvim_tree_icons = {
     \ 'default': '',
@@ -12,10 +10,10 @@ let g:nvim_tree_icons = {
     \   'unstaged': "",
     \   'staged': "",
     \   'unmerged': "",
-    \   'renamed': "",
-    \   'untracked': "",
-    \   'deleted': "",
-    \   'ignored': ""
+    \   'renamed': "",
+    \   'untracked': "",
+    \   'deleted': "",
+    \   'ignored': ""
     \   },
     \ 'folder': {
     \   'default': "",

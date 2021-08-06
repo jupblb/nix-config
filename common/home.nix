@@ -329,12 +329,13 @@
           ahead      = " ";
           behind     = " ";
           conflicted = " ";
-          deleted    = " ";
+          deleted    = " ";
           diverged   = " ";
           modified   = " ";
+          renamed    = " ";
           staged     = " ";
           stashed    = " ";
-          untracked  = " ";
+          untracked  = " ";
         };
         hg_branch   = { disabled = false; symbol = " "; };
         hostname    = { format = "[($hostname:)]($style)"; };
