@@ -3,7 +3,7 @@
 {
   home = {
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
-    packages         = with pkgs; [ ammonite gh git-crypt ripgrep ];
+    packages         = with pkgs; [ ammonite git-crypt gore ripgrep ];
     sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
     username         = "jupblb";
   };
