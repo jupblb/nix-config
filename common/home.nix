@@ -156,7 +156,7 @@
       coc           = {
         enable   = true;
         settings = rec {
-          diagnostic     = {
+          diagnostic                = {
             errorSign         = " ";
             hintSign          = " ";
             infoSign          = " ";
@@ -164,29 +164,54 @@
             virtualTextPrefix = "  ";
             warningSign       = " ";
           };
-          eslint         = { packageManager = npm.binPath; };
-          go             = { goplsPath = "${pkgs.gopls}/bin/gopls"; };
-          languageserver = {
+          diagnostic-languageserver = {
+            filetypes       = {
+              dockerfile = "hadolint";
+              fish       = "fish";
+              sh         = "shellcheck";
+              vim        = "vint";
+            };
+            formatters      = {
+              mdformat = {
+                args    = [ "-" ];
+                command = "${pkgs.python3Packages.mdformat}/bin/mdformat";
+              };
+              shfmt    = {
+                args    = [ "-i" "2" "-filename" "%filepath" ];
+                command = "${pkgs.shfmt}/bin/shfmt";
+              };
+            };
+            formatFiletypes = {
+              fish     = "fish_indent";
+              markdown = "mdformat";
+              sh       = "shfmt";
+            };
+            linters         = {
+              hadolint   = { command = "${pkgs.hadolint}/bin/hadolint"; };
+              nix-linter = { command = "${pkgs.nix-linter}/bin/nix-linter"; };
+              shellcheck = { command = "${pkgs.shellcheck}/bin/shellcheck"; };
+              vint       = { command = "${pkgs.vim-vint}/bin/vim-vint"; };
+            };
+            mergeConfig     = true;
+          };
+          eslint                    = { packageManager = npm.binPath; };
+          go.goplsPath              = "${pkgs.gopls}/bin/gopls";
+          languageserver            = {
             bash = {
-              args      = [ "start" ];
-              command   =
-                "${pkgs.nodePackages.bash-language-server}/bin/bash-language-server";
-              filetypes = [ "sh" ];
-            };
-            nix  = {
-              command   = "${pkgs.rnix-lsp}/bin/rnix-lsp";
-              filetypes = [ "nix" ];
+              args               = [ "start" ];
+              command            = let nodePackages = pkgs.nodePackages; in
+                "${nodePackages.bash-language-server}/bin/bash-language-server";
+              disableDiagnostics = true;
+              filetypes          = [ "sh" ];
             };
           };
-          markdownlint   = {
+          markdownlint              = {
             config = {
-              blanks-around-fences   = false;
-              blanks-around-lists    = false;
-              line-length            = { code_blocks = false; tables = false; };
-              no-bare-urls           = false;
+              line-length  = { code_blocks = false; tables = false; };
+              no-bare-urls = false;
             };
           };
-          metals         = {
+          metals                    = {
             gradleScript                      = "${pkgs.gradle}/bin/gradle";
             javaHome                          = "${pkgs.openjdk11}";
             mavenScript                       = "${pkgs.maven}/bin/mvn";
@@ -196,13 +221,16 @@
             showImplicitConversionsAndClasses = true;
             statusBarEnabled                  = true;
           };
-          npm.binPath    = "${pkgs.nodePackages.npm}/bin/npm";
-          suggest        = { enablePreselect = true; };
-          tabnine        = {
+          npm.binPath               = "${pkgs.nodePackages.npm}/bin/npm";
+          preferences               = {
+            formatOnSaveFiletypes = [ "fish" "go" "scala" "markdown" ];
+          };
+          suggest                   = { enablePreselect = true; };
+          tabnine                   = {
             binary_path       = "${pkgs.tabnine}/bin/TabNine";
             disable_filetypes = [ "go" "scala" ];
           };
-          tsserver       = { npm = npm.binPath; };
+          tsserver                  = { npm = npm.binPath; };
         };
       };
       extraConfig   = "source ${toString ../config/neovim/init.vim}";
@@ -210,8 +238,8 @@
           config = "source ${toString ../config/neovim/coc.vim}";
           plugin = coc-nvim.overrideAttrs(_: {
             dependencies = [
-              coc-css coc-eslint coc-go coc-html coc-json coc-markdownlint
-                coc-metals coc-tabnine coc-tsserver
+              coc-css coc-diagnostic coc-eslint coc-go coc-html coc-json
+                coc-markdownlint coc-metals coc-tabnine coc-tsserver
               telescope-coc
             ];
           });
