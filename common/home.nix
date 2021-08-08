@@ -172,17 +172,19 @@
               vim        = "vint";
             };
             formatters      = {
-              mdformat = {
+              lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
+              mdformat   = {
                 args    = [ "-" ];
                 command = "${pkgs.python3Packages.mdformat}/bin/mdformat";
               };
-              shfmt    = {
+              shfmt      = {
                 args    = [ "-i" "2" "-filename" "%filepath" ];
                 command = "${pkgs.shfmt}/bin/shfmt";
               };
             };
             formatFiletypes = {
               fish     = "fish_indent";
+              lua      = "lua-format";
               markdown = "mdformat";
               sh       = "shfmt";
             };
@@ -223,7 +225,7 @@
           };
           npm.binPath               = "${pkgs.nodePackages.npm}/bin/npm";
           preferences               = {
-            formatOnSaveFiletypes = [ "fish" "go" "scala" "markdown" ];
+            formatOnSaveFiletypes = [ "fish" "lua" "go" "scala" "markdown" ];
           };
           suggest                   = { enablePreselect = true; };
           tabnine                   = {
