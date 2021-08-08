@@ -357,13 +357,15 @@
           ahead      = " ";
           behind     = " ";
           conflicted = " ";
-          deleted    = " ";
+          deleted    = " ";
           diverged   = " ";
-          modified   = " ";
-          renamed    = " ";
-          staged     = " ";
+          format     =
+            "([$all_status](underline $style)[$ahead_behind]($style) )";
+          modified   = " ";
+          renamed    = " ";
+          staged     = " ";
           stashed    = " ";
-          untracked  = " ";
+          untracked  = " ";
         };
         hg_branch   = { disabled = false; symbol = " "; };
         hostname    = { format = "[($hostname:)]($style)"; };

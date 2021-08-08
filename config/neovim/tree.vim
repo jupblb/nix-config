@@ -7,13 +7,13 @@ let g:nvim_tree_icons = {
     \ 'default': '',
     \ 'symlink': '',
     \ 'git': {
-    \   'unstaged': "",
-    \   'staged': "",
+    \   'unstaged': "",
+    \   'staged': "",
     \   'unmerged': "",
-    \   'renamed': "",
-    \   'untracked': "",
-    \   'deleted': "",
-    \   'ignored': ""
+    \   'renamed': "",
+    \   'untracked': "",
+    \   'deleted': "",
+    \   'ignored': ""
     \   },
     \ 'folder': {
     \   'default': "",
