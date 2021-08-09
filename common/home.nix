@@ -293,7 +293,7 @@
           config = "source ${toString ../config/neovim/trouble.vim}";
           plugin = trouble-nvim;
         } {
-          config = "vnoremap <C-v> :VBox<CR>";
+          config = "source ${toString ../config/neovim/venn.vim}";
           plugin = venn-nvim;
         } {
           config = ''
