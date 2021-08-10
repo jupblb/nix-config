@@ -304,10 +304,7 @@
           config = "source ${toString ../config/neovim/venn.vim}";
           plugin = venn-nvim;
         } {
-          config = ''
-            nnoremap <Leader>r :Grepper -tool rg<CR>
-            nnoremap <Leader>R :Grepper -buffer -noquickfix -tool rg<CR>
-          '';
+          config = "source ${toString ../config/neovim/grepper.vim}";
           plugin = vim-grepper;
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
