@@ -267,6 +267,9 @@
           config = "nnoremap <Leader>L :lua require('nabla').action()<CR>";
           plugin = nabla-nvim;
         } {
+          config = "lua require('bqf').setup({ preview = { wrap = true } })";
+          plugin = nvim-bqf;
+        } {
           config = "lua require('colorizer').setup()";
           plugin = nvim-colorizer-lua;
         } {
@@ -290,9 +293,6 @@
               [ telescope-fzf-writer-nvim telescope-fzy-native-nvim ];
           });
         } {
-          config = "source ${toString ../config/neovim/trouble.vim}";
-          plugin = trouble-nvim;
-        } {
           config = "source ${toString ../config/neovim/venn.vim}";
           plugin = venn-nvim;
         } {
@@ -300,9 +300,7 @@
             nnoremap <Leader>r :Grepper -tool rg<CR>
             nnoremap <Leader>R :Grepper -buffer -noquickfix -tool rg<CR>
           '';
-          plugin = vim-grepper.overrideAttrs(_: {
-            patches = [ ../config/neovim/grepper.diff ];
-          });
+          plugin = vim-grepper;
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
