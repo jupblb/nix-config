@@ -168,6 +168,7 @@
             filetypes       = {
               dockerfile = "hadolint";
               fish       = "fish";
+              lua        = "luacheck";
               sh         = "shellcheck";
               vim        = "vint";
             };
@@ -190,6 +191,13 @@
             };
             linters         = {
               hadolint   = { command = "${pkgs.hadolint}/bin/hadolint"; };
+              luacheck   = {
+                args    = [
+                  "--codes" "--filename" "%filepath" "--formatter" "plain"
+                    "--globals" "vim" "--ranges" "-"
+                ];
+                command = "${pkgs.luaPackages.luacheck}/bin/luacheck";
+              };
               nix-linter = { command = "${pkgs.nix-linter}/bin/nix-linter"; };
               shellcheck = { command = "${pkgs.shellcheck}/bin/shellcheck"; };
               vint       = { command = "${pkgs.vim-vint}/bin/vim-vint"; };

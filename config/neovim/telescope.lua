@@ -49,7 +49,7 @@ set_keymap('<Leader>s',
 set_keymap('<Leader>S',
            '<Cmd>lua require("telescope").extensions.fzf_writer.grep()<CR>')
 
-delta_git_commits = function(opts)
+_G.delta_git_commits = function(opts)
     opts = opts or {}
     opts.previewer = previewers.new_termopen_previewer {
         get_command = function(entry)
@@ -63,7 +63,7 @@ delta_git_commits = function(opts)
     builtin.git_commits(opts)
 end
 
-delta_git_bcommits = function(opts)
+_G.delta_git_bcommits = function(opts)
     opts = opts or {}
     opts.previewer = previewers.new_termopen_previewer {
         get_command = function(entry)
@@ -78,7 +78,7 @@ delta_git_bcommits = function(opts)
     builtin.git_bcommits(opts)
 end
 
-delta_git_status = function(opts)
+_G.delta_git_status = function(opts)
     opts = opts or {}
     opts.previewer = previewers.new_termopen_previewer {
         get_command = function(entry)
@@ -93,9 +93,9 @@ delta_git_status = function(opts)
     builtin.git_status(opts)
 end
 
-set_keymap('<Leader>gb', '<Cmd>Telescope git_branches<CR>', opts)
-set_keymap('<Leader>gc', '<Cmd>lua delta_git_commits()<CR>', opts)
+set_keymap('<Leader>gb', '<Cmd>Telescope git_branches<CR>')
+set_keymap('<Leader>gc', '<Cmd>lua delta_git_commits()<CR>')
 set_keymap('<Leader>gC',
-           '<Cmd>lua delta_git_bcommits({path=vim.fn.expand("%:p")})<CR>', opts)
-set_keymap('<Leader>gf', '<Cmd>Telescope git_files<CR>', opts)
-set_keymap('<Leader>gs', '<Cmd>lua delta_git_status()<CR>', opts)
+           '<Cmd>lua delta_git_bcommits({path=vim.fn.expand("%:p")})<CR>')
+set_keymap('<Leader>gf', '<Cmd>Telescope git_files<CR>')
+set_keymap('<Leader>gs', '<Cmd>lua delta_git_status()<CR>')
