@@ -14,10 +14,15 @@ self: super: with super; {
   python3Packages  = python3Packages // {
     mdformat = super.python3Packages.mdformat.overrideAttrs(old: {
       propagatedBuildInputs =
-        let mdformat-tables = callPackage ./mdformat/mdformat-tables.nix {
-          python3Packages = super.python3Packages;
-        };
-        in old.propagatedBuildInputs ++ [ mdformat-tables ];
+        let
+          mdformat-gfm     = callPackage ./mdformat/mdformat-gfm.nix {
+            mdformat-tables = mdformat-tables';
+            python3Packages = super.python3Packages;
+          };
+          mdformat-tables' = callPackage ./mdformat/mdformat-tables.nix {
+            python3Packages = super.python3Packages;
+          };
+        in old.propagatedBuildInputs ++ [ mdformat-gfm ];
     });
   };
   ripgrep          =
