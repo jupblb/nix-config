@@ -2,8 +2,20 @@
 
 {
   home = {
-    file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
-    packages         = with pkgs; [ ammonite git-crypt gore ripgrep ];
+    file             = {
+      ".ammonite/predef.sc".source                     = pkgs.ammonite.predef;
+      "${config.xdg.configHome}/zk/config.toml".source =
+        let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
+          format = { markdown.link-drop-extension = false; };
+          lsp    = { diagnostics = { wiki-title = "info"; }; };
+          note   = { id-charset = "hex"; id-length = 8; };
+          tool   = {
+            editor      = "nvim";
+            fzf-preview = "${pkgs.glow}/bin/glow --style light {-1}";
+          };
+        };
+    };
+    packages         = with pkgs; [ ammonite git-crypt gore ripgrep zk ];
     sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
     username         = "jupblb";
   };
@@ -212,6 +224,12 @@
               disableDiagnostics = true;
               filetypes          = [ "sh" ];
             };
+            zk   = {
+              command      = "zk";
+              args         = [ "lsp" ];
+              filetypes    = [ "markdown" ];
+              trace.server = "messages";
+            };
           };
           markdownlint              = {
             config = {
@@ -233,7 +251,10 @@
           preferences               = {
             formatOnSaveFiletypes = [ "fish" "lua" "go" "scala" "markdown" ];
           };
-          suggest                   = { enablePreselect = true; };
+          suggest                   = {
+            enablePreselect         = true;
+            invalidInsertCharacters = [];
+          };
           tabnine                   = {
             binary_path       = "${pkgs.tabnine}/bin/TabNine";
             disable_filetypes = [ "go" "scala" ];
@@ -266,9 +287,6 @@
         } {
           config = "lua vim.o.tabline = '%!v:lua.require\\'luatab\\'.tabline()'";
           plugin = luatab-nvim;
-        } {
-          config = "source ${toString ../config/neovim/mkdx.vim}";
-          plugin = mkdx;
         } {
           config = "nnoremap <Leader>L :lua require('nabla').action()<CR>";
           plugin = nabla-nvim;

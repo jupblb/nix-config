@@ -21,4 +21,5 @@ self: super: with super; {
     telescope-coc = callPackage ./neovim/telescope-coc.nix {};
     venn-nvim     = callPackage ./neovim/venn.nix {};
   };
+  zk               = callPackage ./zk.nix {};
 }

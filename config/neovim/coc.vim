@@ -20,7 +20,7 @@ nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
 nnoremap <silent> <Leader>c <Cmd>Telescope coc commands<CR>
 nnoremap <silent> <C-]> <Cmd>Telescope coc definitions<CR>
 nnoremap <silent> <A-CR> <Cmd>Telescope coc code_actions<CR>
-nnoremap <silent> <Leader>la <Cmd>Telescope coc code_actions<CR>
+nnoremap <silent> <Leader>la <Cmd>CocAction<CR>
 nnoremap <silent> <Leader>lda <Cmd>Telescope coc file<CR>
 nnoremap <silent> <Leader>ldd <Cmd>Telescope coc diagnostics<CR>
 nnoremap <silent> <Leader>lds <Cmd>Telescope coc document_symbols<CR>
