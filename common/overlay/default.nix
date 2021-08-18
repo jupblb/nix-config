@@ -7,10 +7,19 @@ self: super: with super; {
   };
   chromium-wayland = callPackage ./chromium-wayland.nix {};
   fish-plugins     = import ./fish/plugins { inherit (super) callPackage; };
-  lf               = callPackage ./lf { lf = super.lf; };
   htop             = callPackage ./htop { htop = super.htop; };
+  lf               = callPackage ./lf { lf = super.lf; };
   luaformatter     = luaformatter.override { stdenv = gccStdenv; };
   pragmata-pro     = callPackage ./pragmata-pro {};
+  python3Packages  = python3Packages // {
+    mdformat = super.python3Packages.mdformat.overrideAttrs(old: {
+      propagatedBuildInputs =
+        let mdformat-tables = callPackage ./mdformat/mdformat-tables.nix {
+          python3Packages = super.python3Packages;
+        };
+        in old.propagatedBuildInputs ++ [ mdformat-tables ];
+    });
+  };
   ripgrep          =
     let rg_12 = builtins.fetchurl
       https://raw.githubusercontent.com/NixOS/nixpkgs/85f96822a05180cbfd5195e7034615b427f78f01/pkgs/tools/text/ripgrep/default.nix;
