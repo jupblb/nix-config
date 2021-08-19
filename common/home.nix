@@ -291,7 +291,8 @@
           config = "nnoremap <Leader>L :lua require('nabla').action()<CR>";
           plugin = nabla-nvim;
         } {
-          config = "lua require('bqf').setup({ preview = { wrap = true } })";
+          config =
+            "lua require('bqf').setup({ preview = { win_height = 99, wrap = true } })";
           plugin = nvim-bqf;
         } {
           config = "lua require('colorizer').setup()";
