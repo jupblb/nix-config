@@ -17,6 +17,11 @@ set termguicolors
 set virtualedit=all
 set wrap
 
+let g:markdown_fenced_languages = [
+  \    'c', 'cpp', 'css', 'java', 'go', 'javascript', 'js=javascript',
+  \    'json', 'python', 'sh', 'typescript', 'yaml'
+  \  ]
+
 map q: <Nop>
 nnoremap Q <Nop>
 nnoremap <Space> <Nop>
@@ -28,4 +33,5 @@ autocmd BufRead,BufNewFile *.sc set filetype=scala
 
 autocmd FileType go,java,sql set colorcolumn=100
 autocmd FileType json syntax match Comment +\/\/.\+$+
+autocmd FileType markdown set conceallevel=2
 autocmd FileType scss setl iskeyword+=@-@

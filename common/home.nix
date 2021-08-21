@@ -184,9 +184,12 @@
             };
             formatters      = {
               lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
-              mdformat   = {
-                args    = [ "-" ];
-                command = "${pkgs.python3Packages.mdformat}/bin/mdformat";
+              prettier   = {
+                args    = [
+                  "--embedded-language-formatting" "off" "--prose-wrap" "always"
+                    "--stdin" "--stdin-filepath" "%filepath"
+                ];
+                command = "${pkgs.nodePackages.prettier}/bin/prettier";
               };
               shfmt      = {
                 args    = [ "-i" "2" "-filename" "%filepath" ];
@@ -196,7 +199,7 @@
             formatFiletypes = {
               fish     = "fish_indent";
               lua      = "lua-format";
-              markdown = "mdformat";
+              markdown = "prettier";
               sh       = "shfmt";
             };
             linters         = {
@@ -288,9 +291,6 @@
           config = "lua vim.o.tabline = '%!v:lua.require\\'luatab\\'.tabline()'";
           plugin = luatab-nvim;
         } {
-          config = "nnoremap <Leader>L :lua require('nabla').action()<CR>";
-          plugin = nabla-nvim;
-        } {
           config =
             "lua require('bqf').setup({ preview = { win_height = 99, wrap = true } })";
           plugin = nvim-bqf;
@@ -323,6 +323,9 @@
         } {
           config = "source ${toString ../config/neovim/grepper.vim}";
           plugin = vim-grepper;
+        } {
+          config = "source ${toString ../config/neovim/markdown.vim}";
+          plugin = vim-markdown;
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
