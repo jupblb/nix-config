@@ -236,8 +236,10 @@
           };
           markdownlint              = {
             config = {
-              line-length  = { code_blocks = false; tables = false; };
-              no-bare-urls = false;
+              blanks-around-headers = false;
+              line-length           = { code_blocks = false; tables = false; };
+              no-bare-urls          = false;
+              no-multiple-blanks    = false;
             };
           };
           metals                    = {
