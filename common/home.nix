@@ -179,6 +179,7 @@
               dockerfile = "hadolint";
               fish       = "fish";
               lua        = "luacheck";
+              markdown   = "languagetool";
               sh         = "shellcheck";
               vim        = "vint";
             };
@@ -203,17 +204,22 @@
               sh       = "shfmt";
             };
             linters         = {
-              hadolint   = { command = "${pkgs.hadolint}/bin/hadolint"; };
-              luacheck   = {
+              hadolint     = { command = "${pkgs.hadolint}/bin/hadolint"; };
+              languagetool = {
+                args     = [ "-adl" "-d" "DASH_RULE" "-" ];
+                command  = "${pkgs.languagetool}/bin/languagetool-commandline";
+                debounce = 2000;
+              };
+              luacheck     = {
                 args    = [
                   "--codes" "--filename" "%filepath" "--formatter" "plain"
                     "--globals" "vim" "--ranges" "-"
                 ];
                 command = "${pkgs.luaPackages.luacheck}/bin/luacheck";
               };
-              nix-linter = { command = "${pkgs.nix-linter}/bin/nix-linter"; };
-              shellcheck = { command = "${pkgs.shellcheck}/bin/shellcheck"; };
-              vint       = { command = "${pkgs.vim-vint}/bin/vim-vint"; };
+              nix-linter   = { command = "${pkgs.nix-linter}/bin/nix-linter"; };
+              shellcheck   = { command = "${pkgs.shellcheck}/bin/shellcheck"; };
+              vint         = { command = "${pkgs.vim-vint}/bin/vim-vint"; };
             };
             mergeConfig     = true;
           };
@@ -235,12 +241,13 @@
             };
           };
           markdownlint              = {
-            config = {
+            config   = {
               blanks-around-headers = false;
               line-length           = { code_blocks = false; tables = false; };
               no-bare-urls          = false;
               no-multiple-blanks    = false;
             };
+            onChange = false;
           };
           metals                    = {
             gradleScript                      = "${pkgs.gradle}/bin/gradle";
