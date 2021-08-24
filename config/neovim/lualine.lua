@@ -9,7 +9,7 @@ require('lualine').setup {
         lualine_b = {
             'branch', {
                 'diff',
-                color_added = '#8ec07c',
+                color_added = '#79740e',
                 color_modified = '#f9f5d7',
                 color_removed = '#fb4934'
             }

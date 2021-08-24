@@ -1,4 +1,3 @@
-local actions = require('telescope.actions')
 local builtin = require('telescope.builtin')
 local previewers = require('telescope.previewers')
 local telescope = require('telescope')
@@ -18,7 +17,7 @@ end
 telescope.setup {
     defaults = {
         buffer_previewer_maker = custom_buffer_previewer,
-        mappings = {i = {["<esc>"] = actions.close}},
+        mappings = {i = {["<esc>"] = require('telescope.actions').close}},
         layout_config = {
             flex = {flip_columns = 160},
             vertical = {preview_height = 0.5}
@@ -37,7 +36,6 @@ local set_keymap = function(combo, cmd)
     vim.api.nvim_set_keymap('n', combo, cmd, {noremap = true, silent = true})
 end
 
-set_keymap('<Leader><CR>', '<Cmd>Telescope file_browser hidden=true<CR>')
 set_keymap('<Leader><Tab>', '<Cmd>Telescope buffers<CR>')
 set_keymap('<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>')
 set_keymap('<Leader>f',

@@ -1,18 +1,20 @@
 set hidden
 set updatetime=200
 
-inoremap <silent><expr> <C-Space> coc#refresh()
-inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr>         <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+command! -nargs=0 Format :call CocAction('format')
+
+inoremap <silent><expr> <C-Space> coc#refresh()
+inoremap <silent><expr> <CR>
+  \ pumvisible() ? coc#_select_confirm() : 
+  \ "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
 nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -35,12 +37,3 @@ nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 
 nnoremap <Leader>lr <Plug>(coc-rename)
 nnoremap <Leader>lf <Cmd>call CocAction('format')<CR>
-
-nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<C-r>=coc#float#scroll(1)\<CR>" : "\<Right>"
-inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<C-r>=coc#float#scroll(0)\<CR>" : "\<Left>"
-vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-
-command! -nargs=0 Format :call CocAction('format')
