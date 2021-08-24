@@ -181,6 +181,7 @@
               lua        = "luacheck";
               markdown   = "languagetool";
               sh         = "shellcheck";
+              text       = "languagetool";
               vim        = "vint";
             };
             formatters      = {
