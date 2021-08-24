@@ -19,6 +19,7 @@ self: super: with super; {
     luatab-nvim   = callPackage ./neovim/luatab.nix {};
     telescope-coc = callPackage ./neovim/telescope-coc.nix {};
     venn-nvim     = callPackage ./neovim/venn.nix {};
+    vim-gh-line   = callPackage ./neovim/vim-gh-line.nix {};
   };
   zk               = callPackage ./zk.nix {};
 }

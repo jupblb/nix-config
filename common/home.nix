@@ -206,7 +206,9 @@
             linters         = {
               hadolint     = { command = "${pkgs.hadolint}/bin/hadolint"; };
               languagetool = {
-                args     = [ "-adl" "-d" "DASH_RULE" "-" ];
+                args     = [
+                  "-adl" "-d" "ARROWS,DASH_RULE,PLUS_MINUS,WHITESPACE_RULE" "-"
+                ];
                 command  = "${pkgs.languagetool}/bin/languagetool-commandline";
                 debounce = 2000;
               };
@@ -329,6 +331,9 @@
         } {
           config = "source ${toString ../config/neovim/venn.vim}";
           plugin = venn-nvim;
+        } {
+          config = "let g:gh_line_blame_map_default = 0";
+          plugin = vim-gh-line;
         } {
           config = "source ${toString ../config/neovim/grepper.vim}";
           plugin = vim-grepper;
