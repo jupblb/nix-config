@@ -94,6 +94,7 @@
         push.default      = "upstream";
         submodule.recurse = true;
       };
+      ignores     = [ ".vim-bookmarks" ];
       signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
       userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
@@ -327,6 +328,9 @@
         } {
           config = "source ${toString ../config/neovim/venn.vim}";
           plugin = venn-nvim;
+        } {
+          config = "source ${toString ../config/neovim/bookmark.vim}";
+          plugin = vim-bookmarks;
         } {
           config = "let g:gh_line_blame_map_default = 0";
           plugin = vim-gh-line;

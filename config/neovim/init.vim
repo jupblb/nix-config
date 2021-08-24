@@ -26,7 +26,7 @@ map q: <Nop>
 nnoremap Q <Nop>
 nnoremap <Space> <Nop>
 map <Space> <Leader>
-map gf <Cmd>e <cfile><CR>
+map <silent> gf <Cmd>execute('edit ' . fnamemodify(expand('%:p:h') . '/' . expand('<cfile>'), ':p'))<CR>
 
 autocmd BufRead,BufNewFile *.fish set filetype=fish
 autocmd BufRead,BufNewFile *.nix set filetype=nix
