@@ -1,3 +1,3 @@
-vnoremap <C-v><C-v> :VBoxO<CR>
-vnoremap <C-v><C-b> :VBoxHO<CR>
-vnoremap <C-v><C-d> :VBoxDO<CR>
+vmap <C-v><C-v> :VBoxO<CR>
+vmap <C-v><C-b> :VBoxHO<CR>
+vmap <C-v><C-d> :VBoxDO<CR>

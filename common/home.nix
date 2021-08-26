@@ -275,6 +275,9 @@
       };
       extraConfig   = "source ${toString ../config/neovim/init.vim}";
       plugins       = with pkgs.vimPlugins; [ {
+          config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
+          plugin = bufdelete-nvim;
+        } {
           config = "source ${toString ../config/neovim/coc.vim}";
           plugin = coc-nvim.overrideAttrs(_: {
             dependencies = [
@@ -298,7 +301,7 @@
             dependencies = [ nvim-gps ];
           });
         } {
-          config = "lua vim.o.tabline = '%!v:lua.require\\'luatab\\'.tabline()'";
+          config = "set tabline=%!v:lua.require\\'luatab\\'.tabline()";
           plugin = luatab-nvim;
         } {
           config =

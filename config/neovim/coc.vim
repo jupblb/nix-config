@@ -16,24 +16,24 @@ inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
 inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-nnoremap <silent> <Leader>c <Cmd>Telescope coc commands<CR>
-nnoremap <silent> <C-]> <Cmd>Telescope coc definitions<CR>
-nnoremap <silent> <A-CR> <Cmd>Telescope coc code_actions<CR>
-nnoremap <silent> <Leader>la <Cmd>CocAction<CR>
-nnoremap <silent> <Leader>lda <Cmd>Telescope coc file<CR>
-nnoremap <silent> <Leader>ldd <Cmd>Telescope coc diagnostics<CR>
-nnoremap <silent> <Leader>lds <Cmd>Telescope coc document_symbols<CR>
-nnoremap <silent> <Leader>li <Cmd>Telescope coc implementations<CR>
-nnoremap <silent> <Leader>lla <Cmd>Telescope coc line_code_actions<CR>
-nnoremap <silent> <Leader>lt <Cmd>Telescope coc type_definitions<CR>
-nnoremap <silent> <Leader>lwd <Cmd>Telescope coc workspace_diagnostics<CR>
-nnoremap <silent> <Leader>lws <Cmd>Telescope coc workspace_symbols<CR>
-nnoremap <silent> gr <Cmd>Telescope coc references<CR>
+nmap <silent> <Leader>c <Cmd>Telescope coc commands<CR>
+nmap <silent> <C-]> <Cmd>Telescope coc definitions<CR>
+nmap <silent> <A-CR> <Cmd>Telescope coc code_actions<CR>
+nmap <silent> <Leader>la <Cmd>CocAction<CR>
+nmap <silent> <Leader>lda <Cmd>Telescope coc file<CR>
+nmap <silent> <Leader>ldd <Cmd>Telescope coc diagnostics<CR>
+nmap <silent> <Leader>lds <Cmd>Telescope coc document_symbols<CR>
+nmap <silent> <Leader>li <Cmd>Telescope coc implementations<CR>
+nmap <silent> <Leader>lla <Cmd>Telescope coc line_code_actions<CR>
+nmap <silent> <Leader>lt <Cmd>Telescope coc type_definitions<CR>
+nmap <silent> <Leader>lwd <Cmd>Telescope coc workspace_diagnostics<CR>
+nmap <silent> <Leader>lws <Cmd>Telescope coc workspace_symbols<CR>
+nmap <silent> gr <Cmd>Telescope coc references<CR>
 
-nnoremap <silent> K :call CocActionAsync('doHover')<CR>
+nmap <silent> K :call CocActionAsync('doHover')<CR>
 
-nnoremap <Leader>lr <Plug>(coc-rename)
-nnoremap <Leader>lf <Cmd>call CocAction('format')<CR>
+nmap <Leader>lr <Plug>(coc-rename)
+nmap <Leader>lf <Cmd>call CocAction('format')<CR>
