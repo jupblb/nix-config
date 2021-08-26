@@ -319,7 +319,9 @@
             let nvim-treesitter' =
               nvim-treesitter.withPlugins(_: pkgs.tree-sitter.allGrammars);
             in nvim-treesitter'.overrideAttrs(_: {
-              dependencies = [ nvim-treesitter-refactor ];
+              dependencies = [
+                nvim-treesitter-refactor nvim-treesitter-textobjects vim-matchup
+              ];
             });
         } {
           config = "luafile ${toString ../config/neovim/devicons.lua}";
@@ -349,7 +351,7 @@
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
         }
-        git-messenger-vim vim-cool vim-sleuth
+        git-messenger-vim surround vim-cool vim-sleuth
       ];
       enable        = true;
       extraPackages = with pkgs; [ fd glow ripgrep ];
