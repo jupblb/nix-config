@@ -294,7 +294,9 @@
           plugin = hop-nvim;
         } {
           config = "luafile ${toString ../config/neovim/lualine.lua}";
-          plugin = lualine-nvim;
+          plugin = lualine-nvim.overrideAttrs(_: {
+            dependencies = [ nvim-gps ];
+          });
         } {
           config = "lua vim.o.tabline = '%!v:lua.require\\'luatab\\'.tabline()'";
           plugin = luatab-nvim;

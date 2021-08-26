@@ -1,3 +1,7 @@
+local gps = require('nvim-gps')
+
+gps.setup({})
+
 require('lualine').setup {
     extensions = {'fugitive', 'nvim-tree', 'quickfix'},
     options = {
@@ -14,7 +18,10 @@ require('lualine').setup {
                 color_removed = '#fb4934'
             }
         },
-        lualine_c = {{'filename', path = 1}},
+        lualine_c = {
+            { 'filename', path = 1 },
+            { gps.get_location, condition = gps.is_available }
+        },
         lualine_x = {
             {
                 'diagnostics',
