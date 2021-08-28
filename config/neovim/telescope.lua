@@ -38,6 +38,7 @@ end
 
 set_keymap('<Leader><Tab>', '<Cmd>Telescope buffers<CR>')
 set_keymap('<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>')
+set_keymap('<Leader>"', '<Cmd>Telescope registers<CR>')
 set_keymap('<Leader>f',
            '<Cmd>lua require("telescope").extensions.fzf_writer.files()<CR>')
 set_keymap('<Leader>o', '<Cmd>Telescope oldfiles<CR>')
