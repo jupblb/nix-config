@@ -371,14 +371,16 @@
       enable              = true;
       forwardAgent        = true;
       matchBlocks         =
-        let key = {
+        let config = {
+          hostname       = "jupblb.ddns.net";
           identitiesOnly = true;
           identityFile   = [ (toString ../config/ssh/id_ed25519) ];
         };
         in {
-          dionysus     = key // { hostname = "jupblb.ddns.net"; port = 1995; };
-          "github.com" = key;
-          hades        = key // { hostname = "jupblb.ddns.net"; port = 1993; };
+          dionysus     = config // { port = 1995; };
+          "github.com" = config // { hostname = "github.com"; };
+          hades        = config // { port = 1993; };
+          pihole       = config // { port = 1998; user = "root"; };
         };
       serverAliveInterval = 30;
     };
