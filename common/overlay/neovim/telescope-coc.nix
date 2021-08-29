@@ -7,6 +7,6 @@ vimUtils.buildVimPlugin rec {
     owner  = "fannheyward";
     repo   = "telescope-coc.nvim";
     rev    = version;
-    sha256 = "15pzikwpzrdwrngyyrqg73am3k9p8m43hdpaxf5f3j65xqr98ivp";
+    sha256 = "0i2g168q57pfbm63idl054sdbflkgd8a754pvk0q9w7w1mzpql2q";
   };
 }
