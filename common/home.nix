@@ -298,14 +298,14 @@
         } {
           config = "luafile ${toString ../config/neovim/lualine.lua}";
           plugin = lualine-nvim.overrideAttrs(_: {
-            dependencies = [ nvim-gps ];
+            dependencies = [ nvim-gps vim-sleuth ];
           });
         } {
           config = "set tabline=%!v:lua.require\\'luatab\\'.tabline()";
           plugin = luatab-nvim;
         } {
           config =
-            "lua require('bqf').setup({ preview = { win_height = 99, wrap = true } })";
+            "lua require('bqf').setup({preview = {win_height = 99, wrap = true}})";
           plugin = nvim-bqf;
         } {
           config = "lua require('colorizer').setup()";
@@ -351,7 +351,7 @@
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
         }
-        git-messenger-vim surround vim-cool vim-sleuth
+        git-messenger-vim surround vim-cool
       ];
       enable        = true;
       extraPackages = with pkgs; [ fd glow ripgrep ];

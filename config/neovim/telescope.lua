@@ -40,13 +40,13 @@ set_keymap('<Leader><Tab>', '<Cmd>Telescope buffers<CR>')
 set_keymap('<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>')
 set_keymap('<Leader>"', '<Cmd>Telescope registers<CR>')
 set_keymap('<Leader>f',
-           '<Cmd>lua require("telescope").extensions.fzf_writer.files()<CR>')
-set_keymap('<Leader>o', '<Cmd>Telescope oldfiles<CR>')
+           '<Cmd>lua require("telescope.builtin").find_files({previewer = false, layout_config = {horizontal = {width = 0.5}}})<CR>')
+set_keymap('<Leader>F', '<Cmd>Telescope find_files<CR>')
+set_keymap('<Leader>o',
+           '<Cmd>lua require("telescope.builtin").oldfiles({previewer = false, layout_config = {horizontal = {width = 0.5}}})<CR>')
+set_keymap('<Leader>O', '<Cmd>Telescope oldfiles<CR>')
 set_keymap('<Leader>m', '<Cmd>Telescope marks<CR>')
-set_keymap('<Leader>s',
-           '<Cmd>lua require("telescope").extensions.fzf_writer.staged_grep()<CR>')
-set_keymap('<Leader>S',
-           '<Cmd>lua require("telescope").extensions.fzf_writer.grep()<CR>')
+set_keymap('<Leader>s', '<Cmd>Telescope live_grep<CR>')
 
 _G.delta_git_commits = function(opts)
     opts = opts or {}
