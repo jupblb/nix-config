@@ -9,6 +9,7 @@ self: super: with super; {
   fish-plugins     = import ./fish/plugins { inherit (super) callPackage; };
   htop             = callPackage ./htop { htop = super.htop; };
   lf               = callPackage ./lf { lf = super.lf; };
+  luaformatter     = callPackage ./luaformatter.nix {};
   pragmata-pro     = callPackage ./pragmata-pro {};
   ripgrep          =
     let rg_12 = builtins.fetchurl

@@ -185,20 +185,22 @@
               vim        = "vint";
             };
             formatters      = {
-              prettier = {
+              lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
+              prettier   = {
                 args    = [
                   "--embedded-language-formatting" "off" "--prose-wrap" "always"
                     "--stdin" "--stdin-filepath" "%filepath"
                 ];
                 command = "${pkgs.nodePackages.prettier}/bin/prettier";
               };
-              shfmt    = {
+              shfmt      = {
                 args    = [ "-i" "2" "-filename" "%filepath" ];
                 command = "${pkgs.shfmt}/bin/shfmt";
               };
             };
             formatFiletypes = {
               fish     = "fish_indent";
+              lua      = "lua-format";
               markdown = "prettier";
               sh       = "shfmt";
             };
