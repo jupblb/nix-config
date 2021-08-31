@@ -350,6 +350,9 @@
           config = "source ${toString ../config/neovim/markdown.vim}";
           plugin = vim-markdown;
         } {
+          config = "source ${toString ../config/neovim/mergetool.vim}";
+          plugin = vim-mergetool;
+        } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
         }

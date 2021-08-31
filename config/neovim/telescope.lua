@@ -45,7 +45,6 @@ set_keymap('<Leader>F', '<Cmd>Telescope find_files<CR>')
 set_keymap('<Leader>o',
            '<Cmd>lua require("telescope.builtin").oldfiles({previewer = false, layout_config = {horizontal = {width = 0.5}}})<CR>')
 set_keymap('<Leader>O', '<Cmd>Telescope oldfiles<CR>')
-set_keymap('<Leader>m', '<Cmd>Telescope marks<CR>')
 set_keymap('<Leader>s', '<Cmd>Telescope live_grep<CR>')
 
 _G.delta_git_commits = function(opts)
