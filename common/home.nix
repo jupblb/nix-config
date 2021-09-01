@@ -168,12 +168,12 @@
         enable   = true;
         settings = rec {
           diagnostic                = {
-            errorSign         = " ";
-            hintSign          = " ";
-            infoSign          = " ";
+            errorSign         = " ";
+            hintSign          = " ";
+            infoSign          = " ";
             virtualText       = true;
             virtualTextPrefix = "  ";
-            warningSign       = " ";
+            warningSign       = " ";
           };
           diagnostic-languageserver = {
             filetypes       = {

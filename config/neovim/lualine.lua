@@ -20,8 +20,8 @@ require('lualine').setup {
             }
         },
         lualine_c = {
-            { 'filename', path = 1 },
-            { gps.get_location, condition = gps.is_available }
+            {'filename', path = 1},
+            {gps.get_location, condition = gps.is_available}
         },
         lualine_x = {
             {
@@ -31,13 +31,16 @@ require('lualine').setup {
                 color_info = '#7c6f64',
                 color_hint = '#98971a',
                 sources = {'coc'},
-                symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
+                symbols = {
+                    error = ' ',
+                    warn = ' ',
+                    info = ' ',
+                    hint = ' '
+                }
             }
         },
         lualine_y = {
-            'SleuthIndicator',
-            'encoding',
-            {'filetype', colored = false}
+            'SleuthIndicator', 'encoding', {'filetype', colored = false}
         },
         lualine_z = {'progress', 'location'}
     }
