@@ -2,6 +2,7 @@ set clipboard+=unnamedplus
 set colorcolumn=80
 set cursorline
 set ignorecase
+set inccommand=nosplit
 set list
 set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set mouse=a
