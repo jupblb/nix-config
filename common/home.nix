@@ -181,7 +181,6 @@
               fish       = "fish";
               lua        = "luacheck";
               sh         = "shellcheck";
-              text       = "languagetool";
               vim        = "vint";
             };
             formatters      = {
@@ -206,11 +205,6 @@
             };
             linters         = {
               hadolint     = { command = "${pkgs.hadolint}/bin/hadolint"; };
-              languagetool = {
-                args     = [ "-adl" "-d" "ARROWS,DASH_RULE,PLUS_MINUS" "-" ];
-                command  = "${pkgs.languagetool}/bin/languagetool-commandline";
-                debounce = 1000;
-              };
               luacheck     = {
                 args    = [
                   "--codes" "--filename" "%filepath" "--formatter" "plain"
