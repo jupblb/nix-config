@@ -25,8 +25,10 @@ telescope.setup {
         layout_strategy = "flex"
     },
     extensions = {
-        fzf_writer = {use_highlighter = true},
-        fzy_native = {override_generic_sorter = true}
+        fzy_native = {
+            override_file_sorter = true,
+            override_generic_sorter = true
+        }
     }
 }
 telescope.load_extension('fzy_native')

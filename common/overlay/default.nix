@@ -19,7 +19,6 @@ self: super: with super; {
     telescope-coc = callPackage ./neovim/telescope-coc.nix {};
     venn-nvim     = callPackage ./neovim/venn.nix {};
     vim-bookmarks = callPackage ./neovim/vim-bookmarks.nix {};
-    vim-gh-line   = callPackage ./neovim/vim-gh-line.nix {};
   };
   zk               = callPackage ./zk.nix {};
 }

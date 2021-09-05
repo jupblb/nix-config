@@ -24,6 +24,7 @@ let g:nvim_tree_icons = {
     \   'symlink_open': "",
     \   }
     \ }
+let g:nvim_tree_lsp_diagnostics = 1
 let g:nvim_tree_show_icons = {
     \ 'git': 1,
     \ 'folders': 1,
