@@ -35,5 +35,4 @@ autocmd BufRead,BufNewFile *.sc set filetype=scala
 
 autocmd FileType go,java,sql set colorcolumn=100
 autocmd FileType json syntax match Comment +\/\/.\+$+
-autocmd FileType markdown set conceallevel=1
 autocmd FileType scss setl iskeyword+=@-@
