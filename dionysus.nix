@@ -62,15 +62,16 @@
   imports = [ ./common/nixos.nix ];
 
   networking = {
-    firewall.allowedTCPPorts = [
+    firewall.allowedTCPPorts  = [
       53 67 80 111 443 2049 4000 4001 4002 8181 22067 22070
     ];
-    firewall.allowedUDPPorts = [
+    firewall.allowedUDPPorts  = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
     ];
-    hostId                   = "ce5e3a09";
-    hostName                 = "dionysus";
-    wireless.enable          = false;
+    interfaces.enp8s0.useDHCP = true;
+    hostId                    = "ce5e3a09";
+    hostName                  = "dionysus";
+    wireless.enable           = false;
   };
 
   programs.adb.enable                 = true;
