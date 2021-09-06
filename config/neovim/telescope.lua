@@ -24,14 +24,19 @@ telescope.setup {
         },
         layout_strategy = "flex"
     },
-    extensions = {
-        fzy_native = {
-            override_file_sorter = true,
-            override_generic_sorter = true
+    pickers = {
+        find_files = {
+            previewer = false,
+            layout_config = {horizontal = {width = 0.5}}
+        },
+        oldfiles = {
+            cwd_only = true,
+            previewer = false,
+            layout_config = {horizontal = {width = 0.5}}
         }
     }
 }
-telescope.load_extension('fzy_native')
+telescope.load_extension('fzf')
 telescope.load_extension('coc')
 
 local set_keymap = function(combo, cmd)
@@ -41,12 +46,8 @@ end
 set_keymap('<Leader><Tab>', '<Cmd>Telescope buffers<CR>')
 set_keymap('<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>')
 set_keymap('<Leader>"', '<Cmd>Telescope registers<CR>')
-set_keymap('<Leader>f',
-           '<Cmd>lua require("telescope.builtin").find_files({previewer = false, layout_config = {horizontal = {width = 0.5}}})<CR>')
-set_keymap('<Leader>F', '<Cmd>Telescope find_files<CR>')
-set_keymap('<Leader>o',
-           '<Cmd>lua require("telescope.builtin").oldfiles({previewer = false, layout_config = {horizontal = {width = 0.5}}})<CR>')
-set_keymap('<Leader>O', '<Cmd>Telescope oldfiles<CR>')
+set_keymap('<Leader>f', '<Cmd>Telescope find_files<CR>')
+set_keymap('<Leader>o', '<Cmd>Telescope oldfiles<CR>')
 set_keymap('<Leader>s', '<Cmd>Telescope live_grep<CR>')
 
 _G.delta_git_commits = function(opts)

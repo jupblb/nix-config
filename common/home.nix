@@ -325,7 +325,7 @@
         } {
           config = "luafile ${toString ../config/neovim/telescope.lua}";
           plugin = telescope-nvim.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [ telescope-fzy-native-nvim ];
+            dependencies = old.dependencies ++ [ telescope-fzf-native-nvim ];
           });
         } {
           config = "source ${toString ../config/neovim/venn.vim}";
