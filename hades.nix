@@ -12,8 +12,6 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ chromium-wayland ];
-
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
@@ -22,6 +20,7 @@
   };
 
   fonts.enableDefaultFonts = true;
+  fonts.fonts              = with pkgs; [ pragmata-pro ];
 
   hardware = {
     bluetooth.enable = true;
@@ -47,7 +46,7 @@
 
     programs = {
       firefox = {
-        enable = true;
+        enable                        = true;
         profiles."jupblb".extraConfig = ''
           user_pref("widget.wayland-dmabuf-vaapi.enabled", true);
           user_pref("gfx.webrender.enabled", true);
@@ -92,24 +91,7 @@
   networking.hostName              = "hades";
   networking.networkmanager.enable = true;
 
-  programs = {
-    chromium = {
-      enable     = true;
-      extensions = [
-        "aeblfdkhhhdcdjpifhhbdiojplfjncoa"
-        "cjpalhdlnbpafiamejdnhcphjbkeiagm"
-        "fihnjjcciajhdojfnbdddfaoknhalnja"
-        "lcbjdhceifofjlpecfpeimnnphbcjgnc"
-      ];
-      extraOpts  = {
-        "DefaultPopupsSetting" = 2;
-        "SpellcheckEnabled"    = true;
-        "SpellcheckLanguage"   = [ "pl" "en-US" ];
-      };
-    };
-
-    steam.enable = true;
-  };
+  programs = { steam.enable = true; };
 
   services = {
     gnome = {
