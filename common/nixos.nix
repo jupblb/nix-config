@@ -2,7 +2,6 @@
 
 {
   boot = {
-    loader.timeout       = 3;
     supportedFilesystems = [ "ntfs" "exfat" ];
     tmpOnTmpfs           = true;
   };
