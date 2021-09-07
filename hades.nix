@@ -45,13 +45,26 @@
     home.stateVersion = "20.03";
 
     programs = {
-      firefox = {
+      firefox         = {
         enable                        = true;
-        profiles."jupblb".extraConfig = ''
-          user_pref("widget.wayland-dmabuf-vaapi.enabled", true);
-          user_pref("gfx.webrender.enabled", true);
-        '';
-        package                       = pkgs.firefox-wayland;
+        profiles."jupblb" = {
+          settings = {
+            "extensions.pocket.enabled"                           = false;
+            "full-screen-api.warning.timeout"                     = 0;
+            "general.smoothScroll"                                = false;
+            "general.warnOnAboutConfig"                           = false;
+            "gfx.webrender.enabled"                               = true;
+            "mousewheel.min_line_scroll_amount"                   = true;
+            "network.protocol-handler.expose.magnet"              = false;
+            "permissions.default.desktop-notification"            = 2;
+            "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+            "widget.wayland-dmabuf-vaapi.enabled"                 = true;
+          };
+          userContent = builtins.readFile ./config/firefox.css;
+        };
+        package                       = pkgs.firefox-wayland.override {
+          cfg.enableGnomeExtensions = true;
+        };
       };
 
       kitty.settings = {
