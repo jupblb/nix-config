@@ -87,12 +87,13 @@
       };
       enable      = true;
       extraConfig = {
-        color.ui          = true;
-        core.mergeoptions = "--no-edit";
-        fetch.prune       = true;
-        pull.rebase       = true;
-        push.default      = "upstream";
-        submodule.recurse = true;
+        color.ui            = true;
+        core.mergeoptions   = "--no-edit";
+        fetch.prune         = true;
+        merge.conflictStyle = "diff3";
+        pull.rebase         = true;
+        push.default        = "upstream";
+        submodule.recurse   = true;
       };
       ignores     = [ ".vim-bookmarks" ];
       signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
