@@ -19,8 +19,8 @@ set virtualedit=all
 set wrap
 
 let g:markdown_fenced_languages = [
-  \    'c', 'cpp', 'css', 'java', 'go', 'javascript', 'js=javascript',
-  \    'json', 'python', 'sh', 'typescript', 'yaml'
+  \    'c', 'cpp', 'css', 'java', 'go', 'haskell', 'javascript',
+  \    'js=javascript', 'json', 'python', 'scala', 'sh', 'typescript', 'yaml'
   \  ]
 
 map q: <Nop>

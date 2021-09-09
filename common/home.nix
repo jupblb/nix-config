@@ -186,12 +186,10 @@
             };
             formatters      = {
               lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
-              prettier   = {
-                args    = [
-                  "--embedded-language-formatting" "off" "--prose-wrap" "always"
-                    "--stdin" "--stdin-filepath" "%filepath"
-                ];
-                command = "${pkgs.nodePackages.prettier}/bin/prettier";
+              pandoc     = {
+                command = "${pkgs.pandoc}/bin/pandoc";
+                args    = let md = "markdown"; in
+                  [ "-f" md "-t" "${md}-simple_tables" "--columns=80" "-" ];
               };
               shfmt      = {
                 args    = [ "-i" "2" "-filename" "%filepath" ];
@@ -199,10 +197,10 @@
               };
             };
             formatFiletypes = {
-              fish     = "fish_indent";
-              lua      = "lua-format";
-              markdown = "prettier";
-              sh       = "shfmt";
+              fish   = "fish_indent";
+              lua    = "lua-format";
+              pandoc = "pandoc";
+              sh     = "shfmt";
             };
             linters         = {
               hadolint     = { command = "${pkgs.hadolint}/bin/hadolint"; };
@@ -232,18 +230,9 @@
             zk   = {
               command      = "zk";
               args         = [ "lsp" ];
-              filetypes    = [ "markdown" ];
+              filetypes    = [ "pandoc" ];
               trace.server = "messages";
             };
-          };
-          markdownlint              = {
-            config   = {
-              blanks-around-headers = false;
-              line-length           = { code_blocks = false; tables = false; };
-              no-bare-urls          = false;
-              no-multiple-blanks    = false;
-            };
-            onChange = false;
           };
           metals                    = {
             gradleScript                      = "${pkgs.gradle}/bin/gradle";
@@ -257,12 +246,9 @@
           };
           npm.binPath               = "${pkgs.nodePackages.npm}/bin/npm";
           preferences               = {
-            formatOnSaveFiletypes = [ "fish" "lua" "go" "scala" "markdown" ];
+            formatOnSaveFiletypes = [ "fish" "lua" "go" "pandoc" "scala" ];
           };
-          suggest                   = {
-            enablePreselect         = true;
-            invalidInsertCharacters = [];
-          };
+          suggest                   = { invalidInsertCharacters = []; };
           tabnine                   = {
             binary_path       = "${pkgs.tabnine}/bin/TabNine";
             disable_filetypes = [ "go" "scala" ];
@@ -279,7 +265,7 @@
           plugin = coc-nvim.overrideAttrs(_: {
             dependencies = [
               coc-css coc-diagnostic coc-eslint coc-go coc-html coc-json
-                coc-markdownlint coc-metals coc-tabnine coc-tsserver
+                coc-metals coc-tabnine coc-tsserver
               telescope-coc
             ];
           });
@@ -341,11 +327,11 @@
           config = "source ${toString ../config/neovim/grepper.vim}";
           plugin = vim-grepper;
         } {
-          config = "source ${toString ../config/neovim/markdown.vim}";
-          plugin = vim-markdown;
-        } {
           config = "source ${toString ../config/neovim/mergetool.vim}";
           plugin = vim-mergetool;
+        } {
+          config = "source ${toString ../config/neovim/pandoc.vim}";
+          plugin = vim-pandoc-syntax;
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
