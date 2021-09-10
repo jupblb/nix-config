@@ -1,8 +1,12 @@
-{ buildGoModule, fetchFromGitHub, icu }:
+{ buildGoModule, fetchFromGitHub, fetchurl, icu }:
 
 buildGoModule rec {
   buildInputs  = [ icu ];
   doCheck      = false;
+  patches      = [ (fetchurl {
+    url    = "https://github.com/mickael-menu/zk/commit/162bad446902332bb0f39c8d3911c3bc976a5d21.diff";
+    sha256 = "1j3bnpw66w8kxi75zd399yvlz1hdcrj2faqxjy4kd3dkr340v2yg";
+  }) ];
   pname        = "zk";
   preBuild     = ''buildFlagsArray+=("-tags" "fts5 icu")'';
   src          = fetchFromGitHub {

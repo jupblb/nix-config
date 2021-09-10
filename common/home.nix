@@ -228,10 +228,9 @@
               filetypes          = [ "sh" ];
             };
             zk   = {
-              command      = "zk";
-              args         = [ "lsp" ];
-              filetypes    = [ "pandoc" ];
-              trace.server = "messages";
+              command   = "zk";
+              args      = [ "lsp" ];
+              filetypes = [ "markdown" "pandoc" ];
             };
           };
           metals                    = {
