@@ -46,9 +46,9 @@
 
     programs = {
       firefox         = {
-        enable                        = true;
+        enable            = true;
         profiles."jupblb" = {
-          settings = {
+          settings    = {
             "extensions.pocket.enabled"                           = false;
             "full-screen-api.warning.timeout"                     = 0;
             "general.smoothScroll"                                = false;
@@ -62,7 +62,7 @@
           };
           userContent = builtins.readFile ./config/firefox.css;
         };
-        package                       = pkgs.firefox-wayland.override {
+        package           = pkgs.firefox-wayland.override {
           cfg.enableGnomeExtensions = true;
         };
       };
