@@ -62,15 +62,19 @@
   imports = [ ./common/nixos.nix ];
 
   networking = {
+    defaultGateway            = "192.168.1.1";
     firewall.allowedTCPPorts  = [
       53 67 80 111 443 2049 4000 4001 4002 8181 22067 22070
     ];
     firewall.allowedUDPPorts  = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
     ];
-    interfaces.enp8s0.useDHCP = true;
+    interfaces.enp8s0.ipv4    = {
+      addresses = [ { address = "192.168.1.4"; prefixLength = 24; } ];
+    };
     hostId                    = "ce5e3a09";
     hostName                  = "dionysus";
+    nameservers               = [ "1.1.1.1" "8.8.8.8" ];
     wireless.enable           = false;
   };
 
@@ -78,6 +82,18 @@
   programs.gnupg.agent.pinentryFlavor = "curses";
 
   services = {
+    dnsmasq = {
+      enable              = true;
+      extraConfig         =
+        let git = "https://github.com/notracking/hosts-blocklists/raw/master";
+        in ''
+          ${builtins.readFile ./config/dnsmasq.conf}
+          conf-file=${builtins.fetchurl "${git}/dnsmasq/dnsmasq.blacklist.txt"}
+        '';
+      resolveLocalQueries = false;
+      servers             = [ "1.1.1.1" "8.8.8.8" ];
+    };
+
     nginx = {
       enable                 = true;
       virtualHosts.localhost = {
@@ -127,7 +143,7 @@
       devices       = [
         { device = "/dev/disk/by-id/ata-Lexar_480GB_SSD_K46106J005201"; }
         { device = "/dev/disk/by-id/ata-Lexar_480GB_SSD_K46106J005198"; }
-        { device = "/dev/disk/by-id/ata-WDC_WD10EALX-009BA0_WD-WCATR9032259"; }
+        { device = "/dev/disk/by-id/ata-ST8000VN0022-2EL112_ZA1DT3QD"; }
         { device = "/dev/nvme0n1"; }
       ];
       enable        = true;
@@ -235,4 +251,3 @@
 
   users.users.jupblb.extraGroups = [ "adbusers" ];
 }
-
