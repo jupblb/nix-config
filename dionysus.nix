@@ -54,8 +54,8 @@
 
   home-manager.users.jupblb = {
     programs = {
-      mercurial.enable = lib.mkForce false;
-      tmux.enable      = lib.mkForce false;
+      mercurial.enable   = lib.mkForce false;
+      tmux.enable        = lib.mkForce false;
     };
   };
 
@@ -189,8 +189,6 @@
         pools         = [ "" ];
       };
     };
-
-    tautulli.enable = true;
 
     transmission = {
       enable       = true;
