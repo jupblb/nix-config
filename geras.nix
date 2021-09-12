@@ -1,7 +1,17 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.tmpOnTmpfs = lib.mkForce false;
+  boot = {
+    loader     = {
+      generic-extlinux-compatible.enable = true;
+      grub.enable                        = false;
+    };
+    tmpOnTmpfs = lib.mkForce false;
+  };
+
+  fileSystems = {
+    "/" = { device = "/dev/disk/by-label/NIXOS_SD"; fsType = "ext4"; };
+  };
 
   imports = [ ./common/nixos.nix ];
 
@@ -9,8 +19,11 @@
 
   networking = {
     hostName        = "geras";
+    interfaces.eth0 = { useDHCP = true; };
     wireless.enable = false;
   };
+
+  nix.maxJobs = 2;
 
   programs.gnupg.agent.pinentryFlavor = "curses";
 
