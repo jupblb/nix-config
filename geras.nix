@@ -9,6 +9,8 @@
     tmpOnTmpfs = lib.mkForce false;
   };
 
+  i18n.supportedLocales = lib.mkForce [ "en_US.UTF-8/UTF-8" ];
+
   fileSystems = {
     "/" = { device = "/dev/disk/by-label/NIXOS_SD"; fsType = "ext4"; };
   };
