@@ -275,7 +275,7 @@
             dependencies = [
               coc-css coc-diagnostic coc-eslint coc-go coc-html coc-json
                 coc-markdownlint coc-metals coc-tabnine coc-tsserver
-              telescope-coc
+              telescope-coc-nvim
             ];
           });
         } {
