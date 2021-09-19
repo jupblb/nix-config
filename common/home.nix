@@ -36,6 +36,15 @@
       enable = true;
     };
 
+    emacs = {
+      enable        = true;
+      extraConfig   = ''(load "${builtins.toString ../config/default.el}")'';
+      extraPackages = epkgs: with epkgs; [
+        evil evil-collection gruvbox-theme org use-package
+      ];
+      package       = pkgs.emacs-nox;
+    };
+
     exa.enable = true;
 
     fish = {
@@ -187,11 +196,11 @@
             formatters      = rec {
               lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
               pandoc     = {
-                command = "${pkgs.pandoc}/bin/pandoc";
                 args    = [
                   "-f" "markdown+lists_without_preceding_blankline" "-t"
                     "gfm+raw_tex" "--columns=80" "-"
                 ];
+                command = "${pkgs.pandoc}/bin/pandoc";
               };
               shfmt      = {
                 args    = [ "-i" "2" "-filename" "%filepath" ];
