@@ -2,19 +2,7 @@
 
 {
   home = {
-    file             = {
-      ".ammonite/predef.sc".source                     = pkgs.ammonite.predef;
-      "${config.xdg.configHome}/zk/config.toml".source =
-        let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
-          format = { markdown.link-drop-extension = false; };
-          lsp    = { diagnostics = { wiki-title = "info"; }; };
-          note   = { id-charset = "hex"; id-length = 8; };
-          tool   = {
-            editor      = "nvim";
-            fzf-preview = "${pkgs.glow}/bin/glow --style light {-1}";
-          };
-        };
-    };
+    file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs; [ ammonite git-crypt gore ripgrep zk ];
     sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
     username         = "jupblb";
@@ -432,5 +420,19 @@
     };
   };
 
-  xdg.enable = true;
+  xdg = {
+    configFile = {
+      "zk/config.toml".source =
+        let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
+          format = { markdown.link-drop-extension = false; };
+          lsp    = { diagnostics = { wiki-title = "info"; }; };
+          note   = { id-charset = "hex"; id-length = 8; };
+          tool   = {
+            editor      = "nvim";
+            fzf-preview = "${pkgs.glow}/bin/glow --style light {-1}";
+          };
+        };
+    };
+    enable     = true;
+  };
 }
