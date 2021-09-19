@@ -4,12 +4,20 @@
   home = {
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs; [ ammonite git-crypt gore ripgrep zk ];
-    sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
+    sessionPath      = [ "${config.xdg.configHome}/emacs/bin" ];
+    sessionVariables = {
+      DOOMDIR      = ../config/doom;
+      DOOMLOCALDIR = "${config.xdg.dataHome}/doom";
+      EDITOR       = "nvim";
+      GOROOT       = "${pkgs.go}/share/go";
+    };
     username         = "jupblb";
   };
 
   nixpkgs.config.allowUnfreePredicate = pkg: (lib.getName pkg) == "tabnine";
   nixpkgs.overlays                    = [ (import ./overlay) ];
+
+  fonts.fontconfig.enable = true;
 
   programs = {
     bash = {
@@ -26,10 +34,13 @@
 
     emacs = {
       enable        = true;
-      extraConfig   = ''(load "${builtins.toString ../config/default.el}")'';
-      extraPackages = epkgs: with epkgs; [
-        evil evil-collection gruvbox-theme org use-package
-      ];
+      extraPackages =
+        let
+          aspell'  = pkgs.aspellWithDicts(dicts: with dicts; [
+            en en-computers en-science pl
+          ]);
+          packages = with pkgs; [ fd fontconfig languagetool ripgrep sqlite ];
+        in epkgs: [ aspell' ] ++ packages;
       package       = pkgs.emacs-nox;
     };
 
@@ -422,6 +433,13 @@
 
   xdg = {
     configFile = {
+      "emacs"                 = {
+        onChange = "${config.xdg.configHome}/emacs/bin/doom install";
+        source   = builtins.fetchGit {
+          ref = "develop";
+          url = https://github.com/hlissner/doom-emacs.git;
+        };
+      };
       "zk/config.toml".source =
         let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
           format = { markdown.link-drop-extension = false; };
