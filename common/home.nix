@@ -229,6 +229,7 @@
           };
           eslint                    = { packageManager = npm.binPath; };
           go.goplsPath              = "${pkgs.gopls}/bin/gopls";
+          hover.floatConfig         = { maxWidth = 90; };
           languageserver            = {
             bash = {
               args               = [ "start" ];
