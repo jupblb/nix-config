@@ -244,17 +244,6 @@
               filetypes = [ "markdown" ];
             };
           };
-          markdownlint              = {
-            config   = {
-              blanks-around-headers = false;
-              line-length           = { code_blocks = false; tables = false; };
-              list-marker-space     = false;
-              no-bare-urls          = false;
-              no-multiple-blanks    = false;
-              ul-indent.indent      = 4;
-            };
-            onChange = false;
-          };
           metals                    = {
             gradleScript                      = "${pkgs.gradle}/bin/gradle";
             javaHome                          = "${pkgs.openjdk11}";
@@ -283,7 +272,7 @@
           plugin = coc-nvim.overrideAttrs(_: {
             dependencies = [
               coc-css coc-diagnostic coc-eslint coc-go coc-html coc-json
-                coc-markdownlint coc-metals coc-tabnine coc-tsserver
+                coc-metals coc-tabnine coc-tsserver
               telescope-coc-nvim
             ];
           });
