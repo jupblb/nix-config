@@ -196,7 +196,7 @@
               lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
               pandoc     = {
                 args    = [
-                  "-f" "markdown+lists_without_preceding_blankline" "-t"
+                  "-f" "markdown+lists_without_preceding_blankline" "-s" "-t"
                     "gfm+raw_tex" "--columns=80" "-"
                 ];
                 command = "${pkgs.pandoc}/bin/pandoc";
