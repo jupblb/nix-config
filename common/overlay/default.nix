@@ -5,6 +5,9 @@ self: super: with super; {
       sha256 = "1kir3j5z3drkihx1hysdcmjaiacz840qpwbz70v4k62jr95mz3jp";
     };
   };
+  emanote      =
+    let url = "https://github.com/srid/emanote/archive/master.tar.gz";
+    in (import (builtins.fetchTarball url)).default;
   fish-plugins = import ./fish/plugins { inherit (super) callPackage; };
   htop         = callPackage ./htop { htop = super.htop; };
   lf           = callPackage ./lf { lf = super.lf; };

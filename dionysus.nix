@@ -53,7 +53,8 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   home-manager.users.jupblb = {
-    programs = { mercurial.enable = lib.mkForce false; };
+    home.packages = with pkgs; [ emanote ];
+    programs      = { mercurial.enable = lib.mkForce false; };
   };
 
   imports = [ ./common/nixos.nix ];
