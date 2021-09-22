@@ -195,6 +195,11 @@
             formatters      = rec {
               lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
               pandoc     = {
+                args    = 
+                  [ "-f" "markdown" "-s" "-t" "markdown" "--columns=80" "-" ];
+                command = "${pkgs.pandoc}/bin/pandoc";
+              };
+              pandoc-md  = {
                 args    = [
                   "-f" "markdown+lists_without_preceding_blankline" "-s" "-t"
                     "gfm+raw_tex" "--columns=80" "-"
@@ -209,7 +214,8 @@
             formatFiletypes = {
               fish     = "fish_indent";
               lua      = "lua-format";
-              markdown = "pandoc";
+              markdown = "pandoc-md";
+              pandoc   = "pandoc";
               sh       = "shfmt";
             };
             linters         = {
@@ -339,6 +345,9 @@
         } {
           config = "source ${toString ../config/neovim/mergetool.vim}";
           plugin = vim-mergetool;
+        } {
+          config = "source ${toString ../config/neovim/pandoc.vim}";
+          plugin = vim-pandoc-syntax;
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
