@@ -17,8 +17,6 @@
   nixpkgs.config.allowUnfreePredicate = pkg: (lib.getName pkg) == "tabnine";
   nixpkgs.overlays                    = [ (import ./overlay) ];
 
-  fonts.fontconfig.enable = true;
-
   programs = {
     bash = {
       enable         = true;
