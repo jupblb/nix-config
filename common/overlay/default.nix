@@ -9,7 +9,6 @@ self: super: with super; {
     let url = "https://github.com/srid/emanote/archive/master.tar.gz";
     in (import (builtins.fetchTarball url)).default;
   fish-plugins = import ./fish/plugins { inherit (super) callPackage; };
-  htop         = callPackage ./htop { htop = super.htop; };
   lf           = callPackage ./lf { lf = super.lf; };
   pragmata-pro = callPackage ./pragmata-pro {};
   ripgrep               =
