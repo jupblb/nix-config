@@ -50,7 +50,7 @@
         fish_greeting =
           "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
         lfcd          = "${builtins.readFile pkgs.lf.lfcd-fish} lfcd $argv";
-        ls            = builtins.readFile ../config/fish/exa.fish;
+        ls            = builtins.readFile ../config/script/exa.fish;
       };
       plugins              = lib.mapAttrsToList
         (name: pkg: { name = name; src = pkg; }) pkgs.fish-plugins;

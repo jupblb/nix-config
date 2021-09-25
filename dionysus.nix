@@ -53,8 +53,7 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   home-manager.users.jupblb = {
-    home.packages = with pkgs; [ emanote ];
-    programs      = { mercurial.enable = lib.mkForce false; };
+    programs = { mercurial.enable = lib.mkForce false; };
   };
 
   imports = [ ./common/nixos.nix ];
@@ -62,7 +61,7 @@
   networking = {
     defaultGateway            = "192.168.1.1";
     firewall.allowedTCPPorts  = [
-      53 67 80 111 443 2049 4000 4001 4002 8181 22067 22070
+      53 67 80 111 443 2049 2267 4000 4001 4002 8181 22067 22070
     ];
     firewall.allowedUDPPorts  = [
       53 67 80 111 443 2049 4000 4001 4002 22067 22070
@@ -93,26 +92,38 @@
     };
 
     nginx = {
-      enable                 = true;
-      virtualHosts.localhost = {
-        locations = {
-          "/nfs/"         = {
-            alias       = "/nfs/";
-            extraConfig = "autoindex on;";
+      enable       = true;
+      virtualHosts = {
+        home = {
+          locations = {
+            "/nfs/"         = {
+              alias       = "/nfs/";
+              extraConfig = "autoindex on;";
+            };
+            "/emanote/"     = {
+              alias       = "/srv/emanote/";
+              extraConfig = "autoindex on;";
+              index       = "index.html";
+            };
+            "/plex" = {
+              proxyPass = "http://127.0.0.1/web";
+            };
+            "/syncthing/"   = {
+              extraConfig = "proxy_set_header Host localhost;";
+              proxyPass   = "http://127.0.0.1:8384/";
+            };
+            "/transmission" = {
+              proxyPass = "http://127.0.0.1:9091/transmission";
+            };
+            "/web/" = {
+              proxyPass = "http://127.0.0.1:32400";
+            };
           };
-          "/plex" = {
-            proxyPass = "http://127.0.0.1/web";
-          };
-          "/syncthing/"   = {
-            extraConfig = "proxy_set_header Host localhost;";
-            proxyPass   = "http://127.0.0.1:8384/";
-          };
-          "/transmission" = {
-            proxyPass = "http://127.0.0.1:9091/transmission";
-          };
-          "/web/" = {
-            proxyPass = "http://127.0.0.1:32400";
-          };
+        };
+        swps = {
+          extraConfig = "autoindex on;";
+          listen      = [ { addr = "0.0.0.0"; port = 2267; } ];
+          root        = "/srv/emanote-swps";
         };
       };
     };
@@ -225,13 +236,7 @@
   };
 
   systemd.services = {
-    auto-suspend = {
-      description   = "Auto suspend";
-      script        = "rtcwake -m mem --date 9:00";
-      serviceConfig = { Type = "oneshot"; User = "root"; };
-      startAt       = "*-*-* 00:00:00";
-    };
-    checkip      = {
+    checkip = {
       after         = [ "network.target" ];
       description   = "Public IP checker";
       script        = with pkgs; ''
@@ -244,6 +249,14 @@
         Type          = "oneshot";
         User          = "jupblb";
       };
+      startAt       = "*:0/15";
+    };
+    emanote = {
+      after         = [ "network.target" ];
+      description   = "Emanote";
+      path          = with pkgs; [ emanote findutils gnused ];
+      script        = builtins.readFile ./config/script/emanote.sh;
+      serviceConfig = { Type = "oneshot"; User = "root"; };
       startAt       = "*:0/15";
     };
   };
