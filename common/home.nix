@@ -421,14 +421,16 @@
 
   xdg = {
     configFile = {
-      "emacs"                 = {
-        onChange = "${config.xdg.configHome}/emacs/bin/doom install";
+      "emacs"                          = {
+        onChange = "${config.xdg.configHome}/emacs/bin/doom install -y";
         source   = builtins.fetchGit {
           ref = "develop";
           url = https://github.com/hlissner/doom-emacs.git;
         };
       };
-      "zk/config.toml".source =
+      "nvim/spell/pl.utf-8.spl".source = builtins.fetchurl
+        "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
+      "zk/config.toml".source          =
         let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
           format = { markdown.link-drop-extension = false; };
           lsp    = { diagnostics = { wiki-title = "info"; }; };
