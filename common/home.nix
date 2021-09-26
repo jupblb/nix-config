@@ -422,7 +422,7 @@
   xdg = {
     configFile = {
       "emacs"                          = {
-        onChange = "${config.xdg.configHome}/emacs/bin/doom install -y";
+        onChange = "${config.xdg.configHome}/emacs/bin/doom -y install";
         source   = builtins.fetchGit {
           ref = "develop";
           url = https://github.com/hlissner/doom-emacs.git;
