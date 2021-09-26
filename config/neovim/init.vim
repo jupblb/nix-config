@@ -33,6 +33,7 @@ autocmd BufRead,BufNewFile *.fish set filetype=fish
 autocmd BufRead,BufNewFile *.nix set filetype=nix
 autocmd BufRead,BufNewFile *.sc set filetype=scala
 
+autocmd FileType gitcommit set colorcolumn=72
 autocmd FileType go,java,sql set colorcolumn=100
 autocmd FileType json syntax match Comment +\/\/.\+$+
 autocmd FileType scss setl iskeyword+=@-@
