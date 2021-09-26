@@ -434,7 +434,11 @@
         let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
           format = { markdown.link-drop-extension = false; };
           lsp    = { diagnostics = { wiki-title = "info"; }; };
-          note   = { id-charset = "hex"; id-length = 8; };
+          note   = {
+            id-charset = "hex";
+            id-length  = 8;
+            template   = builtins.toString ../config/note-template.md;
+          };
           tool   = {
             editor      = "nvim";
             fzf-preview = "${pkgs.glow}/bin/glow --style light {-1}";
