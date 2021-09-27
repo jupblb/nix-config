@@ -432,6 +432,10 @@
         "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
       "zk/config.toml".source          =
         let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
+          alias  = {
+            edit = "zk edit --interactive $@";
+            list = "zk list --interactive $@";
+          };
           format = { markdown.link-drop-extension = false; };
           lsp    = { diagnostics = { wiki-title = "info"; }; };
           note   = {
