@@ -37,7 +37,7 @@
           aspell'  = pkgs.aspellWithDicts(dicts: with dicts; [
             en en-computers en-science pl
           ]);
-          packages = with pkgs; [ fd fontconfig languagetool ripgrep sqlite ];
+          packages = with pkgs; [ fd fontconfig ripgrep sqlite ];
         in epkgs: [ aspell' ] ++ packages;
       package       = pkgs.emacs-nox;
     };
