@@ -433,8 +433,9 @@
       "zk/config.toml".source          =
         let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
           alias  = {
-            edit = "zk edit --interactive $@";
-            list = "zk list --interactive $@";
+            edit  = "zk edit --interactive $@";
+            list  = "zk list --interactive $@";
+            newpl = "zk new --extra=lang=pl $@";
           };
           format = { markdown.link-drop-extension = false; };
           lsp    = { diagnostics = { wiki-title = "info"; }; };
