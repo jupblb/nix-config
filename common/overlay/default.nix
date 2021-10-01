@@ -11,10 +11,6 @@ self: super: with super; {
   fish-plugins = import ./fish/plugins { inherit (super) callPackage; };
   lf           = callPackage ./lf { lf = super.lf; };
   pragmata-pro = callPackage ./pragmata-pro {};
-  ripgrep               =
-    let rg_12 = builtins.fetchurl
-      https://raw.githubusercontent.com/NixOS/nixpkgs/85f96822a05180cbfd5195e7034615b427f78f01/pkgs/tools/text/ripgrep/default.nix;
-    in callPackage rg_12 { inherit (darwin.apple_sdk.frameworks) Security; };
   vimPlugins   = vimPlugins // {
     luatab-nvim = callPackage ./neovim/luatab.nix {};
     venn-nvim   = callPackage ./neovim/venn.nix {};
