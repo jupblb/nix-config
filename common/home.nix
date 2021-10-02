@@ -320,7 +320,7 @@
             dependencies = old.dependencies ++ [ telescope-fzf-native-nvim ];
           });
         } {
-          config = "source ${toString ../config/neovim/venn.vim}";
+          config = "vmap <C-v><C-v> :VBox<CR>";
           plugin = venn-nvim;
         } {
           config = "source ${toString ../config/neovim/bookmark.vim}";
