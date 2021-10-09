@@ -180,11 +180,14 @@
             formatters      = rec {
               lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
               pandoc     = {
-                args    = [
-                  "-f" "markdown" "-s" "-t" "markdown-simple_tables"
-                    "--columns=80" "-"
-                ];
-                command = "${pkgs.pandoc}/bin/pandoc";
+                command = pkgs.writeShellScript "pandoc-obsidian" ''
+                  ${pkgs.pandoc}/bin/pandoc -f markdown -s \
+                    -t markdown-simple_tables --columns=80 "-" |
+                    ${pkgs.gnused}/bin/sed -E \
+                    "s/((\\\)(\[)){2}(.+)(\|.+)?((\\\)(\])){2}/\[\[\4\5\]\]/g" |
+                    ${pkgs.gnused}/bin/sed -E \
+                    "s/\\[\\[(.+)(\\\)\|(.+)\\]\\]/\\[\\[\1|\3\\]\\]/g"
+                '';
               };
               shfmt      = {
                 args    = [ "-i" "2" "-filename" "%filepath" ];
@@ -412,19 +415,19 @@
         "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
       "zk/config.toml".source          =
         let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
-          alias  = {
+          alias           = {
             edit  = "zk edit --interactive $@";
             list  = "zk list --interactive $@";
             newpl = "zk new --extra=lang=pl $@";
           };
-          format = { markdown.link-drop-extension = false; };
-          lsp    = { diagnostics = { wiki-title = "info"; }; };
-          note   = {
+          format.markdown = { link-format = "wiki"; };
+          lsp             = { diagnostics = { wiki-title = "info"; }; };
+          note            = {
             id-charset = "hex";
             id-length  = 8;
             template   = builtins.toString ../config/note-template.md;
           };
-          tool   = {
+          tool            = {
             editor      = "nvim";
             fzf-preview = "${pkgs.glow}/bin/glow --style light {-1}";
           };
