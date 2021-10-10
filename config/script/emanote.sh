@@ -25,9 +25,12 @@ cp -r /backup/jupblb/Documents/notes $TMP_DIR
 
 # Delete anything above 10MB in size
 find $TMP_DIR -type f -size +10M -delete
-# Fix links by translating them to the wiki format
+# Fix links by translating them to the obsidian format
 find $TMP_DIR -type f \
   -exec sed -i -E "s/\[([^\(]+)\]\([^\)]*([a-z0-9]{8})\.md\)/\[\[\2\|\1\]\]/g" {} \;
+# Fix images by translating them to the obsidian format
+find $TMP_DIR -type f \
+  -exec sed -i -E "s/!\[[^]]*\]\((.+\/)*([^]]+)\)/!\[\[\2\]\]/g" {} \;
 
 dump_notes "$TMP_DIR" "/srv/emanote"
 dump_notes "$TMP_DIR/psychology" "/srv/emanote-swps"

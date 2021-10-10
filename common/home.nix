@@ -184,9 +184,11 @@
                   ${pkgs.pandoc}/bin/pandoc -f markdown -s \
                     -t markdown-simple_tables --columns=80 "-" |
                     ${pkgs.gnused}/bin/sed -E \
-                    "s/((\\\)(\[)){2}(.+)(\|.+)?((\\\)(\])){2}/\[\[\4\5\]\]/g" |
+                    "s/((\\\)(\[)){2}([^]]+)((\\\)(\])){2}/\[\[\4\]\]/g" |
                     ${pkgs.gnused}/bin/sed -E \
-                    "s/\\[\\[(.+)(\\\)\|(.+)\\]\\]/\\[\\[\1|\3\\]\\]/g"
+                    "s/\\[\\[([^]]+)(\\\)\|([^]]+)\\]\\]/\\[\\[\1|\3\\]\\]/g" |
+                    ${pkgs.gnused}/bin/sed -E \
+                    "s/(\\[\\[[^]]+\\]\\])(\\\)#/\1#/g"
                 '';
               };
               shfmt      = {
@@ -420,7 +422,7 @@
             list  = "zk list --interactive $@";
             newpl = "zk new --extra=lang=pl $@";
           };
-          format.markdown = { link-format = "wiki"; };
+          format.markdown = { link-format = "[[{{filename}}|{{title}}]]"; };
           lsp             = { diagnostics = { wiki-title = "info"; }; };
           note            = {
             id-charset = "hex";
