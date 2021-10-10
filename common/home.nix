@@ -4,7 +4,6 @@
   home = {
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs; [ ammonite git-crypt gore ripgrep zk ];
-    sessionPath      = [ "${config.xdg.configHome}/emacs/bin" ];
     sessionVariables = {
       DOOMDIR      = ../config/doom;
       DOOMLOCALDIR = "${config.xdg.dataHome}/doom";
@@ -28,18 +27,6 @@
     bat = {
       config = { theme = "gruvbox-light"; };
       enable = true;
-    };
-
-    emacs = {
-      enable        = true;
-      extraPackages =
-        let
-          aspell'  = pkgs.aspellWithDicts(dicts: with dicts; [
-            en en-computers en-science pl
-          ]);
-          packages = with pkgs; [ fd fontconfig ripgrep sqlite ];
-        in epkgs: [ aspell' ] ++ packages;
-      package       = pkgs.emacs-nox;
     };
 
     exa.enable = true;
@@ -421,13 +408,6 @@
 
   xdg = {
     configFile = {
-      "emacs"                          = {
-        onChange = "${config.xdg.configHome}/emacs/bin/doom -y install";
-        source   = builtins.fetchGit {
-          ref = "develop";
-          url = https://github.com/hlissner/doom-emacs.git;
-        };
-      };
       "nvim/spell/pl.utf-8.spl".source = builtins.fetchurl
         "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
       "zk/config.toml".source          =
