@@ -13,7 +13,7 @@
     NIXPKGS_ALLOW_UNFREE = "1";
   };
   environment.systemPackages   = with pkgs; [
-    file git gitAndTools.git-crypt unzip
+    file git gitAndTools.git-crypt kitty.terminfo unzip
   ];
 
   hardware = {
