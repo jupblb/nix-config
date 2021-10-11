@@ -7,7 +7,7 @@ dump_notes() {
   SRV_DIR=$2
 
   mkdir -p "$SRV_DIR-tmp"
-  cd "$SRC_DIR" && emanote gen "$SRV_DIR-tmp"
+  emanote -L "$SRC_DIR" gen "$SRV_DIR-tmp"
   rm -rf "$SRV_DIR"
   mv "$SRV_DIR-tmp" "$SRV_DIR"
 }
