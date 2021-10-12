@@ -2,7 +2,6 @@ let g:nvim_tree_git_hl = 1
 let g:nvim_tree_gitignore = 1
 let g:nvim_tree_group_empty = 1
 let g:nvim_tree_icon_padding = '  '
-" icons to restore:  
 let g:nvim_tree_icons = {
     \ 'default': '',
     \ 'symlink': '',
@@ -16,8 +15,8 @@ let g:nvim_tree_icons = {
     \   'ignored': ""
     \   },
     \ 'folder': {
-    \   'default': "",
-    \   'open': "",
+    \   'default': "",
+    \   'open': "",
     \   'empty': "",
     \   'empty_open': "",
     \   'symlink': "",
