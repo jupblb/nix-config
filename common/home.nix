@@ -181,7 +181,9 @@
               lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
               pandoc     = {
                 command = pkgs.writeShellScript "pandoc-obsidian" ''
-                  ${pkgs.pandoc}/bin/pandoc -f markdown -s \
+                  ${pkgs.gnused}/bin/sed -E \
+                    "s/\[\[\[(.+)\]\((.+)\)/\[\1\]\(\2\)/g" |
+                    ${pkgs.pandoc}/bin/pandoc -f markdown -s \
                     -t markdown-simple_tables --columns=80 "-" |
                     ${pkgs.gnused}/bin/sed -E \
                     "s/((\\\)(\[)){2}([^]]+)((\\\)(\])){2}/\[\[\4\]\]/g" |
@@ -418,12 +420,10 @@
       "zk/config.toml".source          =
         let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
           alias           = {
-            edit  = "zk edit --interactive $@";
-            list  = "zk list --interactive $@";
-            newpl = "zk new --extra=lang=pl $@";
+            edit = "zk edit --interactive $@";
+            list = "zk list --interactive $@";
           };
-          format.markdown = { link-format = "[[{{filename}}|{{title}}]]"; };
-          lsp             = { diagnostics = { wiki-title = "info"; }; };
+          format.markdown = { link-drop-extension = false; };
           note            = {
             id-charset = "hex";
             id-length  = 8;
