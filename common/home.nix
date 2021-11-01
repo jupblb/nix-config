@@ -155,7 +155,7 @@
     neovim = {
       coc           = {
         enable   = true;
-        settings = rec {
+        settings = {
           diagnostic                = {
             errorSign         = " ";
             hintSign          = " ";
@@ -166,11 +166,10 @@
           };
           diagnostic-languageserver = {
             filetypes       = {
-              dockerfile = "hadolint";
-              fish       = "fish";
-              lua        = "luacheck";
-              sh         = "shellcheck";
-              vim        = "vint";
+              fish = "fish";
+              lua  = "luacheck";
+              sh   = "shellcheck";
+              vim  = "vint";
             };
             formatters      = rec {
               lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
@@ -200,21 +199,19 @@
               sh       = "shfmt";
             };
             linters         = {
-              hadolint     = { command = "${pkgs.hadolint}/bin/hadolint"; };
-              luacheck     = {
+              luacheck   = {
                 args    = [
                   "--codes" "--filename" "%filepath" "--formatter" "plain"
                     "--globals" "vim" "--ranges" "-"
                 ];
                 command = "${pkgs.luaPackages.luacheck}/bin/luacheck";
               };
-              nix-linter   = { command = "${pkgs.nix-linter}/bin/nix-linter"; };
-              shellcheck   = { command = "${pkgs.shellcheck}/bin/shellcheck"; };
-              vint         = { command = "${pkgs.vim-vint}/bin/vim-vint"; };
+              nix-linter = { command = "${pkgs.nix-linter}/bin/nix-linter"; };
+              shellcheck = { command = "${pkgs.shellcheck}/bin/shellcheck"; };
+              vint       = { command = "${pkgs.vim-vint}/bin/vim-vint"; };
             };
             mergeConfig     = true;
           };
-          eslint                    = { packageManager = npm.binPath; };
           go.goplsPath              = "${pkgs.gopls}/bin/gopls";
           hover.floatConfig         = { maxWidth = 90; };
           languageserver            = {
@@ -224,6 +221,10 @@
                 "${nodePackages.bash-language-server}/bin/bash-language-server";
               disableDiagnostics = true;
               filetypes          = [ "sh" ];
+            };
+            nix  = {
+              command   = "${pkgs.rnix-lsp}/bin/rnix-lsp";
+              filetypes = [ "nix" ];
             };
             zk   = {
               command   = "zk";
@@ -247,7 +248,6 @@
             binary_path       = "${pkgs.tabnine}/bin/TabNine";
             disable_filetypes = [ "go" "scala" ];
           };
-          tsserver                  = { npm = npm.binPath; };
         };
       };
       extraConfig   = "source ${toString ../config/neovim/init.vim}";
