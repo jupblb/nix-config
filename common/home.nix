@@ -4,12 +4,7 @@
   home = {
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs; [ ammonite git-crypt gore ripgrep zk ];
-    sessionVariables = {
-      DOOMDIR      = ../config/doom;
-      DOOMLOCALDIR = "${config.xdg.dataHome}/doom";
-      EDITOR       = "nvim";
-      GOROOT       = "${pkgs.go}/share/go";
-    };
+    sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
     username         = "jupblb";
   };
 
