@@ -358,7 +358,6 @@
           dionysus     = config // { port = 1995; };
           "github.com" = config // { hostname = "github.com"; };
           hades        = config // { port = 1993; };
-          pihole       = config // { port = 1998; user = "root"; };
         };
       serverAliveInterval = 30;
     };
