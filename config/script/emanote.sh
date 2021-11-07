@@ -27,7 +27,7 @@ cp -r /backup/jupblb/Documents/notes $TMP_DIR
 find $TMP_DIR -type f -size +100M -delete
 # Fix links by translating them to the obsidian format
 find $TMP_DIR -type f -iname '*.md' \
-  -exec sed -i -E "s/\[([^\(]+)\]\((.+\/)*(.+)\.md\)/\[\[\3\|\1\]\]/g" {} \;
+  -exec sed -i -E "s/\[([^(]+)\]\(([^)]+\/)*([^)]+)\.md\)/\[\[\3\|\1\]\]/g" {} \;
 # Fix images by translating them to the obsidian format
 find $TMP_DIR -type f -iname '*.md' \
   -exec sed -i -E "s/!\[[^]]*\]\((.+\/)*([^]]+)\)/!\[\[\2\]\]/g" {} \;
