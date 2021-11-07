@@ -13,9 +13,11 @@ require('lualine').setup {
         lualine_b = {
             'branch', {
                 'diff',
-                color_added = '#79740e',
-                color_modified = '#f9f5d7',
-                color_removed = '#fb4934',
+                diff_color = {
+                    added = { fg = '#79740e' },
+                    modified = { fg = '#f9f5d7' },
+                    removed = { fg = '#fb4934' },
+                },
                 symbols = {added = ' ', modified = ' ', removed = ' '}
             }
         },
@@ -26,10 +28,12 @@ require('lualine').setup {
         lualine_x = {
             {
                 'diagnostics',
-                color_error = '#cc241d',
-                color_warn = '#d79921',
-                color_info = '#7c6f64',
-                color_hint = '#98971a',
+                diagnostics_color = {
+                    error = { fg = '#cc241d' },
+                    hint = { fg = '#98971a' },
+                    info = { fg = '#7c6f64' },
+                    warn = { fg = '#d79921' },
+                },
                 sources = {'coc'},
                 symbols = {
                     error = ' ',

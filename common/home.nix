@@ -258,8 +258,7 @@
           config = "source ${toString ../config/neovim/coc.vim}";
           plugin = coc-nvim.overrideAttrs(_: {
             dependencies = [
-              coc-css coc-diagnostic coc-eslint coc-go coc-html coc-json
-                coc-metals coc-tabnine coc-tsserver
+              coc-diagnostic coc-go coc-json coc-metals coc-tabnine
               telescope-coc-nvim
             ];
           });
