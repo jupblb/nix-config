@@ -7,7 +7,7 @@ vimUtils.buildVimPlugin rec {
     owner  = "alvarosevilla95";
     repo   = "luatab.nvim";
     rev    = version;
-    sha256 = "13w4ryqsl3lxxxcrb2dyc0h9kql4cmx0hbhxingrc1cncwgldnj9";
+    sha256 = "0iy45hmn6f6dp3pym0yl091kngnrg25hrk5dlm93mj3yxbmgss4r";
   };
   version   = "master";
 }
