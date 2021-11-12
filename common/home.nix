@@ -304,8 +304,8 @@
           plugin = nvim-web-devicons;
         } {
           config = "luafile ${toString ../config/neovim/telescope.lua}";
-          plugin = telescope-nvim.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [ telescope-fzf-native-nvim ];
+          plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
+            dependencies = old.dependencies ++ [ telescope-nvim ];
           });
         } {
           config = "vmap <C-v><C-v> :VBox<CR>";
