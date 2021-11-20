@@ -21,6 +21,3 @@ require('nvim-treesitter.configs').setup {
         }
     }
 }
-
-vim.api.nvim_command(
-    "autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f")

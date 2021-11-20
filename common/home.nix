@@ -34,8 +34,12 @@
         lfcd          = "${builtins.readFile pkgs.lf.lfcd-fish} lfcd $argv";
         ls            = builtins.readFile ../config/script/exa.fish;
       };
-      plugins              = lib.mapAttrsToList
-        (name: pkg: { name = name; src = pkg; }) pkgs.fish-plugins;
+      plugins              = with pkgs.fishPlugins; [
+        { name = "gcloud"; src = gcloud; }
+        { name = "gruvbox"; src = gruvbox; }
+        { name = "kubectl"; src = kubectl; }
+        { name = "nix-env"; src = nix-env; }
+      ];
       interactiveShellInit = ''
         set -gx LF_ICONS "${builtins.readFile ../config/lf/lf-icons.cfg}"
         theme_gruvbox light hard
@@ -91,7 +95,7 @@
 
     go = {
       enable = true;
-      goPath = "${config.xdg.dataHome}/go";
+      goPath = "${config.xdg.cacheHome}/go";
     };
 
     gpg.enable = true;
@@ -129,7 +133,7 @@
         enable_audio_bell             = "no";
         foreground                    = "#282828";
         scrollback_pager              =
-          "nvim -c 'setl ft=man | call clearmatches() | autocmd VimEnter * norm G{}'";
+          "nvim -c 'call clearmatches() | Man! | set syntax=off | autocmd VimEnter * norm G{}'";
         scrollback_pager_history_size = 4096;
         shell                         = "${pkgs.fish}/bin/fish";
       };
@@ -148,123 +152,16 @@
         extensions.beautifygraph = "";
         pager.pager              = "${pkgs.gitAndTools.delta}/bin/delta";
       };
+      ignores     = [ ".vim-bookmarks" ];
       userEmail   = "mpkielbowicz@gmail.com";
       userName    = "jupblb";
     };
 
     neovim = {
-      coc           = {
-        enable   = true;
-        settings = {
-          diagnostic                = {
-            errorSign         = " ";
-            hintSign          = " ";
-            infoSign          = " ";
-            virtualText       = true;
-            virtualTextPrefix = "  ";
-            warningSign       = " ";
-          };
-          diagnostic-languageserver = {
-            filetypes       = {
-              fish = "fish";
-              lua  = "luacheck";
-              sh   = "shellcheck";
-              vim  = "vint";
-            };
-            formatters      = rec {
-              lua-format = { command = "${pkgs.luaformatter}/bin/lua-format"; };
-              pandoc     = {
-                command = pkgs.writeShellScript "pandoc-obsidian" ''
-                  ${pkgs.gnused}/bin/sed -E \
-                    "s/\[\[\[(.+)\]\((.+)\)/\[\1\]\(\2\)/g" |
-                    ${pkgs.pandoc}/bin/pandoc -f markdown -s \
-                    -t markdown-simple_tables --columns=80 "-" |
-                    ${pkgs.gnused}/bin/sed -E \
-                    "s/((\\\)(\[)){2}([^]]+)((\\\)(\])){2}/\[\[\4\]\]/g" |
-                    ${pkgs.gnused}/bin/sed -E \
-                    "s/\\[\\[([^]]+)(\\\)\|([^]]+)\\]\\]/\\[\\[\1|\3\\]\\]/g" |
-                    ${pkgs.gnused}/bin/sed -E \
-                    "s/(\\[\\[[^]]+\\]\\])(\\\)#/\1#/g"
-                '';
-              };
-              shfmt      = {
-                args    = [ "-i" "2" "-filename" "%filepath" ];
-                command = "${pkgs.shfmt}/bin/shfmt";
-              };
-            };
-            formatFiletypes = {
-              fish     = "fish_indent";
-              lua      = "lua-format";
-              markdown = "pandoc";
-              sh       = "shfmt";
-            };
-            linters         = {
-              luacheck   = {
-                args    = [
-                  "--codes" "--filename" "%filepath" "--formatter" "plain"
-                    "--globals" "vim" "--ranges" "-"
-                ];
-                command = "${pkgs.luaPackages.luacheck}/bin/luacheck";
-              };
-              nix-linter = { command = "${pkgs.nix-linter}/bin/nix-linter"; };
-              shellcheck = { command = "${pkgs.shellcheck}/bin/shellcheck"; };
-              vint       = { command = "${pkgs.vim-vint}/bin/vim-vint"; };
-            };
-            mergeConfig     = true;
-          };
-          go.goplsPath              = "${pkgs.gopls}/bin/gopls";
-          hover.floatConfig         = { maxWidth = 90; };
-          languageserver            = {
-            bash = {
-              args               = [ "start" ];
-              command            = let nodePackages = pkgs.nodePackages; in
-                "${nodePackages.bash-language-server}/bin/bash-language-server";
-              disableDiagnostics = true;
-              filetypes          = [ "sh" ];
-            };
-            nix  = {
-              command   = "${pkgs.rnix-lsp}/bin/rnix-lsp";
-              filetypes = [ "nix" ];
-            };
-            zk   = {
-              command   = "zk";
-              args      = [ "lsp" ];
-              filetypes = [ "markdown" ];
-            };
-          };
-          metals                    = {
-            gradleScript                      = "${pkgs.gradle}/bin/gradle";
-            javaHome                          = "${pkgs.openjdk11}";
-            mavenScript                       = "${pkgs.maven}/bin/mvn";
-            millScript                        = "${pkgs.mill}/bin/mill";
-            sbtScript                         = "${pkgs.sbt}/bin/sbt";
-            showImplicitArguments             = true;
-            showImplicitConversionsAndClasses = true;
-            statusBarEnabled                  = true;
-          };
-          npm.binPath               = "${pkgs.nodePackages.npm}/bin/npm";
-          suggest                   = { invalidInsertCharacters = []; };
-          tabnine                   = {
-            binary_path       = "${pkgs.tabnine}/bin/TabNine";
-            disable_filetypes = [ "go" "scala" ];
-          };
-        };
-      };
       extraConfig   = "source ${toString ../config/neovim/init.vim}";
       plugins       = with pkgs.vimPlugins; [ {
           config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
           plugin = bufdelete-nvim;
-        } {
-          config = "source ${toString ../config/neovim/coc.vim}";
-          plugin = coc-nvim.overrideAttrs(_: {
-            dependencies = [
-              coc-diagnostic coc-go coc-json coc-metals coc-tabnine
-              telescope-coc-nvim
-            ];
-          });
-        } {
-          config = "let $GLOW_STYLE = 'light'";
-          plugin = glow-nvim;
         } {
           config = "source ${toString ../config/neovim/gruvbox-material.vim}";
           plugin = gruvbox-material;
@@ -272,25 +169,58 @@
           config = "source ${toString ../config/neovim/hop.vim}";
           plugin = hop-nvim;
         } {
+          config = "luafile ${toString ../config/neovim/lsp-status.lua}";
+          plugin = lsp-status-nvim;
+        } {
+          config = "lua require('lsp_signature').setup({hint_enable = false})";
+          plugin = lsp_signature-nvim;
+        } {
           config = "luafile ${toString ../config/neovim/lualine.lua}";
           plugin = lualine-nvim.overrideAttrs(_: {
-            dependencies = [ nvim-gps vim-sleuth ];
+            dependencies = [ vim-sleuth ];
           });
         } {
-          config = "set tabline=%!v:lua.require\\'luatab\\'.tabline()";
+          config = "luafile ${toString ../config/neovim/luatab.lua}";
           plugin = luatab-nvim;
         } {
-          config =
-            "lua require('bqf').setup({preview = {win_height = 99, wrap = true}})";
+          config = "luafile ${toString ../config/neovim/bqf.lua}";
           plugin = nvim-bqf;
+        } {
+          config = ''
+            set completeopt=menu,menuone,noselect
+            luafile ${toString ../config/neovim/cmp.lua}
+          '';
+          plugin = nvim-cmp.overrideAttrs(_: {
+            dependencies = [ cmp-buffer cmp-nvim-lsp cmp-path cmp-tabnine ];
+          });
         } {
           config = "lua require('colorizer').setup()";
           plugin = nvim-colorizer-lua;
         } {
-          config = "source ${toString ../config/neovim/tree.vim}";
+          config = ''
+            source ${toString ../config/neovim/lspconfig.vim}
+            luafile ${toString ../config/neovim/lspconfig.lua}
+          '';
+          plugin = nvim-lspconfig.overrideAttrs(_: {
+            dependencies = [ null-ls-nvim schemastore ];
+          });
+        } {
+          config = ''
+            source ${toString ../config/neovim/metals.vim}
+            luafile ${toString ../config/neovim/metals.lua}
+          '';
+          plugin = nvim-metals;
+        } {
+          config = ''
+            source ${toString ../config/neovim/tree.vim}
+            luafile ${toString ../config/neovim/tree.lua}
+          '';
           plugin = nvim-tree-lua;
         } {
-          config = "luafile ${toString ../config/neovim/treesitter.lua}";
+          config = ''
+            autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f
+            luafile ${toString ../config/neovim/treesitter.lua}
+          '';
           plugin =
             let nvim-treesitter' =
               nvim-treesitter.withPlugins(_: pkgs.tree-sitter.allGrammars);
@@ -303,9 +233,15 @@
           config = "luafile ${toString ../config/neovim/devicons.lua}";
           plugin = nvim-web-devicons;
         } {
-          config = "luafile ${toString ../config/neovim/telescope.lua}";
-          plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [ telescope-nvim ];
+          config = ''
+            source ${toString ../config/neovim/telescope.vim}
+            luafile ${toString ../config/neovim/telescope.lua}
+          '';
+          plugin = telescope-nvim.overrideAttrs(old: {
+            dependencies = old.dependencies ++ [
+              neoclip telescope-fzf-native-nvim telescope-lsp-handlers
+              telescope-vim-bookmarks
+           ];
           });
         } {
           config = "vmap <C-v><C-v> :VBox<CR>";
@@ -332,11 +268,23 @@
         git-messenger-vim surround vim-cool
       ];
       enable        = true;
-      extraPackages = with pkgs; [ fd glow ripgrep ];
+      extraPackages =
+        let
+          default      = with pkgs; [
+            coursier fd fish google-java-format gopls jsonnet-language-server
+            luaformatter openjdk pandoc ripgrep rnix-lsp shellcheck shfmt
+            tabnine zk
+          ];
+          luaPackages  = with pkgs.luaPackages; [ luacheck ];
+          nodePackages = with pkgs.nodePackages; [
+            bash-language-server dockerfile-language-server-nodejs pyright
+            vscode-json-languageserver
+          ];
+        in default ++ luaPackages ++ nodePackages;
       vimAlias      = true;
       vimdiffAlias  = true;
-      withNodeJs    = true;
-      withPython3   = false;
+      withNodeJs    = false;
+      withPython3   = true;
       withRuby      = false;
     };
 

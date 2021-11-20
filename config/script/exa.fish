@@ -1,8 +1,8 @@
 # if arguments contain `l` (list) boolean flag
 if string match -qr -- '(^|[^-])-\w*l' $argv
-	set extra '--icons'
+    set extra --icons
 else
-	set extra '--group-directories-first'
+    set extra --group-directories-first
 end
 
 exa $extra $argv

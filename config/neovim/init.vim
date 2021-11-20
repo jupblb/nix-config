@@ -1,6 +1,7 @@
 set clipboard+=unnamedplus
 set colorcolumn=80
 set cursorline
+set hidden
 set ignorecase
 set inccommand=nosplit
 set list
@@ -15,6 +16,7 @@ set splitright
 set smartcase
 set tabstop=2
 set termguicolors
+set updatetime=500
 set virtualedit=all
 set wrap
 
@@ -27,6 +29,8 @@ map q: <Nop>
 nnoremap Q <Nop>
 nnoremap <Space> <Nop>
 map <Space> <Leader>
+
+" Create file if it doesn't exist.
 map <silent> gf <Cmd>execute('edit ' . fnamemodify(expand('%:p:h') . '/' . expand('<cfile>'), ':p'))<CR>
 
 autocmd BufRead,BufNewFile *.fish set filetype=fish
@@ -35,5 +39,3 @@ autocmd BufRead,BufNewFile *.sc set filetype=scala
 
 autocmd FileType gitcommit,hgcommit set colorcolumn=72
 autocmd FileType go,java,sql set colorcolumn=100
-autocmd FileType json syntax match Comment +\/\/.\+$+
-autocmd FileType scss setl iskeyword+=@-@

@@ -2,6 +2,8 @@ local builtin = require('telescope.builtin')
 local previewers = require('telescope.previewers')
 local telescope = require('telescope')
 
+require('neoclip').setup({default_register = '*'})
+
 local custom_buffer_previewer = function(filepath, bufnr, opts)
     opts = opts or {}
     if opts.use_ft_detect == nil then
@@ -24,6 +26,13 @@ telescope.setup {
         },
         layout_strategy = "flex"
     },
+    extensions = {
+        lsp_handlers = {
+            code_action = {
+                telescope = require('telescope.themes').get_dropdown({})
+            }
+        }
+    },
     pickers = {
         find_files = {
             previewer = false,
@@ -36,19 +45,11 @@ telescope.setup {
         }
     }
 }
+
 telescope.load_extension('fzf')
-telescope.load_extension('coc')
-
-local set_keymap = function(combo, cmd)
-    vim.api.nvim_set_keymap('n', combo, cmd, {noremap = true, silent = true})
-end
-
-set_keymap('<Leader><Tab>', '<Cmd>Telescope buffers<CR>')
-set_keymap('<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>')
-set_keymap('<Leader>"', '<Cmd>Telescope registers<CR>')
-set_keymap('<Leader>f', '<Cmd>Telescope find_files<CR>')
-set_keymap('<Leader>o', '<Cmd>Telescope oldfiles<CR>')
-set_keymap('<Leader>s', '<Cmd>Telescope live_grep<CR>')
+telescope.load_extension('lsp_handlers')
+telescope.load_extension('neoclip')
+telescope.load_extension('vim_bookmarks')
 
 _G.delta_git_commits = function(opts)
     opts = opts or {}
@@ -93,10 +94,3 @@ _G.delta_git_status = function(opts)
 
     builtin.git_status(opts)
 end
-
-set_keymap('<Leader>gb', '<Cmd>Telescope git_branches<CR>')
-set_keymap('<Leader>gc', '<Cmd>lua delta_git_commits()<CR>')
-set_keymap('<Leader>gC',
-           '<Cmd>lua delta_git_bcommits({path=vim.fn.expand("%:p")})<CR>')
-set_keymap('<Leader>gf', '<Cmd>Telescope git_files<CR>')
-set_keymap('<Leader>gs', '<Cmd>lua delta_git_status()<CR>')

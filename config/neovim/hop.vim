@@ -6,3 +6,5 @@ augroup HopInitHighlight
   autocmd VimEnter * highlight HopNextKey2 guifg=#cc241d
   autocmd VimEnter * highlight HopUnmatched guifg=#3c3836
 augroup end
+
+lua require('hop').setup({create_hl_autocmd = false})

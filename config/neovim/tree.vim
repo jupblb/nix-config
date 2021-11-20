@@ -34,5 +34,3 @@ let g:nvim_tree_width_allow_resize = 1
 
 nmap <Leader>t :NvimTreeToggle<CR>
 nmap <Leader>T :NvimTreeFindFile<CR>
-
-lua require('nvim-tree').setup({})
