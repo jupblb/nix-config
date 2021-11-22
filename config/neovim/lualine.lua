@@ -10,7 +10,7 @@ require('lualine').setup({
     },
     sections = {
         lualine_b = {
-            'branch', {
+            {'branch', icon = ''}, {
                 'diff',
                 diff_color = {
                     added = {fg = '#000000'},
