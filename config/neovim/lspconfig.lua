@@ -4,14 +4,14 @@ local null_ls = require("null-ls")
 
 -- Replace default signs
 local signs = {
-    Error = " ",
-    Warning = " ",
-    Hint = " ",
-    Information = " "
+    Error = ' ',
+    Warning = ' ',
+    Hint = ' ',
+    Information = ' '
 }
 for type, icon in pairs(signs) do
-    local hl = "LspDiagnosticsSign" .. type
-    vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = ""})
+    local hl = 'LspDiagnosticsSign' .. type
+    vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = ''})
 end
 
 -- Add border to the floating windows
@@ -19,12 +19,20 @@ local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
     opts.border = opts.border or {
-        {"╭", "FloatBorder"}, {"─", "FloatBorder"}, {"╮", "FloatBorder"},
-        {"│", "FloatBorder"}, {"╯", "FloatBorder"}, {"─", "FloatBorder"},
-        {"╰", "FloatBorder"}, {"│", "FloatBorder"}
+        {'╭', 'FloatBorder'}, {'─', 'FloatBorder'}, {'╮', 'FloatBorder'},
+        {'│', 'FloatBorder'}, {'╯', 'FloatBorder'}, {'─', 'FloatBorder'},
+        {'╰', 'FloatBorder'}, {'│', 'FloatBorder'}
     }
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
+
+-- Setup
+lspconfig.util.default_config = vim.tbl_extend('force',
+                                               lspconfig.util.default_config, {
+    capabilities = lsp_status.capabilities,
+    flags = {debounce_text_changes = 150},
+    on_attach = lsp_status.on_attach
+})
 
 -- null-ls setup
 null_ls.config({
@@ -57,31 +65,27 @@ null_ls.register({
     })
 })
 
--- Setup
-lspconfig.util.default_config = vim.tbl_extend("force",
-                                               lspconfig.util.default_config, {
-    capabilities = lsp_status.capabilities,
-    flags = {debounce_text_changes = 150},
-    on_attach = lsp_status.on_attach
-})
-
-local default_servers = {"bashls", "dockerls", "gopls", "null-ls", "rnix", "zk"}
+-- other LSPs
+local default_servers = {'bashls', 'dockerls', 'null-ls', 'rnix', 'zk'}
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
 lspconfig.jsonls.setup({
-    cmd = {"vscode-json-languageserver", "--stdio"},
+    cmd = {'vscode-json-languageserver', '--stdio'},
     commands = {
         Format = {
             function()
-                vim.lsp.buf.range_formatting({}, {0, 0}, {vim.fn.line("$"), 0})
+                vim.lsp.buf.range_formatting({}, {0, 0}, {vim.fn.line('$'), 0})
             end
         }
     },
-    settings = {json = {schemas = require("schemastore").json.schemas()}}
+    settings = {json = {schemas = require('schemastore').json.schemas()}}
 })
 
 -- lspconfig.jsonnet_ls.setup({
 --    single_file_support = true
 -- })
 
-lspconfig.pyright.setup({settings = {python = {pythonPath = "python3"}}})
+if vim.fn.getcwd():find('/google/') == nil then
+    lspconfig.gopls.setup({})
+    lspconfig.pyright.setup({settings = {python = {pythonPath = 'python3'}}})
+end
