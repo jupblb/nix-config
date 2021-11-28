@@ -2,6 +2,8 @@
 
 {
   home = {
+    activation.nvim  = lib.hm.dag.entryAfter ["writeBoundary"]
+      "$DRY_RUN_CMD nvim --headless +UpdateRemotePlugins +quit && echo";
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs; [ ammonite git-crypt gore ripgrep zk ];
     sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
@@ -183,6 +185,14 @@
           config = "luafile ${toString ../config/neovim/luatab.lua}";
           plugin = luatab-nvim;
         } {
+          config = ''
+            source ${toString ../config/neovim/neogit.vim}
+            luafile ${toString ../config/neovim/neogit.lua}
+          '';
+          plugin = neogit.overrideAttrs(old: {
+            dependencies = old.dependencies ++ [ diffview-nvim ];
+          });
+        } {
           config = "luafile ${toString ../config/neovim/bqf.lua}";
           plugin = nvim-bqf;
         } {
@@ -197,6 +207,9 @@
           config = "lua require('colorizer').setup()";
           plugin = nvim-colorizer-lua;
         } {
+          config = "luafile ${toString ../config/neovim/jqx.lua}";
+          plugin = nvim-jqx;
+        } {
           config = ''
             source ${toString ../config/neovim/lspconfig.vim}
             luafile ${toString ../config/neovim/lspconfig.lua}
@@ -210,6 +223,9 @@
             luafile ${toString ../config/neovim/metals.lua}
           '';
           plugin = nvim-metals;
+        } {
+          config = "luafile ${toString ../config/neovim/pqf.lua}";
+          plugin = nvim-pqf;
         } {
           config = ''
             source ${toString ../config/neovim/tree.vim}
@@ -226,7 +242,8 @@
               nvim-treesitter.withPlugins(_: pkgs.tree-sitter.allGrammars);
             in nvim-treesitter'.overrideAttrs(_: {
               dependencies = [
-                nvim-treesitter-refactor nvim-treesitter-textobjects vim-matchup
+                nvim-treesitter-refactor nvim-treesitter-textobjects
+                nvim-ts-context-commentstring vim-matchup
               ];
             });
         } {
@@ -264,21 +281,26 @@
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
+        } {
+          config = "source ${toString ../config/neovim/ultest.vim}";
+          plugin = vim-ultest.overrideAttrs(_: {
+            dependencies = [ vim-test ];
+          });
         }
-        git-messenger-vim surround vim-cool
+        commentary git-messenger-vim surround vim-cool
       ];
       enable        = true;
       extraPackages =
         let
           default      = with pkgs; [
-            coursier fd fish google-java-format gopls jsonnet-language-server
+            coursier fd fish google-java-format gopls jq jsonnet-language-server
             luaformatter openjdk pandoc ripgrep rnix-lsp shellcheck shfmt
-            tabnine zk
+            tabnine yq-go zk
           ];
           luaPackages  = with pkgs.luaPackages; [ luacheck ];
           nodePackages = with pkgs.nodePackages; [
-            bash-language-server dockerfile-language-server-nodejs pyright
-            vscode-json-languageserver
+            bash-language-server dockerfile-language-server-nodejs
+            markdownlint-cli pyright vscode-json-languageserver
           ];
         in default ++ luaPackages ++ nodePackages;
       vimAlias      = true;
@@ -351,6 +373,11 @@
         shlvl       = { disabled = false; symbol = " "; };
         status      = { disabled = false; symbol = " "; };
       };
+    };
+
+    zoxide = {
+      enable  = true;
+      options = [ "--cmd cd" ];
     };
   };
 

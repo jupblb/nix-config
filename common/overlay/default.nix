@@ -18,14 +18,15 @@ self: super: with super; {
   lf                      = callPackage ./lf { lf = super.lf; };
   pragmata-pro            = callPackage ./pragmata-pro {};
   vimPlugins              = vimPlugins // {
-    luatab-nvim               = callPackage ./neovim/luatab.nix {};
     neoclip                   = callPackage ./neovim/neoclip.nix {};
     null-ls-nvim              = vimPlugins.null-ls-nvim.overrideAttrs(_: {
-      dependencies = [];
+      dependencies = with vimPlugins; [ plenary-nvim ];
     });
+    nvim-jqx                  = callPackage ./neovim/jqx.nix {};
     nvim-metals               = callPackage ./neovim/nvim-metals.nix {
       inherit (vimPlugins) plenary-nvim;
     };
+    nvim-pqf                  = callPackage ./neovim/pqf.nix {};
     schemastore               = callPackage ./neovim/schemastore.nix {};
     telescope-fzf-native-nvim = vimPlugins.telescope-fzf-native-nvim.overrideAttrs(_: {
       dependencies = [];

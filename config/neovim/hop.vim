@@ -1,4 +1,6 @@
-nnoremap <Leader><Space> :HopWord<CR>
+nmap <Leader><Space> <Cmd>HopWord<CR>
+vmap <Leader><Space> <Cmd>HopWord<CR>
+
 augroup HopInitHighlight
   autocmd!
   autocmd VimEnter * highlight HopNextKey guifg=#cc241d gui=bold

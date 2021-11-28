@@ -40,6 +40,9 @@ null_ls.config({
         null_ls.builtins.diagnostics.luacheck.with({
             extra_args = {'--globals', 'vim'}
         }), --
+        null_ls.builtins.diagnostics.markdownlint.with({
+            extra_args = {'--disable', 'MD030'}
+        }), --
         null_ls.builtins.diagnostics.shellcheck,
         null_ls.builtins.formatting.fish_indent,
         -- null_ls.builtins.formatting.google_java_format,
@@ -66,7 +69,7 @@ null_ls.register({
 })
 
 -- other LSPs
-local default_servers = {'bashls', 'dockerls', 'null-ls', 'rnix', 'zk'}
+local default_servers = {'bashls', 'dockerls', 'null-ls', 'rnix'}
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
 lspconfig.jsonls.setup({
@@ -84,6 +87,8 @@ lspconfig.jsonls.setup({
 -- lspconfig.jsonnet_ls.setup({
 --    single_file_support = true
 -- })
+--
+if vim.fn.getcwd():find('/notes/') ~= nil then lspconfig.zk.setup({}) end
 
 if vim.fn.getcwd():find('/google/') == nil then
     lspconfig.gopls.setup({})

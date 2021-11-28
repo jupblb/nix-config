@@ -1,6 +1,15 @@
-require('nvim-treesitter.configs').setup {
-    indent = {enable = true},
+require('nvim-treesitter.configs').setup({
+    context_commentstring = {enable = true},
     highlight = {enable = true, disable = {"yaml"}},
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "<CR>",
+            node_incremental = "<TAB>",
+            node_decremental = "<S-TAB>"
+        }
+    },
+    indent = {enable = true},
     matchup = {enable = true},
     refactor = {
         highlight_definitions = {enable = true},
@@ -20,4 +29,4 @@ require('nvim-treesitter.configs').setup {
             }
         }
     }
-}
+})
