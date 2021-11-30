@@ -215,7 +215,7 @@
             luafile ${toString ../config/neovim/lspconfig.lua}
           '';
           plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ null-ls-nvim schemastore ];
+            dependencies = [ null-ls-nvim SchemaStore-nvim ];
           });
         } {
           config = ''

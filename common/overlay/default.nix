@@ -27,7 +27,6 @@ self: super: with super; {
       inherit (vimPlugins) plenary-nvim;
     };
     nvim-pqf                  = callPackage ./neovim/pqf.nix {};
-    schemastore               = callPackage ./neovim/schemastore.nix {};
     telescope-fzf-native-nvim = vimPlugins.telescope-fzf-native-nvim.overrideAttrs(_: {
       dependencies = [];
     });
