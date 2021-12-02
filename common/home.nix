@@ -14,12 +14,7 @@
   nixpkgs.overlays                    = [ (import ./overlay) ];
 
   programs = {
-    bash = {
-      enable         = true;
-      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
-      shellOptions   = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
-      initExtra      = builtins.readFile ../config/bashrc;
-    };
+    bash = import ../config/bash;
 
     bat = {
       config = { theme = "gruvbox-light"; };
@@ -28,19 +23,7 @@
 
     exa.enable = true;
 
-    firefox.profiles."jupblb" = {
-      settings    = {
-        "extensions.pocket.enabled"                           = false;
-        "full-screen-api.warning.timeout"                     = 0;
-        "general.smoothScroll"                                = false;
-        "mousewheel.min_line_scroll_amount"                   = true;
-        "network.protocol-handler.expose.magnet"              = false;
-        "permissions.default.desktop-notification"            = 2;
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-        "general.warnOnAboutConfig"                           = false;
-      };
-      userContent = builtins.readFile ../config/firefox.css;
-    };
+    firefox = import ../config/firefox.nix;
 
     fish = {
       enable               = true;
@@ -74,40 +57,7 @@
       fileWidgetOptions = [ "--preview 'bat --color=always -pp {}'" ];
     };
 
-    git = {
-      aliases     = {
-        amend = "commit -a --amend --no-edit";
-        line  = "!sh -c 'git log -L$2,+1:\${GIT_PREFIX:-./}$1' -";
-        lines = "!sh -c 'git log -L$2,$3:\${GIT_PREFIX:-./}$1' -";
-      };
-      delta       = {
-        enable  = true;
-        options = {
-          line-numbers            = true;
-          line-numbers-zero-style = "#3c3836";
-          minus-emph-style        = "syntax #fa9f86";
-          minus-style             = "syntax #f9d8bc";
-          plus-emph-style         = "syntax #d9d87f";
-          plus-style              = "syntax #eeebba";
-          side-by-side            = true;
-          syntax-theme            = "gruvbox-light";
-        };
-      };
-      enable      = true;
-      extraConfig = {
-        color.ui            = true;
-        core.mergeoptions   = "--no-edit";
-        fetch.prune         = true;
-        merge.conflictStyle = "diff3";
-        pull.rebase         = true;
-        push.default        = "upstream";
-        submodule.recurse   = true;
-      };
-      ignores     = [ ".vim-bookmarks" ];
-      signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
-      userEmail   = "mpkielbowicz@gmail.com";
-      userName    = "jupblb";
-    };
+    git = import ../config/git.nix;
 
     go = {
       enable = true;
@@ -128,30 +78,10 @@
         package = pkgs.pragmata-pro;
         size    = 10;
       };
-      keybindings = {
-        "ctrl+shift+'" = "launch --location=hsplit";
-        "ctrl+shift+;" = "launch --location=vsplit";
-        "ctrl+shift+`" = "show_scrollback";
-        "ctrl+shift+h" = "move_window left";
-        "ctrl+shift+j" = "move_window bottom";
-        "ctrl+shift+k" = "move_window top";
-        "ctrl+shift+l" = "move_window right";
-        "ctrl+h"       = "neighboring_window left";
-        "ctrl+j"       = "neighboring_window bottom";
-        "ctrl+k"       = "neighboring_window top";
-        "ctrl+l"       = "neighboring_window right";
-      };
-      settings    = {
-        background                    = "#f9f5d7";
-        clipboard_control             =
-          "write-clipboard write-primary no-append";
-        enabled_layouts               = "splits";
-        enable_audio_bell             = "no";
-        foreground                    = "#282828";
-        scrollback_pager              =
-          "nvim -c 'call clearmatches() | Man! | set syntax=off | autocmd VimEnter * norm G{}'";
-        scrollback_pager_history_size = 4096;
-        shell                         = "${pkgs.fish}/bin/fish";
+      keybindings = import ../config/kitty/keybindings.nix;
+      settings    = (import ../config/kitty/settings.nix) // {
+        env   = "SHELL=${pkgs.fish}/bin/fish";
+        shell = "${pkgs.fish}/bin/fish";
       };
     };
 
@@ -325,68 +255,9 @@
 
     nix-index.enable = true;
 
-    ssh = {
-      compression         = true;
-      controlMaster       = "auto";
-      controlPersist      = "yes";
-      enable              = true;
-      forwardAgent        = true;
-      matchBlocks         =
-        let config = {
-          hostname       = "jupblb.ddns.net";
-          identitiesOnly = true;
-          identityFile   = [ (toString ../config/ssh/id_ed25519) ];
-        };
-        in {
-          dionysus     = config // { port = 1995; };
-          "github.com" = config // { hostname = "github.com"; };
-          hades        = config // { port = 1993; };
-        };
-      serverAliveInterval = 30;
-    };
+    ssh = import ../config/ssh;
 
-    starship = {
-      enable   = true;
-      settings = {
-        add_newline = false;
-        directory   = {
-          read_only         = " ";
-          truncation_length = 8;
-          truncation_symbol = "…/";
-        };
-        format      =
-          let
-            git    = map (s: "git_" + s) [ "branch" "commit" "state" "status" ];
-            line   = prefix ++ [ "hg_branch" ] ++ git  ++ [ "status" "shell" ];
-            prefix = [ "shlvl" "nix_shell"  "hostname" "directory" ];
-          in lib.concatMapStrings (e: "$" + e) line;
-        git_branch  = { symbol = " "; };
-        git_status  = {
-          ahead      = " ";
-          behind     = " ";
-          conflicted = " ";
-          deleted    = " ";
-          diverged   = " ";
-          format     =
-            "([$all_status](underline $style)[$ahead_behind]($style) )";
-          modified   = " ";
-          renamed    = " ";
-          staged     = " ";
-          stashed    = " ";
-          untracked  = " ";
-        };
-        hg_branch   = { disabled = false; symbol = " "; };
-        hostname    = { format = "[($hostname:)]($style)"; };
-        nix_shell   = { format = "[ ]($style) "; };
-        shell       = {
-          bash_indicator = "\\$";
-          disabled       = false;
-          fish_indicator = "~>";
-        };
-        shlvl       = { disabled = false; symbol = " "; };
-        status      = { disabled = false; symbol = " "; };
-      };
-    };
+    starship = import ../config/starship.nix;
 
     zoxide = {
       enable  = true;

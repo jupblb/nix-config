@@ -46,12 +46,11 @@
 
     programs = {
       firefox        = {
-        enable                        = true;
-        profiles."jupblb".settings    = {
+        profiles."jupblb".settings = {
           "gfx.webrender.enabled"               = true;
           "widget.wayland-dmabuf-vaapi.enabled" = true;
         };
-        package                       = pkgs.firefox-wayland.override {
+        package                    = pkgs.firefox-wayland.override {
           cfg.enableGnomeExtensions = true;
         };
       };

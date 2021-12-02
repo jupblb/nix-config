@@ -9,30 +9,33 @@ self: super: with super; {
     let url = "https://github.com/srid/emanote/archive/master.tar.gz";
     in (import (builtins.fetchTarball url)).default;
   fishPlugins             = fishPlugins // {
-    gcloud  = callPackage ./fish/gcloud.nix {};
-    gruvbox = callPackage ./fish/gruvbox.nix {};
-    kubectl = callPackage ./fish/kubectl.nix {};
-    nix-env = callPackage ./fish/nix-env.nix {};
+    gcloud  = callPackage ./fish/plugin/gcloud.nix {};
+    gruvbox = callPackage ./fish/plugin/gruvbox.nix {};
+    kubectl = callPackage ./fish/plugin/kubectl.nix {};
+    nix-env = callPackage ./fish/plugin/nix-env.nix {};
   };
   jsonnet-language-server = callPackage ./jsonnet-language-server.nix {};
   lf                      = callPackage ./lf { lf = super.lf; };
   pragmata-pro            = callPackage ./pragmata-pro {};
   vimPlugins              = vimPlugins // {
-    neoclip                   = callPackage ./neovim/neoclip.nix {};
+    neoclip                   = callPackage ./neovim/plugin/neoclip.nix {};
     null-ls-nvim              = vimPlugins.null-ls-nvim.overrideAttrs(_: {
       dependencies = with vimPlugins; [ plenary-nvim ];
     });
-    nvim-jqx                  = callPackage ./neovim/jqx.nix {};
-    nvim-metals               = callPackage ./neovim/nvim-metals.nix {
+    nvim-jqx                  = callPackage ./neovim/plugin/jqx.nix {};
+    nvim-metals               = callPackage ./neovim/plugin/nvim-metals.nix {
       inherit (vimPlugins) plenary-nvim;
     };
-    nvim-pqf                  = callPackage ./neovim/pqf.nix {};
-    telescope-fzf-native-nvim = vimPlugins.telescope-fzf-native-nvim.overrideAttrs(_: {
-      dependencies = [];
-    });
-    telescope-lsp-handlers    = callPackage ./neovim/telescope-lsp-handlers.nix {};
-    telescope-vim-bookmarks   = callPackage ./neovim/telescope-vim-bookmarks.nix {};
-    venn-nvim                 = callPackage ./neovim/venn.nix {};
+    nvim-pqf                  = callPackage ./neovim/plugin/pqf.nix {};
+    telescope-fzf-native-nvim =
+      vimPlugins.telescope-fzf-native-nvim.overrideAttrs(_: {
+        dependencies = [];
+      });
+    telescope-lsp-handlers    =
+      callPackage ./neovim/plugin/telescope-lsp-handlers.nix {};
+    telescope-vim-bookmarks   =
+      callPackage ./neovim/plugin/telescope-vim-bookmarks.nix {};
+    venn-nvim                 = callPackage ./neovim/plugin/venn.nix {};
   };
   zk                      = callPackage ./zk.nix {};
 }

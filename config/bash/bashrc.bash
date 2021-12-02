@@ -1,6 +1,9 @@
+#!/usr/bin/env bash
+
 if [[ "$SHLVL" -eq "1" && -n "$SSH_TTY" && -x "$(command -v fish)" ]]; then
-				export SHELL=$(which fish)
-				exec fish
+    SHELL=$(which fish)
+    export SHELL
+    exec fish
 fi
 
 export PS1="\[\e[0;32m\]\u@\h \[\e[0;37m\]\w\[\e[0;34m\] $ \[\e[0m\]"
