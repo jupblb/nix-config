@@ -47,8 +47,8 @@ null_ls.config({
         null_ls.builtins.formatting.fish_indent,
         -- null_ls.builtins.formatting.google_java_format,
         null_ls.builtins.formatting.lua_format,
-        null_ls.builtins.formatting.json_tool, --
-        null_ls.builtins.formatting.shfmt
+        null_ls.builtins.formatting.json_tool,
+        null_ls.builtins.formatting.shfmt.with({extra_args = {'-i=4'}})
     }
 })
 
