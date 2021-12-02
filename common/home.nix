@@ -204,7 +204,7 @@
             dependencies = [ cmp-buffer cmp-nvim-lsp cmp-path cmp-tabnine ];
           });
         } {
-          config = "lua require('colorizer').setup()";
+          config = "lua require('colorizer').setup({'css','lua','nix','vim'})";
           plugin = nvim-colorizer-lua;
         } {
           config = "luafile ${toString ../config/neovim/jqx.lua}";
