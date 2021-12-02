@@ -28,6 +28,20 @@
 
     exa.enable = true;
 
+    firefox.profiles."jupblb" = {
+      settings    = {
+        "extensions.pocket.enabled"                           = false;
+        "full-screen-api.warning.timeout"                     = 0;
+        "general.smoothScroll"                                = false;
+        "mousewheel.min_line_scroll_amount"                   = true;
+        "network.protocol-handler.expose.magnet"              = false;
+        "permissions.default.desktop-notification"            = 2;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "general.warnOnAboutConfig"                           = false;
+      };
+      userContent = builtins.readFile ../config/firefox.css;
+    };
+
     fish = {
       enable               = true;
       functions            = {
@@ -293,9 +307,8 @@
       extraPackages =
         let
           default      = with pkgs; [
-            coursier fd fish google-java-format gopls jq jsonnet-language-server
-            luaformatter openjdk pandoc ripgrep rnix-lsp shellcheck shfmt
-            tabnine yq-go zk
+            coursier fd fish google-java-format gopls jq luaformatter openjdk
+            pandoc ripgrep rnix-lsp shellcheck shfmt tabnine yq-go zk
           ];
           luaPackages  = with pkgs.luaPackages; [ luacheck ];
           nodePackages = with pkgs.nodePackages; [
