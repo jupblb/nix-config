@@ -10,8 +10,8 @@ local signs = {
     Information = ' '
 }
 for type, icon in pairs(signs) do
-    local hl = 'LspDiagnosticsSign' .. type
-    vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = ''})
+    local hl = 'DiagnosticSign' .. type
+    vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
 end
 
 -- Add border to the floating windows
