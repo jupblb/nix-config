@@ -26,13 +26,6 @@ telescope.setup {
         },
         layout_strategy = "flex"
     },
-    extensions = {
-        lsp_handlers = {
-            code_action = {
-                telescope = require('telescope.themes').get_dropdown({})
-            }
-        }
-    },
     pickers = {
         find_files = {
             previewer = false,

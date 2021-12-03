@@ -1,9 +1,7 @@
 set clipboard+=unnamedplus
 set colorcolumn=80
 set cursorline
-set hidden
 set ignorecase
-set inccommand=nosplit
 set list
 set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set mouse=a
@@ -37,5 +35,5 @@ autocmd BufRead,BufNewFile *.fish set filetype=fish
 autocmd BufRead,BufNewFile *.nix set filetype=nix
 autocmd BufRead,BufNewFile *.sc set filetype=scala
 
-autocmd FileType gitcommit,hgcommit set colorcolumn=72
-autocmd FileType go,java,sql set colorcolumn=100
+autocmd FileType gitcommit,hgcommit setlocal colorcolumn=72
+autocmd FileType go,java,sql setlocal colorcolumn=100
