@@ -84,10 +84,6 @@ lspconfig.jsonls.setup({
     settings = {json = {schemas = require('schemastore').json.schemas()}}
 })
 
--- lspconfig.jsonnet_ls.setup({
---    single_file_support = true
--- })
---
 if vim.fn.getcwd():find('/notes/') ~= nil then lspconfig.zk.setup({}) end
 
 if vim.fn.getcwd():find('/google/') == nil then
