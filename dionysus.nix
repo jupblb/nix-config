@@ -174,40 +174,38 @@
     };
 
     syncthing = {
-      declarative = {
-        cert    = toString ./config/syncthing/dionysus/cert.pem;
-        folders =
-          let simpleVersioning = {
-            params = { keep = "5"; };
-            type   = "simple";
+      cert        = toString ./config/syncthing/dionysus/cert.pem;
+      folders     =
+        let simpleVersioning = {
+          params = { keep = "5"; };
+          type   = "simple";
+        };
+        in {
+          "domci/Documents" = {
+            path       = "/backup/domci/Documents";
+            versioning = simpleVersioning;
           };
-          in {
-            "domci/Documents" = {
-              path       = "/backup/domci/Documents";
-              versioning = simpleVersioning;
-            };
-            "domci/Downloads" = {
-              path = "/backup/domci/Downloads";
-            };
-            "domci/Pictures" = {
-              path       = "/backup/domci/Pictures";
-              versioning = simpleVersioning;
-            };
-            "domci/Videos" = {
-              path       = "/backup/domci/Videos";
-              versioning = simpleVersioning;
-            };
-            "jupblb/Documents" = {
-              path       = "/backup/jupblb/Documents";
-              versioning = simpleVersioning;
-            };
-            "jupblb/Pictures" = {
-              path       = "/backup/jupblb/Pictures";
-              versioning = simpleVersioning;
-            };
+          "domci/Downloads" = {
+            path = "/backup/domci/Downloads";
           };
-        key     = toString ./config/syncthing/dionysus/key.pem;
-      };
+          "domci/Pictures" = {
+            path       = "/backup/domci/Pictures";
+            versioning = simpleVersioning;
+          };
+          "domci/Videos" = {
+            path       = "/backup/domci/Videos";
+            versioning = simpleVersioning;
+          };
+          "jupblb/Documents" = {
+            path       = "/backup/jupblb/Documents";
+            versioning = simpleVersioning;
+          };
+          "jupblb/Pictures" = {
+            path       = "/backup/jupblb/Pictures";
+            versioning = simpleVersioning;
+          };
+        };
+      key         = toString ./config/syncthing/dionysus/key.pem;
       relay       = {
         enable        = true;
         listenAddress = "0.0.0.0";

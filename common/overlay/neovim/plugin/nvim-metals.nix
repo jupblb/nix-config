@@ -9,6 +9,6 @@ vimUtils.buildVimPlugin rec {
     owner  = "scalameta";
     repo   = pname;
     rev    = version;
-    sha256 = "0dc83br7var5ksdhz4pdym8yhkx60vi1z2qb58gf7v2cn8ivribh";
+    sha256 = "16v2bybicisw0z65j2lphxpbj7w1rzppqmbfjz2b2hrq98b2d87s";
   };
 }
