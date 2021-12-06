@@ -37,7 +37,7 @@ lspconfig.util.default_config = vim.tbl_extend('force',
 -- null-ls setup
 null_ls.config({
     sources = {
-        -- null_ls.builtins.code_actions.shellcheck,
+        null_ls.builtins.code_actions.shellcheck,
         null_ls.builtins.diagnostics.luacheck.with({
             extra_args = {'--globals', 'vim'}
         }), --
@@ -47,7 +47,6 @@ null_ls.config({
         null_ls.builtins.diagnostics.shellcheck,
         null_ls.builtins.diagnostics.staticcheck,
         null_ls.builtins.formatting.fish_indent,
-        -- null_ls.builtins.formatting.google_java_format,
         null_ls.builtins.formatting.lua_format,
         null_ls.builtins.formatting.json_tool,
         null_ls.builtins.formatting.shfmt.with({extra_args = {'-i=4'}})

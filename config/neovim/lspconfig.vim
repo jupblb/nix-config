@@ -17,4 +17,3 @@ nmap gs          <Cmd>lua vim.lsp.buf.signature_help()<CR>
 nmap <Leader>ls  <Cmd>lua vim.lsp.buf.signature_help()<CR>
 nmap <Leader>lt  <Cmd>lua vim.lsp.buf.type_definition()<CR>
 nmap <Leader>lws <Cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-

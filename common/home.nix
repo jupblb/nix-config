@@ -30,7 +30,6 @@
       functions            = {
         fish_greeting =
           "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
-        lfcd          = "${builtins.readFile pkgs.lf.lfcd-fish} lfcd $argv";
         ls            = builtins.readFile ../config/script/exa.fish;
       };
       plugins              = with pkgs.fishPlugins; [
@@ -39,13 +38,10 @@
         { name = "kubectl"; src = kubectl; }
         { name = "nix-env"; src = nix-env; }
       ];
-      interactiveShellInit = ''
-        set -gx LF_ICONS "${builtins.readFile ../config/lf/lf-icons.cfg}"
-        theme_gruvbox light hard
-      '';
-      shellAliases         = {
-        cat  = "bat -p --paging=never";
-        less = "bat -p --paging=always";
+      interactiveShellInit = "theme_gruvbox light hard";
+      shellAliases         = with pkgs; {
+        cat  = "${bat}/bin/bat -p --paging=never";
+        less = "${bat}/bin/bat -p --paging=always";
       };
     };
 
@@ -87,8 +83,19 @@
 
     lf = {
       enable      = true;
-      extraConfig = builtins.readFile ../config/lf/lfrc.sh;
-      previewer   = { keybinding = "`"; source = pkgs.lf.previewer; };
+      extraConfig = builtins.readFile ../config/lfrc.sh;
+      previewer   = {
+        keybinding = "`";
+        source     = with pkgs; writeShellScript "lf-preview" ''
+          case "$1" in
+            *.json)       ${jq}/bin/jq --color-output . "$1";;
+            *.md)         ${glow}/bin/glow -s light -- "$1";;
+            *.pdf)        ${poppler_utils}/bin/pdftotext "$1" -;;
+            *.tar*|*.zip) ${atool}/bin/atool --list -- "$1";;
+            *)            ${bat}/bin/bat --style=numbers --color=always "$1";;
+          esac
+        '';
+      };
       settings    = { hidden = true; icons = true; tabstop = 4; };
     };
 
@@ -200,8 +207,8 @@
           '';
           plugin = telescope-nvim.overrideAttrs(old: {
             dependencies = old.dependencies ++ [
-              neoclip telescope-fzf-native-nvim telescope-lsp-handlers
-              telescope-vim-bookmarks
+              nvim-neoclip-lua telescope-fzf-native-nvim
+              telescope-lsp-handlers-nvim telescope-vim-bookmarks-nvim
            ];
           });
         } {
@@ -237,8 +244,8 @@
       extraPackages =
         let
           default      = with pkgs; [
-            coursier fd fish go-tools google-java-format gopls jq luaformatter
-            openjdk pandoc ripgrep rnix-lsp shellcheck shfmt tabnine yq-go zk
+            coursier fd fish go-tools gopls jq luaformatter openjdk pandoc
+            ripgrep rnix-lsp shellcheck shfmt tabnine yq-go zk
           ];
           luaPackages  = with pkgs.luaPackages; [ luacheck ];
           nodePackages = with pkgs.nodePackages; [

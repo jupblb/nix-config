@@ -14,28 +14,17 @@ self: super: with super; {
     kubectl = callPackage ./fish/plugin/kubectl.nix {};
     nix-env = callPackage ./fish/plugin/nix-env.nix {};
   };
-  jsonnet-language-server = callPackage ./jsonnet-language-server.nix {};
   lf                      = callPackage ./lf { lf = super.lf; };
   pragmata-pro            = callPackage ./pragmata-pro {};
   vimPlugins              = vimPlugins // {
-    neoclip                   = callPackage ./neovim/plugin/neoclip.nix {};
     null-ls-nvim              = vimPlugins.null-ls-nvim.overrideAttrs(_: {
       dependencies = with vimPlugins; [ plenary-nvim ];
     });
-    nvim-jqx                  = callPackage ./neovim/plugin/jqx.nix {};
-    nvim-metals               = callPackage ./neovim/plugin/nvim-metals.nix {
-      inherit (vimPlugins) plenary-nvim;
-    };
     nvim-pqf                  = callPackage ./neovim/plugin/pqf.nix {};
     telescope-fzf-native-nvim =
       vimPlugins.telescope-fzf-native-nvim.overrideAttrs(_: {
         dependencies = [];
       });
-    telescope-lsp-handlers    =
-      callPackage ./neovim/plugin/telescope-lsp-handlers.nix {};
-    telescope-vim-bookmarks   =
-      callPackage ./neovim/plugin/telescope-vim-bookmarks.nix {};
-    venn-nvim                 = callPackage ./neovim/plugin/venn.nix {};
   };
   zk                      = callPackage ./zk.nix {};
 }
