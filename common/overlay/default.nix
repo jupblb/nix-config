@@ -14,6 +14,7 @@ self: super: with super; {
     kubectl = callPackage ./fish/plugin/kubectl.nix {};
     nix-env = callPackage ./fish/plugin/nix-env.nix {};
   };
+  gtree                   = callPackage ./gtree.nix {};
   lf                      = callPackage ./lf { lf = super.lf; };
   pragmata-pro            = callPackage ./pragmata-pro {};
   vimPlugins              = vimPlugins // {

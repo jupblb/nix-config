@@ -46,11 +46,15 @@
     };
 
     fzf = {
-      enable            = true;
-      defaultCommand    = "${pkgs.fd}/bin/fd --hidden --type f";
-      defaultOptions    = [ "--color=light" ];
-      fileWidgetCommand = "${pkgs.fd}/bin/fd --hidden";
-      fileWidgetOptions = [ "--preview 'bat --color=always -pp {}'" ];
+      enable                 = true;
+      changeDirWidgetCommand = "${pkgs.fd}/bin/fd --hidden --type d";
+      changeDirWidgetOptions =
+        [ "--preview '${pkgs.gtree}/bin/gtree {} | head -200'" ];
+      defaultCommand         = "${pkgs.fd}/bin/fd --hidden --type f";
+      defaultOptions         = [ "--color=light" ];
+      fileWidgetCommand      = "${pkgs.fd}/bin/fd --hidden --type f";
+      fileWidgetOptions      =
+        [ "--preview '${pkgs.bat}/bin/bat --color=always -pp {}'" ];
     };
 
     git = import ../config/git.nix;

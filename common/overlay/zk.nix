@@ -1,4 +1,4 @@
-{ buildGoModule, fetchFromGitHub, fetchurl, icu }:
+{ buildGoModule, fetchFromGitHub, icu }:
 
 buildGoModule rec {
   buildInputs  = [ icu ];
