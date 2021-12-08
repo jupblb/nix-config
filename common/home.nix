@@ -278,8 +278,14 @@
 
   xdg = {
     configFile = {
-      "nvim/spell/pl.utf-8.spl".source = builtins.fetchurl
-        "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
+      "nvim/spell/pl.utf-8.spl".source = pkgs.fetchurl {
+        sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
+        url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
+      };
+      "tridactyl/tridactylrc".text     = ''
+        ${builtins.readFile ../config/tridactylrc.vim}
+        set editorcmd ${pkgs.kitty}/bin/kitty -- ${pkgs.fish}/bin/fish -c "nvim %f"
+      '';
       "zk/config.toml".source          =
         let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
           alias           = {
