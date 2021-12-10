@@ -27,5 +27,4 @@ self: super: with super; {
         dependencies = [];
       });
   };
-  zk                      = callPackage ./zk.nix {};
 }
