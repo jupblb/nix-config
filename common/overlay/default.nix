@@ -22,6 +22,10 @@ self: super: with super; {
       dependencies = with vimPlugins; [ plenary-nvim ];
     });
     nvim-pqf                  = callPackage ./neovim/plugin/pqf.nix {};
+    nvim-treesitter           =
+      let grammars = builtins.filter
+        (g: g.pname != "tree-sitter-markdown-grammar") tree-sitter.allGrammars;
+      in vimPlugins.nvim-treesitter.withPlugins(_: grammars);
     telescope-fzf-native-nvim =
       vimPlugins.telescope-fzf-native-nvim.overrideAttrs(_: {
         dependencies = [];

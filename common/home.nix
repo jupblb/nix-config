@@ -133,9 +133,7 @@
           plugin = lsp_signature-nvim;
         } {
           config = "luafile ${toString ../config/neovim/lualine.lua}";
-          plugin = lualine-nvim.overrideAttrs(_: {
-            dependencies = [ vim-sleuth ];
-          });
+          plugin = lualine-nvim;
         } {
           config = "luafile ${toString ../config/neovim/luatab.lua}";
           plugin = luatab-nvim;
@@ -147,6 +145,9 @@
           plugin = neogit.overrideAttrs(old: {
             dependencies = old.dependencies ++ [ diffview-nvim ];
           });
+        } {
+          config = "luafile ${toString ../config/neovim/null-ls.lua}";
+          plugin = null-ls-nvim;
         } {
           config = "luafile ${toString ../config/neovim/bqf.lua}";
           plugin = nvim-bqf;
@@ -170,7 +171,7 @@
             luafile ${toString ../config/neovim/lspconfig.lua}
           '';
           plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ null-ls-nvim SchemaStore-nvim ];
+            dependencies = [ SchemaStore-nvim ];
           });
         } {
           config = ''
@@ -192,15 +193,12 @@
             autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f
             luafile ${toString ../config/neovim/treesitter.lua}
           '';
-          plugin =
-            let nvim-treesitter' =
-              nvim-treesitter.withPlugins(_: pkgs.tree-sitter.allGrammars);
-            in nvim-treesitter'.overrideAttrs(_: {
-              dependencies = [
-                nvim-treesitter-refactor nvim-treesitter-textobjects
-                nvim-ts-context-commentstring vim-matchup
-              ];
-            });
+          plugin = nvim-treesitter.overrideAttrs(_: {
+            dependencies = [
+              nvim-treesitter-refactor nvim-treesitter-textobjects
+              nvim-ts-context-commentstring vim-matchup
+            ];
+          });
         } {
           config = "luafile ${toString ../config/neovim/devicons.lua}";
           plugin = nvim-web-devicons;
@@ -242,7 +240,7 @@
             dependencies = [ vim-test ];
           });
         }
-        commentary git-messenger-vim surround vim-cool
+        commentary git-messenger-vim surround vim-cool vim-sleuth
       ];
       enable        = true;
       extraPackages =
