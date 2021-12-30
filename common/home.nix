@@ -246,8 +246,8 @@
       extraPackages =
         let
           default      = with pkgs; [
-            coursier fd fish go-tools gopls jq luaformatter openjdk pandoc
-            ripgrep rnix-lsp shellcheck shfmt tabnine yq-go zk
+            buildifier coursier fd fish go-tools gopls jq luaformatter openjdk
+            pandoc ripgrep rnix-lsp shellcheck shfmt statix tabnine yq-go zk
           ];
           luaPackages  = with pkgs.luaPackages; [ luacheck ];
           nodePackages = with pkgs.nodePackages; [

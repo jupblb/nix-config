@@ -25,6 +25,7 @@ bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//
 " Search engines
 set searchurls.ddg https://duckduckgo.com/html?q=%s
 set searchurls.hn https://www.google.com/search?q=site%3Anews.ycombinator.com+%s
+set searchurls.kagi https://kagi.com/search?q=%s
 set searchurls.maps https://www.google.com/maps/search/%s/
 set searchurls.r https://www.google.com/search?q=site%3Areddit.com+%s
 set searchurls.wiki https://en.wikipedia.org/w/index.php?search=%s

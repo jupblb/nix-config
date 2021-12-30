@@ -3,6 +3,7 @@ local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
         null_ls.builtins.code_actions.shellcheck,
+        null_ls.builtins.code_actions.statix,
         null_ls.builtins.diagnostics.luacheck.with({
             extra_args = {'--globals', 'vim'}
         }), --
@@ -10,7 +11,9 @@ null_ls.setup({
             extra_args = {'--disable', 'MD007', 'MD030'}
         }), --
         null_ls.builtins.diagnostics.shellcheck,
+        null_ls.builtins.diagnostics.statix,
         null_ls.builtins.diagnostics.staticcheck,
+        null_ls.builtins.formatting.buildifier,
         null_ls.builtins.formatting.fish_indent,
         null_ls.builtins.formatting.lua_format,
         null_ls.builtins.formatting.json_tool,
