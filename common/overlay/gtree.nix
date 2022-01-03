@@ -5,9 +5,9 @@ buildGoModule rec {
   src          = fetchFromGitHub {
     owner  = "kitagry";
     repo   = pname;
-    rev    = "v${version}";
-    sha256 = "1914swyja01kiyq6857by7vyra6y0v5q8iw1ch9aknsqb3pnlzqf";
+    rev    = "${version}";
+    sha256 = "0ldrl0rxs2nmxhagac68vdbd1w48f6i7cbbraaf5zzfb110famdl";
   };
   vendorSha256 = "0i2jx0dhzwci2w32sh3cynp30vm96ww7d3kmqhcpr0kf4dnavkhs";
-  version      = "0.2.1";
+  version      = "9711311";
 }

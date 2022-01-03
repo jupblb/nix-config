@@ -6,7 +6,13 @@
       "$DRY_RUN_CMD nvim --headless +UpdateRemotePlugins +quit && echo";
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs; [ ammonite git-crypt gore ripgrep zk ];
-    sessionVariables = { EDITOR = "nvim"; GOROOT = "${pkgs.go}/share/go"; };
+    sessionVariables = {
+      _ZO_FZF_OPTS =
+        let preview = "${pkgs.gtree}/bin/gtree -L=2 {2..} | head -200";
+        in "--no-sort --reverse -1 -0 --preview '${preview}'";
+      EDITOR       = "nvim";
+      GOROOT       = "${pkgs.go}/share/go";
+    };
     username         = "jupblb";
   };
 
@@ -49,7 +55,7 @@
       enable                 = true;
       changeDirWidgetCommand = "${pkgs.fd}/bin/fd --hidden --type d";
       changeDirWidgetOptions =
-        [ "--preview '${pkgs.gtree}/bin/gtree {} | head -200'" ];
+        [ "--preview '${pkgs.gtree}/bin/gtree -L=2 {} | head -200'" ];
       defaultCommand         = "${pkgs.fd}/bin/fd --hidden --type f";
       defaultOptions         = [ "--color=light" ];
       fileWidgetCommand      = "${pkgs.fd}/bin/fd --hidden --type f";
