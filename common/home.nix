@@ -16,8 +16,7 @@
     username         = "jupblb";
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg: (lib.getName pkg) == "tabnine";
-  nixpkgs.overlays                    = [ (import ./overlay) ];
+  nixpkgs.overlays = [ (import ./overlay) ];
 
   programs = {
     bash = import ../config/bash;
@@ -163,7 +162,7 @@
             luafile ${toString ../config/neovim/cmp.lua}
           '';
           plugin = nvim-cmp.overrideAttrs(_: {
-            dependencies = [ cmp-buffer cmp-nvim-lsp cmp-path cmp-tabnine ];
+            dependencies = [ cmp-buffer cmp-nvim-lsp cmp-path ];
           });
         } {
           config = "lua require('colorizer').setup({'css','lua','nix','vim'})";
@@ -252,8 +251,8 @@
       extraPackages =
         let
           default      = with pkgs; [
-            buildifier coursier fd fish go-tools gopls jq luaformatter openjdk
-            pandoc ripgrep rnix-lsp shellcheck shfmt statix tabnine yq-go zk
+            buildifier coursier fd fish gitlint go-tools gopls jq luaformatter
+            openjdk pandoc ripgrep rnix-lsp shellcheck shfmt statix yq-go zk
           ];
           luaPackages  = with pkgs.luaPackages; [ luacheck ];
           nodePackages = with pkgs.nodePackages; [

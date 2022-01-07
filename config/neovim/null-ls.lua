@@ -4,6 +4,7 @@ null_ls.setup({
     sources = {
         null_ls.builtins.code_actions.shellcheck,
         null_ls.builtins.code_actions.statix,
+        null_ls.builtins.diagnostics.gitlint,
         null_ls.builtins.diagnostics.luacheck.with({
             extra_args = {'--globals', 'vim'}
         }), --
