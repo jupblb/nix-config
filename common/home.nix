@@ -10,6 +10,7 @@
       _ZO_FZF_OPTS =
         let preview = "${pkgs.gtree}/bin/gtree -L=2 {2..} | head -200";
         in "--no-sort --reverse -1 -0 --preview '${preview}'";
+      ATUIN_NOBIND = "true";
       EDITOR       = "nvim";
       GOROOT       = "${pkgs.go}/share/go";
     };
@@ -19,6 +20,11 @@
   nixpkgs.overlays = [ (import ./overlay) ];
 
   programs = {
+    atuin = {
+      enable   = true;
+      settings = { search_mode = "fuzzy"; };
+    };
+
     bash = import ../config/bash;
 
     bat = {
@@ -43,23 +49,15 @@
         { name = "kubectl"; src = kubectl; }
         { name = "nix-env"; src = nix-env; }
       ];
-      interactiveShellInit = "theme_gruvbox light hard";
+      interactiveShellInit = ''
+        theme_gruvbox light hard
+        atuin init fish | source
+        bind \cr '_atuin_search'
+      '';
       shellAliases         = with pkgs; {
         cat  = "${bat}/bin/bat -p --paging=never";
         less = "${bat}/bin/bat -p --paging=always";
       };
-    };
-
-    fzf = {
-      enable                 = true;
-      changeDirWidgetCommand = "${pkgs.fd}/bin/fd --hidden --type d";
-      changeDirWidgetOptions =
-        [ "--preview '${pkgs.gtree}/bin/gtree -L=2 {} | head -200'" ];
-      defaultCommand         = "${pkgs.fd}/bin/fd --hidden --type f";
-      defaultOptions         = [ "--color=light" ];
-      fileWidgetCommand      = "${pkgs.fd}/bin/fd --hidden --type f";
-      fileWidgetOptions      =
-        [ "--preview '${pkgs.bat}/bin/bat --color=always -pp {}'" ];
     };
 
     git = import ../config/git.nix;
