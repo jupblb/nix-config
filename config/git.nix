@@ -8,7 +8,6 @@
     enable  = true;
     options = {
       line-numbers            = true;
-      line-numbers-zero-style = "#3c3836";
       minus-emph-style        = "syntax #fa9f86";
       minus-style             = "syntax #f9d8bc";
       plus-emph-style         = "syntax #d9d87f";

@@ -26,7 +26,7 @@
 
     nixpkgs.config.packageOverrides = _:
       let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      in (import (fetchTarball t) {});
+      in import (fetchTarball t) {};
     nixpkgs.overlays                = [
       (self: super: { fish-foreign-env = pkgs.fishPlugins.foreign-env; })
     ];

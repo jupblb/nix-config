@@ -1,8 +1,7 @@
 {
   allow_remote_control          = "yes";
   background                    = "#f9f5d7";
-  clipboard_control             =
-    "write-clipboard write-primary no-append";
+  clipboard_control             = "write-clipboard write-primary no-append";
   enabled_layouts               = "splits";
   enable_audio_bell             = "no";
   foreground                    = "#282828";
