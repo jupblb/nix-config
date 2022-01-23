@@ -14,8 +14,6 @@
     supportedFilesystems            = [ "zfs" ];
   };
 
-  environment.systemPackages = with pkgs; [ wol ];
-
   fileSystems = {
     "/"              = {
       device = "/dev/disk/by-label/nixos";

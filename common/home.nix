@@ -77,9 +77,8 @@
     kitty = {
       enable      = true;
       font        = {
-        name    = "PragmataPro Mono Liga";
-        package = pkgs.pragmata-pro;
-        size    = 10;
+        name = "PragmataPro Mono Liga";
+        size = 10;
       };
       keybindings = import ../config/kitty/keybindings.nix;
       settings    = (import ../config/kitty/settings.nix) // {

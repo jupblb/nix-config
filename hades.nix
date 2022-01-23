@@ -127,11 +127,6 @@
         ATTR{authorized}="0"
     '';
 
-    wakeonlan.interfaces = [ {
-      interface = "eno2";
-      method    = "magicpacket";
-    } ];
-
     xserver = {
       enable                            = true;
       desktopManager.gnome.enable      = true;
