@@ -5,7 +5,7 @@
     activation.nvim  = lib.hm.dag.entryAfter ["writeBoundary"]
       "$DRY_RUN_CMD nvim --headless +UpdateRemotePlugins +quit && echo";
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
-    packages         = with pkgs; [ ammonite git-crypt gore ripgrep zk ];
+    packages         = with pkgs; [ ammonite git-crypt gore httpie ripgrep zk ];
     sessionVariables = {
       _ZO_FZF_OPTS =
         let preview = "${pkgs.gtree}/bin/gtree -L=2 {2..} | head -200";
@@ -248,8 +248,9 @@
       extraPackages =
         let
           default      = with pkgs; [
-            buildifier coursier fd fish gitlint go-tools gopls jq luaformatter
-            openjdk pandoc ripgrep rnix-lsp shellcheck shfmt statix yq-go zk
+            buildifier cargo coursier fd fish gitlint go-tools gopls jq
+            luaformatter openjdk pandoc ripgrep rnix-lsp rust-analyzer rustc
+            shellcheck shfmt statix yq-go zk
           ];
           luaPackages  = with pkgs.luaPackages; [ luacheck ];
           nodePackages = with pkgs.nodePackages; [

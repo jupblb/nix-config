@@ -34,7 +34,7 @@ lspconfig.util.default_config = vim.tbl_extend('force',
 })
 
 -- other LSPs
-local default_servers = {'bashls', 'dockerls', 'rnix'}
+local default_servers = {'bashls', 'dockerls', 'rnix', 'rust_analyzer'}
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
 lspconfig.jsonls.setup({

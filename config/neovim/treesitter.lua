@@ -1,6 +1,7 @@
 require('nvim-treesitter.configs').setup({
     context_commentstring = {enable = true},
-    highlight = {enable = true, disable = {"go", "yaml"}},
+    ensure_installed = "maintained",
+    highlight = {enable = true, disable = {"yaml"}},
     incremental_selection = {
         enable = true,
         keymaps = {

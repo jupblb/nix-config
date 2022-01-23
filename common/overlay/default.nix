@@ -1,7 +1,7 @@
 self: super: with super; {
   ammonite                = ammonite // {
     predef = pkgs.fetchurl {
-      url    = https://git.io/vHaKQ;
+      url    = "https://git.io/vHaKQ";
       sha256 = "1kir3j5z3drkihx1hysdcmjaiacz840qpwbz70v4k62jr95mz3jp";
     };
   };
@@ -15,17 +15,13 @@ self: super: with super; {
     nix-env = callPackage ./fish/plugin/nix-env.nix {};
   };
   gtree                   = callPackage ./gtree.nix {};
-  lf                      = callPackage ./lf { lf = super.lf; };
+  lf                      = callPackage ./lf { inherit (super) lf; };
   pragmata-pro            = callPackage ./pragmata-pro {};
   vimPlugins              = vimPlugins // {
     null-ls-nvim              = vimPlugins.null-ls-nvim.overrideAttrs(_: {
       dependencies = with vimPlugins; [ plenary-nvim ];
     });
     nvim-pqf                  = callPackage ./neovim/plugin/pqf.nix {};
-    nvim-treesitter           =
-      let grammars = builtins.filter
-        (g: g.pname != "tree-sitter-markdown-grammar") tree-sitter.allGrammars;
-      in vimPlugins.nvim-treesitter.withPlugins(_: grammars);
     telescope-fzf-native-nvim =
       vimPlugins.telescope-fzf-native-nvim.overrideAttrs(_: {
         dependencies = [];
