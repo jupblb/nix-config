@@ -54,20 +54,18 @@
       enable                 = true;
       changeDirWidgetCommand = "${pkgs.fd}/bin/fd --hidden --type d";
       changeDirWidgetOptions = [
-        "--height=100%"
         "--preview '${pkgs.gtree}/bin/gtree -L=2 {} | head -200'"
       ];
       defaultCommand         = "${pkgs.fd}/bin/fd --hidden --type f";
       defaultOptions         = [ "--color=light" ];
       fileWidgetCommand      = "${pkgs.fd}/bin/fd --hidden --type f";
       fileWidgetOptions      = [
-        "--height=100%"
         "--preview '${pkgs.bat}/bin/bat --color=always -pp {}'"
       ];
       historyWidgetOptions   = [
-        "--height=100%"
+        "--bind ctrl-e:preview-down,ctrl-y:preview-up"
         "--preview='echo -- {1..} | fish_indent --ansi'"
-        "--preview-window='bottom:9:wrap'"
+        "--preview-window='bottom:3:wrap'"
         "--reverse"
       ];
     };
