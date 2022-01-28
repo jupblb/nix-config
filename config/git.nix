@@ -1,6 +1,6 @@
 {
   aliases     = {
-    amend = "commit -a --amend --no-edit";
+    amend = "commit --amend --no-edit";
     line  = "!sh -c 'git log -L$2,+1:\${GIT_PREFIX:-./}$1' -";
     lines = "!sh -c 'git log -L$2,$3:\${GIT_PREFIX:-./}$1' -";
   };

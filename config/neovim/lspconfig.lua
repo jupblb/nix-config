@@ -1,6 +1,9 @@
 local lspconfig = require("lspconfig")
 local lsp_status = require("lsp-status")
 
+-- Disable virtual text for errors
+vim.diagnostic.config({virtual_text = false})
+
 -- Replace default signs
 local signs = {
     Error = ' ',
