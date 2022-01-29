@@ -282,8 +282,9 @@
     starship = import ../config/starship.nix;
 
     zoxide = {
-      enable  = true;
-      options = [ "--cmd cd" ];
+      enable                = true;
+      enableBashIntegration = false;
+      options               = [ "--cmd cd" ];
     };
   };
 

@@ -14,6 +14,8 @@
     supportedFilesystems            = [ "zfs" ];
   };
 
+  environment.systemPackages   = with pkgs; [ python3Packages.subliminal ];
+
   fileSystems = {
     "/"              = {
       device = "/dev/disk/by-label/nixos";
