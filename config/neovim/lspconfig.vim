@@ -1,8 +1,6 @@
 autocmd ColorScheme * highlight NormalFloat guibg=#fbf1c7
 autocmd ColorScheme * highlight FloatBorder guifg=#282828 guibg=#fbf7c7
 
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})
-
 nmap gD          <Cmd>lua vim.lsp.buf.declaration()<CR>
 nmap <C-]>       <Cmd>lua vim.lsp.buf.definition()<CR>
 nmap <Leader>lD  <Cmd>lua vim.lsp.buf.definition()<CR>

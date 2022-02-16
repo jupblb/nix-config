@@ -18,13 +18,17 @@ self: super: with super; {
   lf                      = callPackage ./lf { inherit (super) lf; };
   pragmata-pro            = callPackage ./pragmata-pro {};
   vimPlugins              = vimPlugins // {
-    null-ls-nvim              = vimPlugins.null-ls-nvim.overrideAttrs(_: {
+    cmp-nvim-lsp-signature-help =
+      callPackage ./neovim/plugin/cmp-nvim-lsp-signature-help.nix {};
+    null-ls-nvim                = vimPlugins.null-ls-nvim.overrideAttrs(_: {
       dependencies = with vimPlugins; [ plenary-nvim ];
     });
-    nvim-pqf                  = callPackage ./neovim/plugin/pqf.nix {};
-    telescope-fzf-native-nvim =
+    nvim-pqf                    = callPackage ./neovim/plugin/pqf.nix {};
+    telescope-fzf-native-nvim   =
       vimPlugins.telescope-fzf-native-nvim.overrideAttrs(_: {
         dependencies = [];
       });
+    telescope-tele-tabby-nvim   =
+      callPackage ./neovim/plugin/telescope-tele-tabby.nix {};
   };
 }

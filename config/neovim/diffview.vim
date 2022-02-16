@@ -1,5 +1,4 @@
-nmap <Leader>gg <Cmd>Neogit<CR>
-nmap <Leader>gs <Cmd>Neogit<CR>
+lua require('diffview').setup({enhanced_diff_hl = true})
 
 nmap <Leader>gdd <Cmd>DiffviewOpen<CR>
 nmap <Leader>gdo <Cmd>DiffviewOpen<CR>

@@ -5,9 +5,6 @@ null_ls.setup({
         null_ls.builtins.code_actions.shellcheck,
         null_ls.builtins.code_actions.statix,
         null_ls.builtins.diagnostics.gitlint,
-        null_ls.builtins.diagnostics.luacheck.with({ --
-            extra_args = {'--globals', 'vim'}
-        }), --
         -- https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
         null_ls.builtins.diagnostics.markdownlint.with({
             extra_args = {'--disable', 'MD007', 'MD030', 'MD034'}

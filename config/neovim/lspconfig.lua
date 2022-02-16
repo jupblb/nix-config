@@ -52,6 +52,9 @@ lspconfig.jsonls.setup({
     settings = {json = {schemas = require('schemastore').json.schemas()}}
 })
 
+local luadev = require("lua-dev").setup({runtime_path=true})
+lspconfig.sumneko_lua.setup(luadev)
+
 if vim.fn.getcwd():find('/notes/') ~= nil then lspconfig.zk.setup({}) end
 
 if vim.fn.getcwd():find('/google/') == nil then

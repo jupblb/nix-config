@@ -132,58 +132,45 @@
           config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
           plugin = bufdelete-nvim;
         } {
+          config = "source ${toString ../config/neovim/diffview.vim}";
+          plugin = diffview-nvim;
+        } {
           config = "source ${toString ../config/neovim/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
           config = "source ${toString ../config/neovim/hop.vim}";
           plugin = hop-nvim;
         } {
+          config = "lua require('lsp_lines').register_lsp_virtual_lines()";
+          plugin = lsp_lines-nvim;
+        } {
           config = "luafile ${toString ../config/neovim/lsp-status.lua}";
           plugin = lsp-status-nvim;
-        } {
-          config = "lua require('lsp_signature').setup({hint_enable = false})";
-          plugin = lsp_signature-nvim;
         } {
           config = "luafile ${toString ../config/neovim/lualine.lua}";
           plugin = lualine-nvim;
         } {
-          config = "luafile ${toString ../config/neovim/luatab.lua}";
-          plugin = luatab-nvim;
-        } {
-          config = ''
-            source ${toString ../config/neovim/neogit.vim}
-            luafile ${toString ../config/neovim/neogit.lua}
-          '';
-          plugin = neogit.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [ diffview-nvim ];
-          });
-        } {
           config = "luafile ${toString ../config/neovim/null-ls.lua}";
           plugin = null-ls-nvim;
-        } {
-          config = "luafile ${toString ../config/neovim/bqf.lua}";
-          plugin = nvim-bqf;
         } {
           config = ''
             set completeopt=menu,menuone,noselect
             luafile ${toString ../config/neovim/cmp.lua}
           '';
           plugin = nvim-cmp.overrideAttrs(_: {
-            dependencies = [ cmp-buffer cmp-nvim-lsp cmp-path ];
+            dependencies =
+              [ cmp-buffer cmp-nvim-lsp cmp-nvim-lsp-signature-help cmp-path ];
           });
         } {
           config = "lua require('colorizer').setup({'css','lua','nix','vim'})";
           plugin = nvim-colorizer-lua;
-        } {
-          config = "luafile ${toString ../config/neovim/jqx.lua}";
-          plugin = nvim-jqx;
         } {
           config = ''
             source ${toString ../config/neovim/lspconfig.vim}
             luafile ${toString ../config/neovim/lspconfig.lua}
           '';
           plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ SchemaStore-nvim ];
+            dependencies = [ lua-dev-nvim SchemaStore-nvim ];
           });
         } {
           config = ''
@@ -222,7 +209,8 @@
           plugin = telescope-nvim.overrideAttrs(old: {
             dependencies = old.dependencies ++ [
               nvim-neoclip-lua telescope-fzf-native-nvim
-              telescope-lsp-handlers-nvim telescope-vim-bookmarks-nvim
+              telescope-lsp-handlers-nvim telescope-tele-tabby-nvim
+              telescope-vim-bookmarks-nvim
            ];
           });
         } {
@@ -235,9 +223,6 @@
           config = "let g:gh_line_blame_map_default = 0";
           plugin = vim-gh-line;
         } {
-          config = "source ${toString ../config/neovim/grepper.vim}";
-          plugin = vim-grepper;
-        } {
           config = "source ${toString ../config/neovim/markdown.vim}";
           plugin = vim-markdown;
         } {
@@ -246,11 +231,6 @@
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
-        } {
-          config = "source ${toString ../config/neovim/ultest.vim}";
-          plugin = vim-ultest.overrideAttrs(_: {
-            dependencies = [ vim-test ];
-          });
         }
         commentary git-messenger-vim surround vim-cool vim-sleuth
       ];
@@ -258,16 +238,15 @@
       extraPackages =
         let
           default      = with pkgs; [
-            buildifier cargo coursier fd fish gitlint go-tools gopls jq
+            buildifier cargo coursier fd fish gitlint go-tools gopls
             luaformatter openjdk pandoc ripgrep rnix-lsp rust-analyzer rustc
-            shellcheck shfmt statix yq-go zk
+            shellcheck shfmt statix sumneko-lua-language-server zk
           ];
-          luaPackages  = with pkgs.luaPackages; [ luacheck ];
           nodePackages = with pkgs.nodePackages; [
             bash-language-server dockerfile-language-server-nodejs
             markdownlint-cli pyright vscode-json-languageserver
           ];
-        in default ++ luaPackages ++ nodePackages;
+        in default ++ nodePackages;
       vimAlias      = true;
       vimdiffAlias  = true;
       withNodeJs    = false;
