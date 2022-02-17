@@ -10,7 +10,6 @@ self: super: with super; {
     in (import (builtins.fetchTarball url)).default;
   fishPlugins             = fishPlugins // {
     gcloud  = callPackage ./fish/plugin/gcloud.nix {};
-    gruvbox = callPackage ./fish/plugin/gruvbox.nix {};
     kubectl = callPackage ./fish/plugin/kubectl.nix {};
     nix-env = callPackage ./fish/plugin/nix-env.nix {};
   };

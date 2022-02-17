@@ -21,30 +21,23 @@
   programs = {
     bash = import ../config/bash;
 
-    bat = {
-      config = { theme = "gruvbox-light"; };
-      enable = true;
-    };
-
     exa.enable = true;
 
     firefox = import ../config/firefox.nix;
 
     fish = {
-      enable               = true;
-      functions            = {
+      enable       = true;
+      functions    = {
         fish_greeting =
           "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
         ls            = builtins.readFile ../config/script/exa.fish;
       };
-      plugins              = with pkgs.fishPlugins; [
+      plugins      = with pkgs.fishPlugins; [
         { name = "gcloud"; src = gcloud; }
-        { name = "gruvbox"; src = gruvbox; }
         { name = "kubectl"; src = kubectl; }
         { name = "nix-env"; src = nix-env; }
       ];
-      interactiveShellInit = "theme_gruvbox light hard";
-      shellAliases         = with pkgs; {
+      shellAliases = with pkgs; {
         cat  = "${bat}/bin/bat -p --paging=never";
         less = "${bat}/bin/bat -p --paging=always";
       };
@@ -86,6 +79,7 @@
 
     kitty = {
       enable      = true;
+      environment = { BAT_THEME = "gruvbox-light"; };
       font        = {
         name = "PragmataPro Mono Liga";
         size = 10;
@@ -95,6 +89,7 @@
         env   = "SHELL=${pkgs.fish}/bin/fish";
         shell = "${pkgs.fish}/bin/fish";
       };
+      theme       = "Gruvbox Light Hard";
     };
 
     lf = {

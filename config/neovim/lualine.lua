@@ -3,11 +3,7 @@ local function metals_status() return vim.g["metals_status"] or "" end
 
 require('lualine').setup({
     extensions = {'nvim-tree', 'quickfix'},
-    options = {
-        component_separators = '|',
-        section_separators = '',
-        theme = 'gruvbox-material'
-    },
+    options = {component_separators = '|', section_separators = ''},
     sections = {
         lualine_b = {
             {'branch', icon = ''}, {
