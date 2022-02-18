@@ -68,22 +68,6 @@
         enable         = true;
         pinentryFlavor = "gnome3";
       };
-
-      spotifyd = {
-        enable          = true;
-        package         = pkgs.spotifyd.override {
-          withMpris = true;
-          withPulseAudio = true;
-        };
-        settings.global = {
-          backend     = "pulseaudio";
-          bitrate     = "320";
-          device_name = "hades";
-          password    = builtins.readFile ./config/spotify.key;
-          use_mpris   = "true";
-          username    = "mpkielbowicz@gmail.com";
-        };
-      };
     };
   };
 

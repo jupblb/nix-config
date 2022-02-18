@@ -30,6 +30,8 @@
     nixpkgs.overlays                = [
       (self: super: { fish-foreign-env = pkgs.fishPlugins.foreign-env; })
     ];
+
+    programs.neovim.extraPackages = with pkgs; [ gcc ];
   };
 
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
@@ -69,6 +71,7 @@
     fstrim.enable = true;
 
     openssh = {
+      extraConfig            = "AcceptEnv BAT_THEME";
       openFirewall           = true;
       enable                 = true;
       passwordAuthentication = false;

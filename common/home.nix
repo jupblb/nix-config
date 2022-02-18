@@ -142,7 +142,10 @@
           config = "luafile ${toString ../config/neovim/lsp-status.lua}";
           plugin = lsp-status-nvim;
         } {
-          config = "luafile ${toString ../config/neovim/lualine.lua}";
+          config = ''
+            set noshowmode
+            luafile ${toString ../config/neovim/lualine.lua}
+          '';
           plugin = lualine-nvim;
         } {
           config = "luafile ${toString ../config/neovim/null-ls.lua}";

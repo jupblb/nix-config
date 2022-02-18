@@ -14,7 +14,11 @@
     supportedFilesystems            = [ "zfs" ];
   };
 
-  environment.systemPackages   = with pkgs; [ python3Packages.subliminal ];
+  environment = {
+    interactiveShellInit =
+      "echo \"Syncthing is $(systemctl is-active syncthing)\"";
+    systemPackages       = with pkgs; [ python3Packages.subliminal ];
+  };
 
   fileSystems = {
     "/"              = {
@@ -24,6 +28,7 @@
     "/backup"        = {
       device  = "backup";
       fsType  = "zfs";
+      options = [ "noauto" ];
     };
     "/boot"          = {
       device = "/dev/disk/by-uuid/E668-E8D2";
@@ -34,7 +39,7 @@
       fsType = "ext4";
     };
     "/nfs/downloads" = {
-      device  = "/home/jupblb/Downloads";
+      device  = "/data/downloads";
       fsType  = "none";
       options = [ "bind" ];
     };
@@ -53,18 +58,25 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   home-manager.users.jupblb = {
-    programs = { mercurial.enable = lib.mkForce false; };
+    programs = {
+      fish.functions   = {
+        zfs-backup-unlock =
+          builtins.readFile ./config/script/zfs-backup-unlock.fish;
+      };
+      mercurial.enable = lib.mkForce false;
+    };
   };
 
   imports = [ ./common/nixos.nix ];
 
   networking = {
     defaultGateway            = "192.168.1.1";
+    domain                    = "kielbowi.cz";
     firewall.allowedTCPPorts  = [
-      53 67 80 111 443 2049 2267 4000 4001 4002 8181 22067 22070
+      53 67 68 80 111 443 2049 2267 4000 4001 4002 8181 22067 22070
     ];
     firewall.allowedUDPPorts  = [
-      53 67 80 111 443 2049 4000 4001 4002 22067 22070
+      53 67 68 80 111 443 2049 4000 4001 4002 22067 22070
     ];
     interfaces.enp8s0.ipv4    = {
       addresses = [ { address = "192.168.1.4"; prefixLength = 24; } ];
@@ -79,53 +91,60 @@
   programs.gnupg.agent.pinentryFlavor = "curses";
 
   services = {
-    dnsmasq = {
-      enable              = true;
-      extraConfig         =
-        let git = "https://github.com/notracking/hosts-blocklists/raw/master";
-        in ''
-          ${builtins.readFile ./config/dnsmasq.conf}
-          conf-file=${builtins.fetchurl "${git}/dnsmasq/dnsmasq.blacklist.txt"}
-        '';
-      resolveLocalQueries = false;
-      servers             = [ "1.1.1.1" "8.8.8.8" ];
+    adguardhome = {
+      enable       = true;
+      openFirewall = true;
     };
 
-    nginx = {
+    caddy = {
+      email        = "caddy@kielbowi.cz";
       enable       = true;
-      virtualHosts = {
-        home = {
-          locations = {
-            "/nfs/"         = {
-              alias       = "/nfs/";
-              extraConfig = "autoindex on;";
-            };
-            "/emanote/"     = {
-              alias       = "/srv/emanote/";
-              extraConfig = "autoindex on;";
-              index       = "index.html";
-            };
-            "/plex" = {
-              proxyPass = "http://127.0.0.1/web";
-            };
-            "/syncthing/"   = {
-              extraConfig = "proxy_set_header Host localhost;";
-              proxyPass   = "http://127.0.0.1:8384/";
-            };
-            "/transmission" = {
-              proxyPass = "http://127.0.0.1:9091/transmission";
-            };
-            "/web/" = {
-              proxyPass = "http://127.0.0.1:32400";
-            };
+      virtualHosts =
+        let
+          basicauth = ''
+            basicauth {
+              ${secret.login} ${secret.password}
+            }
+          '';
+          secret    = (import ./config/secret.nix).caddy;
+        in {
+          "dionysus.kielbowi.cz"     = {
+            extraConfig   = "respond \"Hello, world!\"";
+            serverAliases = [ "www.dionysus.kielbowi.cz" ];
+          };
+          "notes.kielbowi.cz"        = {
+            extraConfig   = basicauth + ''
+              file_server browse {
+                root /srv/emanote
+              }
+            '';
+            serverAliases = [ "www.notes.kielbowi.cz" ];
+          };
+          "plex.kielbowi.cz"         = {
+            extraConfig   = "reverse_proxy http://localhost:32400";
+            serverAliases = [ "www.plex.kielbowi.cz" ];
+          };
+          "swps.kielbowi.cz"         = {
+            extraConfig   = ''
+              file_server browse {
+                root /srv/emanote-swps
+              }
+            '';
+            serverAliases = [ "www.swps.kielbowi.cz" ];
+          };
+          "syncthing.kielbowi.cz"    = {
+            extraConfig   = basicauth + ''
+              reverse_proxy http://localhost:8384 {
+                header_up Host localhost
+                header_up X-Forwarded-Host syncthing.kielbowi.cz
+              }
+            '';
+            serverAliases = [ "www.syncthing.kielbowi.cz" ];
+          };
+          "transmission.kielbowi.cz" = {
+            extraConfig = basicauth + "reverse_proxy http://127.0.0.1:9091";
           };
         };
-        swps = {
-          extraConfig = "autoindex on;";
-          listen      = [ { addr = "0.0.0.0"; port = 2267; } ];
-          root        = "/srv/emanote-swps";
-        };
-      };
     };
 
     nfs.server = {
@@ -147,6 +166,30 @@
       openFirewall = true;
     };
 
+    rss2email = {
+      config = {
+        "DATE-HEADER" = 1;
+        "DIGEST"      = 1;
+        "FROM"        = "mailgun@kielbowi.cz";
+        "HTML-MAIL"   = 1;
+      };
+      enable = true;
+      feeds  = {
+        "bartosz-ciechanowski" = { url = "https://ciechanow.ski/atom.xml"; };
+        "console-interviews"   = {
+          url = "https://console.dev/interviews/rss.xml";
+        };
+        "console-tools"        = { url = "https://console.dev/tools/rss.xml"; };
+        "drew-devault"         = { url = "https://drewdevault.com/feed.xml"; };
+        "jonathan-turner"      = { url = "https://www.jntrnr.com/atom.xml"; };
+        "kubernetes"           = { url = "https://kubernetes.io/feed.xml"; };
+        "nick-case"            = { url = "http://blog.ncase.me/rss/"; };
+        "the-morning-paper"    = { url = "http://blog.acolyer.org/feed/"; };
+        "xkcd"                 = { url = "http://xkcd.com/rss.xml"; };
+      };
+      to     = "rss@kielbowi.cz";
+    };
+
     smartd = {
       autodetect    = false;
       devices       = [
@@ -159,16 +202,18 @@
       extraOptions  = [ "--interval=7200" "-A /var/log/smartd/" ];
       notifications = {
         mail.enable    = true;
-        mail.recipient = "mpkielbowicz@gmail.com";
-        test           = true;
+        mail.recipient = "dionysus@kielbowi.cz";
+        wall.enable    = false;
       };
     };
 
-    ssmtp = {
-      authPassFile = toString ./config/gmail.key;
-      authUser     = "mpkielbowicz@gmail.com";
+    ssmtp = let cfg = (import ./config/secret.nix).mailgun; in {
+      authPassFile =
+        toString(pkgs.writeText "mailgun-password" cfg.password);
+      authUser     = cfg.login;
+      domain       = "kielbowi.cz";
       enable       = true;
-      hostName     = "smtp.gmail.com:587";
+      hostName     = "smtp.eu.mailgun.org:587";
       useSTARTTLS  = true;
       useTLS       = true;
     };
@@ -216,10 +261,14 @@
     transmission = {
       enable       = true;
       group        = "users";
-      home         = "/home/jupblb";
       openFirewall = true;
-      settings     = { ratio-limit = 0; ratio-limit-enabled = true; };
-      user         = "jupblb";
+      settings     = {
+        download-dir        = "/data/downloads";
+        incomplete-dir      = "/data/downloads/.incomplete";
+        ratio-limit         = 0;
+        ratio-limit-enabled = true;
+        rpc-host-whitelist  = "transmission.kielbowi.cz";
+      };
     };
 
     zfs.autoScrub = {
@@ -234,22 +283,7 @@
   };
 
   systemd.services = {
-    checkip = {
-      after         = [ "network.target" ];
-      description   = "Public IP checker";
-      script        = with pkgs; ''
-        ${curl}/bin/curl ipinfo.io/ip >> ~/ip.txt
-        ${gawk}/bin/awk '!seen[$0]++' ~/ip.txt > ~/ip.txt.next
-        mv ~/ip.txt.next ~/ip.txt
-      '';
-      serviceConfig = {
-        ProtectSystem = "full";
-        Type          = "oneshot";
-        User          = "jupblb";
-      };
-      startAt       = "*:0/15";
-    };
-    emanote = {
+    emanote    = {
       after         = [ "network.target" ];
       description   = "Emanote";
       path          = with pkgs; [ emanote findutils gnused ];
@@ -257,6 +291,20 @@
       serviceConfig = { Type = "oneshot"; User = "root"; };
       startAt       = "*:0/15";
     };
+    ip-updater = {
+      after         = [ "network.target" ];
+      description   = "Public IP updater";
+      environment   = (import ./config/secret.nix).ovh;
+      path          = with pkgs; [ curl gawk ];
+      script        = builtins.readFile ./config/script/ip-updater.sh;
+      serviceConfig = {
+        ProtectSystem = "full";
+        Type          = "oneshot";
+        User          = "jupblb";
+      };
+      startAt       = "*:0/5";
+    };
+    syncthing  = { wantedBy = lib.mkForce []; };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];

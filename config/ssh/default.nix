@@ -6,14 +6,20 @@
   forwardAgent        = true;
   matchBlocks         =
     let config = {
-      hostname       = "jupblb.ddns.net";
       identitiesOnly = true;
       identityFile   = [ (toString ./id_ed25519) ];
+      sendEnv        = [ "BAT_THEME" ];
     };
     in {
-      dionysus     = config // { port = 1995; };
+      dionysus     = config // {
+        hostname = "dionysus.kielbowi.cz";
+        port     = 1995;
+      };
       "github.com" = config // { hostname = "github.com"; };
-      hades        = config // { port = 1993; };
+      hades        = config // {
+        hostname = "dionysus.kielbowi.cz";
+        port     = 1993;
+      };
     };
   serverAliveInterval = 30;
 }
