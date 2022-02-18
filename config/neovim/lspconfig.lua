@@ -29,11 +29,16 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup
+local lsp_attach = function(client)
+    vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
+    lsp_status.on_attach(client)
+end
+
 lspconfig.util.default_config = vim.tbl_extend('force',
                                                lspconfig.util.default_config, {
     capabilities = lsp_status.capabilities,
     flags = {debounce_text_changes = 150},
-    on_attach = lsp_status.on_attach
+    on_attach = lsp_attach
 })
 
 -- other LSPs
@@ -52,7 +57,7 @@ lspconfig.jsonls.setup({
     settings = {json = {schemas = require('schemastore').json.schemas()}}
 })
 
-local luadev = require("lua-dev").setup({runtime_path=true})
+local luadev = require("lua-dev").setup({runtime_path = true})
 lspconfig.sumneko_lua.setup(luadev)
 
 if vim.fn.getcwd():find('/notes/') ~= nil then lspconfig.zk.setup({}) end
