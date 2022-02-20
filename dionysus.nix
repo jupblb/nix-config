@@ -108,6 +108,14 @@
           '';
           secret    = (import ./config/secret.nix).caddy;
         in {
+          "blog.kielbowi.cz"         = {
+            extraConfig   = ''
+              file_server browse {
+                root /srv/blog
+              }
+            '';
+            serverAliases = [ "www.blog.kielbowi.cz" ];
+          };
           "dionysus.kielbowi.cz"     = {
             extraConfig   = "respond \"Hello, world!\"";
             serverAliases = [ "www.dionysus.kielbowi.cz" ];
@@ -288,6 +296,14 @@
       description   = "Emanote";
       path          = with pkgs; [ emanote findutils gnused ];
       script        = builtins.readFile ./config/script/emanote.sh;
+      serviceConfig = { Type = "oneshot"; User = "root"; };
+      startAt       = "*:0/15";
+    };
+    hugo       = {
+      after         = [ "network.target" ];
+      description   = "Hugo blog generator";
+      path          = with pkgs; [ git hugo ];
+      script        = builtins.readFile ./config/script/hugo.sh;
       serviceConfig = { Type = "oneshot"; User = "root"; };
       startAt       = "*:0/15";
     };
