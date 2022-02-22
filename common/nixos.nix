@@ -97,8 +97,8 @@
         "domci/Downloads".devices  = [ "dionysus" "domci-mac" ];
         "domci/Pictures".devices   = [ "dionysus" "domci-mac" ];
         "domci/Videos".devices     = [ "dionysus" "domci-mac" ];
-        "jupblb/Documents".devices = [ "artemis" "dionysus" "hades"];
-        "jupblb/Pictures".devices  = [ "dionysus" "hades" ];
+        "jupblb/Documents".devices = [ "artemis" "dionysus" "hades" ];
+        "jupblb/Pictures".devices  = [ "artemis" "dionysus" "hades" ];
       };
       group               = "users";
       openDefaultPorts    = true;
