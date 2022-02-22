@@ -5,7 +5,8 @@
     activation.nvim  = lib.hm.dag.entryAfter ["writeBoundary"]
       "$DRY_RUN_CMD nvim --headless +UpdateRemotePlugins +quit && echo";
     file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
-    packages         = with pkgs; [ ammonite git-crypt gore httpie ripgrep zk ];
+    packages         = with pkgs;
+      [ ammonite git-crypt gore httpie hugo ripgrep zk ];
     sessionVariables = {
       _ZO_FZF_OPTS =
         let preview = "${pkgs.gtree}/bin/gtree -L=2 {2..} | head -200";
