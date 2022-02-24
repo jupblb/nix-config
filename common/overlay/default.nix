@@ -19,6 +19,7 @@ self: super: with super; {
   vimPlugins              = vimPlugins // {
     cmp-nvim-lsp-signature-help =
       callPackage ./neovim/plugin/cmp-nvim-lsp-signature-help.nix {};
+    gkeep-nvim                  = callPackage ./neovim/plugin/gkeep.nix {};
     null-ls-nvim                = vimPlugins.null-ls-nvim.overrideAttrs(_: {
       dependencies = with vimPlugins; [ plenary-nvim ];
     });

@@ -31,5 +31,5 @@ let g:nvim_tree_show_icons = {
 let g:nvim_tree_width = 42
 let g:nvim_tree_width_allow_resize = 1
 
-nmap <Leader>t :NvimTreeToggle<CR>
-nmap <Leader>T :NvimTreeFindFile<CR>
+nmap <Leader>t <Cmd>NvimTreeToggle<CR>
+nmap <Leader>T <Cmd>NvimTreeFindFile<CR>

@@ -131,6 +131,9 @@
           config = "source ${toString ../config/neovim/diffview.vim}";
           plugin = diffview-nvim;
         } {
+          config = "source ${toString ../config/neovim/gkeep.vim}";
+          plugin = gkeep-nvim;
+        } {
           config = "source ${toString ../config/neovim/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
