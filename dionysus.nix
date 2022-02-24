@@ -285,10 +285,7 @@
     };
   };
 
-  system = {
-    autoUpgrade  = { allowReboot = true; enable = true; };
-    stateVersion = "20.09";
-  };
+  system.stateVersion = "20.09";
 
   systemd.services = {
     emanote    = {
