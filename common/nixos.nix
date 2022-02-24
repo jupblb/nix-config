@@ -93,12 +93,14 @@
           "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
       };
       folders             = {
+        "calibre".devices          = [ "dionysus" ];
         "domci/Documents".devices  = [ "dionysus" "domci-mac" ];
         "domci/Downloads".devices  = [ "dionysus" "domci-mac" ];
         "domci/Pictures".devices   = [ "dionysus" "domci-mac" ];
         "domci/Videos".devices     = [ "dionysus" "domci-mac" ];
         "jupblb/Documents".devices = [ "artemis" "dionysus" "hades" ];
         "jupblb/Pictures".devices  = [ "artemis" "dionysus" "hades" ];
+        "paperless".devices        = [ "dionysus" ];
       };
       group               = "users";
       openDefaultPorts    = true;

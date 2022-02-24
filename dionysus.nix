@@ -116,6 +116,10 @@
             '';
             serverAliases = [ "www.blog.kielbowi.cz" ];
           };
+          "calibre.kielbowi.cz"    = {
+            extraConfig   = "reverse_proxy http://localhost:8083";
+            serverAliases = [ "www.calibre.kielbowi.cz" ];
+          };
           "dionysus.kielbowi.cz"     = {
             extraConfig   = "respond \"Hello, world!\"";
             serverAliases = [ "www.dionysus.kielbowi.cz" ];
@@ -128,9 +132,17 @@
             '';
             serverAliases = [ "www.notes.kielbowi.cz" ];
           };
+          "paperless.kielbowi.cz"    = {
+            extraConfig   = "reverse_proxy http://localhost:28981";
+            serverAliases = [ "www.paperless.kielbowi.cz" ];
+          };
           "plex.kielbowi.cz"         = {
             extraConfig   = "reverse_proxy http://localhost:32400";
             serverAliases = [ "www.plex.kielbowi.cz" ];
+          };
+          "shiori.kielbowi.cz"       = {
+            extraConfig   = "reverse_proxy http://localhost:8080";
+            serverAliases = [ "www.shiori.kielbowi.cz" ];
           };
           "swps.kielbowi.cz"         = {
             extraConfig   = ''
@@ -155,6 +167,16 @@
         };
     };
 
+    calibre-web = {
+      enable  = true;
+      group   = "users";
+      options = {
+        calibreLibrary       = "/backup/calibre";
+        enableBookConversion = true;
+        enableBookUploading  = true;
+      };
+    };
+
     nfs.server = {
       enable     = true;
       exports    = ''
@@ -166,6 +188,16 @@
       lockdPort  = 4001;
       mountdPort = 4002;
       statdPort  = 4000;
+    };
+
+    paperless-ng = {
+      enable      = true;
+      extraConfig = {
+        PAPERLESS_ALLOWED_HOSTS =
+          "paperless.kielbowi.cz,www.paperless.kielbowi.cz";
+        PAPERLESS_OCR_LANGUAGE  = "pol+eng";
+      };
+      mediaDir    = "/backup/paperless";
     };
 
     plex = {
@@ -197,6 +229,13 @@
       };
       to     = "rss@kielbowi.cz";
     };
+
+    shellhub-agent = {
+      enable   = true;
+      tenantId = "c4278ad7-67c3-4c7f-bfe4-b9c0ea011a21";
+    };
+
+    shiori.enable = true;
 
     smartd = {
       autodetect    = false;
@@ -234,6 +273,9 @@
           type   = "simple";
         };
         in {
+          "calibre"         = {
+            path = "/backup/calibre";
+          };
           "domci/Documents" = {
             path       = "/backup/domci/Documents";
             versioning = simpleVersioning;
@@ -256,6 +298,9 @@
           "jupblb/Pictures" = {
             path       = "/backup/jupblb/Pictures";
             versioning = simpleVersioning;
+          };
+          "paperless"       = {
+            path = "/backup/paperless";
           };
         };
       key         = toString ./config/syncthing/dionysus/key.pem;
@@ -288,7 +333,8 @@
   system.stateVersion = "20.09";
 
   systemd.services = {
-    emanote    = {
+    calibre-web         = { wantedBy = lib.mkForce []; };
+    emanote             = {
       after         = [ "network.target" ];
       description   = "Emanote";
       path          = with pkgs; [ emanote findutils gnused ];
@@ -296,7 +342,7 @@
       serviceConfig = { Type = "oneshot"; User = "root"; };
       startAt       = "*:0/15";
     };
-    hugo       = {
+    hugo                = {
       after         = [ "network.target" ];
       description   = "Hugo blog generator";
       path          = with pkgs; [ git hugo ];
@@ -304,7 +350,7 @@
       serviceConfig = { Type = "oneshot"; User = "root"; };
       startAt       = "*:0/15";
     };
-    ip-updater = {
+    ip-updater          = {
       after         = [ "network.target" ];
       description   = "Public IP updater";
       environment   = (import ./config/secret.nix).ovh;
@@ -317,7 +363,8 @@
       };
       startAt       = "*:0/5";
     };
-    syncthing  = { wantedBy = lib.mkForce []; };
+    paperless-ng-server = { wantedBy = lib.mkForce []; };
+    syncthing           = { wantedBy = lib.mkForce []; };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
