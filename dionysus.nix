@@ -269,8 +269,11 @@
       cert        = toString ./config/syncthing/dionysus/cert.pem;
       folders     =
         let simpleVersioning = {
-          params = { keep = "5"; };
-          type   = "simple";
+          params = {
+            cleanInterval = "3600";
+            maxAge        = toString(3600 * 24 * 30);
+          };
+          type   = "staggered";
         };
         in {
           "calibre"         = {
