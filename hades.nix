@@ -23,22 +23,20 @@
   fonts.fonts              = with pkgs; [ pragmata-pro ];
 
   hardware = {
-    bluetooth.enable = true;
-
-    cpu.intel.updateMicrocode = true;
-
-    opengl = {
+    bluetooth.enable   = true;
+    cpu.intel          = { updateMicrocode = true; };
+    opengl             = {
       driSupport      = true;
       enable          = true;
       extraPackages   = with pkgs; [ amdvlk libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
-
-    pulseaudio = {
+    pulseaudio         = {
       enable       = true;
       extraModules = [ pkgs.pulseaudio-modules-bt ];
       package      = pkgs.pulseaudioFull;
     };
+    video.hidpi.enable = true;
   };
 
   home-manager.users.jupblb = {

@@ -108,14 +108,6 @@
           '';
           secret    = (import ./config/secret.nix).caddy;
         in {
-          "blog.kielbowi.cz"         = {
-            extraConfig   = ''
-              file_server browse {
-                root /srv/blog
-              }
-            '';
-            serverAliases = [ "www.blog.kielbowi.cz" ];
-          };
           "calibre.kielbowi.cz"    = {
             extraConfig   = "reverse_proxy http://localhost:8083";
             serverAliases = [ "www.calibre.kielbowi.cz" ];
@@ -206,6 +198,35 @@
       openFirewall = true;
     };
 
+    restic.backups = {
+      syncthing-local  = {
+        extraBackupArgs =
+          [ "--exclude=./**/.stversions" "--tag syncthing-local" ];
+        initialize      = true;
+        passwordFile    = toString(
+          pkgs.writeText "restic-password" (import ./config/secret.nix).restic
+        );
+        paths           = [ "/backup" ];
+        pruneOpts       = [ "--keep-daily 1" ];
+        repository      = "/data/backup";
+      };
+      syncthing-remote = {
+        extraBackupArgs =
+          [ "--exclude=./**/.stversions" "--tag syncthing-remote" ];
+        extraOptions    = [
+          "sftp.command='ssh restic@poseidon.kielbowi.cz -i ${toString ./config/ssh/restic/id_ed25519} -s sftp'"
+        ];
+        initialize      = true;
+        passwordFile    = toString(
+          pkgs.writeText "restic-password" (import ./config/secret.nix).restic
+        );
+        paths           = [ "/backup" ];
+        pruneOpts       = [ "--keep-daily 7" "--keep-weekly 4" ];
+        repository      =
+          "sftp:restic@poseidon.kielbowi.cz:/data/restic/syncthing";
+      };
+    };
+
     rss2email = {
       config = {
         "DATE-HEADER" = 1;
@@ -255,8 +276,7 @@
     };
 
     ssmtp = let cfg = (import ./config/secret.nix).mailgun; in {
-      authPassFile =
-        toString(pkgs.writeText "mailgun-password" cfg.password);
+      authPassFile = toString(pkgs.writeText "mailgun-password" cfg.password);
       authUser     = cfg.login;
       domain       = "kielbowi.cz";
       enable       = true;
@@ -345,14 +365,6 @@
       serviceConfig = { Type = "oneshot"; User = "root"; };
       startAt       = "*:0/15";
     };
-    hugo                = {
-      after         = [ "network.target" ];
-      description   = "Hugo blog generator";
-      path          = with pkgs; [ git hugo ];
-      script        = builtins.readFile ./config/script/hugo.sh;
-      serviceConfig = { Type = "oneshot"; User = "root"; };
-      startAt       = "*:0/15";
-    };
     ip-updater          = {
       after         = [ "network.target" ];
       description   = "Public IP updater";
@@ -372,5 +384,8 @@
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
-  users.users.jupblb.extraGroups = [ "adbusers" ];
+  users.users = {
+    jupblb.extraGroups = [ "adbusers" ];
+    paperless.group    = lib.mkForce "users";
+  };
 }

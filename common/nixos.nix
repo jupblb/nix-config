@@ -1,10 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot = {
-    supportedFilesystems = [ "ntfs" "exfat" ];
-    tmpOnTmpfs           = true;
-  };
+  boot.supportedFilesystems = [ "ntfs" "exfat" ];
 
   console.keyMap = "pl";
 
@@ -16,10 +13,7 @@
     file git gitAndTools.git-crypt kitty.terminfo unzip
   ];
 
-  hardware = {
-    enableRedistributableFirmware = true;
-    video.hidpi.enable            = true;
-  };
+  hardware.enableRedistributableFirmware = true;
 
   home-manager.users.jupblb = {
     imports = [ ./home.nix ];
@@ -114,13 +108,11 @@
   time.timeZone = "Europe/Warsaw";
 
   users.users.jupblb = {
-    description                 = "Michal Kielbowicz";
-    extraGroups                 = [ "wheel" ];
-    initialPassword             = "changeme";
-    isNormalUser                = true;
-    openssh.authorizedKeys.keys = [
-      (builtins.readFile ../config/ssh/id_ed25519.pub)
-    ];
-    shell                       = pkgs.bashInteractive;
+    description                     = "Michal Kielbowicz";
+    extraGroups                     = [ "wheel" ];
+    initialPassword                 = "changeme";
+    isNormalUser                    = true;
+    openssh.authorizedKeys.keyFiles = [ ../config/ssh/jupblb/id_ed25519.pub ];
+    shell                           = pkgs.bashInteractive;
   };
 }

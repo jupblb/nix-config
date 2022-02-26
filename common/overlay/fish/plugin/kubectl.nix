@@ -4,5 +4,5 @@ fetchFromGitHub {
   owner  = "evanlucas";
   repo   = "fish-kubectl-completions";
   rev    = "master";
-  sha256 = "1r6wqvvvb755jkmlng1i085s7cj1psxmddqghm80x5573rkklfps";
+  sha256 = "09qcj82qfs4y4nfwvy90y10xmx6vc9yp33nmyk1mpvx0dx6ri21r";
 }

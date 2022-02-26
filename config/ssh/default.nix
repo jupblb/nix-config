@@ -4,22 +4,28 @@
   controlPersist      = "yes";
   enable              = true;
   forwardAgent        = true;
-  matchBlocks         =
-    let config = {
-      identitiesOnly = true;
-      identityFile   = [ (toString ./id_ed25519) ];
-      sendEnv        = [ "BAT_THEME" ];
+  matchBlocks         = let config = { identitiesOnly = true; }; in {
+    dionysus     = config // {
+      hostname     = "jupblb.ddns.net";
+      identityFile = [ (toString ./jupblb/id_ed25519) ];
+      port         = 1995;
+      sendEnv      = [ "BAT_THEME" ];
     };
-    in {
-      dionysus     = config // {
-        hostname = "jupblb.ddns.net";
-        port     = 1995;
-      };
-      "github.com" = config // { hostname = "github.com"; };
-      hades        = config // {
-        hostname = "jupblb.ddns.net";
-        port     = 1993;
-      };
+    "github.com" = config // {
+      hostname     = "github.com";
+      identityFile = [ (toString ./git/id_ed25519) ];
     };
+    hades        = config // {
+      hostname     = "jupblb.ddns.net";
+      identityFile = [ (toString ./jupblb/id_ed25519) ];
+      port         = 1993;
+      sendEnv      = [ "BAT_THEME" ];
+    };
+    poseidon     = config // {
+      hostname     = "poseidon.kielbowi.cz";
+      identityFile = [ (toString ./jupblb/id_ed25519) ];
+      sendEnv      = [ "BAT_THEME" ];
+    };
+  };
   serverAliveInterval = 30;
 }
