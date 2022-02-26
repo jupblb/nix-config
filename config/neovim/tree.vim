@@ -28,8 +28,6 @@ let g:nvim_tree_show_icons = {
     \ 'files': 1,
     \ 'folder_arrows': 0,
     \ }
-let g:nvim_tree_width = 42
-let g:nvim_tree_width_allow_resize = 1
 
 nmap <Leader>t <Cmd>NvimTreeToggle<CR>
 nmap <Leader>T <Cmd>NvimTreeFindFile<CR>
