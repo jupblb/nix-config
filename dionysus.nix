@@ -116,6 +116,10 @@
             extraConfig   = "respond \"Hello, world!\"";
             serverAliases = [ "www.dionysus.kielbowi.cz" ];
           };
+          "jellyfin.kielbowi.cz"     = {
+            extraConfig   = "reverse_proxy http://localhost:8096";
+            serverAliases = [ "www.jellyfin.kielbowi.cz" ];
+          };
           "notes.kielbowi.cz"        = {
             extraConfig   = basicauth + ''
               file_server browse {
@@ -167,6 +171,11 @@
         enableBookConversion = true;
         enableBookUploading  = true;
       };
+    };
+
+    jellyfin = {
+      enable = true;
+      group  = "users";
     };
 
     nfs.server = {
