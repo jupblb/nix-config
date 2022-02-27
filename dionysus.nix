@@ -199,27 +199,38 @@
     };
 
     restic.backups = {
-      syncthing-local  = {
+      syncthing-gcs      = {
+        environmentFile = toString(
+          pkgs.writeText "restic-gcs-env" ''
+            GOOGLE_PROJECT_ID=restic-backup-342620
+            GOOGLE_APPLICATION_CREDENTIALS=${./config/restic/restic-gcs.json}
+          ''
+        );
+        extraBackupArgs =
+          [ "--exclude=./**/.stversions" "--tag syncthing-gcs" ];
+        initialize      = true;
+        passwordFile    = toString ./config/restic/encryption.txt;
+        paths           = [ "/backup" ];
+        pruneOpts       = [ "--keep-daily 7" "--keep-weekly 4" ];
+        repository      = "gs:dionysus-backup:/";
+      };
+      syncthing-local    = {
         extraBackupArgs =
           [ "--exclude=./**/.stversions" "--tag syncthing-local" ];
         initialize      = true;
-        passwordFile    = toString(
-          pkgs.writeText "restic-password" (import ./config/secret.nix).restic
-        );
+        passwordFile    = toString ./config/restic/encryption.txt;
         paths           = [ "/backup" ];
         pruneOpts       = [ "--keep-daily 1" ];
         repository      = "/data/backup";
       };
-      syncthing-remote = {
+      syncthing-poseidon = {
         extraBackupArgs =
-          [ "--exclude=./**/.stversions" "--tag syncthing-remote" ];
+          [ "--exclude=./**/.stversions" "--tag syncthing-poseidon" ];
         extraOptions    = [
           "sftp.command='ssh restic@poseidon.kielbowi.cz -i ${toString ./config/ssh/restic/id_ed25519} -s sftp'"
         ];
         initialize      = true;
-        passwordFile    = toString(
-          pkgs.writeText "restic-password" (import ./config/secret.nix).restic
-        );
+        passwordFile    = toString ./config/restic/encryption.txt;
         paths           = [ "/backup" ];
         pruneOpts       = [ "--keep-daily 7" "--keep-weekly 4" ];
         repository      =
