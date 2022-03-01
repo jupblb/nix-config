@@ -108,6 +108,10 @@
           '';
           secret    = (import ./config/secret.nix).caddy;
         in {
+          "adguard.kielbowi.cz"    = {
+            extraConfig   = "reverse_proxy http://localhost:3000";
+            serverAliases = [ "www.adguard.kielbowi.cz" ];
+          };
           "calibre.kielbowi.cz"    = {
             extraConfig   = "reverse_proxy http://localhost:8083";
             serverAliases = [ "www.calibre.kielbowi.cz" ];
