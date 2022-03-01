@@ -70,21 +70,22 @@
   imports = [ ./common/nixos.nix ];
 
   networking = {
-    defaultGateway            = "192.168.1.1";
-    domain                    = "kielbowi.cz";
-    firewall.allowedTCPPorts  = [
+    defaultGateway           = "192.168.1.1";
+    domain                   = "kielbowi.cz";
+    firewall.allowedTCPPorts = [
       53 67 68 80 111 443 2049 2267 4000 4001 4002 8181 22067 22070
     ];
-    firewall.allowedUDPPorts  = [
+    firewall.allowedUDPPorts = [
       53 67 68 80 111 443 2049 4000 4001 4002 22067 22070
     ];
-    interfaces.enp8s0.ipv4    = {
-      addresses = [ { address = "192.168.1.4"; prefixLength = 24; } ];
+    interfaces.enp8s0        = {
+      ipv4.addresses = [ { address = "192.168.1.4"; prefixLength = 24; } ];
+      wakeOnLan      = { enable = true; };
     };
-    hostId                    = "ce5e3a09";
-    hostName                  = "dionysus";
-    nameservers               = [ "1.1.1.1" "8.8.8.8" ];
-    wireless.enable           = false;
+    hostId                   = "ce5e3a09";
+    hostName                 = "dionysus";
+    nameservers              = [ "1.1.1.1" "8.8.8.8" ];
+    wireless.enable          = false;
   };
 
   programs.adb.enable                 = true;
