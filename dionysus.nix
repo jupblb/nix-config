@@ -59,6 +59,7 @@
 
   home-manager.users.jupblb = {
     programs = {
+      firefox.enable   = lib.mkForce false;
       fish.functions   = {
         zfs-backup-unlock =
           builtins.readFile ./config/script/zfs-backup-unlock.fish;
@@ -97,6 +98,18 @@
       openFirewall = true;
     };
 
+    bepasty = {
+      enable          = true;
+      servers.default = let secret = (import ./config/secret.nix).bepasty; in {
+        bind        = "127.0.0.1:8324";
+        dataDir     = "/data/bepasty";
+        extraConfig = ''
+          SITENAME = 'paste.kielbowi.cz'
+        '';
+        secretKey   = secret.key;
+      };
+    };
+
     caddy = {
       email        = "caddy@kielbowi.cz";
       enable       = true;
@@ -132,6 +145,10 @@
               }
             '';
             serverAliases = [ "www.notes.kielbowi.cz" ];
+          };
+          "paste.kielbowi.cz"        = {
+            extraConfig   = "reverse_proxy http://localhost:8324";
+            serverAliases = [ "www.paste.kielbowi.cz" ];
           };
           "paperless.kielbowi.cz"    = {
             extraConfig   = "reverse_proxy http://localhost:28981";
@@ -213,7 +230,7 @@
     };
 
     restic.backups = {
-      syncthing-gcs      = {
+      gcs      = {
         environmentFile = toString(
           pkgs.writeText "restic-gcs-env" ''
             GOOGLE_PROJECT_ID=restic-backup-342620
@@ -228,7 +245,7 @@
         pruneOpts       = [ "--keep-daily 7" "--keep-weekly 4" ];
         repository      = "gs:dionysus-backup:/";
       };
-      syncthing-local    = {
+      local    = {
         extraBackupArgs =
           [ "--exclude=./**/.stversions" "--tag syncthing-local" ];
         initialize      = true;
@@ -237,7 +254,7 @@
         pruneOpts       = [ "--keep-daily 1" ];
         repository      = "/data/backup";
       };
-      syncthing-poseidon = {
+      poseidon = {
         extraBackupArgs =
           [ "--exclude=./**/.stversions" "--tag syncthing-poseidon" ];
         extraOptions    = [
