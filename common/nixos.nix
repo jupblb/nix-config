@@ -53,14 +53,15 @@
   services = {
     acpid.enable = true;
 
-    apcupsd.enable     = true;
-    apcupsd.configText = ''
-      UPSCABLE usb
-      UPSTYPE usb
-      DEVICE
-      BATTERYLEVEL 10
-      MINUTES 5
-    '';
+    apcupsd = {
+      configText = ''
+        UPSCABLE usb
+        UPSTYPE usb
+        DEVICE
+        BATTERYLEVEL 10
+      '';
+      enable     = true;
+    };
 
     fstrim.enable = true;
 

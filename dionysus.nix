@@ -99,6 +99,13 @@
       openFirewall = true;
     };
 
+    apcupsd = {
+      configText = "TIMEOUT 30";
+      hooks      = {
+        doshutdown = builtins.readFile ./config/script/dionysus-shutdown.sh;
+      };
+    };
+
     caddy = {
       email        = "caddy@kielbowi.cz";
       enable       = true;
