@@ -2,16 +2,17 @@
 
 {
   boot = {
-    initrd.availableKernelModules   = [
+    initrd.availableKernelModules    = [
       "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci"
     ];
-    kernel.sysctl                   = {
+    kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "204800";
     };
-    kernelModules                   = [ "kvm-amd" ];
-    loader.efi.canTouchEfiVariables = true;
-    loader.systemd-boot.enable      = true;
-    supportedFilesystems            = [ "zfs" ];
+    kernelModules                    = [ "kvm-amd" ];
+    loader.efi.canTouchEfiVariables  = true;
+    loader.systemd-boot.enable       = true;
+    supportedFilesystems             = [ "zfs" ];
+    zfs.requestEncryptionCredentials = false;
   };
 
   environment = {
@@ -59,6 +60,7 @@
 
   home-manager.users.jupblb = {
     programs = {
+      firefox.enable   = lib.mkForce false;
       fish.functions   = {
         zfs-backup-unlock =
           builtins.readFile ./config/script/zfs-backup-unlock.fish;
