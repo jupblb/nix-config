@@ -4,7 +4,6 @@
   home = {
     activation.nvim  = lib.hm.dag.entryAfter ["writeBoundary"]
       "$DRY_RUN_CMD nvim --headless +UpdateRemotePlugins +quit && echo";
-    file             = { ".ammonite/predef.sc".source = pkgs.ammonite.predef; };
     packages         = with pkgs;
       [ ammonite git-crypt gore httpie hugo ripgrep zk ];
     sessionVariables = {
