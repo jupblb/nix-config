@@ -29,7 +29,7 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup
-local lsp_attach = function(client)
+_G.lsp_attach = function(client)
     vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
     lsp_status.on_attach(client)
 end
@@ -59,8 +59,6 @@ lspconfig.jsonls.setup({
 
 local luadev = require("lua-dev").setup({runtime_path = true})
 lspconfig.sumneko_lua.setup(luadev)
-
-if vim.fn.getcwd():find('/notes/') ~= nil then lspconfig.zk.setup({}) end
 
 if vim.fn.getcwd():find('/google/') == nil then
     lspconfig.gopls.setup({})

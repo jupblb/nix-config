@@ -2,14 +2,14 @@ set showtabline=0
 
 nnoremap z= <Cmd>Telescope spell_suggest<CR>
 
-nmap <Leader><Tab> <Cmd>Telescope buffers<CR>
+nmap <Leader><Tab>   <Cmd>Telescope buffers<CR>
 nmap <Leader><S-Tab> <Cmd>Telescope tele_tabby list<CR>
-nmap <Leader>/     <Cmd>Telescope current_buffer_fuzzy_find<CR>
-nmap <Leader>?     <Cmd>Telescope live_grep<CR>
-nmap <Leader>"     <Cmd>Telescope registers<CR>
-nmap <Leader>f     <Cmd>Telescope find_files<CR>
-nmap <Leader>j     <Cmd>Telescope jumplist<CR>
-nmap <Leader>o     <Cmd>Telescope oldfiles<CR>
+nmap <Leader>/       <Cmd>Telescope current_buffer_fuzzy_find<CR>
+nmap <Leader>?       <Cmd>Telescope live_grep<CR>
+nmap <Leader>"       <Cmd>Telescope registers<CR>
+nmap <Leader>f       <Cmd>Telescope find_files<CR>
+nmap <Leader>j       <Cmd>Telescope jumplist<CR>
+nmap <Leader>o       <Cmd>Telescope oldfiles<CR>
 
 nmap <Leader>gb <Cmd>Telescope git_branches<CR>
 nmap <Leader>gC <Cmd>Telescope git_commits<CR>

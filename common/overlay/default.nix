@@ -24,5 +24,6 @@ self: super: with super; {
       });
     telescope-tele-tabby-nvim   =
       callPackage ./neovim/plugin/telescope-tele-tabby.nix {};
+    zk-nvim                     = callPackage ./neovim/plugin/zk.nix {};
   };
 }

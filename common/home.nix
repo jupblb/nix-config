@@ -254,6 +254,12 @@
         } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
+        } {
+          config = ''
+            source ${toString ../config/neovim/zk.vim}
+            luafile ${toString ../config/neovim/zk.lua}
+          '';
+          plugin = zk-nvim;
         }
         commentary git-messenger-vim surround vim-cool vim-sleuth
       ];
