@@ -234,8 +234,9 @@
         initialize      = true;
         passwordFile    = toString ./config/restic/encryption.txt;
         paths           = [ "/backup" ];
-        pruneOpts       = [ "--keep-daily 7" "--keep-weekly 4" ];
+        pruneOpts       = [ "--keep-weekly 4" "--keep-monthly 3" ];
         repository      = "gs:dionysus-backup:/";
+        timerConfig     = { OnCalendar = "weekly"; };
       };
       syncthing-local    = {
         extraBackupArgs =
@@ -243,7 +244,7 @@
         initialize      = true;
         passwordFile    = toString ./config/restic/encryption.txt;
         paths           = [ "/backup" ];
-        pruneOpts       = [ "--keep-daily 1" ];
+        pruneOpts       = [ "--keep-daily 14" ];
         repository      = "/data/backup";
       };
       syncthing-poseidon = {
