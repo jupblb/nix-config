@@ -130,6 +130,14 @@
             extraConfig   = "respond \"Hello, world!\"";
             serverAliases = [ "www.dionysus.kielbowi.cz" ];
           };
+          "files.kielbowi.cz"        = {
+            extraConfig   = basicauth + ''
+              file_server browse {
+                root /backup/jupblb/
+              }
+            '';
+            serverAliases = [ "www.files.kielbowi.cz" ];
+          };
           "jellyfin.kielbowi.cz"     = {
             extraConfig   = "reverse_proxy http://localhost:8096";
             serverAliases = [ "www.jellyfin.kielbowi.cz" ];
@@ -149,6 +157,10 @@
           "plex.kielbowi.cz"         = {
             extraConfig   = "reverse_proxy http://localhost:32400";
             serverAliases = [ "www.plex.kielbowi.cz" ];
+          };
+          "photos.kielbowi.cz"       = {
+            extraConfig   = "reverse_proxy http://localhost:2342";
+            serverAliases = [ "www.photos.kielbowi.cz" ];
           };
           "shiori.kielbowi.cz"       = {
             extraConfig   = "reverse_proxy http://localhost:8080";
@@ -420,7 +432,38 @@
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   users.users = {
-    jupblb.extraGroups = [ "adbusers" ];
+    jupblb.extraGroups = [ "adbusers" "podman" ];
     paperless.group    = lib.mkForce "users";
+  };
+
+  virtualisation = {
+    oci-containers = {
+      backend               = "podman";
+      containers.photoprism = {
+        image        = "photoprism/photoprism";
+        environment  = {
+          PHOTOPRISM_ADMIN_PASSWORD   = "changeme";
+          PHOTOPRISM_DETECT_NSFW      = "true";
+          PHOTOPRISM_DISABLE_SETTINGS = "true";
+          PHOTOPRISM_READONLY         = "true";
+          PHOTOPRISM_SITE_URL         = "photos.kielbowi.cz";
+          PHOTOPRISM_UPLOAD_NSFW      = "true";
+        };
+        extraOptions = [
+          "--security-opt=seccomp=unconfined"
+          "--security-opt=apparmor=unconfined"
+        ];
+        ports        = [ "2342:2342/tcp" ];
+        volumes      = [
+          "/var/lib/photoprism-container:/photoprism/storage"
+          "/backup/jupblb/Pictures/album:/photoprism/originals/jupblb:ro"
+        ];
+      };
+    };
+    podman         = {
+      dockerCompat  = true;
+      enable        = true;
+      extraPackages = with pkgs; [ zfs ];
+    };
   };
 }
