@@ -12,6 +12,16 @@
     loader.systemd-boot.enable      = true;
   };
 
+  environment = {
+    gnome.excludePackages = with pkgs.gnome; [
+      baobab cheese epiphany gedit gnome-calculator gnome-disk-utility
+      gnome-logs gnome-music gnome-shell-extensions gnome-terminal
+      pkgs.gnome-connections simple-scan yelp
+    ];
+    systemPackages        = with pkgs.gnomeExtensions;
+      [ compiz-windows-effect hide-top-bar removable-drive-menu ];
+  };
+
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
@@ -40,7 +50,10 @@
   };
 
   home-manager.users.jupblb = {
-    home.stateVersion = "20.03";
+    home = {
+      packages     = with pkgs; [ _1password-gui ];
+      stateVersion = "20.03";
+    };
 
     programs = {
       firefox        = {
@@ -69,21 +82,22 @@
 
   imports = [ ./common/nixos.nix ];
 
-  networking.hostName              = "hades";
-  networking.networkmanager.enable = true;
+  networking.hostName = "hades";
 
   programs = { steam.enable = true; };
 
   services = {
+    dleyna-renderer.enable = false;
+
+    dleyna-server.enable = false;
+
     gnome = {
-      chrome-gnome-shell.enable    = true;
-      core-utilities.enable        = false;
-      gnome-online-accounts.enable = true;
-      gnome-settings-daemon.enable = true;
-      sushi.enable                 = true;
+      chrome-gnome-shell.enable   = false;
+      gnome-remote-desktop.enable = false;
+      rygel.enable                = false;
     };
 
-    gvfs.enable = true;
+    power-profiles-daemon.enable = false;
 
     printing = {
       drivers = with pkgs; [ samsung-unified-linux-driver_1_00_37 ];
@@ -102,21 +116,20 @@
       user      = "jupblb";
     };
 
+    telepathy.enable = false;
+
     udev.extraRules = ''
       SUBSYSTEM=="usb", ATTRS{idVendor}=="8087", ATTRS{idProduct}=="0aaa",\
         ATTR{authorized}="0"
     '';
 
     xserver = {
-      enable                            = true;
-      desktopManager.gnome.enable      = true;
-      desktopManager.gnome.sessionPath = with pkgs.gnome3; [
-        evince gnome-screenshot nautilus shotwell totem
-      ];
-      displayManager.autoLogin.enable   = true;
-      displayManager.autoLogin.user     = "jupblb";
-      displayManager.gdm.enable         = true;
-      videoDrivers                      = [ "amdgpu" ];
+      enable               = true;
+      desktopManager.gnome = { enable = true; };
+      displayManager       = {
+        autoLogin  = { enable = true; user = "jupblb"; };
+        gdm.enable = true;
+      };
     };
   };
 
@@ -125,6 +138,12 @@
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   system.stateVersion = "20.03";
+
+  systemd.services = {
+    # https://github.com/NixOS/nixpkgs/issues/103746
+    "getty@tty1".enable  = false;
+    "autovt@tty1".enable = false;
+  };
 
   time.hardwareClockInLocalTime = true;
 
