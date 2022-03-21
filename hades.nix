@@ -68,6 +68,8 @@
         hide_window_decorations = "yes";
         linux_display_server    = "wayland";
       };
+
+      neovim.extraConfig = "autocmd VimEnter * GkeepLogin";
     };
 
     services = {

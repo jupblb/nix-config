@@ -10,4 +10,3 @@ nmap <Leader>kS <Cmd>GkeepRefresh<CR>
 nmap <Leader>kx <Cmd>GkeepCheck<CR>
 nmap <Leader>kX <Cmd>GkeepClearChecked<CR>
 
-autocmd VimEnter * GkeepLogin
