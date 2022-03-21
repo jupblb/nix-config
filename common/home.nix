@@ -7,7 +7,7 @@
         "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
       nvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD nvim --headless \
-          +UpdateRemotePlugins +TSUpdate +quit && echo
+          +UpdateRemotePlugins +TSUpdateSync +quit && echo
       '';
     };
     packages         = with pkgs;
