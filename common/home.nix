@@ -261,9 +261,9 @@
       extraPackages =
         let
           default      = with pkgs; [
-            buildifier cargo coursier fd fish gitlint go-tools gopls
-            luaformatter openjdk pandoc ripgrep rnix-lsp rust-analyzer rustc
-            shellcheck shfmt statix sumneko-lua-language-server zk
+            buildifier cargo coursier fd fish gitlint gopls luaformatter openjdk
+            pandoc ripgrep rnix-lsp rust-analyzer rustc shellcheck shfmt statix
+            sumneko-lua-language-server zk
           ];
           nodePackages = with pkgs.nodePackages; [
             bash-language-server dockerfile-language-server-nodejs

@@ -61,6 +61,8 @@ local luadev = require("lua-dev").setup({runtime_path = true})
 lspconfig.sumneko_lua.setup(luadev)
 
 if vim.fn.getcwd():find('/google/') == nil then
-    lspconfig.gopls.setup({})
+    lspconfig.gopls.setup({
+        settings = {gopls = {gofumpt = true, staticcheck = true}}
+    })
     lspconfig.pyright.setup({settings = {python = {pythonPath = 'python3'}}})
 end
