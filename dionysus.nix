@@ -357,34 +357,42 @@
           type   = "staggered";
         };
         in {
-          "calibre"         = {
-            path = "/backup/calibre";
+          "calibre"          = {
+            enable = true;
+            path   = "/backup/calibre";
           };
-          "domci/Documents" = {
+          "domci/Documents"  = {
+            enable     = true;
             path       = "/backup/domci/Documents";
             versioning = simpleVersioning;
           };
-          "domci/Downloads" = {
-            path = "/backup/domci/Downloads";
+          "domci/Downloads"  = {
+            enable = true;
+            path   = "/backup/domci/Downloads";
           };
-          "domci/Pictures" = {
+          "domci/Pictures"   = {
+            enable     = true;
             path       = "/backup/domci/Pictures";
             versioning = simpleVersioning;
           };
-          "domci/Videos" = {
+          "domci/Videos"     = {
+            enable     = true;
             path       = "/backup/domci/Videos";
             versioning = simpleVersioning;
           };
           "jupblb/Documents" = {
+            enable     = true;
             path       = "/backup/jupblb/Documents";
             versioning = simpleVersioning;
           };
-          "jupblb/Pictures" = {
+          "jupblb/Pictures"  = {
+            enable     = true;
             path       = "/backup/jupblb/Pictures";
             versioning = simpleVersioning;
           };
-          "paperless"       = {
-            path = "/backup/paperless";
+          "paperless"        = {
+            enable = true;
+            path   = "/backup/paperless";
           };
         };
       key         = toString ./config/syncthing/dionysus/key.pem;

@@ -111,8 +111,14 @@
       dataDir   = "/home/jupblb/.local/share/syncthing";
       cert      = toString ./config/syncthing/hades/cert.pem;
       folders   = {
-        "jupblb/Documents".path = "/home/jupblb/Documents";
-        "jupblb/Pictures".path  = "/home/jupblb/Pictures";
+        "jupblb/Documents" = {
+          enable = true;
+          path   = "/home/jupblb/Documents";
+        };
+        "jupblb/Pictures"  = {
+          enable = true;
+          path   = "/home/jupblb/Pictures";
+        };
       };
       key       = toString ./config/syncthing/hades/key.pem;
       user      = "jupblb";
