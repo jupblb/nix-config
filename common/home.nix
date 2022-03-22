@@ -19,6 +19,7 @@
       EDITOR       = "nvim";
       GOROOT       = "${pkgs.go}/share/go";
     };
+    shellAliases     = { icat = "kitty +kitten icat"; };
     username         = "jupblb";
   };
 
@@ -102,18 +103,33 @@
       };
       keybindings = import ../config/kitty/keybindings.nix;
       settings    = (import ../config/kitty/settings.nix) // {
-        env                                = "SHELL=${pkgs.fish}/bin/fish";
-        shell                              = "${pkgs.fish}/bin/fish";
+        env   = "SHELL=${pkgs.fish}/bin/fish";
+        shell = "${pkgs.fish}/bin/fish";
       };
       theme       = "Gruvbox Light Hard";
     };
 
     lf = {
+      commands    = {
+        open = ''
+        ''${{
+          case $(file --mime-type "$f" -b) in
+            text/*) $EDITOR $fx;;
+            *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
+          esac
+        }}
+        '';
+      };
       enable      = true;
-      extraConfig = builtins.readFile ../config/lfrc.sh;
+      extraConfig =
+        let cleaner = pkgs.writeScript "lf-cleaner"
+          (builtins.readFile ../config/lf/kitty-cleaner.sh);
+        in "set cleaner ${cleaner}";
       previewer   = {
         keybinding = "`";
         source     = with pkgs; writeShellScript "lf-preview" ''
+          ${builtins.readFile ../config/lf/kitty-previewer.sh}
+
           case "$1" in
             *.json)       ${jq}/bin/jq --color-output . "$1";;
             *.md)         ${glow}/bin/glow -s light -- "$1";;
