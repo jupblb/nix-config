@@ -138,6 +138,10 @@
             '';
             serverAliases = [ "www.files.kielbowi.cz" ];
           };
+          "go.kielbowi.cz"           = {
+            extraConfig   = "reverse_proxy http://localhost:4567";
+            serverAliases = [ "www.go.kielbowi.cz" ];
+          };
           "jellyfin.kielbowi.cz"     = {
             extraConfig   = "reverse_proxy http://localhost:8096";
             serverAliases = [ "www.jellyfin.kielbowi.cz" ];
@@ -460,18 +464,25 @@
 
   virtualisation = {
     oci-containers = {
-      backend              = "podman";
-      containers.photoview = {
-        environment  = {
-          MAPBOX_TOKEN              = (import ./config/secret.nix).mapbox;
-          PHOTOVIEW_DATABASE_DRIVER = "postgres";
-          PHOTOVIEW_LISTEN_PORT     = "8012";
-          PHOTOVIEW_POSTGRES_URL    =
-            "postgresql://photoview@localhost/photoview";
+      backend    = "podman";
+      containers = {
+        photoview      = {
+          environment  = {
+            MAPBOX_TOKEN              = (import ./config/secret.nix).mapbox;
+            PHOTOVIEW_DATABASE_DRIVER = "postgres";
+            PHOTOVIEW_LISTEN_PORT     = "8012";
+            PHOTOVIEW_POSTGRES_URL    =
+              "postgresql://photoview@localhost/photoview";
+          };
+          extraOptions = [ "--network=host" ];
+          image        = "viktorstrate/photoview:2";
+          volumes      = [ "/backup/jupblb/Pictures/album:/photos-jupblb:ro" ];
         };
-        extraOptions = [ "--network=host" ];
-        image        = "viktorstrate/photoview:2";
-        volumes      = [ "/backup/jupblb/Pictures/album:/photos-jupblb:ro" ];
+        simply-shorten = {
+          environment = (import ./config/secret.nix).simply-shorten;
+          image       = "draganczukp/simply-shorten";
+          ports       = [ "4567:4567" ];
+        };
       };
     };
     podman         = {
