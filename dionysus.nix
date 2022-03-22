@@ -159,7 +159,7 @@
             serverAliases = [ "www.plex.kielbowi.cz" ];
           };
           "photos.kielbowi.cz"       = {
-            extraConfig   = "reverse_proxy http://localhost:2342";
+            extraConfig   = "reverse_proxy http://localhost:8012";
             serverAliases = [ "www.photos.kielbowi.cz" ];
           };
           "shiori.kielbowi.cz"       = {
@@ -225,6 +225,20 @@
         PAPERLESS_OCR_LANGUAGE  = "pol+eng";
       };
       mediaDir    = "/backup/paperless";
+    };
+
+    postgresql = {
+      authentication  = ''
+        local all all trust
+        host all all ::1/128 trust
+      '';
+      enable          = true;
+      ensureDatabases = [ "photoview" ];
+      ensureUsers     = [ {
+        name              = "photoview";
+        ensurePermissions = { "DATABASE photoview" = "ALL PRIVILEGES"; };
+      } ];
+      package         = pkgs.postgresql_14;
     };
 
     plex = {
@@ -438,26 +452,18 @@
 
   virtualisation = {
     oci-containers = {
-      backend               = "podman";
-      containers.photoprism = {
-        image        = "photoprism/photoprism";
+      backend              = "podman";
+      containers.photoview = {
         environment  = {
-          PHOTOPRISM_ADMIN_PASSWORD   = "changeme";
-          PHOTOPRISM_DETECT_NSFW      = "true";
-          PHOTOPRISM_DISABLE_SETTINGS = "true";
-          PHOTOPRISM_READONLY         = "true";
-          PHOTOPRISM_SITE_URL         = "photos.kielbowi.cz";
-          PHOTOPRISM_UPLOAD_NSFW      = "true";
+          MAPBOX_TOKEN              = (import ./config/secret.nix).mapbox;
+          PHOTOVIEW_DATABASE_DRIVER = "postgres";
+          PHOTOVIEW_LISTEN_PORT     = "8012";
+          PHOTOVIEW_POSTGRES_URL    =
+            "postgresql://photoview@localhost/photoview";
         };
-        extraOptions = [
-          "--security-opt=seccomp=unconfined"
-          "--security-opt=apparmor=unconfined"
-        ];
-        ports        = [ "2342:2342/tcp" ];
-        volumes      = [
-          "/var/lib/photoprism-container:/photoprism/storage"
-          "/backup/jupblb/Pictures/album:/photoprism/originals/jupblb:ro"
-        ];
+        extraOptions = [ "--network=host" ];
+        image        = "viktorstrate/photoview:2";
+        volumes      = [ "/backup/jupblb/Pictures/album:/photos-jupblb:ro" ];
       };
     };
     podman         = {
