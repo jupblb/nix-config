@@ -1,3 +1,5 @@
+#!/usr/bin/env fish
+
 zpool create -f -o ashift=12 \
     -O encryption=on -O keyformat=passphrase -O xattr=sa -O acltype=posixacl \
     -m legacy backup mirror \

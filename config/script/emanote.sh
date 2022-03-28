@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 TMP_DIR="/tmp/emanote"
 

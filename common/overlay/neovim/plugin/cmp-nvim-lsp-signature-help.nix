@@ -7,6 +7,6 @@ vimUtils.buildVimPlugin rec {
     owner  = "hrsh7th";
     repo   = pname;
     rev    = version;
-    sha256 = "15f27cz2q2bnsv98mjyvf0j5vx8lidvz2vr10090qv4nwakrhpy6";
+    sha256 = "026qsr7rssb9g7l66wjk0m2xrbkmghl5px4w4m1p6vf6lyy5jfjs";
   };
 }

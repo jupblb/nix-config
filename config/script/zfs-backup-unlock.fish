@@ -1,3 +1,5 @@
+#!/usr/bin/env fish
+
 sudo zfs load-key -a
 sudo mount /backup
 sudo systemctl start calibre-web.service
