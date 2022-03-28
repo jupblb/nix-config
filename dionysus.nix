@@ -468,10 +468,13 @@
       containers = {
         photoview      = {
           environment  = {
-            MAPBOX_TOKEN              = (import ./config/secret.nix).mapbox;
-            PHOTOVIEW_DATABASE_DRIVER = "postgres";
-            PHOTOVIEW_LISTEN_PORT     = "8012";
-            PHOTOVIEW_POSTGRES_URL    =
+            MAPBOX_TOKEN                       =
+              (import ./config/secret.nix).mapbox;
+            PHOTOVIEW_DATABASE_DRIVER          = "postgres";
+            PHOTOVIEW_DISABLE_FACE_RECOGNITION = "1";
+            PHOTOVIEW_DISABLE_VIDEO_ENCODING   = "1";
+            PHOTOVIEW_LISTEN_PORT              = "8012";
+            PHOTOVIEW_POSTGRES_URL             =
               "postgresql://photoview@localhost/photoview";
           };
           extraOptions = [ "--network=host" ];
