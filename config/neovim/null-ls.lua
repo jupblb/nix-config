@@ -7,7 +7,9 @@ null_ls.setup({
         null_ls.builtins.diagnostics.gitlint,
         -- https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
         null_ls.builtins.diagnostics.markdownlint.with({
-            extra_args = {'--disable', 'MD007', 'MD012', 'MD030', 'MD034'}
+            extra_args = {
+                '--disable', 'MD007', 'MD012', 'MD013', 'MD030', 'MD034'
+            }
         }), --
         null_ls.builtins.diagnostics.shellcheck,
         null_ls.builtins.diagnostics.statix,
