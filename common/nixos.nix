@@ -88,10 +88,6 @@
           "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
       };
       folders             = {
-        "calibre" = {
-          devices = [ "dionysus" ];
-          enable  = lib.mkDefault false;
-        };
         "domci/Documents" = {
           devices = [ "dionysus" "domci-mac" ];
           enable  = lib.mkDefault false;
@@ -114,10 +110,6 @@
         };
         "jupblb/Pictures" = {
           devices = [ "artemis" "dionysus" "hades" ];
-          enable  = lib.mkDefault false;
-        };
-        "paperless" = {
-          devices = [ "dionysus" ];
           enable  = lib.mkDefault false;
         };
       };

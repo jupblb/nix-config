@@ -75,10 +75,10 @@
     defaultGateway           = "192.168.1.1";
     domain                   = "kielbowi.cz";
     firewall.allowedTCPPorts = [
-      53 67 68 80 111 443 2049 2267 4000 4001 4002 8181 22067 22070
+      53 67 68 80 111 443 2049 2267 3012 4000 4001 4002 8181 22067 22070
     ];
     firewall.allowedUDPPorts = [
-      53 67 68 80 111 443 2049 4000 4001 4002 22067 22070
+      53 67 68 80 111 443 2049 3012 4000 4001 4002 22067 22070
     ];
     interfaces.enp8s0        = {
       ipv4.addresses = [ { address = "192.168.1.4"; prefixLength = 24; } ];
@@ -190,6 +190,37 @@
           "transmission.kielbowi.cz" = {
             extraConfig = basicauth + "reverse_proxy http://127.0.0.1:9091";
           };
+          "vaultwarden.kielbowi.cz" = {
+            extraConfig = ''
+              encode gzip
+
+              header / {
+                # Enable HTTP Strict Transport Security (HSTS)
+                Strict-Transport-Security "max-age=31536000;"
+                # Enable cross-site filter (XSS) and tell browser to block detected attacks
+                X-XSS-Protection "1; mode=block"
+                # Disallow the site to be rendered within a frame (clickjacking protection)
+                X-Frame-Options "DENY"
+                # Prevent search engines from indexing (optional)
+                X-Robots-Tag "none"
+                # Server name removing
+                -Server
+              }
+
+              # The negotiation endpoint is also proxied to Rocket
+              reverse_proxy /notifications/hub/negotiate http://localhost:8222
+
+              # Notifications redirected to the websockets server
+              reverse_proxy /notifications/hub http://localhost:3012
+
+              # Proxy the Root directory to Rocket
+              reverse_proxy http://localhost:8222 {
+                   # Send the true remote IP to Rocket, so that vaultwarden can put this in the
+                   # log, so that fail2ban can ban the correct IP.
+                   header_up X-Real-IP {remote_host}
+              }
+            '';
+          };
         };
     };
 
@@ -227,22 +258,36 @@
         PAPERLESS_ALLOWED_HOSTS =
           "paperless.kielbowi.cz,www.paperless.kielbowi.cz";
         PAPERLESS_OCR_LANGUAGE  = "pol+eng";
+        PAPERLESS_DBHOST        = "localhost";
       };
       mediaDir    = "/backup/paperless";
     };
 
     postgresql = {
       authentication  = ''
-        local all all trust
-        host all all ::1/128 trust
+        # TYPE  DATABASE USER CIDR-ADDRESS METHOD
+          local all      all               trust
+          host  all      all  samehost     trust
       '';
       enable          = true;
-      ensureDatabases = [ "photoview" ];
+      ensureDatabases = [ "paperless" "photoview" "vaultwarden" ];
       ensureUsers     = [ {
+        name              = "paperless";
+        ensurePermissions = { "DATABASE paperless" = "ALL PRIVILEGES"; };
+      } {
         name              = "photoview";
         ensurePermissions = { "DATABASE photoview" = "ALL PRIVILEGES"; };
+      } {
+        name              = "vaultwarden";
+        ensurePermissions = { "DATABASE vaultwarden" = "ALL PRIVILEGES"; };
       } ];
       package         = pkgs.postgresql_14;
+    };
+
+    postgresqlBackup = {
+      databases = config.services.postgresql.ensureDatabases;
+      enable    = true;
+      location  = "/backup/postgresql";
     };
 
     plex = {
@@ -251,8 +296,10 @@
       openFirewall = true;
     };
 
+    redis.enable = true;
+
     restic.backups = {
-      syncthing-gcs      = {
+      gcs      = {
         environmentFile = toString(
           pkgs.writeText "restic-gcs-env" ''
             GOOGLE_PROJECT_ID=restic-backup-342620
@@ -268,7 +315,7 @@
         repository      = "gs:dionysus-backup:/";
         timerConfig     = { OnCalendar = "weekly"; };
       };
-      syncthing-local    = {
+      local    = {
         extraBackupArgs =
           [ "--exclude=./**/.stversions" "--tag syncthing-local" ];
         initialize      = true;
@@ -277,7 +324,7 @@
         pruneOpts       = [ "--keep-daily 14" ];
         repository      = "/data/backup";
       };
-      syncthing-poseidon = {
+      poseidon = {
         extraBackupArgs =
           [ "--exclude=./**/.stversions" "--tag syncthing-poseidon" ];
         extraOptions    = [
@@ -361,10 +408,6 @@
           type   = "staggered";
         };
         in {
-          "calibre"          = {
-            enable = true;
-            path   = "/backup/calibre";
-          };
           "domci/Documents"  = {
             enable     = true;
             path       = "/backup/domci/Documents";
@@ -394,10 +437,6 @@
             path       = "/backup/jupblb/Pictures";
             versioning = simpleVersioning;
           };
-          "paperless"        = {
-            enable = true;
-            path   = "/backup/paperless";
-          };
         };
       key         = toString ./config/syncthing/dionysus/key.pem;
       relay       = {
@@ -423,6 +462,23 @@
     zfs.autoScrub = {
       enable   = true;
       interval = "monthly";
+    };
+
+    vaultwarden = {
+      config    = let smtpCfg = (import ./config/secret.nix).mailgun; in {
+        databaseUrl      = "postgresql://vaultwarden@localhost/vaultwarden";
+        domain           = "https://vaultwarden.kielbowi.cz";
+        rocketPort       = 8222;
+        signupsAllowed   = false;
+        signupsVerify    = true;
+        smtpFrom         = "mailgun@kielbowi.cz";
+        smtpHost         = "smtp.eu.mailgun.org";
+        smtpPassword     = smtpCfg.password;
+        smtpUsername     = smtpCfg.login;
+        websocketEnables = true;
+      };
+      dbBackend = "postgresql";
+      enable    = true;
     };
   };
 
@@ -484,6 +540,7 @@
           environment = (import ./config/secret.nix).simply-shorten;
           image       = "draganczukp/simply-shorten";
           ports       = [ "4567:4567" ];
+          volumes     = [ "/backup/simply-shorten.sqlite:/urls.sqlite" ];
         };
       };
     };
