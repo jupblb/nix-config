@@ -14,6 +14,14 @@ self: super: with super; {
     cmp-nvim-lsp-signature-help =
       callPackage ./neovim/plugin/cmp-nvim-lsp-signature-help.nix {};
     gkeep-nvim                  = callPackage ./neovim/plugin/gkeep.nix {};
+    hop-nvim                    = vimPlugins.hop-nvim.overrideAttrs(_: {
+      src = fetchFromGitHub {
+        owner  = "phaazon";
+        repo   = "hop.nvim";
+        rev    = "e2f978b50c2bd9ae2c6a4ebdf2222c0f299c85c3";
+        sha256 = "1si2ibxidjn0l565vhr77949s16yjv46alq145b19h15amwgq3g2";
+      };
+    });
     null-ls-nvim                = vimPlugins.null-ls-nvim.overrideAttrs(_: {
       dependencies = with vimPlugins; [ plenary-nvim ];
     });
