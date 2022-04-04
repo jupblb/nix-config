@@ -363,11 +363,6 @@
       to     = "rss@kielbowi.cz";
     };
 
-    shellhub-agent = {
-      enable   = true;
-      tenantId = "c4278ad7-67c3-4c7f-bfe4-b9c0ea011a21";
-    };
-
     shiori.enable = true;
 
     smartd = {
