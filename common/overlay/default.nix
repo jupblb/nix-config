@@ -7,6 +7,7 @@ self: super: with super; {
     kubectl = callPackage ./fish/plugin/kubectl.nix {};
     nix-env = callPackage ./fish/plugin/nix-env.nix {};
   };
+  forgit                  = callPackage ./forgit.nix {};
   gtree                   = callPackage ./gtree.nix {};
   lf                      = callPackage ./lf { inherit (super) lf; };
   pragmata-pro            = callPackage ./pragmata-pro {};

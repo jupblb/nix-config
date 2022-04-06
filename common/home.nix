@@ -11,7 +11,7 @@
       '';
     };
     packages         = with pkgs;
-      [ ammonite git-crypt gore httpie hugo ripgrep zk ];
+      [ ammonite forgit git-crypt gore httpie ripgrep zk ];
     sessionVariables = {
       _ZO_FZF_OPTS =
         let preview = "${pkgs.gtree}/bin/gtree -L=2 {2..} | head -200";
@@ -45,10 +45,15 @@
     fish = {
       enable       = true;
       functions    = {
+        delta-view    = {
+          body     = builtins.readFile ../config/script/delta-view.fish;
+          onSignal = "WINCH";
+        };
         fish_greeting =
           "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
         ls            = builtins.readFile ../config/script/exa.fish;
       };
+      interactiveShellInit = "delta-view";
       plugins      = with pkgs.fishPlugins; [
         { name = "gcloud"; src = gcloud; }
         { name = "kubectl"; src = kubectl; }
@@ -80,7 +85,42 @@
       ];
     };
 
-    git = import ../config/git.nix;
+    git = {
+      aliases     = {
+        amend = "commit --amend --no-edit";
+        line  = "!sh -c 'git log -L$2,+1:\${GIT_PREFIX:-./}$1' -";
+        lines = "!sh -c 'git log -L$2,$3:\${GIT_PREFIX:-./}$1' -";
+      };
+      delta       = {
+        enable  = true;
+        options = {
+          line-numbers            = true;
+          minus-emph-style        = "syntax #fa9f86";
+          minus-style             = "syntax #f9d8bc";
+          plus-emph-style         = "syntax #d9d87f";
+          plus-style              = "syntax #eeebba";
+          syntax-theme            = "gruvbox-light";
+        };
+      };
+      enable      = true;
+      extraConfig = {
+        color.ui            = true;
+        core.mergeoptions   = "--no-edit";
+        fetch.prune         = true;
+        merge.conflictStyle = "diff3";
+        pull.rebase         = true;
+        push.default        = "upstream";
+        submodule.recurse   = true;
+      };
+      ignores     = [ ".vim-bookmarks" ];
+      iniContent  = {
+        core.pager =
+          lib.mkForce "sh -c 'delta --width \${FZF_PREVIEW_COLUMNS-$COLUMNS}'";
+      };
+      signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
+      userEmail   = "mpkielbowicz@gmail.com";
+      userName    = "jupblb";
+    };
 
     go = {
       enable = true;
