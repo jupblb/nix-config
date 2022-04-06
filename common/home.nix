@@ -159,9 +159,6 @@
           config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
           plugin = bufdelete-nvim;
         } {
-          config = "source ${toString ../config/neovim/diffview.vim}";
-          plugin = diffview-nvim;
-        } {
           config = "source ${toString ../config/neovim/gkeep.vim}";
           plugin = gkeep-nvim;
         } {
@@ -253,9 +250,6 @@
           config = "source ${toString ../config/neovim/bookmark.vim}";
           plugin = vim-bookmarks;
         } {
-          config = "let g:gh_line_blame_map_default = 0";
-          plugin = vim-gh-line;
-        } {
           config = "source ${toString ../config/neovim/markdown.vim}";
           plugin = vim-markdown;
         } {
@@ -271,7 +265,7 @@
           '';
           plugin = zk-nvim;
         }
-        commentary git-messenger-vim surround vim-cool vim-sleuth
+        commentary git-messenger-vim surround vim-cool vim-gh-line vim-sleuth
       ];
       enable        = true;
       extraPackages =

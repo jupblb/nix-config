@@ -11,7 +11,6 @@ nmap <Leader>f       <Cmd>Telescope find_files<CR>
 nmap <Leader>j       <Cmd>Telescope jumplist<CR>
 nmap <Leader>o       <Cmd>Telescope oldfiles<CR>
 
-nmap <Leader>gb <Cmd>Telescope git_branches<CR>
 nmap <Leader>gC <Cmd>Telescope git_commits<CR>
 nmap <Leader>gc <Cmd>Telescope git_bcommits<CR>
 nmap <Leader>gf <Cmd>Telescope git_files<CR>
