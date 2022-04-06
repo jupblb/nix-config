@@ -7,9 +7,9 @@ vim.diagnostic.config({virtual_text = false})
 -- Replace default signs
 local signs = {
     Error = ' ',
-    Warning = ' ',
+    Warn = ' ',
     Hint = ' ',
-    Information = ' '
+    Info = ' '
 }
 for type, icon in pairs(signs) do
     local hl = 'DiagnosticSign' .. type
