@@ -11,7 +11,7 @@
       '';
     };
     packages         = with pkgs;
-      [ ammonite forgit git-crypt gore httpie ripgrep zk ];
+      [ ammonite forgit git-crypt gore httpie ripgrep telescope zk ];
     sessionVariables = {
       _ZO_FZF_OPTS =
         let preview = "${pkgs.gtree}/bin/gtree -L=2 {2..} | head -200";
@@ -346,6 +346,15 @@
         sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
         url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
       };
+      "telescope/config".text          =
+        let theme = pkgs.fetchurl {
+          sha256 = "0lg7d0nw3z1awm84kzkbhbpvfqn60dhy6rdd6cprhdss40l9h2h4";
+          url    = "https://raw.githubusercontent.com/omar-polo/telescope/main/contrib/light.config";
+        };
+        in ''
+          ${builtins.readFile theme}
+          ${builtins.readFile ../config/telescope.txt}
+        '';
       "tridactyl/tridactylrc".text     = ''
         ${builtins.readFile ../config/tridactylrc.vim}
         set editorcmd ${pkgs.kitty}/bin/kitty -- ${pkgs.fish}/bin/fish -c "nvim %f"
