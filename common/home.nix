@@ -11,7 +11,7 @@
       '';
     };
     packages         = with pkgs;
-      [ ammonite forgit git-crypt gore httpie ripgrep telescope zk ];
+      [ ammonite curlie forgit git-crypt gore ripgrep tldr telescope zk ];
     sessionVariables = {
       _ZO_FZF_OPTS =
         let preview = "${pkgs.gtree}/bin/gtree -L=2 {2..} | head -200";
@@ -61,6 +61,7 @@
       ];
       shellAliases = with pkgs; {
         cat  = "${bat}/bin/bat -p --paging=never";
+        diff = "${difftastic}/bin/difft --background=light";
         less = "${bat}/bin/bat -p --paging=always";
       };
     };
