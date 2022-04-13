@@ -480,8 +480,8 @@
   system.stateVersion = "20.09";
 
   systemd.services = {
-    calibre-web         = { wantedBy = lib.mkForce []; };
-    emanote             = {
+    calibre-web           = { wantedBy = lib.mkForce []; };
+    emanote               = {
       after         = [ "network.target" ];
       description   = "Emanote";
       path          = with pkgs; [ emanote findutils gnused ];
@@ -489,7 +489,7 @@
       serviceConfig = { Type = "oneshot"; User = "root"; };
       startAt       = "*:0/15";
     };
-    ip-updater          = {
+    ip-updater            = {
       after         = [ "network.target" ];
       description   = "Public IP updater";
       environment   = (import ./config/secret.nix).ovh;
@@ -502,8 +502,10 @@
       };
       startAt       = "*:0/5";
     };
-    paperless-ng-server = { wantedBy = lib.mkForce []; };
-    syncthing           = { wantedBy = lib.mkForce []; };
+    paperless-ng-server   = { wantedBy = lib.mkForce []; };
+    podman-photoview      = { wantedBy = lib.mkForce []; };
+    podman-simply-shorten = { wantedBy = lib.mkForce []; };
+    syncthing             = { wantedBy = lib.mkForce []; };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
@@ -532,7 +534,12 @@
           volumes      = [ "/backup/jupblb/Pictures/album:/photos-jupblb:ro" ];
         };
         simply-shorten = {
-          environment = (import ./config/secret.nix).simply-shorten;
+          environment =
+            let pass = (import ./config/secret.nix).simply-shorten;
+            in {
+              inherit (pass) username password;
+              db_url = "/urls.sqlite";
+            };
           image       = "draganczukp/simply-shorten";
           ports       = [ "4567:4567" ];
           volumes     = [ "/backup/simply-shorten.sqlite:/urls.sqlite" ];
