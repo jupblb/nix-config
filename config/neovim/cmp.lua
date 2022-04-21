@@ -11,9 +11,6 @@ local function tab_movement(movement)
 end
 
 cmp.setup({
-    documentation = {
-        border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'}
-    },
     mapping = {
         ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
         ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
@@ -25,5 +22,6 @@ cmp.setup({
     preselect = cmp.PreselectMode.None,
     sources = cmp.config.sources({{name = 'nvim_lsp'}},
                                  {{name = 'nvim_lsp_signature_help'}},
-                                 {{name = 'path'}}, {{name = 'buffer'}})
+                                 {{name = 'path'}}, {{name = 'buffer'}}),
+    window = {documentation = cmp.config.window.bordered()}
 })

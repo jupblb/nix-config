@@ -12,6 +12,6 @@ stdenv.mkDerivation rec {
     owner  = "wfxr";
     repo   = name;
     rev    = "master";
-    sha256 = "1r22x33n55c6br9kmc9hlly2b5g7bnc122g3h072akwm0chcnfh5";
+    sha256 = "1hq1qbpfj0kfld8rvqf7mhh83mll6baq26p1cp0sr68cf66nl51q";
   };
 }

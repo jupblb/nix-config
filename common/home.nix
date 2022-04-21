@@ -7,7 +7,7 @@
         "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
       nvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD nvim --headless \
-          +UpdateRemotePlugins +TSUpdateSync +quit && echo
+          +UpdateRemotePlugins +TSUpdateSync all +quit && echo
       '';
     };
     packages         = with pkgs;
@@ -200,6 +200,9 @@
           config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
           plugin = bufdelete-nvim;
         } {
+          config = "source ${toString ../config/neovim/fidget.vim}";
+          plugin = fidget-nvim;
+        } {
           config = "source ${toString ../config/neovim/gkeep.vim}";
           plugin = gkeep-nvim;
         } {
@@ -211,9 +214,6 @@
         } {
           config = "lua require('lsp_lines').register_lsp_virtual_lines()";
           plugin = lsp_lines-nvim;
-        } {
-          config = "luafile ${toString ../config/neovim/lsp-status.lua}";
-          plugin = lsp-status-nvim;
         } {
           config = ''
             set noshowmode
@@ -244,10 +244,7 @@
             dependencies = [ lua-dev-nvim SchemaStore-nvim ];
           });
         } {
-          config = ''
-            source ${toString ../config/neovim/metals.vim}
-            luafile ${toString ../config/neovim/metals.lua}
-          '';
+          config = "luafile ${toString ../config/neovim/metals.lua}";
           plugin = nvim-metals;
         } {
           config = "luafile ${toString ../config/neovim/pqf.lua}";
@@ -297,6 +294,9 @@
           config = "source ${toString ../config/neovim/mergetool.vim}";
           plugin = vim-mergetool;
         } {
+          config = "source ${toString ../config/neovim/oscyank.vim}";
+          plugin = vim-oscyank;
+        } {
           config = "source ${toString ../config/neovim/signify.vim}";
           plugin = vim-signify;
         } {
@@ -312,7 +312,7 @@
       extraPackages =
         let
           default      = with pkgs; [
-            buildifier cargo coursier fd fish gitlint gopls luaformatter openjdk
+            buildifier cargo coursier fd fish gopls jq luaformatter openjdk
             pandoc ripgrep rnix-lsp rust-analyzer rustc shellcheck shfmt statix
             sumneko-lua-language-server zk
           ];

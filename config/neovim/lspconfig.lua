@@ -1,16 +1,10 @@
 local lspconfig = require("lspconfig")
-local lsp_status = require("lsp-status")
 
 -- Disable virtual text for errors
 vim.diagnostic.config({virtual_text = false})
 
 -- Replace default signs
-local signs = {
-    Error = ' ',
-    Warn = ' ',
-    Hint = ' ',
-    Info = ' '
-}
+local signs = {Error = ' ', Warn = ' ', Hint = ' ', Info = ' '}
 for type, icon in pairs(signs) do
     local hl = 'DiagnosticSign' .. type
     vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
@@ -29,14 +23,12 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup
-_G.lsp_attach = function(client)
+_G.lsp_attach = function()
     vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
-    lsp_status.on_attach(client)
 end
 
 lspconfig.util.default_config = vim.tbl_extend('force',
                                                lspconfig.util.default_config, {
-    capabilities = lsp_status.capabilities,
     flags = {debounce_text_changes = 150},
     on_attach = lsp_attach
 })
