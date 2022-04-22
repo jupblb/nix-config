@@ -47,6 +47,7 @@
     bash.promptInit       = builtins.readFile ../config/bash/bashrc.bash;
     fish.enable           = true;
     gnupg.agent.enable    = true;
+    mosh.enable           = true;
     vim.defaultEditor     = true;
   };
 
