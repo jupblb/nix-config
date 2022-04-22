@@ -61,7 +61,9 @@
           "gfx.webrender.enabled"               = true;
           "widget.wayland-dmabuf-vaapi.enabled" = true;
         };
-        package                    = pkgs.firefox-wayland;
+        package                    = pkgs.firefox-wayland.override {
+          cfg.enableTridactylNative = true;
+        };
       };
 
       kitty.settings = {
