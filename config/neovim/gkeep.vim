@@ -1,3 +1,11 @@
+let g:gkeep_icons = {
+      \ 'home': ' ',
+      \ 'label': ' ',
+      \ 'list': ' ',
+      \ 'note': ' ',
+      \ 'search': ' ',
+      \ }
+let g:gkeep_sync_archived = 1
 let g:gkeep_sync_dir = "~/Documents/keep"
 let g:gkeep_width = 42
 
