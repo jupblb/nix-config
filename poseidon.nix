@@ -15,7 +15,7 @@
 
   imports =
     let vpsadminos = builtins.fetchurl
-      "https://raw.githubusercontent.com/vpsfreecz/vpsadminos/staging/os/lib/nixos-container/vpsadminos.nix";
+      "https://github.com/vpsfreecz/vpsadminos/raw/staging/os/lib/nixos-container/vpsadminos.nix";
     in [ ./common/nixos.nix vpsadminos ];
 
   networking = {

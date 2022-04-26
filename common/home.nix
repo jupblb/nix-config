@@ -343,6 +343,10 @@
 
   xdg = {
     configFile = {
+      "lf/icons".source                = pkgs.fetchurl {
+        sha256 = "04jnldz0y2fj4ymypzmvs7jjbvvjrwzdp99qp9r12syfk65nh9cn";
+        url    = "https://github.com/gokcehan/lf/raw/master/etc/icons.example";
+      };
       "nvim/spell/pl.utf-8.spl".source = pkgs.fetchurl {
         sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
         url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
@@ -350,7 +354,8 @@
       "telescope/config".text          =
         let theme = pkgs.fetchurl {
           sha256 = "0lg7d0nw3z1awm84kzkbhbpvfqn60dhy6rdd6cprhdss40l9h2h4";
-          url    = "https://raw.githubusercontent.com/omar-polo/telescope/main/contrib/light.config";
+          url    =
+            "https://github.com/omar-polo/telescope/raw/main/contrib/light.config";
         };
         in ''
           ${builtins.readFile theme}
