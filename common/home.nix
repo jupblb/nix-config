@@ -43,8 +43,8 @@
     firefox = import ../config/firefox.nix;
 
     fish = {
-      enable       = true;
-      functions    = {
+      enable               = true;
+      functions            = {
         delta-view    = {
           body     = builtins.readFile ../config/script/delta-view.fish;
           onSignal = "WINCH";
@@ -54,12 +54,7 @@
         ls            = builtins.readFile ../config/script/exa.fish;
       };
       interactiveShellInit = "delta-view";
-      plugins      = with pkgs.fishPlugins; [
-        { name = "gcloud"; src = gcloud; }
-        { name = "kubectl"; src = kubectl; }
-        { name = "nix-env"; src = nix-env; }
-      ];
-      shellAliases = with pkgs; {
+      shellAliases         = with pkgs; {
         cat  = "${bat}/bin/bat -p --paging=never";
         diff = "${difftastic}/bin/difft --background=light";
         less = "${bat}/bin/bat -p --paging=always";

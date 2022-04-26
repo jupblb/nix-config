@@ -1,9 +1,9 @@
 { fetchFromGitHub, vimUtils }:
 
 vimUtils.buildVimPlugin rec {
-  pname     = "cmp-nvim-lsp-signature-help";
-  version   = "main";
-  src       = fetchFromGitHub {
+  pname   = "cmp-nvim-lsp-signature-help";
+  version = "main";
+  src     = fetchFromGitHub {
     owner  = "hrsh7th";
     repo   = pname;
     rev    = version;

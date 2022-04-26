@@ -1,9 +1,9 @@
 { fetchFromGitHub, vimUtils }:
 
 vimUtils.buildVimPlugin rec {
-  pname     = "telescope-tele-tabby-nvim";
-  version   = "main";
-  src       = fetchFromGitHub {
+  pname   = "telescope-tele-tabby-nvim";
+  version = "main";
+  src     = fetchFromGitHub {
     owner  = "TC72";
     repo   = "telescope-tele-tabby.nvim";
     rev    = version;

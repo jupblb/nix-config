@@ -1,9 +1,9 @@
 { fetchFromGitLab, vimUtils }:
 
 vimUtils.buildVimPlugin rec {
-  pname     = "nvim-pqf";
-  version   = "main";
-  src       = fetchFromGitLab {
+  pname   = "nvim-pqf";
+  version = "main";
+  src     = fetchFromGitLab {
     owner  = "yorickpeterse";
     repo   = pname;
     rev    = version;
