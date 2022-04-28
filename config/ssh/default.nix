@@ -5,6 +5,11 @@
   enable              = true;
   forwardAgent        = true;
   matchBlocks         = let config = { identitiesOnly = true; }; in {
+    cerberus     = config // {
+      hostname     = "192.168.1.1";
+      identityFile = [ (toString ./jupblb/id_ed25519) ];
+      user         = "root";
+    };
     dionysus     = config // {
       hostname     = "jupblb.ddns.net";
       identityFile = [ (toString ./jupblb/id_ed25519) ];
@@ -14,12 +19,6 @@
     "github.com" = config // {
       hostname     = "github.com";
       identityFile = [ (toString ./git/id_ed25519) ];
-    };
-    hades        = config // {
-      hostname     = "jupblb.ddns.net";
-      identityFile = [ (toString ./jupblb/id_ed25519) ];
-      port         = 1993;
-      sendEnv      = [ "BAT_THEME" ];
     };
     poseidon     = config // {
       hostname     = "poseidon.kielbowi.cz";

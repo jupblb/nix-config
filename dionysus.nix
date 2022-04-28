@@ -75,10 +75,10 @@
     defaultGateway           = "192.168.1.1";
     domain                   = "kielbowi.cz";
     firewall.allowedTCPPorts = [
-      53 67 68 80 111 443 2049 2267 3012 4000 4001 4002 8181 22067 22070
+      80 111 443 2049 2267 3012 4000 4001 4002 8181 22067 22070
     ];
     firewall.allowedUDPPorts = [
-      53 67 68 80 111 443 2049 3012 4000 4001 4002 22067 22070
+      80 111 443 2049 3012 4000 4001 4002 22067 22070
     ];
     interfaces.enp8s0        = {
       ipv4.addresses = [ { address = "192.168.1.4"; prefixLength = 24; } ];
@@ -94,11 +94,6 @@
   programs.gnupg.agent.pinentryFlavor = "curses";
 
   services = {
-    adguardhome = {
-      enable       = true;
-      openFirewall = true;
-    };
-
     apcupsd = {
       configText = "TIMEOUT 30";
       hooks      = {
@@ -118,10 +113,6 @@
           '';
           secret    = (import ./config/secret.nix).caddy;
         in {
-          "adguard.kielbowi.cz"    = {
-            extraConfig   = "reverse_proxy http://localhost:3000";
-            serverAliases = [ "www.adguard.kielbowi.cz" ];
-          };
           "calibre.kielbowi.cz"    = {
             extraConfig   = "reverse_proxy http://localhost:8083";
             serverAliases = [ "www.calibre.kielbowi.cz" ];
