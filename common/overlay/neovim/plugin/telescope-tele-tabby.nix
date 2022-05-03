@@ -7,6 +7,6 @@ vimUtils.buildVimPlugin rec {
     owner  = "TC72";
     repo   = "telescope-tele-tabby.nvim";
     rev    = version;
-    sha256 = "1zg9vbzvxx1xxw3fdkm4zjhr33shmhmj05yb6hq096p5zl7qk1h8";
+    sha256 = "0bnndfw0qks5jpr1w9ddafm90wl5xnxvpciai4pi5gqgirnasyh2";
   };
 }
