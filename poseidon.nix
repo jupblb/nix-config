@@ -6,17 +6,22 @@
   };
 
   home-manager.users.jupblb = {
+    imports = [
+      ./home-manager/lf.nix
+      ./home-manager/neovim
+      ./home-manager/starship.nix
+      ./home-manager/zoxide.nix
+    ];
+
     programs = {
-      firefox.enable   = lib.mkForce false;
-      mercurial.enable = lib.mkForce false;
-      ssh.enable       = lib.mkForce false;
+      ssh.enable = lib.mkForce false;
     };
   };
 
   imports =
     let vpsadminos = builtins.fetchurl
       "https://github.com/vpsfreecz/vpsadminos/raw/staging/os/lib/nixos-container/vpsadminos.nix";
-    in [ ./common/nixos.nix vpsadminos ];
+    in [ ./nixos vpsadminos ];
 
   networking = {
     domain                    = "kielbowi.cz";
@@ -28,8 +33,6 @@
   programs.gnupg.agent.pinentryFlavor = "curses";
 
   services = {
-    acpid.enable   = lib.mkForce false;
-    apcupsd.enable = lib.mkForce false;
     caddy          = {
       email        = "caddy@kielbowi.cz";
       enable       = true;
@@ -50,16 +53,11 @@
     };
     fstrim.enable  = lib.mkForce false;
     syncthing      = {
-      enable = lib.mkForce false;
       relay  = {
         enable        = true;
         listenAddress = "0.0.0.0";
         pools         = [ "" ];
       };
-    };
-    shellhub-agent = {
-      enable   = true;
-      tenantId = "c4278ad7-67c3-4c7f-bfe4-b9c0ea011a21";
     };
   };
 

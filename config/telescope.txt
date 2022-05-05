@@ -1,7 +1,0 @@
-bind global-map C-u scroll-up
-bind global-map C-d scroll-down
-bind global-map m bookmark-page
-bind global-map M list-bookmarks
-bind global-map C-y scroll-line-up
-bind global-map C-e scroll-line-down
-

@@ -59,17 +59,23 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   home-manager.users.jupblb = {
+    imports = [
+      ./home-manager/fish
+      ./home-manager/lf.nix
+      ./home-manager/neovim
+      ./home-manager/starship.nix
+      ./home-manager/zoxide.nix
+    ];
+
     programs = {
-      firefox.enable   = lib.mkForce false;
       fish.functions   = {
         zfs-backup-unlock =
           builtins.readFile ./config/script/zfs-backup-unlock.fish;
       };
-      mercurial.enable = lib.mkForce false;
     };
   };
 
-  imports = [ ./common/nixos.nix ];
+  imports = [ ./nixos ./nixos/apc.nix ./nixos/syncthing.nix ];
 
   networking = {
     defaultGateway           = "192.168.1.1";
@@ -90,12 +96,17 @@
     wireless.enable          = false;
   };
 
-  programs.adb.enable                 = true;
-  programs.gnupg.agent.pinentryFlavor = "curses";
+  programs = {
+    adb.enable                 = true;
+    gnupg.agent.pinentryFlavor = "curses";
+  };
 
   services = {
+    acpid.enable = true;
+
     apcupsd = {
       configText = "TIMEOUT 30";
+      enable     = true;
       hooks      = {
         doshutdown = builtins.readFile ./config/script/dionysus-shutdown.sh;
       };

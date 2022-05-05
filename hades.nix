@@ -12,15 +12,7 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment = {
-    gnome.excludePackages = with pkgs.gnome; [
-      baobab cheese epiphany gedit gnome-calculator gnome-disk-utility
-      gnome-logs gnome-music gnome-shell-extensions gnome-terminal
-      pkgs.gnome-connections simple-scan yelp
-    ];
-    systemPackages        = with pkgs.gnomeExtensions;
-      [ compiz-windows-effect hide-top-bar removable-drive-menu ];
-  };
+  environment.systemPackages = with pkgs; [ _1password-gui ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
@@ -50,10 +42,21 @@
   };
 
   home-manager.users.jupblb = {
-    home = {
-      packages     = with pkgs; [ _1password-gui ];
-      stateVersion = "20.03";
-    };
+    home.stateVersion = "20.03";
+
+    imports = [
+      ./home-manager/direnv.nix
+      ./home-manager/firefox
+      ./home-manager/fish
+      ./home-manager/go.nix
+      ./home-manager/kitty
+      ./home-manager/lf.nix
+      ./home-manager/neovim
+      ./home-manager/neovim/lsp.nix
+      ./home-manager/starship.nix
+      ./home-manager/zk
+      ./home-manager/zoxide.nix
+    ];
 
     programs = {
       firefox        = {
@@ -70,8 +73,6 @@
         hide_window_decorations = "yes";
         linux_display_server    = "wayland";
       };
-
-      neovim.extraConfig = "autocmd VimEnter * GkeepLogin";
     };
 
     services = {
@@ -84,25 +85,13 @@
     };
   };
 
-  imports = [ ./common/nixos.nix ];
+  imports = [ ./nixos ./nixos/apc.nix ./nixos/gnome.nix ./nixos/syncthing.nix ];
 
   networking.hostName = "hades";
 
   programs = { steam.enable = true; };
 
   services = {
-    dleyna-renderer.enable = false;
-
-    dleyna-server.enable = false;
-
-    gnome = {
-      chrome-gnome-shell.enable   = false;
-      gnome-remote-desktop.enable = false;
-      rygel.enable                = false;
-    };
-
-    power-profiles-daemon.enable = false;
-
     printing = {
       drivers = with pkgs; [ samsung-unified-linux-driver_1_00_37 ];
       enable  = true;
@@ -126,21 +115,10 @@
       user      = "jupblb";
     };
 
-    telepathy.enable = false;
-
     udev.extraRules = ''
       SUBSYSTEM=="usb", ATTRS{idVendor}=="8087", ATTRS{idProduct}=="0aaa",\
         ATTR{authorized}="0"
     '';
-
-    xserver = {
-      enable               = true;
-      desktopManager.gnome = { enable = true; };
-      displayManager       = {
-        autoLogin  = { enable = true; user = "jupblb"; };
-        gdm.enable = true;
-      };
-    };
   };
 
   sound.enable = true;
