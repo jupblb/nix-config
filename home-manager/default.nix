@@ -100,7 +100,7 @@
           user         = "root";
         };
         dionysus     = config // {
-          hostname     = "jupblb.ddns.net";
+          hostname     = "dionysus.kielbowi.cz";
           identityFile = [ (toString ../config/ssh/jupblb/id_ed25519) ];
           port         = 1995;
         };

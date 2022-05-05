@@ -125,69 +125,60 @@
           secret    = (import ./config/secret.nix).caddy;
         in {
           "calibre.kielbowi.cz"    = {
-            extraConfig   = "reverse_proxy http://localhost:8083";
-            serverAliases = [ "www.calibre.kielbowi.cz" ];
+            extraConfig = "reverse_proxy http://localhost:8083";
           };
           "dionysus.kielbowi.cz"     = {
-            extraConfig   = "respond \"Hello, world!\"";
-            serverAliases = [ "www.dionysus.kielbowi.cz" ];
+            extraConfig = "respond \"Hello, world!\"";
           };
           "files.kielbowi.cz"        = {
-            extraConfig   = basicauth + ''
+            extraConfig = basicauth + ''
               file_server browse {
                 root /backup/jupblb/
               }
             '';
-            serverAliases = [ "www.files.kielbowi.cz" ];
           };
           "go.kielbowi.cz"           = {
-            extraConfig   = "reverse_proxy http://localhost:4567";
-            serverAliases = [ "www.go.kielbowi.cz" ];
+            extraConfig = "reverse_proxy http://localhost:4567";
           };
           "jellyfin.kielbowi.cz"     = {
             extraConfig   = "reverse_proxy http://localhost:8096";
             serverAliases = [ "www.jellyfin.kielbowi.cz" ];
           };
           "notes.kielbowi.cz"        = {
-            extraConfig   = basicauth + ''
+            extraConfig = basicauth + ''
               file_server browse {
                 root /srv/emanote
               }
             '';
-            serverAliases = [ "www.notes.kielbowi.cz" ];
           };
           "paperless.kielbowi.cz"    = {
-            extraConfig   = "reverse_proxy http://localhost:28981";
-            serverAliases = [ "www.paperless.kielbowi.cz" ];
-          };
-          "plex.kielbowi.cz"         = {
-            extraConfig   = "reverse_proxy http://localhost:32400";
-            serverAliases = [ "www.plex.kielbowi.cz" ];
+            extraConfig = "reverse_proxy http://localhost:28981";
           };
           "photos.kielbowi.cz"       = {
             extraConfig   = "reverse_proxy http://localhost:8012";
             serverAliases = [ "www.photos.kielbowi.cz" ];
           };
+          "plex.kielbowi.cz"         = {
+            extraConfig   = "reverse_proxy http://localhost:32400";
+            serverAliases = [ "www.plex.kielbowi.cz" ];
+          };
           "shiori.kielbowi.cz"       = {
-            extraConfig   = "reverse_proxy http://localhost:8080";
-            serverAliases = [ "www.shiori.kielbowi.cz" ];
+            extraConfig = "reverse_proxy http://localhost:8080";
           };
           "swps.kielbowi.cz"         = {
-            extraConfig   = ''
+            extraConfig = ''
               file_server browse {
                 root /srv/emanote-swps
               }
             '';
-            serverAliases = [ "www.swps.kielbowi.cz" ];
           };
           "syncthing.kielbowi.cz"    = {
-            extraConfig   = basicauth + ''
+            extraConfig = basicauth + ''
               reverse_proxy http://localhost:8384 {
                 header_up Host localhost
                 header_up X-Forwarded-Host syncthing.kielbowi.cz
               }
             '';
-            serverAliases = [ "www.syncthing.kielbowi.cz" ];
           };
           "transmission.kielbowi.cz" = {
             extraConfig = basicauth + "reverse_proxy http://127.0.0.1:9091";

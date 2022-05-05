@@ -3,5 +3,5 @@ require('nvim-tree').setup({
         enable = true,
         icons = {error = "", hint = "", warning = ""}
     },
-    view = {auto_resize = true, width = 42}
+    view = {width = 42}
 })
