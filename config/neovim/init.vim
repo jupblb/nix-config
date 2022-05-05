@@ -23,6 +23,9 @@ let g:markdown_fenced_languages = [
   \    'js=javascript', 'json', 'python', 'scala', 'sh', 'typescript', 'yaml'
   \  ]
 
+let g:do_filetype_lua = 1
+let g:did_load_filetypes = 0
+
 map q: <Nop>
 nnoremap Q <Nop>
 nnoremap <Space> <Nop>

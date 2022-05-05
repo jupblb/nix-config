@@ -15,7 +15,6 @@ nmap <Leader>gC <Cmd>Telescope git_commits<CR>
 nmap <Leader>gc <Cmd>Telescope git_bcommits<CR>
 nmap <Leader>gf <Cmd>Telescope git_files<CR>
 
-nmap <Leader>la  <Cmd>Telescope lsp_code_actions<CR>
 nmap <Leader>ldd <Cmd>Telescope lsp_document_diagnostics<CR>
 nmap <Leader>lwd <Cmd>Telescope lsp_workspace_diagnostics<CR>
 
