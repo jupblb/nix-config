@@ -26,7 +26,13 @@
   nixpkgs.overlays = [ (import ./overlay) ];
 
   programs = {
-    bash = import ../config/bash;
+    bash = {
+      enable         = true;
+      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
+      shellAliases   = { "ls" = "ls --color=auto"; };
+      shellOptions   = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
+      initExtra      = "source ${toString ../config/bashrc.bash}";
+    };
 
     direnv = {
       config     = {
@@ -40,7 +46,18 @@
 
     exa.enable = true;
 
-    firefox = import ../config/firefox.nix;
+    firefox = {
+      enable                        = true;
+      profiles."jupblb".settings    = {
+        "browser.aboutConfig.showWarning"          = false;
+        "browser.toolbars.bookmarks.visibility"    = "never";
+        "extensions.pocket.enabled"                = false;
+        "full-screen-api.warning.timeout"          = 0;
+        "network.protocol-handler.expose.magnet"   = false;
+        "permissions.default.desktop-notification" = 2;
+      };
+    };
+
 
     fish = {
       enable               = true;
@@ -137,10 +154,41 @@
         name = "PragmataPro Mono Liga";
         size = 10;
       };
-      keybindings = import ../config/kitty/keybindings.nix;
-      settings    = (import ../config/kitty/settings.nix) // {
-        env   = "SHELL=${pkgs.fish}/bin/fish";
-        shell = "${pkgs.fish}/bin/fish";
+      keybindings = {
+        "ctrl+shift+'" = "launch --location=hsplit";
+        "ctrl+shift+;" = "launch --location=vsplit";
+        "ctrl+shift+`" = "show_scrollback";
+        "ctrl+shift+h" = "move_window left";
+        "ctrl+shift+j" = "move_window bottom";
+        "ctrl+shift+k" = "move_window top";
+        "ctrl+shift+l" = "move_window right";
+        "ctrl+h"       = "neighboring_window left";
+        "ctrl+j"       = "neighboring_window bottom";
+        "ctrl+k"       = "neighboring_window top";
+        "ctrl+l"       = "neighboring_window right";
+      };
+      settings    = {
+        allow_remote_control               = "yes";
+        clipboard_control                  =
+          "write-clipboard write-primary no-append";
+        enabled_layouts                    = "splits";
+        enable_audio_bell                  = "no";
+        env                                = "SHELL=${pkgs.fish}/bin/fish";
+        listen_on                          = "unix:/tmp/kitty";
+        macos_option_as_alt                = "left";
+        macos_quit_when_last_window_closed = "yes";
+        scrollback_pager                   =
+          "kitty @ launch --type=overlay --stdin-source=@screen_scrollback nvim -R -c 'autocmd VimEnter * norm G{}' -";
+        scrollback_pager_history_size      = 4096;
+        shell                              = "${pkgs.fish}/bin/fish";
+        symbol_map                         =
+          let mappings = [
+            "U+23FB-U+23FE" "U+2B58" "U+E200-U+E2A9" "U+E0A0-U+E0A3" "U+E0B0-U+E0BF"
+            "U+E0C0-U+E0C8" "U+E0CC-U+E0CF" "U+E0D0-U+E0D2" "U+E0D4" "U+E700-U+E7C5"
+            "U+F000-U+F2E0" "U+2665" "U+26A1" "U+F400-U+F4A8" "U+F67C" "U+E000-U+E00A"
+            "U+F300-U+F313" "U+E5FA-U+E62B"
+          ];
+          in (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font";
       };
       theme       = "Gruvbox Light Hard";
     };
@@ -325,9 +373,79 @@
 
     nix-index.enable = true;
 
-    ssh = import ../config/ssh;
+    ssh = {
+      compression         = true;
+      controlMaster       = "auto";
+      controlPersist      = "yes";
+      enable              = true;
+      forwardAgent        = true;
+      matchBlocks         = let config = { identitiesOnly = true; }; in {
+        cerberus     = config // {
+          hostname     = "192.168.1.1";
+          identityFile = [ (toString ../config/ssh/jupblb/id_ed25519) ];
+          user         = "root";
+        };
+        dionysus     = config // {
+          hostname     = "jupblb.ddns.net";
+          identityFile = [ (toString ../config/ssh/jupblb/id_ed25519) ];
+          port         = 1995;
+          sendEnv      = [ "BAT_THEME" ];
+        };
+        "github.com" = config // {
+          hostname     = "github.com";
+          identityFile = [ (toString ../config/ssh/git/id_ed25519) ];
+        };
+        poseidon     = config // {
+          hostname     = "poseidon.kielbowi.cz";
+          identityFile = [ (toString ../config/ssh/jupblb/id_ed25519) ];
+          sendEnv      = [ "BAT_THEME" ];
+        };
+      };
+      serverAliveInterval = 30;
+    };
 
-    starship = import ../config/starship.nix;
+    starship = {
+      enable   = true;
+      settings = {
+        add_newline = false;
+        directory   = {
+          read_only         = " ";
+          truncation_length = 8;
+          truncation_symbol = "…/";
+        };
+        format      =
+          let
+            git    = map (s: "git_" + s) [ "branch" "commit" "state" "status" ];
+            line   = prefix ++ [ "hg_branch" ] ++ git  ++ [ "status" "shell" ];
+            prefix = [ "shlvl" "nix_shell"  "hostname" "directory" ];
+          in builtins.concatStringsSep "" (map (e: "$" + e) line);
+        git_branch  = { symbol = " "; };
+        git_status  = {
+          ahead      = " ";
+          behind     = " ";
+          conflicted = " ";
+          deleted    = " ";
+          diverged   = " ";
+          format     =
+            "([$all_status](underline $style)[$ahead_behind]($style) )";
+          modified   = " ";
+          renamed    = " ";
+          staged     = " ";
+          stashed    = " ";
+          untracked  = " ";
+        };
+        hg_branch   = { disabled = false; symbol = " "; };
+        hostname    = { format = "[($hostname:)]($style)"; };
+        nix_shell   = { format = "[ ]($style) "; };
+        shell       = {
+          bash_indicator = "\\$";
+          disabled       = false;
+          fish_indicator = "~>";
+        };
+        shlvl       = { disabled = false; symbol = " "; };
+        status      = { disabled = false; symbol = " "; };
+      };
+    };
 
     zoxide = {
       enable                = true;
