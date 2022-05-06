@@ -3,8 +3,8 @@
     extraPackages =
       let
         default      = with pkgs; [
-          buildifier cargo coursier fish gopls jq luaformatter openjdk pandoc
-          rnix-lsp rust-analyzer rustc shellcheck shfmt statix
+          buildifier cargo coursier fish gopls jq openjdk pandoc rnix-lsp
+          rust-analyzer rustc shellcheck shfmt statix
           sumneko-lua-language-server
         ];
         nodePackages = with pkgs.nodePackages; [

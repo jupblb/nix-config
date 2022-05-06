@@ -23,7 +23,8 @@ telescope.setup {
             flex = {flip_columns = 160},
             vertical = {preview_height = 0.5}
         },
-        layout_strategy = "flex"
+        layout_strategy = "flex",
+        path_display = {"truncate"},
     },
     pickers = {
         find_files = {
