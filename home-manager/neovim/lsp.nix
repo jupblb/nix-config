@@ -1,10 +1,15 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
+  home.sessionVariables = {
+    JDTLS_HOME = "${pkgs.jdt-language-server}/share/java";
+    WORKSPACE  = "${config.home.homeDirectory}/Workspace";
+  };
+
   programs.neovim = {
     extraPackages =
       let
         default      = with pkgs; [
-          buildifier cargo coursier fish gopls jq openjdk pandoc rnix-lsp
-          rust-analyzer rustc shellcheck shfmt statix
+          buildifier cargo coursier fish gopls jdt-language-server jq openjdk
+          pandoc rnix-lsp rust-analyzer rustc shellcheck shfmt statix
           sumneko-lua-language-server
         ];
         nodePackages = with pkgs.nodePackages; [

@@ -1,9 +1,9 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   home = {
     activation       = {
       nvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD nvim --headless \
-          +UpdateRemotePlugins +TSUpdateSync all +quit && echo
+        $DRY_RUN_CMD ${config.programs.neovim.finalPackage}/bin/nvim \
+          --headless +UpdateRemotePlugins +TSUpdateSync all +quit && echo
       '';
     };
     sessionVariables = { EDITOR = "nvim"; };

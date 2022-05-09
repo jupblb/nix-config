@@ -1,7 +1,7 @@
 local previewers = require('telescope.previewers')
 local telescope = require('telescope')
 
-require('neoclip').setup({default_register = '*'})
+require('neoclip').setup({ default_register = '*' })
 
 local custom_buffer_previewer = function(filepath, bufnr, opts)
     opts = opts or {}
@@ -15,29 +15,29 @@ local custom_buffer_previewer = function(filepath, bufnr, opts)
     previewers.buffer_previewer_maker(filepath, bufnr, opts)
 end
 
-telescope.setup {
+telescope.setup({
     defaults = {
         buffer_previewer_maker = custom_buffer_previewer,
-        mappings = {i = {["<esc>"] = require('telescope.actions').close}},
+        mappings = { i = { ["<esc>"] = require('telescope.actions').close } },
         layout_config = {
-            flex = {flip_columns = 160},
-            vertical = {preview_height = 0.5}
+            flex = { flip_columns = 160 },
+            vertical = { preview_height = 0.5 }
         },
         layout_strategy = "flex",
-        path_display = {"truncate"},
+        path_display = { "truncate" },
     },
     pickers = {
         find_files = {
             previewer = false,
-            layout_config = {horizontal = {width = 0.5}}
+            layout_config = { horizontal = { width = 0.5 } }
         },
         oldfiles = {
             cwd_only = true,
             previewer = false,
-            layout_config = {horizontal = {width = 0.5}}
+            layout_config = { horizontal = { width = 0.5 } }
         }
-    }
-}
+    },
+})
 
 telescope.load_extension('fzf')
 telescope.load_extension('gkeep')
