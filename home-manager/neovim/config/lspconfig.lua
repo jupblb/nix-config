@@ -27,11 +27,12 @@ _G.lsp_attach = function()
     vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
 end
 
-lspconfig.util.default_config = vim.tbl_extend('force',
-    lspconfig.util.default_config, {
+local default_config = {
     flags = { debounce_text_changes = 150 },
     on_attach = lsp_attach
-})
+}
+lspconfig.util.default_config = vim.tbl_extend(
+    'force', lspconfig.util.default_config, default_config)
 
 -- other LSPs
 local default_servers = { 'bashls', 'dockerls', 'rnix', 'rust_analyzer' }
@@ -46,7 +47,8 @@ lspconfig.jsonls.setup({
     commands = {
         Format = {
             function()
-                vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line('$'), 0 })
+                vim.lsp.buf.range_formatting(
+                    {}, { 0, 0 }, { vim.fn.line('$'), 0 })
             end
         }
     },
@@ -56,9 +58,20 @@ lspconfig.jsonls.setup({
 local luadev = require("lua-dev").setup({ runtime_path = true })
 lspconfig.sumneko_lua.setup(luadev)
 
+lspconfig.metals.setup({
+    root_dir = function(filename)
+        local pattern = lspconfig.util.root_pattern(
+            'build.sbt', 'build.sc', 'build.gradle', 'pom.xml')
+        return pattern(filename) or vim.fn.getcwd()
+    end,
+    single_file_mode = true,
+})
+
 if vim.fn.getcwd():find('/google/') == nil then
     lspconfig.gopls.setup({
         settings = { gopls = { gofumpt = true, staticcheck = true } }
     })
-    lspconfig.pyright.setup({ settings = { python = { pythonPath = 'python3' } } })
+    lspconfig.pyright.setup({
+        settings = { python = { pythonPath = 'python3' } }
+    })
 end

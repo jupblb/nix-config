@@ -1,14 +1,9 @@
 { config, pkgs, ... }: {
-  home.sessionVariables = {
-    JDTLS_HOME = "${pkgs.jdt-language-server}/share/java";
-    WORKSPACE  = "${config.home.homeDirectory}/Workspace";
-  };
-
   programs.neovim = {
     extraPackages =
       let
         default      = with pkgs; [
-          buildifier cargo coursier fish gopls jdt-language-server jq openjdk
+          buildifier cargo fish gopls jdt-language-server jq metals openjdk
           pandoc rnix-lsp rust-analyzer rustc shellcheck shfmt statix
           sumneko-lua-language-server
         ];
@@ -36,9 +31,6 @@
         plugin = nvim-lspconfig.overrideAttrs(_: {
           dependencies = [ lua-dev-nvim SchemaStore-nvim ];
         });
-      } {
-        config = "luafile ${toString ./config/metals.lua}";
-        plugin = nvim-metals;
-    } ];
+      } ];
   };
 }
