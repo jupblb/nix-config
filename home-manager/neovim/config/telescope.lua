@@ -6,7 +6,7 @@ require('neoclip').setup({ default_register = '*' })
 local custom_buffer_previewer = function(filepath, bufnr, opts)
     opts = opts or {}
     if opts.use_ft_detect == nil then
-        local ft = require('plenary.filetype').detect(filepath)
+        local ft = require('plenary.filetype').detect(filepath, {})
         if ft == 'yaml' then
             opts.use_ft_detect = false
             require('telescope.previewers.utils').regex_highlighter(bufnr, ft)
@@ -43,4 +43,5 @@ telescope.load_extension('fzf')
 telescope.load_extension('gkeep')
 telescope.load_extension('lsp_handlers')
 telescope.load_extension('neoclip')
+telescope.load_extension('ui-select')
 telescope.load_extension('vim_bookmarks')

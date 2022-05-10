@@ -88,8 +88,8 @@
               let tele-tabby =
                 pkgs.callPackage ./plugin/telescope-tele-tabby.nix {};
               in old.dependencies ++ [
-                nvim-neoclip-lua telescope-lsp-handlers-nvim tele-tabby
-                telescope-vim-bookmarks-nvim
+                nvim-neoclip-lua tele-tabby telescope-lsp-handlers-nvim
+                telescope-ui-select-nvim telescope-vim-bookmarks-nvim
               ];
           });
         } {

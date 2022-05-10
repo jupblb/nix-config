@@ -3,6 +3,7 @@ autocmd ColorScheme * highlight FloatBorder guifg=#282828 guibg=#fbf7c7
 
 nmap gD          <Cmd>lua vim.lsp.buf.declaration()<CR>
 nmap <C-]>       <Cmd>lua vim.lsp.buf.definition()<CR>
+nmap <Leader>la  <Cmd>lua vim.lsp.buf.code_action()<CR>
 nmap <Leader>lD  <Cmd>lua vim.lsp.buf.definition()<CR>
 nmap <Leader>lds <Cmd>lua vim.lsp.buf.document_symbol()<CR>
 nmap <Leader>=   <Cmd>lua vim.lsp.buf.formatting()<CR>
