@@ -248,8 +248,7 @@
     paperless-ng = {
       enable      = true;
       extraConfig = {
-        PAPERLESS_ALLOWED_HOSTS =
-          "paperless.kielbowi.cz,www.paperless.kielbowi.cz";
+        PAPERLESS_ALLOWED_HOSTS = "paperless.kielbowi.cz";
         PAPERLESS_OCR_LANGUAGE  = "pol+eng";
         PAPERLESS_DBHOST        = "localhost";
       };
