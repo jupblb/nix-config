@@ -28,7 +28,7 @@
       enable                 = true;
       changeDirWidgetCommand = "${pkgs.fd}/bin/fd --hidden --type d";
       changeDirWidgetOptions = [
-        "--preview '${pkgs.gtree}/bin/gtree -L=2 {} | head -200'"
+        "--preview '${pkgs.exa}/bin/exa -RT -L 2 --icons {} | head -200'"
       ];
       defaultCommand         = "${pkgs.fd}/bin/fd --hidden --type f";
       defaultOptions         = [ "--color=light" ];
