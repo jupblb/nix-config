@@ -22,7 +22,7 @@
         note            = {
           id-charset = "hex";
           id-length  = 8;
-          template   = builtins.toString ./note-template.md;
+          template   = toString ./note-template.md;
         };
         tool            = {
           fzf-preview = "${pkgs.glow}/bin/glow --style light {-1}";

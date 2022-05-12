@@ -25,3 +25,5 @@ nmap <Leader>M <Cmd>Telescope vim_bookmarks all<CR>
 
 nmap <Leader>K <Cmd>Telescope gkeep<CR>
 nmap <Leader>kl <Cmd>Telescope gkeep link<CR>
+
+nmap <Leader>s <Cmd>Telescope luasnip<CR>

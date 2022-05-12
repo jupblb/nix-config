@@ -42,6 +42,11 @@
           '';
           plugin = lualine-nvim;
         } {
+          config = "luafile ${toString ./config/luasnip.lua}";
+          plugin = luasnip.overrideAttrs(_: {
+            dependencies = [ friendly-snippets ];
+          });
+        } {
           config = ''
             set completeopt=menu,menuone,noselect
             luafile ${toString ./config/cmp.lua}
@@ -50,7 +55,7 @@
             dependencies =
               let lsp-signature =
                 pkgs.callPackage ./plugin/cmp-nvim-lsp-signature-help.nix {};
-              in [ cmp-buffer cmp-nvim-lsp lsp-signature cmp-path ];
+              in [ cmp-buffer cmp-nvim-lsp lsp-signature cmp-path cmp_luasnip ];
           });
         } {
           config = "lua require('colorizer').setup({'css','lua','nix','vim'})";
@@ -85,11 +90,15 @@
           '';
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
             dependencies =
-              let tele-tabby =
-                pkgs.callPackage ./plugin/telescope-tele-tabby.nix {};
+              let
+                tele-tabby =
+                  pkgs.callPackage ./plugin/telescope-tele-tabby.nix {};
+                telescope-luasnip =
+                  pkgs.callPackage ./plugin/telescope-luasnip.nix {};
               in old.dependencies ++ [
                 nvim-neoclip-lua tele-tabby telescope-lsp-handlers-nvim
-                telescope-ui-select-nvim telescope-vim-bookmarks-nvim
+                telescope-luasnip telescope-ui-select-nvim
+                telescope-vim-bookmarks-nvim
               ];
           });
         } {
@@ -126,5 +135,6 @@
       sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
       url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
     };
+    "nvim/snippets".source           = toString ./snippets;
   };
 }
