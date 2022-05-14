@@ -1,5 +1,5 @@
 ---
-vim: spell spelllang={{#if extra.lang}}{{extra.lang}}{{else}}en_us{{/if}}
+vim: spell spelllang={{extra.lang}}
 ---
 
 # {{title}}
