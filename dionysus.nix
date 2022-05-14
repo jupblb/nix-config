@@ -334,7 +334,6 @@
     rss2email = {
       config = {
         "DATE-HEADER" = 1;
-        "DIGEST"      = 1;
         "FROM"        = "mailgun@kielbowi.cz";
         "HTML-MAIL"   = 1;
       };
