@@ -21,7 +21,8 @@ translate_to_pl() {
 		-exec sed -i "s/Links to this page/Linki do tej strony/g" {} \;
 }
 
-cp -r /backup/jupblb/Documents/notes $TMP_DIR
+cp -r /backup/jupblb/Documents/notes "$TMP_DIR/notes"
+cp -r /backup/jupblb/Documents/notes-psychology "$TMP_DIR/notes-psychology"
 
 # Delete anything above 100MB in size
 find $TMP_DIR -type f -size +100M -delete
@@ -32,8 +33,8 @@ find $TMP_DIR -type f -iname '*.md' \
 find $TMP_DIR -type f -iname '*.md' \
 	-exec sed -i -E "s/!\[[^]]*\]\((.+\/)*([^]]+)\)/!\[\[\2\]\]/g" {} \;
 
-dump_notes "$TMP_DIR" "/srv/emanote"
-dump_notes "$TMP_DIR/psychology" "/srv/emanote-swps"
+dump_notes "$TMP_DIR/notes" "/srv/emanote"
+dump_notes "$TMP_DIR/notes-psychology" "/srv/emanote-swps"
 
 translate_to_pl "/srv/emanote-swps"
 
