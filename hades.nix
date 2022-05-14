@@ -5,7 +5,6 @@
     initrd.availableKernelModules   = [
       "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
     ];
-    initrd.kernelModules            = [ "amdgpu" ];
     kernelPackages                  = pkgs.linuxPackages_latest;
     kernelParams                    = [ "mitigations=off" ];
     loader.efi.canTouchEfiVariables = true;
@@ -29,8 +28,9 @@
     cpu.intel          = { updateMicrocode = true; };
     opengl             = {
       driSupport      = true;
+      driSupport32Bit = true;
       enable          = true;
-      extraPackages   = with pkgs; [ amdvlk libvdpau-va-gl vaapiVdpau ];
+      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     pulseaudio         = {
@@ -59,7 +59,7 @@
     ];
 
     programs = {
-      firefox        = {
+      firefox = {
         profiles."jupblb".settings = {
           "gfx.webrender.enabled"               = true;
           "widget.wayland-dmabuf-vaapi.enabled" = true;
@@ -85,7 +85,13 @@
     };
   };
 
-  imports = [ ./nixos ./nixos/apc.nix ./nixos/gnome.nix ./nixos/syncthing.nix ];
+  imports = [
+    ./nixos
+    ./nixos/amdgpu.nix
+    ./nixos/apc.nix
+    ./nixos/gnome.nix
+    ./nixos/syncthing.nix
+  ];
 
   networking.hostName = "hades";
 

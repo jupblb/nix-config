@@ -56,7 +56,20 @@
     };
   };
 
-  hardware.cpu.amd.updateMicrocode = true;
+  fonts.enableDefaultFonts = true;
+
+  hardware = {
+    bluetooth.enable   = true;
+    cpu.amd            = { updateMicrocode = true; };
+    opengl             = {
+      driSupport      = true;
+      driSupport32Bit = true;
+      enable          = true;
+      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+    };
+    video.hidpi.enable = true;
+  };
 
   home-manager.users.jupblb = {
     imports = [
@@ -75,7 +88,8 @@
     };
   };
 
-  imports = [ ./nixos ./nixos/apc.nix ./nixos/syncthing.nix ];
+  imports =
+    [ ./nixos ./nixos/amdgpu.nix ./nixos/apc.nix ./nixos/syncthing.nix ];
 
   networking = {
     defaultGateway           = "192.168.1.1";
@@ -111,6 +125,8 @@
         doshutdown = builtins.readFile ./config/script/dionysus-shutdown.sh;
       };
     };
+
+    blueman.enable = true;
 
     caddy = {
       email        = "caddy@kielbowi.cz";
@@ -215,6 +231,13 @@
             '';
           };
         };
+    };
+
+    cage = {
+      enable         = true;
+      extraArguments = [ "-d" ];
+      program        = "${pkgs.qutebrowser}/bin/qutebrowser";
+      user           = "jupblb";
     };
 
     calibre-web = {
@@ -467,6 +490,8 @@
       enable    = true;
     };
   };
+
+  sound.enable = true;
 
   system.stateVersion = "20.09";
 
