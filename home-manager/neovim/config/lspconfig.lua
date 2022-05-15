@@ -1,4 +1,4 @@
-local lspconfig = require("lspconfig")
+local lspconfig = require('lspconfig')
 
 -- Disable virtual text for errors
 vim.diagnostic.config({ virtual_text = false })
@@ -28,14 +28,17 @@ _G.lsp_attach = function()
 end
 
 local default_config = {
-    flags = { debounce_text_changes = 150 },
+    capabilities = require('cmp_nvim_lsp')
+        .update_capabilities(vim.lsp.protocol.make_client_capabilities()),
     on_attach = lsp_attach
 }
 lspconfig.util.default_config = vim.tbl_extend(
     'force', lspconfig.util.default_config, default_config)
 
 -- other LSPs
-local default_servers = { 'bashls', 'dockerls', 'rnix', 'rust_analyzer' }
+local default_servers = {
+    'bashls', 'dockerls', 'hls', 'rnix', 'rust_analyzer', 'vimls'
+}
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
 lspconfig.jdtls.setup({
@@ -66,6 +69,12 @@ lspconfig.metals.setup({
     end,
     single_file_mode = true,
 })
+
+local cfg = require("yaml-companion").setup({
+    lspconfig = { yaml = { completion = true } }
+})
+lspconfig.yamlls.setup(cfg)
+require("telescope").load_extension("yaml_schema")
 
 if vim.fn.getcwd():find('/google/') == nil then
     lspconfig.gopls.setup({

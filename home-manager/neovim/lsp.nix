@@ -3,13 +3,14 @@
     extraPackages =
       let
         default      = with pkgs; [
-          buildifier cargo fish gopls jdt-language-server jq metals openjdk
-          pandoc rnix-lsp rust-analyzer rustc shellcheck shfmt statix
-          sumneko-lua-language-server
+          buildifier cargo fish gopls haskell-language-server
+          jdt-language-server jq metals openjdk pandoc rnix-lsp rust-analyzer
+          rustc shellcheck shfmt statix sumneko-lua-language-server
         ];
         nodePackages = with pkgs.nodePackages; [
           bash-language-server dockerfile-language-server-nodejs
-          markdownlint-cli pyright vscode-json-languageserver
+          markdownlint-cli pyright vim-language-server
+          vscode-json-languageserver yaml-language-server
         ];
       in default ++ nodePackages;
     plugins       = with pkgs.vimPlugins; [ {
@@ -29,7 +30,10 @@
           luafile ${toString ./config/lspconfig.lua}
         '';
         plugin = nvim-lspconfig.overrideAttrs(_: {
-          dependencies = [ lua-dev-nvim SchemaStore-nvim ];
+          dependencies =
+            let
+              yaml-companion = pkgs.callPackage ./plugin/yaml-companion.nix {};
+            in [ lua-dev-nvim SchemaStore-nvim yaml-companion ];
         });
       } ];
   };
