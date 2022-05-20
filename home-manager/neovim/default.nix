@@ -3,7 +3,8 @@
     activation       = {
       nvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD ${config.programs.neovim.finalPackage}/bin/nvim \
-          --headless +UpdateRemotePlugins +TSUpdateSync all +quit && echo
+          --headless +UpdateRemotePlugins +TSUpdateSync all \
+          +"call firenvim#install(0)" +quit && echo
       '';
     };
     sessionVariables = { EDITOR = "nvim"; };
@@ -120,7 +121,8 @@
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        commentary git-messenger-vim surround vim-cool vim-gh-line vim-sleuth
+        commentary (pkgs.callPackage ./plugin/firenvim.nix {}) git-messenger-vim
+          surround vim-cool vim-gh-line vim-sleuth
       ];
       vimAlias      = true;
       vimdiffAlias  = true;
