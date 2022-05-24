@@ -27,9 +27,6 @@
           config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
           plugin = bufdelete-nvim;
         } {
-          config = "source ${toString ./config/gkeep.vim}";
-          plugin = pkgs.callPackage ./plugin/gkeep.nix {};
-        } {
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
