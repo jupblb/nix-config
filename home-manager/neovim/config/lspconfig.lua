@@ -37,7 +37,7 @@ lspconfig.util.default_config = vim.tbl_extend(
 
 -- other LSPs
 local default_servers = {
-    'bashls', 'dockerls', 'hls', 'rnix', 'rust_analyzer', 'vimls'
+    'bashls', 'dockerls', 'hls', 'rnix', 'rust_analyzer', 'vimls', 'yamlls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
@@ -69,12 +69,6 @@ lspconfig.metals.setup({
     end,
     single_file_mode = true,
 })
-
-local cfg = require("yaml-companion").setup({
-    lspconfig = { yaml = { completion = true } }
-})
-lspconfig.yamlls.setup(cfg)
-require("telescope").load_extension("yaml_schema")
 
 if vim.fn.getcwd():find('/google/') == nil then
     lspconfig.gopls.setup({

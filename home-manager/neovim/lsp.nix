@@ -30,10 +30,7 @@
           luafile ${toString ./config/lspconfig.lua}
         '';
         plugin = nvim-lspconfig.overrideAttrs(_: {
-          dependencies =
-            let
-              yaml-companion = pkgs.callPackage ./plugin/yaml-companion.nix {};
-            in [ lua-dev-nvim SchemaStore-nvim yaml-companion ];
+          dependencies = [ lua-dev-nvim SchemaStore-nvim ];
         });
       } ];
   };
