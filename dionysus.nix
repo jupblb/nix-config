@@ -65,7 +65,7 @@
       driSupport      = true;
       driSupport32Bit = true;
       enable          = true;
-      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+      extraPackages   = with pkgs; [ libva libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     video.hidpi.enable = true;
