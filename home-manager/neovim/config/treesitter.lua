@@ -1,7 +1,6 @@
 require('nvim-treesitter.configs').setup({
     context_commentstring = {enable = true},
     highlight = {enable = true, disable = {"yaml"}},
-    ignore_install = {"markdown"},
     incremental_selection = {
         enable = true,
         keymaps = {

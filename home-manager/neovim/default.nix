@@ -105,9 +105,6 @@
           config = "source ${toString ./config/bookmark.vim}";
           plugin = vim-bookmarks;
         } {
-          config = "source ${toString ./config/markdown.vim}";
-          plugin = vim-markdown;
-        } {
           config = "source ${toString ./config/mergetool.vim}";
           plugin = vim-mergetool;
         } {
