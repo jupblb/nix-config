@@ -11,7 +11,7 @@
   nixpkgs.overlays = [ (import ../overlay) ];
 
   programs = {
-    bat  = {
+    bat = {
       config = { theme = "gruvbox-light"; };
       enable = true;
     };

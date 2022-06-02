@@ -10,7 +10,7 @@
   };
 
   programs = {
-    git   = {
+    git = {
       ignores = [ ".vim-bookmarks" ];
     };
 
