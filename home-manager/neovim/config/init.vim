@@ -39,10 +39,12 @@ endif
 " Create file if it doesn't exist.
 map <silent> gf <Cmd>execute('edit ' . fnamemodify(expand('%:p:h') . '/' . expand('<cfile>'), ':p'))<CR>
 
+nnoremap <C-f> 5<C-e>
+nnoremap <C-b> 5<C-y>
+
 autocmd BufRead,BufNewFile *.fish set filetype=fish
 autocmd BufRead,BufNewFile *.nix set filetype=nix
 autocmd BufRead,BufNewFile *.sc set filetype=scala
 
 autocmd FileType gitcommit,hgcommit setlocal colorcolumn=72
 autocmd FileType go,java,sql setlocal colorcolumn=100
-
