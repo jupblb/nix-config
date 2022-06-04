@@ -11,6 +11,8 @@
     loader.systemd-boot.enable      = true;
   };
 
+  environment.systemPackages = with pkgs; [ uhk-agent ];
+
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
@@ -24,6 +26,7 @@
   hardware = {
     bluetooth.enable   = true;
     cpu.intel          = { updateMicrocode = true; };
+    keyboard.uhk       = { enable = true; };
     opengl             = {
       driSupport      = true;
       driSupport32Bit = true;
@@ -99,7 +102,10 @@
       polkitPolicyOwners = [ "jupblb" ];
     };
 
-    steam.enable = true;
+    steam = {
+      enable     = true;
+      remotePlay = { openFirewall = true; };
+    };
   };
 
   services = {
@@ -146,6 +152,5 @@
 
   time.hardwareClockInLocalTime = true;
 
-  users.users.jupblb.extraGroups = [ "lp" ];
+  users.users.jupblb.extraGroups = [ "input" "lp" ];
 }
-
