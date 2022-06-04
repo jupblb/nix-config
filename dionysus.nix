@@ -111,8 +111,23 @@
   };
 
   programs = {
-    adb.enable                 = true;
+    adb.enable = true;
+
     gnupg.agent.pinentryFlavor = "curses";
+
+    msmtp = {
+      enable           = true;
+      accounts.default = let cfg = (import ./config/secret.nix).mailgun; in {
+        auth         = true;
+        host         = "smtp.eu.mailgun.org";
+        passwordeval = cfg.password;
+        port         = 587;
+        tls          = true;
+        tls_starttls = true;
+        user         = cfg.login;
+      };
+    };
+
   };
 
   services = {
@@ -155,6 +170,9 @@
           };
           "go.kielbowi.cz"           = {
             extraConfig = "reverse_proxy http://localhost:4567";
+          };
+          "haste.kielbowi.cz"        = {
+            extraConfig = "reverse_proxy http://localhost:7777";
           };
           "jellyfin.kielbowi.cz"     = {
             extraConfig   = "reverse_proxy http://localhost:8096";
@@ -250,6 +268,14 @@
       };
     };
 
+    haste-server = {
+      enable           = true;
+      settings.storage = {
+        connectionUrl = "postgres://haste@localhost:5432/haste";
+        type          = "postgres";
+      };
+    };
+
     jellyfin = {
       enable = true;
       group  = "users";
@@ -268,7 +294,7 @@
       statdPort  = 4000;
     };
 
-    paperless-ng = {
+    paperless = {
       enable      = true;
       extraConfig = {
         PAPERLESS_ALLOWED_HOSTS = "paperless.kielbowi.cz";
@@ -285,8 +311,11 @@
           host  all      all  samehost     trust
       '';
       enable          = true;
-      ensureDatabases = [ "paperless" "photoview" "vaultwarden" ];
+      ensureDatabases = [ "haste" "paperless" "photoview" "vaultwarden" ];
       ensureUsers     = [ {
+        name              = "haste";
+        ensurePermissions = { "DATABASE haste" = "ALL PRIVILEGES"; };
+      } {
         name              = "paperless";
         ensurePermissions = { "DATABASE paperless" = "ALL PRIVILEGES"; };
       } {
@@ -310,8 +339,6 @@
       group        = "users";
       openFirewall = true;
     };
-
-    redis.enable = true;
 
     restic.backups = {
       gcs      = {
@@ -394,16 +421,6 @@
         mail.recipient = "dionysus@kielbowi.cz";
         wall.enable    = false;
       };
-    };
-
-    ssmtp = let cfg = (import ./config/secret.nix).mailgun; in {
-      authPassFile = toString(pkgs.writeText "mailgun-password" cfg.password);
-      authUser     = cfg.login;
-      domain       = "kielbowi.cz";
-      enable       = true;
-      hostName     = "smtp.eu.mailgun.org:587";
-      useSTARTTLS  = true;
-      useTLS       = true;
     };
 
     syncthing = {

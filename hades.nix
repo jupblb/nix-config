@@ -11,8 +11,6 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ _1password-gui ];
-
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
     "/".fsType     = "xfs";
@@ -95,7 +93,14 @@
 
   networking.hostName = "hades";
 
-  programs = { steam.enable = true; };
+  programs = {
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ "jupblb" ];
+    };
+
+    steam.enable = true;
+  };
 
   services = {
     printing = {
