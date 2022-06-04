@@ -87,6 +87,11 @@
       settings = { hide_threads = true; hide_userland_threads = true; };
     };
 
+    man = {
+      enable         = true;
+      generateCaches = true;
+    };
+
     ssh = {
       compression         = true;
       controlMaster       = "auto";

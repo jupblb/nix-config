@@ -7,6 +7,6 @@ vimUtils.buildVimPlugin rec {
     owner  = "mickael-menu";
     repo   = pname;
     rev    = version;
-    sha256 = "0kgk9aa85bry9f6njff53z4gy62h2m57bcjwarkls8rd6gq92szz";
+    sha256 = "sha256-ida/kZF0X1SqEjAD4ICXtgSB2S/l5aOKs55b2eMdiAQ=";
   };
 }

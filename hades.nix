@@ -32,9 +32,8 @@
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     pulseaudio         = {
-      enable       = true;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];
-      package      = pkgs.pulseaudioFull;
+      enable  = true;
+      package = pkgs.pulseaudioFull;
     };
     video.hidpi.enable = true;
   };
@@ -95,7 +94,8 @@
 
   programs = {
     _1password-gui = {
-      enable = true;
+      enable             = true;
+      gid                = 1337;
       polkitPolicyOwners = [ "jupblb" ];
     };
 
