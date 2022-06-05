@@ -46,7 +46,6 @@
 
     imports = [
       ./home-manager/direnv.nix
-      ./home-manager/firefox
       ./home-manager/fish
       ./home-manager/go.nix
       ./home-manager/kitty
@@ -59,16 +58,6 @@
     ];
 
     programs = {
-      firefox = {
-        profiles."jupblb".settings = {
-          "gfx.webrender.enabled"               = true;
-          "widget.wayland-dmabuf-vaapi.enabled" = true;
-        };
-        package                    = pkgs.firefox-wayland.override {
-          cfg.enableTridactylNative = true;
-        };
-      };
-
       kitty.settings = {
         hide_window_decorations = "yes";
         linux_display_server    = "wayland";
