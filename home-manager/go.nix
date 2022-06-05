@@ -6,6 +6,6 @@
 
   programs.go = {
     enable = true;
-    goPath = "${config.xdg.cacheHome}/go";
+    goPath = ".cache/go";
   };
 }
