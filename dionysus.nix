@@ -196,9 +196,6 @@
             extraConfig   = "reverse_proxy http://localhost:32400";
             serverAliases = [ "www.plex.kielbowi.cz" ];
           };
-          "shiori.kielbowi.cz"       = {
-            extraConfig = "reverse_proxy http://localhost:8080";
-          };
           "swps.kielbowi.cz"         = {
             extraConfig = ''
               file_server browse {
@@ -403,8 +400,6 @@
       };
       to     = "rss@kielbowi.cz";
     };
-
-    shiori.enable = true;
 
     smartd = {
       autodetect    = false;
