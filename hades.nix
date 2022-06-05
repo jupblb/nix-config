@@ -62,6 +62,13 @@
         hide_window_decorations = "yes";
         linux_display_server    = "wayland";
       };
+
+      google-chrome = {
+        enable  = true;
+        package = pkgs.google-chrome.override {
+          commandLineArgs = [ "--ozone-platform-hint=auto" ];
+        };
+      };
     };
 
     services = {
