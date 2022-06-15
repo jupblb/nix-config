@@ -23,8 +23,8 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup
-_G.lsp_attach = function()
-    vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
+_G.lsp_attach = function(_, bufnr)
+    vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
 end
 
 local default_config = {
