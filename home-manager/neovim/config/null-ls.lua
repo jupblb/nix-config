@@ -8,7 +8,7 @@ null_ls.setup({
         -- https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
         null_ls.builtins.diagnostics.markdownlint.with({
             extra_args = {
-                '--disable', 'MD007', 'MD012', 'MD013', 'MD030', 'MD034'
+                '--disable', 'MD007', 'MD012', 'MD013', 'MD030', 'MD033', 'MD034'
             }
         }), --
         null_ls.builtins.diagnostics.shellcheck,
@@ -16,13 +16,13 @@ null_ls.setup({
         null_ls.builtins.formatting.buildifier,
         null_ls.builtins.formatting.fish_indent,
         null_ls.builtins.formatting.jq,
-        null_ls.builtins.formatting.shfmt.with({extra_args = {'-i=4'}})
+        null_ls.builtins.formatting.shfmt.with({ extra_args = { '-i=4' } })
     }
 })
 
 null_ls.register({
     method = null_ls.methods.FORMATTING,
-    filetypes = {'markdown'},
+    filetypes = { 'markdown' },
     generator = null_ls.generator({
         command = 'pandoc',
         args = {
@@ -30,7 +30,7 @@ null_ls.register({
             '--columns=80', '-'
         },
         on_output = function(params, done)
-            return done({{text = params.output}})
+            return done({ { text = params.output } })
         end,
         to_stdin = true
     })
