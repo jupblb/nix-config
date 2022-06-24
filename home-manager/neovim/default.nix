@@ -50,9 +50,10 @@
           '';
           plugin = nvim-cmp.overrideAttrs(_: {
             dependencies =
-              let lsp-signature =
-                pkgs.callPackage ./plugin/cmp-nvim-lsp-signature-help.nix {};
-              in [ cmp-buffer cmp-nvim-lsp lsp-signature cmp-path cmp_luasnip ];
+              let cmp-signature = cmp-nvim-lsp-signature-help.overrideAttrs(_: {
+                dependencies = [];
+              });
+              in [ cmp-buffer cmp-nvim-lsp cmp-path cmp-signature cmp_luasnip ];
           });
         } {
           config = "lua require('colorizer').setup({'css','lua','nix','vim'})";

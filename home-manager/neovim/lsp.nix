@@ -32,6 +32,8 @@
         plugin = nvim-lspconfig.overrideAttrs(_: {
           dependencies = [ lua-dev-nvim SchemaStore-nvim ];
         });
-      } ];
+      }
+      (pkgs.callPackage ./plugin/gopher.nix {})
+    ];
   };
 }
