@@ -49,26 +49,6 @@
       };
       theme       = "Gruvbox Light Hard";
     };
-
-    lf = {
-      extraConfig =
-        let cleaner = pkgs.writeScript "lf-cleaner"
-          (builtins.readFile ./cleaner.sh);
-        in "set cleaner ${cleaner}";
-      previewer   = {
-        source = with pkgs; writeShellScript "lf-preview" ''
-          ${builtins.readFile ./previewer.sh}
-
-          case "$1" in
-            *.json)       ${jq}/bin/jq --color-output . "$1";;
-            *.md)         ${glow}/bin/glow -s light -- "$1";;
-            *.pdf)        ${poppler_utils}/bin/pdftotext "$1" -;;
-            *.tar*|*.zip) ${atool}/bin/atool --list -- "$1";;
-            *)            ${bat}/bin/bat --style=numbers --color=always "$1";;
-          esac
-        '';
-      };
-    };
   };
 }
 

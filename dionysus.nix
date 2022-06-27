@@ -74,7 +74,7 @@
   home-manager.users.jupblb = {
     imports = [
       ./home-manager/fish
-      ./home-manager/lf.nix
+      ./home-manager/lf
       ./home-manager/neovim
       ./home-manager/starship.nix
       ./home-manager/zoxide.nix

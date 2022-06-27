@@ -3,9 +3,10 @@
     extraPackages =
       let
         default      = with pkgs; [
-          buildifier cargo fish gopls haskell-language-server
-          jdt-language-server jq metals openjdk pandoc rnix-lsp rust-analyzer
-          rustc shellcheck shfmt statix sumneko-lua-language-server
+          buildifier cargo fish gomodifytags gopls gotests
+          haskell-language-server impl jdt-language-server jq metals openjdk
+          pandoc rnix-lsp rust-analyzer rustc shellcheck shfmt statix
+          sumneko-lua-language-server
         ];
         nodePackages = with pkgs.nodePackages; [
           bash-language-server dockerfile-language-server-nodejs

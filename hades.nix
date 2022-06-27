@@ -48,8 +48,8 @@
       ./home-manager/direnv.nix
       ./home-manager/fish
       ./home-manager/go.nix
-      ./home-manager/kitty
-      ./home-manager/lf.nix
+      ./home-manager/kitty.nix
+      ./home-manager/lf
       ./home-manager/neovim
       ./home-manager/neovim/lsp.nix
       ./home-manager/starship.nix
