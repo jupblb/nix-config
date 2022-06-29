@@ -8,7 +8,7 @@ vimUtils.buildVimPlugin rec {
     owner  = "olexsmir";
     repo   = "gopher.nvim";
     rev    = version;
-    sha256 = "sha256-pRTPoUaMHpAAcnIv6jtxR035XiGYT6fnq1r2oKNFrao=";
+    sha256 = "sha256-aSUCj9H7W8lKrKS18/I0SLIAqOpO8Zten2VPUU3CT5E=";
   };
 }
 

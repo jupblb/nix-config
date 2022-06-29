@@ -72,6 +72,8 @@
   };
 
   home-manager.users.jupblb = {
+    home.stateVersion = "21.11";
+
     imports = [
       ./home-manager/fish
       ./home-manager/lf
@@ -118,9 +120,9 @@
     msmtp = {
       enable           = true;
       accounts.default = let cfg = (import ./config/secret.nix).mailgun; in {
+        inherit (cfg) password;
         auth         = true;
         host         = "smtp.eu.mailgun.org";
-        passwordeval = cfg.password;
         port         = 587;
         tls          = true;
         tls_starttls = true;
