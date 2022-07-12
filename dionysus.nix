@@ -164,11 +164,7 @@
             extraConfig = "respond \"Hello, world!\"";
           };
           "files.kielbowi.cz"        = {
-            extraConfig = basicauth + ''
-              file_server browse {
-                root /backup/jupblb/
-              }
-            '';
+            extraConfig = "reverse_proxy http://localhost:8085";
           };
           "go.kielbowi.cz"           = {
             extraConfig = "reverse_proxy http://localhost:4567";
@@ -549,6 +545,16 @@
     oci-containers = {
       backend    = "podman";
       containers = {
+        filebrowser    = {
+          image   = "filebrowser/filebrowser";
+          ports   = [ "8085:80" ];
+          volumes = [
+            "/backup/files.db:/database.db"
+            "/backup/domci:/srv/domci"
+            "/backup/jupblb:/srv/jupblb"
+            "/data:/srv/data"
+          ];
+        };
         photoview      = {
           environment  = {
             MAPBOX_TOKEN                       =
