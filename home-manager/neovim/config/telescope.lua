@@ -18,6 +18,7 @@ end
 telescope.setup({
     defaults = {
         buffer_previewer_maker = custom_buffer_previewer,
+        dynamic_preview_title = true,
         mappings = { i = { ["<esc>"] = require('telescope.actions').close } },
         layout_config = {
             flex = { flip_columns = 160 },
