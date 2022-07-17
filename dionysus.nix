@@ -143,6 +143,11 @@
       };
     };
 
+    bazarr = {
+      enable = true;
+      group  = "users";
+    };
+
     blueman.enable = true;
 
     caddy = {
@@ -157,6 +162,9 @@
           '';
           secret    = (import ./config/secret.nix).caddy;
         in {
+          "bazarr.kielbowi.cz"       = {
+            extraConfig = "reverse_proxy http://localhost:6767";
+          };
           "calibre.kielbowi.cz"    = {
             extraConfig = "reverse_proxy http://localhost:8083";
           };
@@ -172,9 +180,15 @@
           "haste.kielbowi.cz"        = {
             extraConfig = "reverse_proxy http://localhost:7777";
           };
+          "jackett.kielbowi.cz"      = {
+            extraConfig = "reverse_proxy http://localhost:9117";
+          };
           "jellyfin.kielbowi.cz"     = {
             extraConfig   = "reverse_proxy http://localhost:8096";
             serverAliases = [ "www.jellyfin.kielbowi.cz" ];
+          };
+          "lidarr.kielbowi.cz"       = {
+            extraConfig = "reverse_proxy http://localhost:8686";
           };
           "notes.kielbowi.cz"        = {
             extraConfig = basicauth + ''
@@ -193,6 +207,12 @@
           "plex.kielbowi.cz"         = {
             extraConfig   = "reverse_proxy http://localhost:32400";
             serverAliases = [ "www.plex.kielbowi.cz" ];
+          };
+          "radarr.kielbowi.cz"       = {
+            extraConfig = "reverse_proxy http://localhost:7878";
+          };
+          "sonarr.kielbowi.cz"       = {
+            extraConfig = "reverse_proxy http://localhost:8989";
           };
           "swps.kielbowi.cz"         = {
             extraConfig = ''
@@ -271,7 +291,14 @@
       };
     };
 
+    jackett.enable = true;
+
     jellyfin = {
+      enable = true;
+      group  = "users";
+    };
+
+    lidarr = {
       enable = true;
       group  = "users";
     };
@@ -333,6 +360,11 @@
       enable       = true;
       group        = "users";
       openFirewall = true;
+    };
+
+    radarr = {
+      enable = true;
+      group  = "users";
     };
 
     restic.backups = {
@@ -414,6 +446,11 @@
         mail.recipient = "dionysus@kielbowi.cz";
         wall.enable    = false;
       };
+    };
+
+    sonarr = {
+      enable = true;
+      group  = "users";
     };
 
     syncthing = {
