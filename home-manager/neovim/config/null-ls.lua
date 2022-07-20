@@ -35,3 +35,6 @@ null_ls.register({
         to_stdin = true
     })
 })
+
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/896#issuecomment-1146919411
+vim.api.nvim_create_user_command("NullLsToggle", function() require("null-ls").toggle({}) end, {})

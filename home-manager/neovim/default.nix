@@ -27,6 +27,9 @@
           config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
           plugin = bufdelete-nvim;
         } {
+          config = "luafile ${toString ./config/gitsigns.lua}";
+          plugin = gitsigns-nvim;
+        } {
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
