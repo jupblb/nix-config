@@ -8,7 +8,6 @@ require('gitsigns').setup({
         end
 
         nmap('<leader>hb', function() gs.blame_line { full = true } end)
-        nmap('<leader>hd', gs.diffthis)
         nmap('<leader>hD', function() gs.diffthis('~') end)
         nmap('<leader>hp', gs.preview_hunk)
         nmap('<leader>hr', ':Gitsigns reset_hunk<CR>')

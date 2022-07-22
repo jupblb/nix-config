@@ -190,13 +190,6 @@
           "lidarr.kielbowi.cz"       = {
             extraConfig = "reverse_proxy http://localhost:8686";
           };
-          "notes.kielbowi.cz"        = {
-            extraConfig = basicauth + ''
-              file_server browse {
-                root /srv/emanote
-              }
-            '';
-          };
           "paperless.kielbowi.cz"    = {
             extraConfig = "reverse_proxy http://localhost:28981";
           };
@@ -213,13 +206,6 @@
           };
           "sonarr.kielbowi.cz"       = {
             extraConfig = "reverse_proxy http://localhost:8989";
-          };
-          "swps.kielbowi.cz"         = {
-            extraConfig = ''
-              file_server browse {
-                root /srv/emanote-swps
-              }
-            '';
           };
           "syncthing.kielbowi.cz"    = {
             extraConfig = basicauth + ''

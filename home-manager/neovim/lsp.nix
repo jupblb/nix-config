@@ -37,4 +37,10 @@
       (pkgs.callPackage ./plugin/gopher.nix {})
     ];
   };
+
+  xdg.configFile = {
+    # https://github.com/igorshubovych/markdownlint-cli#configuration
+    # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+    "markdownlint".source = toString ./config/markdownlint.json;
+  };
 }

@@ -5,12 +5,7 @@ null_ls.setup({
         null_ls.builtins.code_actions.shellcheck,
         null_ls.builtins.code_actions.statix,
         null_ls.builtins.diagnostics.fish,
-        -- https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
-        null_ls.builtins.diagnostics.markdownlint.with({
-            extra_args = {
-                '--disable', 'MD007', 'MD012', 'MD013', 'MD030', 'MD033', 'MD034'
-            }
-        }), --
+        null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.shellcheck,
         null_ls.builtins.diagnostics.statix,
         null_ls.builtins.formatting.buildifier,
