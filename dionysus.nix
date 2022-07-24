@@ -413,6 +413,7 @@
         "nick-case"            = { url = "http://blog.ncase.me/rss/"; };
         "the-morning-paper"    = { url = "http://blog.acolyer.org/feed/"; };
         "xkcd"                 = { url = "http://xkcd.com/rss.xml"; };
+        "whynothugo"           = { url = "https://hugo.barrera.io/posts.xml"; };
       };
       to     = "rss@kielbowi.cz";
     };
