@@ -24,3 +24,5 @@ nmap <Leader>m <Cmd>Telescope vim_bookmarks current_file<CR>
 nmap <Leader>M <Cmd>Telescope vim_bookmarks all<CR>
 
 nmap <Leader>s <Cmd>Telescope luasnip<CR>
+
+autocmd User TelescopePreviewerLoaded setlocal wrap

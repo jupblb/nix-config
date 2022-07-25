@@ -65,13 +65,17 @@
       };
       enable      = true;
       extraConfig = {
-        color.ui            = true;
-        core.mergeoptions   = "--no-edit";
-        fetch.prune         = true;
-        merge.conflictStyle = "diff3";
-        pull.rebase         = true;
-        push.default        = "upstream";
-        submodule.recurse   = true;
+        color.ui                      = true;
+        core.mergeoptions             = "--no-edit";
+        diff.tool                     = "difftastic";
+        difftool.prompt               = false;
+        "difftool \"difftastic\"".cmd =
+          "${pkgs.difftastic}/bin/difft --background=light --tab-width=2 $LOCAL $REMOTE";
+        fetch.prune                   = true;
+        merge.conflictStyle           = "diff3";
+        pull.rebase                   = true;
+        push.default                  = "upstream";
+        submodule.recurse             = true;
       };
       iniContent  = {
         core.pager =

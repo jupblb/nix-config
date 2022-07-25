@@ -21,8 +21,8 @@ null_ls.register({
     generator = null_ls.generator({
         command = 'pandoc',
         args = {
-            '-f', 'markdown', '-s', '-t', 'markdown-simple_tables',
-            '--columns=80', '-'
+            '--columns=80', '--reference-links', '-s', '-f', 'markdown', '-t',
+            'markdown-simple_tables-raw_attribute', '-'
         },
         on_output = function(params, done)
             return done({ { text = params.output } })
@@ -30,6 +30,3 @@ null_ls.register({
         to_stdin = true
     })
 })
-
--- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/896#issuecomment-1146919411
-vim.api.nvim_create_user_command("NullLsToggle", function() require("null-ls").toggle({}) end, {})

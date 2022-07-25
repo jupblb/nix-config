@@ -18,7 +18,7 @@
         config = "source ${toString ./config/fidget.vim}";
         plugin = fidget-nvim;
       } {
-        config = "lua require('lsp_lines').register_lsp_virtual_lines()";
+        config = "lua require('lsp_lines').setup({})";
         plugin = lsp_lines-nvim;
       } {
         config = "luafile ${toString ./config/null-ls.lua}";

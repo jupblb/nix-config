@@ -21,7 +21,10 @@
 
     neovim = {
       enable        = true;
-      extraConfig   = "source ${toString ./config/init.vim}";
+      extraConfig   = ''
+        source ${toString ./config/init.vim}
+        luafile ${toString ./config/init.lua}
+      '';
       extraPackages = with pkgs; [ fd ripgrep ];
       plugins       = with pkgs.vimPlugins; [ {
           config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
@@ -117,6 +120,9 @@
         } {
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
+        } {
+          config = "luafile ${toString ./config/zen-mode.lua}";
+          plugin = zen-mode-nvim;
         }
         commentary git-messenger-vim surround vim-cool vim-gh-line vim-sleuth
       ];

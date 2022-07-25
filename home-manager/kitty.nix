@@ -29,6 +29,7 @@
         clipboard_control                  =
           "write-clipboard write-primary no-append";
         confirm_os_window_close            = 0;
+        cursor_blink_interval              = 0;
         enabled_layouts                    = "splits";
         enable_audio_bell                  = "no";
         env                                = "SHELL=${pkgs.fish}/bin/fish";

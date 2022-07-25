@@ -16,7 +16,7 @@
       interactiveShellInit = "delta-view";
       shellAliases         = {
         cat  = "${pkgs.bat}/bin/bat -p --paging=never";
-        diff = "${pkgs.difftastic}/bin/difft --background=light";
+        diff = "${pkgs.difftastic}/bin/difft --background=light --tab-width=2";
         less = "${pkgs.bat}/bin/bat -p --paging=always";
       };
     };
