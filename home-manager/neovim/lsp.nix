@@ -34,7 +34,6 @@
           dependencies = [ lua-dev-nvim SchemaStore-nvim ];
         });
       }
-      (pkgs.callPackage ./plugin/gopher.nix {})
     ];
   };
 
