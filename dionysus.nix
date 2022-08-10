@@ -552,6 +552,9 @@
       };
       startAt       = "*:0/5";
     };
+    jellyfin              = {
+      serviceConfig.PrivateDevices = lib.mkForce false;
+    };
     paperless-ng-server   = { wantedBy = lib.mkForce []; };
     podman-photoview      = { wantedBy = lib.mkForce []; };
     podman-simply-shorten = { wantedBy = lib.mkForce []; };
