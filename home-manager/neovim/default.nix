@@ -33,6 +33,9 @@
           config = "luafile ${toString ./config/gitsigns.lua}";
           plugin = gitsigns-nvim;
         } {
+          config = "source ${toString ./config/gkeep.vim}";
+          plugin = pkgs.callPackage ./plugin/gkeep.nix {};
+        } {
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
