@@ -3,7 +3,7 @@
 
   programs.neovim = {
     plugins = [ {
-      config = "source ${toString ./neovim.vim}";
+      config = "source ${toString ./neovim.vim}\n";
       plugin = pkgs.callPackage ./neovim.nix {};
     } ];
   };

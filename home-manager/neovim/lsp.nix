@@ -15,13 +15,13 @@
         ];
       in default ++ nodePackages;
     plugins       = with pkgs.vimPlugins; [ {
-        config = "source ${toString ./config/fidget.vim}";
+        config = "source ${toString ./config/fidget.vim}\n";
         plugin = fidget-nvim;
       } {
-        config = "lua require('lsp_lines').setup({})";
+        config = "lua require('lsp_lines').setup({})\n";
         plugin = lsp_lines-nvim;
       } {
-        config = "luafile ${toString ./config/null-ls.lua}";
+        config = "luafile ${toString ./config/null-ls.lua}\n";
         plugin = null-ls-nvim.overrideAttrs(_: {
           dependencies = [ plenary-nvim ];
         });
