@@ -8,6 +8,7 @@ null_ls.setup({
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.shellcheck,
         null_ls.builtins.diagnostics.statix,
+        null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.buildifier,
         null_ls.builtins.formatting.fish_indent,
         null_ls.builtins.formatting.jq,

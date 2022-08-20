@@ -75,7 +75,5 @@ if vim.fn.getcwd():find('/google/') == nil then
     lspconfig.gopls.setup({
         settings = { gopls = { gofumpt = true, staticcheck = true } }
     })
-    lspconfig.pyright.setup({
-        settings = { python = { pythonPath = 'python3' } }
-    })
+    lspconfig.pyright.setup({})
 end

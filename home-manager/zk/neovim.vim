@@ -1,12 +1,20 @@
 nmap <Leader>z[ <Cmd>ZkBacklinks<CR>
 nmap <Leader>z] <Cmd>ZkLinks<CR>
-nmap <Leader>zi <Cmd>ZkIndex {force = true}<CR>
-nmap <Leader>zn <Cmd>ZkNew {
-    \     dir = vim.fn.expand('%:p:h'),
-    \     title = vim.fn.input('Title: ')
-    \ }<CR>
-nmap <Leader>zo <Cmd>ZkNotes { sort = { 'modified' } }<CR>
+nmap <Leader>zi <Cmd>ZkIndex { force = true }<CR>
 
-vmap <Leader>zn <Cmd>ZkNew { dir = vim.fn.expand('%:p:h') }<CR>
+nmap <Leader>zo <Cmd>ZkNotes { sort = { 'modified' } }<CR>
+nmap <Leader>zz <Cmd>ZkNotes { sort = { 'modified' } }<CR>
+
+nmap <Leader>znn <Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>
+nmap <Leader>zng <Cmd>ZkNew {
+    \   dir   = 'google',
+    \   group = 'google',
+    \   title = vim.fn.input('Title: ')
+    \ }<CR>
+nmap <Leader>zns <Cmd>ZkNew {
+    \   dir   = 'swps',
+    \   group = 'swps',
+    \   title = vim.fn.input('Title: ')
+    \ }<CR>
 
 lua require("zk").setup({})
