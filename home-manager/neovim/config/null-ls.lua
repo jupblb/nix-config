@@ -11,6 +11,7 @@ null_ls.setup({
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.buildifier,
         null_ls.builtins.formatting.fish_indent,
+        null_ls.builtins.formatting.isort,
         null_ls.builtins.formatting.jq,
         null_ls.builtins.formatting.shfmt.with({ extra_args = { '-i=4' } })
     }
