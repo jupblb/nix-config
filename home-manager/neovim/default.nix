@@ -27,19 +27,19 @@
       '';
       extraPackages = with pkgs; [ fd ripgrep ];
       plugins       = with pkgs.vimPlugins; [ {
-          config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>\n";
+          config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
           plugin = bufdelete-nvim;
         } {
-          config = "luafile ${toString ./config/gitsigns.lua}\n";
+          config = "luafile ${toString ./config/gitsigns.lua}";
           plugin = gitsigns-nvim;
         } {
-          config = "source ${toString ./config/gkeep.vim}\n";
+          config = "source ${toString ./config/gkeep.vim}";
           plugin = pkgs.callPackage ./plugin/gkeep.nix {};
         } {
-          config = "source ${toString ./config/gruvbox-material.vim}\n";
+          config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
-          config = "source ${toString ./config/hop.vim}\n";
+          config = "source ${toString ./config/hop.vim}";
           plugin = hop-nvim;
         } {
           config = ''
@@ -48,7 +48,7 @@
           '';
           plugin = lualine-nvim;
         } {
-          config = "luafile ${toString ./config/luasnip.lua}\n";
+          config = "luafile ${toString ./config/luasnip.lua}";
           plugin = luasnip.overrideAttrs(_: {
             dependencies = [ friendly-snippets ];
           });
@@ -65,10 +65,10 @@
               in [ cmp-buffer cmp-nvim-lsp cmp-path cmp-signature cmp_luasnip ];
           });
         } {
-          config = "lua require('colorizer').setup({'css','lua','nix','vim'})\n";
+          config = "lua require('colorizer').setup({'css','lua','nix','vim'})";
           plugin = nvim-colorizer-lua;
         } {
-          config = "luafile ${toString ./config/pqf.lua}\n";
+          config = "luafile ${toString ./config/pqf.lua}";
           plugin = pkgs.callPackage ./plugin/pqf.nix {};
         } {
           config = ''
@@ -88,7 +88,7 @@
             ];
           });
         } {
-          config = "luafile ${toString ./config/devicons.lua}\n";
+          config = "luafile ${toString ./config/devicons.lua}";
           plugin = nvim-web-devicons;
         } {
           config = ''
@@ -109,22 +109,22 @@
               ];
           });
         } {
-          config = "vmap <C-v><C-v> :VBox<CR>\n";
+          config = "vmap <C-v><C-v> :VBox<CR>";
           plugin = venn-nvim;
         } {
-          config = "source ${toString ./config/bookmark.vim}\n";
+          config = "source ${toString ./config/bookmark.vim}";
           plugin = vim-bookmarks;
         } {
-          config = "source ${toString ./config/mergetool.vim}\n";
+          config = "source ${toString ./config/mergetool.vim}";
           plugin = vim-mergetool;
         } {
-          config = "source ${toString ./config/oscyank.vim}\n";
+          config = "source ${toString ./config/oscyank.vim}";
           plugin = vim-oscyank;
         } {
-          config = "source ${toString ./config/signify.vim}\n";
+          config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         } {
-          config = "luafile ${toString ./config/zen-mode.lua}\n";
+          config = "luafile ${toString ./config/zen-mode.lua}";
           plugin = zen-mode-nvim;
         }
         commentary git-messenger-vim surround vim-cool vim-gh-line vim-sleuth
