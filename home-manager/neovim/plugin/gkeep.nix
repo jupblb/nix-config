@@ -8,7 +8,7 @@ let
       owner  = "kiwiz";
       repo   = pname;
       rev    = version;
-      sha256 = "sha256-KO0SVKWsKr6f+AlQwpzNkGUY2m7EEZUwa36+0ZnEarI=";
+      sha256 = "sha256-frmNHPrYdGFNRsPQ3ZIS0kv4eIulHuSyjEPndu9CjdM=";
     };
     version = "master";
   };

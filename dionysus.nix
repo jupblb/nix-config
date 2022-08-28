@@ -187,6 +187,9 @@
             extraConfig   = "reverse_proxy http://localhost:8096";
             serverAliases = [ "www.jellyfin.kielbowi.cz" ];
           };
+          "komga.kielbowi.cz"        = {
+            extraConfig = "reverse_proxy http://localhost:6428";
+          };
           "lidarr.kielbowi.cz"       = {
             extraConfig = "reverse_proxy http://localhost:8686";
           };
@@ -282,6 +285,12 @@
     jellyfin = {
       enable = true;
       group  = "users";
+    };
+
+    komga = {
+      enable = true;
+      group  = "users";
+      port   = 6428;
     };
 
     lidarr = {
@@ -555,7 +564,10 @@
     jellyfin              = {
       serviceConfig.PrivateDevices = lib.mkForce false;
     };
-    paperless-ng-server   = { wantedBy = lib.mkForce []; };
+    komga                 = { wantedBy = lib.mkForce []; };
+    paperless-consumer    = { wantedBy = lib.mkForce []; };
+    paperless-scheduler   = { wantedBy = lib.mkForce []; };
+    paperless-web         = { wantedBy = lib.mkForce []; };
     podman-photoview      = { wantedBy = lib.mkForce []; };
     podman-simply-shorten = { wantedBy = lib.mkForce []; };
     syncthing             = { wantedBy = lib.mkForce []; };
