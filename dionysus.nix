@@ -88,6 +88,13 @@
           builtins.readFile ./config/script/zfs-backup-unlock.fish;
       };
     };
+
+    services = {
+      dropbox = {
+        enable = true;
+        path   = "/data";
+      };
+    };
   };
 
   imports =
