@@ -319,13 +319,16 @@
     };
 
     paperless = {
-      enable      = true;
-      extraConfig = {
-        PAPERLESS_ALLOWED_HOSTS = "paperless.kielbowi.cz";
-        PAPERLESS_OCR_LANGUAGE  = "pol+eng";
-        PAPERLESS_DBHOST        = "localhost";
+      consumptionDir         = "/data/paperless-inbox";
+      consumptionDirIsPublic = true;
+      enable                 = true;
+      extraConfig            = {
+        PAPERLESS_ALLOWED_HOSTS              = "paperless.kielbowi.cz";
+        PAPERLESS_CONSUMER_DELETE_DUPLICATES = true;
+        PAPERLESS_OCR_LANGUAGE               = "pol+eng";
+        PAPERLESS_DBHOST                     = "localhost";
       };
-      mediaDir    = "/backup/paperless";
+      mediaDir               = "/backup/paperless";
     };
 
     postgresql = {
@@ -573,6 +576,17 @@
     };
     komga                 = { wantedBy = lib.mkForce []; };
     paperless-consumer    = { wantedBy = lib.mkForce []; };
+    paperless-inbox       = {
+      after         = [ "network.target" ];
+      description   = "Sync dropbox scans with paperless";
+      script        = builtins.readFile ./config/script/paperless-db-sync.sh;
+      serviceConfig = {
+        ProtectSystem = "full";
+        Type          = "oneshot";
+        User          = "jupblb";
+      };
+      startAt       = "*:0";
+    };
     paperless-scheduler   = { wantedBy = lib.mkForce []; };
     paperless-web         = { wantedBy = lib.mkForce []; };
     podman-photoview      = { wantedBy = lib.mkForce []; };
