@@ -1,4 +1,5 @@
 require('nvim-treesitter.configs').setup({
+    auto_install = false,
     context_commentstring = {enable = true},
     highlight = {enable = true, disable = {"yaml"}},
     incremental_selection = {

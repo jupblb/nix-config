@@ -81,12 +81,16 @@
             autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f
             luafile ${toString ./config/treesitter.lua}
           '';
-          plugin = nvim-treesitter.overrideAttrs(_: {
-            dependencies = [
-              nvim-treesitter-refactor nvim-treesitter-textobjects
-              nvim-ts-context-commentstring vim-matchup
-            ];
-          });
+          plugin =
+            let
+              nvim-treesitter' =
+                nvim-treesitter.withPlugins(_: pkgs.tree-sitter.allGrammars);
+            in nvim-treesitter'.overrideAttrs(_: {
+              dependencies = [
+                nvim-treesitter-refactor nvim-treesitter-textobjects
+                nvim-ts-context-commentstring vim-matchup
+              ];
+            });
         } {
           config = "luafile ${toString ./config/devicons.lua}";
           plugin = nvim-web-devicons;
