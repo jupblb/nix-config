@@ -15,10 +15,13 @@
         nix-shell     =
           "${pkgs.nix}/bin/nix-shell --run \"env SHLVL=\\$((\\$SHLVL-1)) fish\" $argv";
       };
-      interactiveShellInit = "delta-view";
+      interactiveShellInit = ''
+        delta-view
+        ${builtins.readFile ./tide.fish}
+      '';
       plugins              = [ {
-        name = "fish-async-prompt";
-        src  = pkgs.callPackage ./async-prompt.nix {};
+        name = "tide";
+        src  = pkgs.callPackage ./tide.nix {};
       } ];
       shellAliases         = {
         cat  = "${pkgs.bat}/bin/bat -p --paging=never";

@@ -52,7 +52,6 @@
       ./home-manager/lf
       ./home-manager/neovim
       ./home-manager/neovim/lsp.nix
-      ./home-manager/starship.nix
       ./home-manager/zk
       ./home-manager/zoxide.nix
     ];
