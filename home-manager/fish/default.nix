@@ -12,6 +12,8 @@
         fish_greeting =
           "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
         ls            = builtins.readFile ./exa.fish;
+        nix-shell     =
+          "${pkgs.nix}/bin/nix-shell --run \"env SHLVL=\\$((\\$SHLVL-1)) fish\" $argv";
       };
       interactiveShellInit = "delta-view";
       plugins              = [ {
