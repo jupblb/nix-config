@@ -5,6 +5,7 @@
     fish = {
       enable               = true;
       functions            = {
+        bak           = "cp -r $argv[1] $argv[1].bak";
         delta-view    = {
           body     = builtins.readFile ./delta-view.fish;
           onSignal = "WINCH";
@@ -17,6 +18,7 @@
       };
       interactiveShellInit = ''
         delta-view
+        printf '\033[5 q\r'
         ${builtins.readFile ./tide.fish}
       '';
       plugins              = [ {
