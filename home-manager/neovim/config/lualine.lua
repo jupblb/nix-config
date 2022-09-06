@@ -11,8 +11,8 @@ require('lualine').setup({
             {
                 'filename',
                 path = 1,
-                symbols = { modified = ' ', readonly = ' ' }
-            }
+                symbols = { modified = ' ', readonly = ' ' }
+            },
         },
         lualine_x = {
             {
@@ -29,7 +29,6 @@ require('lualine').setup({
         },
         lualine_y = {
             'SleuthIndicator', 'filesize', { 'filetype', colored = false },
-            'branch'
         },
         lualine_z = { 'progress', 'location' }
     }
