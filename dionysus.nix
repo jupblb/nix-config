@@ -596,11 +596,12 @@
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   users.users = {
-    jupblb.extraGroups = [ "adbusers" "podman" ];
+    jupblb.extraGroups = [ "adbusers" "docker" "podman" ];
     paperless.group    = lib.mkForce "users";
   };
 
   virtualisation = {
+    docker         = { enable = true; };
     oci-containers = {
       backend    = "podman";
       containers = {
@@ -642,7 +643,6 @@
       };
     };
     podman         = {
-      dockerCompat  = true;
       enable        = true;
       extraPackages = with pkgs; [ zfs ];
     };
