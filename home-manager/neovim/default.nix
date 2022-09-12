@@ -6,10 +6,18 @@
           --headless +UpdateRemotePlugins +quit && echo
       '';
     };
-    sessionVariables = { EDITOR = "nvim"; };
+    packages         = with pkgs; [ neovim-remote ];
+    sessionVariables = {
+      EDITOR              = "nvim";
+      NVIM_LISTEN_ADDRESS = "/tmp/nvimsocket-\$KITTY_WINDOW_ID.socket";
+    };
   };
 
   programs = {
+    fish = {
+      functions.vim = builtins.readFile ./singleton.fish;
+    };
+
     git = {
       ignores = [ ".vim-bookmarks" ];
     };
@@ -135,7 +143,6 @@
         }
         commentary git-messenger-vim surround vim-cool vim-gh-line vim-sleuth
       ];
-      vimAlias      = true;
       vimdiffAlias  = true;
       withNodeJs    = false;
       withPython3   = true;
