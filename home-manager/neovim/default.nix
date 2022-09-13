@@ -143,6 +143,7 @@
           plugin = zen-mode-nvim;
         }
         commentary git-messenger-vim surround vim-cool vim-gh-line vim-sleuth
+        vim-vinegar
       ];
       vimdiffAlias  = true;
       withNodeJs    = false;

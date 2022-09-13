@@ -26,8 +26,16 @@ if set -q icons[1]
     echo -n "$(string join ' ' $icons)$(set_color normal) "
 end
 
-if test $cmd_status -gt 0
-    echo -n "$(set_color --bold --underline 9d0006)~>$(set_color normal) "
+if test $fish_bind_mode = "insert"
+    echo -n "$(set_color --bold)"
 else
-    echo -n "$(set_color --bold 79740e)~>$(set_color normal) "
+    echo -n "$(set_color --dim)"
 end
+
+if test $cmd_status -gt 0
+    echo -n "$(set_color --underline 9d0006)"
+else
+    echo -n "$(set_color 79740e)"
+end
+
+echo -n "~>$(set_color normal) "

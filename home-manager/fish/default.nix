@@ -13,6 +13,7 @@
         fish_greeting     =
           "if test $SHLVL -eq 1; ${pkgs.fortune}/bin/fortune -sa; end";
         fish_prompt       = builtins.readFile ./prompt.fish;
+        fish_mode_prompt  = "";
         fish_right_prompt = builtins.readFile ./rprompt.fish;
         ls                = builtins.readFile ./exa.fish;
         nix-shell         =
