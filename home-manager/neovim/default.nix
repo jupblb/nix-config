@@ -38,6 +38,9 @@
           config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
           plugin = bufdelete-nvim;
         } {
+          config = "lua require('git-conflict').setup({})";
+          plugin = pkgs.callPackage ./plugin/git-conflict.nix {};
+        } {
           config = "luafile ${toString ./config/gitsigns.lua}";
           plugin = gitsigns-nvim;
         } {
@@ -73,7 +76,8 @@
               in [ cmp-buffer cmp-nvim-lsp cmp-path cmp-signature cmp_luasnip ];
           });
         } {
-          config = "lua require('colorizer').setup({'css','lua','nix','vim'})";
+          config =
+            "lua require('colorizer').setup({'css','lua', 'markdown', 'nix','vim'})";
           plugin = nvim-colorizer-lua;
         } {
           config = "luafile ${toString ./config/pqf.lua}";
@@ -128,9 +132,6 @@
         } {
           config = "source ${toString ./config/bookmark.vim}";
           plugin = vim-bookmarks;
-        } {
-          config = "source ${toString ./config/mergetool.vim}";
-          plugin = vim-mergetool;
         } {
           config = "source ${toString ./config/oscyank.vim}";
           plugin = vim-oscyank;

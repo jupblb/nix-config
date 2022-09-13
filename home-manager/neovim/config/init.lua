@@ -1,14 +1,17 @@
+-- Toggle diagnostics with <Leader>d
 local diagnostics_active = true
-
-vim.keymap.set('n', '<Leader>d', function()
+local diagnostics_toggle = function()
     if diagnostics_active then
         vim.diagnostic.disable()
     else
         vim.diagnostic.enable()
     end
     diagnostics_active = not diagnostics_active
-end)
+end
 
+vim.keymap.set('n', '<Leader>d', diagnostics_toggle, {})
+
+-- Set up Markdown formatting
 _G.markdown_formatters = {
     ['Pandoc (with reference-links)'] = {
         'pandoc', '--columns=80', '--reference-links', '-s', '-f', 'markdown',

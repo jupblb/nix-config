@@ -23,7 +23,7 @@ null_ls.register({
     generator = null_ls.generator({
         command = 'pandoc',
         args = {
-            '--columns=80', '--reference-links', '-s', '-f', 'markdown', '-t',
+            '--columns=80', '-s', '-f', 'markdown', '-t',
             'markdown-simple_tables-raw_attribute', '-'
         },
         on_output = function(params, done)
