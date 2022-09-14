@@ -1,11 +1,12 @@
 { lib, pkgs, ... }: {
   home = {
-    activation = {
+    activation       = {
       bat = lib.hm.dag.entryAfter ["writeBoundary"]
         "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
     };
-    packages   = with pkgs; [ git-crypt ripgrep ];
-    username   = "jupblb";
+    packages         = with pkgs; [ git-crypt ripgrep ];
+    username         = "jupblb";
+    sessionVariables = { PAGER = "${pkgs.less}/bin/less -R"; };
   };
 
   nixpkgs.overlays = [ (import ../overlay) ];
@@ -117,10 +118,6 @@
         "github.com" = config // {
           hostname     = "github.com";
           identityFile = [ (toString ../config/ssh/git/id_ed25519) ];
-        };
-        poseidon     = config // {
-          hostname     = "poseidon.kielbowi.cz";
-          identityFile = [ (toString ../config/ssh/jupblb/id_ed25519) ];
         };
       };
       serverAliveInterval = 30;

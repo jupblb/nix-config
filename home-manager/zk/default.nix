@@ -7,13 +7,10 @@
   };
 
   programs.neovim = {
-    plugins = with pkgs.vimPlugins; [
-      {
-        config = "source ${toString ./neovim.vim}\n";
-        plugin = zk-nvim;
-      }
-      vim-mustache-handlebars
-    ];
+    plugins = with pkgs.vimPlugins; [ {
+      config = "source ${toString ./neovim.vim}\n";
+      plugin = zk-nvim;
+    } ];
   };
 
   xdg.configFile = {

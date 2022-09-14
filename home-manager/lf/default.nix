@@ -1,7 +1,14 @@
 { pkgs, ... }: {
   programs = {
+    fish = {
+      functions.lfv = builtins.readFile ./lfv.fish;
+    };
+
     lf = {
-      commands    = {
+      cmdKeybindings = {
+        "<c-z>" = "$ kill -STOP $PPID";
+      };
+      commands       = {
         open = ''
         ''${{
           case $(file --mime-type "$f" -b) in
@@ -11,19 +18,19 @@
         }}
         '';
       };
-      enable      = true;
-      extraConfig =
+      enable         = true;
+      extraConfig    =
         let cleaner = pkgs.writeScript "lf-cleaner"
           (builtins.readFile ./cleaner.sh);
         in "set cleaner ${cleaner}";
-      previewer   = {
+      previewer      = {
         keybinding = "`";
         source     = with pkgs; writeShellScript "lf-preview" ''
           ${builtins.readFile ./previewer.sh}
           ${pkgs.pistol}/bin/pistol "$1"
         '';
       };
-      settings    = { hidden = true; icons = true; tabstop = 4; };
+      settings       = { hidden = true; icons = true; tabstop = 4; };
     };
 
     pistol = {

@@ -2,12 +2,15 @@
 
 set -l cmd_status $status
 
+# hostname
 if set -q SSH_TTY
     echo -n "$(set_color 98971a)$(prompt_hostname):$(set_color normal)"
 end
 
+# pwd
 echo -n "$(set_color 79740e)$(prompt_pwd)$(set_color normal) "
 
+# icons
 set -l icons
 
 if jobs -q
@@ -18,14 +21,11 @@ if set -q IN_NIX_SHELL
     set -a icons "$(set_color 458588) "
 end
 
-# if kubectl config view --minify &>/dev/null
-#     set -a icons "$(set_color 458588) "
-# end
-
 if set -q icons[1]
     echo -n "$(string join ' ' $icons)$(set_color normal) "
 end
 
+# sign
 if test $fish_bind_mode = "insert"
     echo -n "$(set_color --bold)"
 else
