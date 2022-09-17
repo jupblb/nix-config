@@ -19,11 +19,7 @@
         nix-shell         =
           "${pkgs.nix}/bin/nix-shell --run \"env SHLVL=\\$((\\$SHLVL-1)) fish\" $argv";
       };
-      interactiveShellInit = ''
-        delta-view
-        printf '\033[5 q\r'
-        set -U async_prompt_functions fish_right_prompt
-      '';
+      interactiveShellInit = builtins.readFile ./init.fish;
       plugins              = [ {
         name = "fish-async-prompt";
         src  = pkgs.callPackage ./fish-async-prompt.nix {};

@@ -6,8 +6,15 @@
     };
   };
 
-  programs.neovim = {
-    plugins = with pkgs.vimPlugins; [ {
+  programs = {
+    fish.shellAbbrs = {
+      zke = "zk edit --interactive";
+      zknn = "zk new --title ";
+      zkng = "zk new --group=google google --title";
+      zkns = "zk new --group=swps swps --title";
+    };
+
+    neovim.plugins = with pkgs.vimPlugins; [ {
       config = "source ${toString ./neovim.vim}\n";
       plugin = zk-nvim;
     } ];
@@ -16,12 +23,6 @@
   xdg.configFile = {
     "zk/config.toml".source          =
       let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
-        alias           = {
-          new-       = "zk new                --title \"$argv\"       ";
-          new-google = "zk new --group=google --title \"$argv\" google";
-          new-swps   = "zk new --group=swps   --title \"$argv\" swps  ";
-          todo       = "zk edit google/todo.md";
-        };
         extra           = {
           lang       = "en_us";
           visibility = "public";

@@ -1,4 +1,8 @@
 { pkgs, ... }: {
+  home.sessionVariables = {
+    DIRENV_WARN_TIMEOUT = "1h";
+  };
+
   programs.direnv = {
     config     = {
       bash_path     = "${pkgs.bashInteractive}/bin/bash";

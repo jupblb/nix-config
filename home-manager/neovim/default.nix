@@ -76,8 +76,7 @@
               in [ cmp-buffer cmp-nvim-lsp cmp-path cmp-signature cmp_luasnip ];
           });
         } {
-          config =
-            "lua require('colorizer').setup({'css','lua', 'markdown', 'nix','vim'})";
+          config = "luafile ${toString ./config/colorizer.lua}";
           plugin = nvim-colorizer-lua;
         } {
           config = "luafile ${toString ./config/pqf.lua}";

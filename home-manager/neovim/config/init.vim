@@ -38,6 +38,7 @@ nnoremap <C-f> 5<C-e>
 nnoremap <C-b> 5<C-y>
 
 autocmd BufRead,BufNewFile *.fish set filetype=fish
+autocmd BufRead,BufNewFile *.log set filetype=text
 autocmd BufRead,BufNewFile *.nix set filetype=nix
 autocmd BufRead,BufNewFile *.sc set filetype=scala
 

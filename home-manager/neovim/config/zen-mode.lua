@@ -6,10 +6,7 @@ require("zen-mode").setup({
         width = 120,
     },
     plugins = {
-        kitty = {
-            enabled = true,
-            font = "+4",
-        },
+        diagnostics = { enabled = true },
     },
 })
 
