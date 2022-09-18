@@ -1,8 +1,16 @@
 #!/usr/bin/env fish
 # https://github.com/gokcehan/lf/blob/master/etc/lfcd.fish
 
+set bin (which lf)
 set tmp (mktemp)
-lf -selection-path=$tmp $argv
+set buf "/tmp/nvim-$KITTY_WINDOW_ID.buffer"
+
+if test -e $buf && not count $argv >/dev/null
+    # https://github.com/gokcehan/lf/issues/939
+    $bin -selection-path=$tmp (cat $buf)
+else
+    $bin -selection-path=$tmp $argv
+end
 
 if test -f $tmp
     set files (cat $tmp)

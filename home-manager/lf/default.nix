@@ -1,37 +1,40 @@
 { pkgs, ... }: {
+  home.packages = with pkgs; [ fd ];
+
   programs = {
-    fish = {
-      functions.lfv = builtins.readFile ./lfv.fish;
+    fish.functions = {
+      lf = builtins.readFile ./lfv.fish;
     };
 
     lf = {
-      cmdKeybindings = {
-        "<c-z>" = "$ kill -STOP $PPID";
+      commands    = {
+        open     = "\${{${builtins.readFile ./open.sh}}}";
+        fzf_open = "\${{${builtins.readFile ./fzf-open.sh}}}";
       };
-      commands       = {
-        open = ''
-        ''${{
-          case $(file --mime-type "$f" -b) in
-            text/*) $EDITOR $fx;;
-            *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
-          esac
-        }}
-        '';
-      };
-      enable         = true;
-      extraConfig    =
+      enable      = true;
+      extraConfig =
         let cleaner = pkgs.writeScript "lf-cleaner"
           (builtins.readFile ./cleaner.sh);
-        in "set cleaner ${cleaner}";
-      previewer      = {
+        in ''
+          set cleaner ${cleaner}
+          map <a-c> :fzf_open d
+          map <c-t> :fzf_open f
+          map <c-z> $ kill -STOP $PPID
+        '';
+      previewer   = {
         keybinding = "`";
         source     = with pkgs; writeShellScript "lf-preview" ''
           ${builtins.readFile ./previewer.sh}
           ${pkgs.pistol}/bin/pistol "$1"
         '';
       };
-      settings       = { hidden = true; icons = true; tabstop = 4; };
+      settings    = { hidden = true; icons = true; tabstop = 4; };
     };
+
+    neovim.extraConfig = ''
+      autocmd BufEnter * call writefile(
+        \ [expand("%:p")], "/tmp/nvim-" . $KITTY_WINDOW_ID . ".buffer")
+    '';
 
     pistol = {
       config = {

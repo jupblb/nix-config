@@ -9,7 +9,7 @@
     packages         = with pkgs; [ neovim-remote ];
     sessionVariables = {
       EDITOR              = "nvim";
-      NVIM_LISTEN_ADDRESS = "/tmp/nvimsocket-\$KITTY_WINDOW_ID.socket";
+      NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
     };
   };
 

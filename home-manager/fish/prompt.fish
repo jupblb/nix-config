@@ -21,12 +21,12 @@ if set -q IN_NIX_SHELL
     set -a icons "$(set_color 458588) "
 end
 
-if set -q icons[1]
+if count $icons >/dev/null
     echo -n "$(string join ' ' $icons)$(set_color normal) "
 end
 
 # sign
-if test $fish_bind_mode = "insert"
+if test $fish_bind_mode = insert
     echo -n "$(set_color --bold)"
 else
     echo -n "$(set_color --dim)"
