@@ -3,18 +3,17 @@
 
   programs = {
     fish.functions = {
-      lf = builtins.readFile ./lfv.fish;
+      lf = builtins.readFile ./lf-vim.fish;
     };
 
     lf = {
       commands    = {
-        open     = "\${{${builtins.readFile ./open.sh}}}";
         fzf_open = "\${{${builtins.readFile ./fzf-open.sh}}}";
       };
       enable      = true;
       extraConfig =
         let cleaner = pkgs.writeScript "lf-cleaner"
-          (builtins.readFile ./cleaner.sh);
+          (builtins.readFile ./cleaner.bash);
         in ''
           set cleaner ${cleaner}
           map <a-c> :fzf_open d
@@ -24,7 +23,7 @@
       previewer   = {
         keybinding = "`";
         source     = with pkgs; writeShellScript "lf-preview" ''
-          ${builtins.readFile ./previewer.sh}
+          ${builtins.readFile ./previewer.bash}
           ${pkgs.pistol}/bin/pistol "$1"
         '';
       };

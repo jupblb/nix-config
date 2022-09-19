@@ -8,10 +8,10 @@
 
   programs = {
     fish.shellAbbrs = {
-      zke = "zk edit --interactive";
-      zknn = "zk new --title ";
-      zkng = "zk new --group=google google --title";
-      zkns = "zk new --group=swps swps --title";
+      ze = "zk edit --interactive";
+      znn = "zk new --title ";
+      zng = "zk new --group=google google --title";
+      zns = "zk new --group=swps swps --title";
     };
 
     neovim.plugins = with pkgs.vimPlugins; [ {

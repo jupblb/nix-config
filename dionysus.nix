@@ -15,11 +15,7 @@
     zfs.requestEncryptionCredentials = false;
   };
 
-  environment = {
-    interactiveShellInit =
-      "echo \"Syncthing is $(systemctl is-active syncthing)\"";
-    systemPackages       = with pkgs; [ python3Packages.subliminal ];
-  };
+  environment.systemPackages = with pkgs; [ python3Packages.subliminal ];
 
   fileSystems = {
     "/"              = {
@@ -549,14 +545,6 @@
 
   systemd.services = {
     calibre-web           = { wantedBy = lib.mkForce []; };
-    emanote               = {
-      after         = [ "network.target" ];
-      description   = "Emanote";
-      path          = with pkgs; [ emanote findutils gnused ];
-      script        = builtins.readFile ./config/script/emanote.sh;
-      serviceConfig = { Type = "oneshot"; User = "root"; };
-      startAt       = "*:0/15";
-    };
     ip-updater            = {
       after         = [ "network.target" ];
       description   = "Public IP updater";

@@ -3,10 +3,7 @@
 {
   console.keyMap = "pl";
 
-  environment.sessionVariables = {
-#   LD_LIBRARY_PATH      = "${pkgs.stdenv.cc.cc.lib}/lib/";
-    NIXPKGS_ALLOW_UNFREE = "1";
-  };
+  environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
   environment.systemPackages   = with pkgs; [ file unzip ];
 
   hardware.enableRedistributableFirmware = true;
@@ -17,11 +14,6 @@
     nixpkgs.config.packageOverrides = _:
       let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable-small.tar.gz";
       in import (fetchTarball t) {};
-    nixpkgs.overlays                = [
-      (_: _: { fish-foreign-env = pkgs.fishPlugins.foreign-env; })
-    ];
-
-    programs.neovim.extraPackages = with pkgs; [ gcc ];
 
     services.gpg-agent.enable = true;
   };
