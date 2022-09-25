@@ -90,17 +90,9 @@
 
   networking.hostName = "hades";
 
-  programs = {
-    _1password-gui = {
-      enable             = true;
-      gid                = 1337;
-      polkitPolicyOwners = [ "jupblb" ];
-    };
-
-    steam = {
-      enable     = true;
-      remotePlay = { openFirewall = true; };
-    };
+  programs.steam = {
+    enable     = true;
+    remotePlay = { openFirewall = true; };
   };
 
   services = {
