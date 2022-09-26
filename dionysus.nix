@@ -513,7 +513,7 @@
     };
 
     vaultwarden = {
-      config    = let smtpCfg = (import ./config/secret.nix).mailgun; in {
+      config          = let smtpCfg = (import ./config/secret.nix).mailgun; in {
         databaseUrl      = "postgresql://vaultwarden@localhost/vaultwarden";
         domain           = "https://vaultwarden.kielbowi.cz";
         rocketPort       = 8222;
@@ -525,8 +525,9 @@
         smtpUsername     = smtpCfg.login;
         websocketEnables = true;
       };
-      dbBackend = "postgresql";
-      enable    = true;
+      dbBackend       = "postgresql";
+      enable          = true;
+      environmentFile = toString ./config/vaultwarden.env;
     };
   };
 

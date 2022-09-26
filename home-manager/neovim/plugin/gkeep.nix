@@ -19,7 +19,7 @@ let
       owner  = "stevearc";
       repo   = "gkeep.nvim";
       rev    = version;
-      sha256 = "sha256-bDtiGjEDI5La+LZnoGnEOvkZizo3PaTFL9bnnbw6rn0=";
+      sha256 = "sha256-DHmRiqWiqqraIkrTKOUmc6VuZrEnO2TYWoc5LOtZXB4=";
     };
   };
 in plugin.overrideAttrs(_: {
