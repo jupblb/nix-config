@@ -71,7 +71,7 @@ lspconfig.metals.setup({
     single_file_mode = true,
 })
 
-if vim.fn.getcwd():find('/google/') == nil then
+if vim.fn.getcwd():find('/google/src/') == nil then
     lspconfig.gopls.setup({
         settings = { gopls = { gofumpt = true, staticcheck = true } }
     })

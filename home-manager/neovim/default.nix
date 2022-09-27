@@ -41,12 +41,6 @@
           config = "lua require('git-conflict').setup({})";
           plugin = pkgs.callPackage ./plugin/git-conflict.nix {};
         } {
-          config = "luafile ${toString ./config/gitsigns.lua}";
-          plugin = gitsigns-nvim;
-        } {
-          config = "source ${toString ./config/gkeep.vim}";
-          plugin = pkgs.callPackage ./plugin/gkeep.nix {};
-        } {
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
@@ -81,12 +75,6 @@
         } {
           config = "luafile ${toString ./config/pqf.lua}";
           plugin = pkgs.callPackage ./plugin/pqf.nix {};
-        } {
-          config = ''
-            source ${toString ./config/tree.vim}
-            luafile ${toString ./config/tree.lua}
-          '';
-          plugin = nvim-tree-lua;
         } {
           config = ''
             autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f

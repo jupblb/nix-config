@@ -1,4 +1,4 @@
-{ copyPathToStore, fetchurl, runCommandNoCC, unzip }:
+{ copyPathToStore, fetchurl, runCommand, unzip }:
 
 let
   version = "0.829";
@@ -8,7 +8,7 @@ let
     url    =
       "https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/Symbols-1000-em%20Nerd%20Font%20Complete.ttf";
   };
-in runCommandNoCC "pragmata-pro-${version}" {
+in runCommand "pragmata-pro-${version}" {
   buildInputs = [ unzip ];
   src         = copyPathToStore "${toString ./.}/PragmataPro${version}.zip";
 } ''
