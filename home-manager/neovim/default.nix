@@ -35,12 +35,6 @@
       '';
       extraPackages = with pkgs; [ fd ripgrep ];
       plugins       = with pkgs.vimPlugins; [ {
-          config = "nmap <C-x> :Bdelete!<CR> | nmap <C-S-x> :Bwipeout!<CR>";
-          plugin = bufdelete-nvim;
-        } {
-          config = "lua require('git-conflict').setup({})";
-          plugin = pkgs.callPackage ./plugin/git-conflict.nix {};
-        } {
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
@@ -54,9 +48,7 @@
           plugin = lualine-nvim;
         } {
           config = "luafile ${toString ./config/luasnip.lua}";
-          plugin = luasnip.overrideAttrs(_: {
-            dependencies = [ friendly-snippets ];
-          });
+          plugin = luasnip;
         } {
           config = ''
             set completeopt=menu,menuone,noselect
@@ -105,12 +97,10 @@
                   pkgs.callPackage ./plugin/telescope-tele-tabby.nix {};
                 telescope-live-grep =
                   pkgs.callPackage ./plugin/telescope-live-grep.nix {};
-                telescope-luasnip   =
-                  pkgs.callPackage ./plugin/telescope-luasnip.nix {};
               in old.dependencies ++ [
                 nvim-neoclip-lua tele-tabby telescope-live-grep
-                telescope-lsp-handlers-nvim telescope-luasnip
-                telescope-ui-select-nvim telescope-vim-bookmarks-nvim
+                telescope-lsp-handlers-nvim telescope-ui-select-nvim
+                telescope-vim-bookmarks-nvim
               ];
           });
         } {
