@@ -92,15 +92,11 @@
           '';
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
             dependencies =
-              let
-                tele-tabby          =
-                  pkgs.callPackage ./plugin/telescope-tele-tabby.nix {};
-                telescope-live-grep =
-                  pkgs.callPackage ./plugin/telescope-live-grep.nix {};
+              let telescope-live-grep =
+                pkgs.callPackage ./plugin/telescope-live-grep.nix {};
               in old.dependencies ++ [
-                nvim-neoclip-lua tele-tabby telescope-live-grep
-                telescope-lsp-handlers-nvim telescope-ui-select-nvim
-                telescope-vim-bookmarks-nvim
+                nvim-neoclip-lua telescope-live-grep telescope-lsp-handlers-nvim
+                telescope-ui-select-nvim telescope-vim-bookmarks-nvim
               ];
           });
         } {

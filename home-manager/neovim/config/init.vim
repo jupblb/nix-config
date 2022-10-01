@@ -43,4 +43,6 @@ autocmd BufRead,BufNewFile *.nix set filetype=nix
 autocmd BufRead,BufNewFile *.sc set filetype=scala
 
 autocmd FileType gitcommit,hgcommit setlocal colorcolumn=72
-autocmd FileType go,java,sql setlocal colorcolumn=100
+autocmd FileType go setlocal colorcolumn=100 noexpandtab shiftwidth=0 tabstop=2
+autocmd FileType java,sql setlocal colorcolumn=100
+autocmd FileType markdown setlocal expandtab shiftwidth=4

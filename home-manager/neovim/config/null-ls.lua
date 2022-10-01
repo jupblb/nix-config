@@ -22,10 +22,18 @@ null_ls.register({
     filetypes = { 'markdown' },
     generator = null_ls.generator({
         command = 'pandoc',
-        args = {
-            '--columns=80', '-s', '-f', 'markdown', '-t',
-            'markdown-simple_tables-raw_attribute', '-'
-        },
+        args = function(params)
+            local args = {
+                '--columns=80', '-s', '-f', 'markdown', '-t',
+                'markdown-simple_tables-raw_attribute', '-'
+            }
+
+            if string.find(params.bufname, "jupblb/Documents") then
+                table.insert(args, "--reference-links")
+            end
+
+            return args
+        end,
         on_output = function(params, done)
             return done({ { text = params.output } })
         end,
