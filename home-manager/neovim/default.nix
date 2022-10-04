@@ -38,9 +38,6 @@
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
-          config = "source ${toString ./config/hop.vim}";
-          plugin = hop-nvim;
-        } {
           config = ''
             set noshowmode
             luafile ${toString ./config/lualine.lua}
@@ -85,6 +82,9 @@
         } {
           config = "luafile ${toString ./config/devicons.lua}";
           plugin = nvim-web-devicons;
+        } {
+          config = "source ${toString ./config/pounce.vim}";
+          plugin = pkgs.callPackage ./plugin/pounce.nix {};
         } {
           config = ''
             source ${toString ./config/telescope.vim}
