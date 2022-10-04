@@ -1,7 +1,9 @@
 set clipboard+=unnamedplus
+set cmdheight=0
 set colorcolumn=80
 set cursorline
 set ignorecase
+set laststatus=0
 set list
 set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set mouse=a
@@ -17,9 +19,6 @@ set termguicolors
 set updatetime=500
 set virtualedit=all
 set wrap
-
-let g:do_filetype_lua = 1
-let g:did_load_filetypes = 0
 
 map q: <Nop>
 nnoremap Q <Nop>

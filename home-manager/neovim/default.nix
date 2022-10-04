@@ -38,12 +38,6 @@
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
-          config = ''
-            set noshowmode
-            luafile ${toString ./config/lualine.lua}
-          '';
-          plugin = lualine-nvim;
-        } {
           config = "luafile ${toString ./config/luasnip.lua}";
           plugin = luasnip;
         } {
@@ -116,7 +110,6 @@
           plugin = zen-mode-nvim;
         }
         commentary git-messenger-vim surround vim-cool vim-gh-line vim-sleuth
-        vim-vinegar
       ];
       vimdiffAlias  = true;
       withNodeJs    = false;
