@@ -5,8 +5,8 @@ nmap gD          <Cmd>lua vim.lsp.buf.declaration()<CR>
 nmap <C-]>       <Cmd>lua vim.lsp.buf.definition()<CR>
 nmap <Leader>la  <Cmd>lua vim.lsp.buf.code_action()<CR>
 nmap <Leader>lv  <Cmd>lua vim.lsp.buf.document_symbol()<CR>
-nmap <Leader>=   <Cmd>lua vim.lsp.buf.formatting()<CR>
-nmap <Leader>lf  <Cmd>lua vim.lsp.buf.formatting()<CR>
+nmap <Leader>=   <Cmd>lua vim.lsp.buf.format({async = true})<CR>
+nmap <Leader>lf  <Cmd>lua vim.lsp.buf.format({async = true})<CR>
 nmap K           <Cmd>lua vim.lsp.buf.hover()<CR>
 nmap <Leader>li  <Cmd>lua vim.lsp.buf.implementation()<CR>
 nmap <Leader>lci <Cmd>lua vim.lsp.buf.incoming_calls()<CR>
