@@ -91,7 +91,7 @@
   };
 
   imports =
-    [ ./nixos ./nixos/amdgpu.nix ./nixos/apc.nix ./nixos/syncthing.nix ];
+    [ ./nixos ./nixos/amdgpu.nix ./nixos/syncthing.nix ];
 
   networking = {
     defaultGateway           = "192.168.1.1";

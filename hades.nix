@@ -96,6 +96,16 @@
   };
 
   services = {
+    apcupsd = {
+      configText = ''
+        UPSCABLE usb
+        UPSTYPE usb
+        DEVICE
+        BATTERYLEVEL 10
+      '';
+      enable     = true;
+    };
+
     printing = {
       drivers = with pkgs; [ samsung-unified-linux-driver_1_00_37 ];
       enable  = true;
