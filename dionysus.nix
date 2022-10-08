@@ -135,14 +135,6 @@
   services = {
     acpid.enable = true;
 
-    apcupsd = {
-      configText = "TIMEOUT 30";
-      enable     = true;
-      hooks      = {
-        doshutdown = builtins.readFile ./config/script/dionysus-shutdown.sh;
-      };
-    };
-
     bazarr = {
       enable = true;
       group  = "users";

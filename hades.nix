@@ -83,7 +83,6 @@
   imports = [
     ./nixos
     ./nixos/amdgpu.nix
-    ./nixos/apc.nix
     ./nixos/gnome.nix
     ./nixos/syncthing.nix
   ];
