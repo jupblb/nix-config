@@ -10,7 +10,6 @@ require('nvim-treesitter.configs').setup({
             node_decremental = "<S-TAB>"
         }
     },
-    indent = { enable = true },
     matchup = { enable = true },
     refactor = {
         highlight_definitions = { enable = true },

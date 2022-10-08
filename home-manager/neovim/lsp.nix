@@ -11,7 +11,7 @@
         nodePackages = with pkgs.nodePackages; [
           bash-language-server dockerfile-language-server-nodejs
           markdownlint-cli pyright vim-language-server
-          vscode-json-languageserver yaml-language-server
+          vscode-json-languageserver
         ];
       in default ++ nodePackages;
     plugins       = with pkgs.vimPlugins; [ {
