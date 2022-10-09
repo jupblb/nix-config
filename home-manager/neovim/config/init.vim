@@ -27,10 +27,6 @@ map <Space> <Leader>
 
 " https://github.com/neovim/neovim/issues/20126#issuecomment-1243465684
 nnoremap <C-I> <C-I>
-if $TERM == 'xterm-kitty'
-  autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif
-  autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif
-endif
 
 " Create file if it doesn't exist.
 map <silent> gf <Cmd>execute('edit ' . fnamemodify(expand('%:p:h') . '/' . expand('<cfile>'), ':p'))<CR>
