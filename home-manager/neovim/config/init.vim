@@ -9,6 +9,7 @@ set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set mouse=a
 set nowrap
 set number
+set relativenumber
 set shell=bash
 set shortmess+=c
 set showbreak=↪
@@ -33,6 +34,9 @@ map <silent> gf <Cmd>execute('edit ' . fnamemodify(expand('%:p:h') . '/' . expan
 
 nnoremap <C-f> 5<C-e>
 nnoremap <C-b> 5<C-y>
+
+autocmd InsertEnter * setlocal norelativenumber
+autocmd InsertLeave * setlocal relativenumber
 
 autocmd BufRead,BufNewFile *.fish set filetype=fish
 autocmd BufRead,BufNewFile *.log set filetype=text
