@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
   home.shellAliases = {
     icat = "kitty +kitten icat";
-    ssh  = "kitty +kitten ssh";
+    kssh = "kitty +kitten ssh";
   };
 
   programs = {

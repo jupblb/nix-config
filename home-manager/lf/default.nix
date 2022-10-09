@@ -32,7 +32,7 @@
 
     neovim.extraConfig = ''
       autocmd BufEnter * call writefile(
-        \ [expand("%:p")], "/tmp/nvim-" . $KITTY_WINDOW_ID . ".buffer")
+        \ [expand("%:p")], "/tmp/nvim-" . $KITTY_WINDOW_ID . $WEZTERM_PANE . ".buffer")
     '';
 
     pistol = {

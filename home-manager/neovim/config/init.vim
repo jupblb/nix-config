@@ -25,6 +25,8 @@ nnoremap Q <Nop>
 nnoremap <Space> <Nop>
 map <Space> <Leader>
 
+" https://github.com/neovim/neovim/issues/20126#issuecomment-1243465684
+nnoremap <C-I> <C-I>
 if $TERM == 'xterm-kitty'
   autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif
   autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif
