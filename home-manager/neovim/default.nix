@@ -38,9 +38,6 @@
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
-          config = "luafile ${toString ./config/luasnip.lua}";
-          plugin = luasnip;
-        } {
           config = ''
             set completeopt=menu,menuone,noselect
             luafile ${toString ./config/cmp.lua}
@@ -50,7 +47,10 @@
               let cmp-signature = cmp-nvim-lsp-signature-help.overrideAttrs(_: {
                 dependencies = [];
               });
-              in [ cmp-buffer cmp-nvim-lsp cmp-path cmp-signature cmp_luasnip ];
+              in [
+                cmp-buffer cmp-nvim-lsp cmp-path cmp-signature cmp_luasnip
+                luasnip
+              ];
           });
         } {
           config = "luafile ${toString ./config/colorizer.lua}";

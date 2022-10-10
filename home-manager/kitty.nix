@@ -12,17 +12,19 @@
         size = 10;
       };
       keybindings = {
-        "ctrl+shift+'" = "launch --location=hsplit";
-        "ctrl+shift+;" = "launch --location=vsplit";
-        "ctrl+shift+`" = "show_scrollback";
-        "ctrl+shift+h" = "move_window left";
-        "ctrl+shift+j" = "move_window bottom";
-        "ctrl+shift+k" = "move_window top";
-        "ctrl+shift+l" = "move_window right";
-        "ctrl+h"       = "neighboring_window left";
-        "ctrl+j"       = "neighboring_window bottom";
-        "ctrl+k"       = "neighboring_window top";
-        "ctrl+l"       = "neighboring_window right";
+        "ctrl+shift+backspace" = "select_tab";
+        "ctrl+shift+'"         = "launch --location=hsplit";
+        "ctrl+shift+;"         = "launch --location=vsplit";
+        "ctrl+shift+`"         = "show_scrollback";
+        "ctrl+shift+0"         = "change_font_size all 0";
+        "ctrl+shift+h"         = "move_window left";
+        "ctrl+shift+j"         = "move_window bottom";
+        "ctrl+shift+k"         = "move_window top";
+        "ctrl+shift+l"         = "move_window right";
+        "ctrl+h"               = "neighboring_window left";
+        "ctrl+j"               = "neighboring_window bottom";
+        "ctrl+k"               = "neighboring_window top";
+        "ctrl+l"               = "neighboring_window right";
       };
       settings    = {
         allow_remote_control               = "yes";
@@ -47,6 +49,7 @@
             "U+E5FA-U+E62B"
           ];
           in (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font";
+        tab_bar_min_tabs                   = 5;
       };
       theme       = "Gruvbox Light Hard";
     };
