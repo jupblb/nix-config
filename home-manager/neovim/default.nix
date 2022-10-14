@@ -48,8 +48,8 @@
                 dependencies = [];
               });
               in [
-                cmp-buffer cmp-nvim-lsp cmp-path cmp-signature cmp_luasnip
-                luasnip
+                cmp-buffer cmp-nvim-lsp cmp-pandoc-references cmp-path
+                cmp-signature cmp_luasnip luasnip
               ];
           });
         } {
@@ -90,15 +90,12 @@
                 pkgs.callPackage ./plugin/telescope-live-grep.nix {};
               in old.dependencies ++ [
                 nvim-neoclip-lua telescope-live-grep telescope-lsp-handlers-nvim
-                telescope-ui-select-nvim telescope-vim-bookmarks-nvim
+                telescope-ui-select-nvim
               ];
           });
         } {
           config = "vmap <C-v><C-v> :VBox<CR>";
           plugin = venn-nvim;
-        } {
-          config = "source ${toString ./config/bookmark.vim}";
-          plugin = vim-bookmarks;
         } {
           config = "source ${toString ./config/oscyank.vim}";
           plugin = vim-oscyank;

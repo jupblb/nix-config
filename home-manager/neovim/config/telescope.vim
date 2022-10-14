@@ -19,7 +19,4 @@ nmap <Leader>gf <Cmd>Telescope git_files<CR>
 
 nmap <Leader>' <Cmd>Telescope neoclip<CR>
 
-nmap <Leader>m <Cmd>Telescope vim_bookmarks current_file<CR>
-nmap <Leader>M <Cmd>Telescope vim_bookmarks all<CR>
-
 autocmd User TelescopePreviewerLoaded setlocal wrap
