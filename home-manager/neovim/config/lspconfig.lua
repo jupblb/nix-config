@@ -28,16 +28,25 @@ _G.lsp_attach = function(_, bufnr)
 end
 
 local default_config = {
-    capabilities = require('cmp_nvim_lsp')
-        .update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
     on_attach = lsp_attach
 }
 lspconfig.util.default_config = vim.tbl_extend(
     'force', lspconfig.util.default_config, default_config)
 
+-- neodev.nvim
+require('neodev').setup({
+    override = function(root_dir, library)
+        if string.find(root_dir, 'nix%-config') then
+            library.enabled = true
+            library.plugins = true
+        end
+    end,
+})
+
 -- other LSPs
 local default_servers = {
-    'bashls', 'dockerls', 'hls', 'rnix', 'rust_analyzer', 'vimls'
+    'bashls', 'dockerls', 'hls', 'rnix', 'rust_analyzer', 'sumneko_lua', 'vimls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
@@ -57,9 +66,6 @@ lspconfig.jsonls.setup({
     },
     settings = { json = { schemas = require('schemastore').json.schemas() } }
 })
-
-local luadev = require("lua-dev").setup({ runtime_path = true })
-lspconfig.sumneko_lua.setup(luadev)
 
 lspconfig.metals.setup({
     root_dir = function(filename)

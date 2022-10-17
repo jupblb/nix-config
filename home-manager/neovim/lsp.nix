@@ -30,9 +30,11 @@
           source ${toString ./config/lspconfig.vim}
           luafile ${toString ./config/lspconfig.lua}
         '';
-        plugin = nvim-lspconfig.overrideAttrs(_: {
-          dependencies = [ lua-dev-nvim SchemaStore-nvim ];
-        });
+        plugin =
+          let neodev-nvim = pkgs.callPackage ./plugin/neodev.nix {};
+          in nvim-lspconfig.overrideAttrs(_: {
+            dependencies = [ neodev-nvim SchemaStore-nvim ];
+          });
       }
     ];
   };
