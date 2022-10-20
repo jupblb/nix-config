@@ -122,6 +122,13 @@
       };
       serverAliveInterval = 30;
     };
+
+    tealdeer = {
+      enable   = true;
+      settings = {
+        updates = { auto_update = true; };
+      };
+    };
   };
 
   xdg.enable = true;
