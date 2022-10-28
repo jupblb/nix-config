@@ -63,9 +63,9 @@
             luafile ${toString ./config/treesitter.lua}
           '';
           plugin =
-            let
-              nvim-treesitter' =
-                nvim-treesitter.withPlugins(_: pkgs.tree-sitter.allGrammars);
+            let nvim-treesitter' = pkgs.callPackage ./plugin/tree-sitter.nix {
+              inherit (pkgs.vimPlugins) nvim-treesitter;
+            };
             in nvim-treesitter'.overrideAttrs(_: {
               dependencies = [
                 nvim-treesitter-refactor nvim-treesitter-textobjects
