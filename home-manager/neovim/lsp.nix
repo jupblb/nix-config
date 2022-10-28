@@ -5,8 +5,8 @@
         default      = with pkgs; [
           black buildifier cargo fish gomodifytags gopls gotests
           haskell-language-server impl isort jdt-language-server jq metals
-          openjdk pandoc rnix-lsp rust-analyzer rustc shellcheck shfmt statix
-          sumneko-lua-language-server
+          open-policy-agent openjdk pandoc rnix-lsp rust-analyzer rustc
+          shellcheck shfmt statix sumneko-lua-language-server
         ];
         nodePackages = with pkgs.nodePackages; [
           bash-language-server dockerfile-language-server-nodejs
