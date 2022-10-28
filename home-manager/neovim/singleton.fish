@@ -8,5 +8,12 @@ if test -z "$nvim_id"
     return
 end
 
-nvr --nostart --servername $NVIM_LISTEN_ADDRESS --remote $argv &
+# https://github.com/neovim/neovim/issues/18519
+for i in (seq 1 (count $argv))
+    if test -e $argv[$i]
+        set argv[$i] (realpath $argv[$i])
+    end
+end
+
+nvim --server $NVIM_LISTEN_ADDRESS --remote $argv &
 fg "%$nvim_id"
