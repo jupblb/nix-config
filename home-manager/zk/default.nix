@@ -9,8 +9,9 @@
   programs = {
     fish.shellAbbrs = {
       ze = "zk edit --interactive";
-      znn = "zk new --title ";
+      znb = "zk new --group=blog blog --title";
       zng = "zk new --group=google google --title";
+      znn = "zk new --title";
       zns = "zk new --group=swps swps --title";
     };
 
@@ -23,13 +24,11 @@
   xdg.configFile = {
     "zk/config.toml".source          =
       let toml = pkgs.formats.toml {}; in toml.generate "config.toml" {
-        extra           = {
-          lang       = "en_us";
-          visibility = "public";
-        };
+        extra           = { draft = "false"; lang = "en_us"; };
         format.markdown = { link-drop-extension = false; };
         group           = {
-          google.extra = { visibility = "private"; };
+          blog.extra   = { draft = "true"; };
+          google.extra = {};
           swps.extra   = { lang = "pl"; };
         };
         note            = {

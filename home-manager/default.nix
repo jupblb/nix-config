@@ -104,22 +104,28 @@
       controlPersist      = "yes";
       enable              = true;
       forwardAgent        = true;
-      matchBlocks         = let config = { identitiesOnly = true; }; in {
-        cerberus     = config // {
-          hostname     = "192.168.1.1";
-          identityFile = [ (toString ../config/ssh/jupblb/id_ed25519) ];
-          user         = "root";
+      matchBlocks         =
+        let identity = {
+          identitiesOnly = true;
+          identityFile   = [ (toString ../config/ssh/jupblb/id_ed25519) ];
         };
-        dionysus     = config // {
-          hostname     = "dionysus.kielbowi.cz";
-          identityFile = [ (toString ../config/ssh/jupblb/id_ed25519) ];
-          port         = 1995;
+        in {
+          cerberus     = identity // {
+            hostname     = "192.168.1.1";
+            user         = "root";
+          };
+          dionysus     = identity // {
+            hostname     = "dionysus.kielbowi.cz";
+            port         = 1995;
+          };
+          "github.com" = identity // {
+            hostname     = "github.com";
+            identityFile = [ (toString ../config/ssh/git/id_ed25519) ];
+          };
+          "prose.sh"   = identity // {
+            hostname = "prose.sh";
+          };
         };
-        "github.com" = config // {
-          hostname     = "github.com";
-          identityFile = [ (toString ../config/ssh/git/id_ed25519) ];
-        };
-      };
       serverAliveInterval = 30;
     };
 
