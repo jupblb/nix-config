@@ -7,6 +7,7 @@
     ];
     kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "204800";
+      "net.core.rmem_max"           = "4194304";
     };
     kernelModules                    = [ "kvm-amd" ];
     loader.efi.canTouchEfiVariables  = true;
@@ -177,8 +178,7 @@
             extraConfig = "reverse_proxy http://localhost:9117";
           };
           "jellyfin.kielbowi.cz"     = {
-            extraConfig   = "reverse_proxy http://localhost:8096";
-            serverAliases = [ "www.jellyfin.kielbowi.cz" ];
+            extraConfig = "reverse_proxy http://localhost:8096";
           };
           "komga.kielbowi.cz"        = {
             extraConfig = "reverse_proxy http://localhost:6428";
@@ -188,14 +188,6 @@
           };
           "paperless.kielbowi.cz"    = {
             extraConfig = "reverse_proxy http://localhost:28981";
-          };
-          "photos.kielbowi.cz"       = {
-            extraConfig   = "reverse_proxy http://localhost:8012";
-            serverAliases = [ "www.photos.kielbowi.cz" ];
-          };
-          "plex.kielbowi.cz"         = {
-            extraConfig   = "reverse_proxy http://localhost:32400";
-            serverAliases = [ "www.plex.kielbowi.cz" ];
           };
           "radarr.kielbowi.cz"       = {
             extraConfig = "reverse_proxy http://localhost:7878";
@@ -317,16 +309,13 @@
           host  all      all  samehost     trust
       '';
       enable          = true;
-      ensureDatabases = [ "haste" "paperless" "photoview" "vaultwarden" ];
+      ensureDatabases = [ "haste" "paperless" "vaultwarden" ];
       ensureUsers     = [ {
         name              = "haste";
         ensurePermissions = { "DATABASE haste" = "ALL PRIVILEGES"; };
       } {
         name              = "paperless";
         ensurePermissions = { "DATABASE paperless" = "ALL PRIVILEGES"; };
-      } {
-        name              = "photoview";
-        ensurePermissions = { "DATABASE photoview" = "ALL PRIVILEGES"; };
       } {
         name              = "vaultwarden";
         ensurePermissions = { "DATABASE vaultwarden" = "ALL PRIVILEGES"; };
@@ -338,12 +327,6 @@
       databases = config.services.postgresql.ensureDatabases;
       enable    = true;
       location  = "/backup/postgresql";
-    };
-
-    plex = {
-      enable       = true;
-      group        = "users";
-      openFirewall = true;
     };
 
     radarr = {
@@ -561,7 +544,6 @@
     };
     paperless-scheduler   = { wantedBy = lib.mkForce []; };
     paperless-web         = { wantedBy = lib.mkForce []; };
-    podman-photoview      = { wantedBy = lib.mkForce []; };
     podman-simply-shorten = { wantedBy = lib.mkForce []; };
     syncthing             = { wantedBy = lib.mkForce []; };
   };
@@ -587,20 +569,6 @@
             "/backup/jupblb:/srv/jupblb"
             "/data:/srv/data"
           ];
-        };
-        photoview      = {
-          environment  = {
-            MAPBOX_TOKEN                       =
-              (import ./config/secret.nix).mapbox;
-            PHOTOVIEW_DATABASE_DRIVER          = "postgres";
-            PHOTOVIEW_DISABLE_FACE_RECOGNITION = "1";
-            PHOTOVIEW_LISTEN_PORT              = "8012";
-            PHOTOVIEW_POSTGRES_URL             =
-              "postgresql://photoview@localhost/photoview";
-          };
-          extraOptions = [ "--network=host" ];
-          image        = "viktorstrate/photoview:2";
-          volumes      = [ "/backup/jupblb/Pictures/album:/photos-jupblb:ro" ];
         };
         simply-shorten = {
           environment =
