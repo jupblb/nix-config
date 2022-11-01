@@ -77,6 +77,7 @@
         merge.conflictStyle           = "diff3";
         pull.rebase                   = true;
         push.default                  = "upstream";
+        sendemail.sendmailcmd         = "${pkgs.msmtp}/bin/msmtp";
         submodule.recurse             = true;
       };
       iniContent  = {
@@ -84,7 +85,7 @@
           lib.mkForce "sh -c 'delta --width \${FZF_PREVIEW_COLUMNS-$COLUMNS}'";
       };
       signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
-      userEmail   = "mpkielbowicz@gmail.com";
+      userEmail   = "git@kielbowi.cz";
       userName    = "jupblb";
     };
 
@@ -96,6 +97,14 @@
     man = {
       enable         = true;
       generateCaches = true;
+    };
+
+    msmtp = {
+      enable        = true;
+      extraConfig   = ''
+        ${builtins.readFile ../config/msmtp.conf}
+        passwordeval echo "${(import ../config/secret.nix).migadu.git}"
+      '';
     };
 
     ssh = {
