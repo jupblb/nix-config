@@ -159,7 +159,7 @@
           "bazarr.kielbowi.cz"       = {
             extraConfig = "reverse_proxy http://localhost:6767";
           };
-          "calibre.kielbowi.cz"    = {
+          "calibre.kielbowi.cz"      = {
             extraConfig = "reverse_proxy http://localhost:8083";
           };
           "dionysus.kielbowi.cz"     = {
@@ -192,6 +192,9 @@
           "radarr.kielbowi.cz"       = {
             extraConfig = "reverse_proxy http://localhost:7878";
           };
+          "rstudio.kielbowi.cz"      = {
+            extraConfig = "reverse_proxy http://localhost:3939";
+          };
           "sonarr.kielbowi.cz"       = {
             extraConfig = "reverse_proxy http://localhost:8989";
           };
@@ -206,7 +209,7 @@
           "transmission.kielbowi.cz" = {
             extraConfig = basicauth + "reverse_proxy http://127.0.0.1:9091";
           };
-          "vaultwarden.kielbowi.cz" = {
+          "vaultwarden.kielbowi.cz"  = {
             extraConfig = ''
               encode gzip
 
@@ -399,6 +402,16 @@
       to     = "rss@kielbowi.cz";
     };
 
+    rstudio-server = {
+      enable             = true;
+      package            = pkgs.rstudioServerWrapper.override {
+        packages = with pkgs.rPackages; [ haven plyr Rcpp ];
+      };
+      rserverExtraConfig = ''
+        www-port=3939
+      '';
+    };
+
     smartd = {
       autodetect    = false;
       devices       = [
@@ -553,6 +566,12 @@
   users.users = {
     jupblb.extraGroups = [ "adbusers" "docker" "podman" ];
     paperless.group    = lib.mkForce "users";
+    rstudio            = {
+      description                     = "RStudio user";
+      initialPassword                 = "changeme";
+      isNormalUser                    = true;
+      openssh.authorizedKeys.keyFiles = [ ./config/ssh/jupblb/id_ed25519.pub ];
+    };
   };
 
   virtualisation = {
