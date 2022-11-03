@@ -4,8 +4,8 @@
       let
         default      = with pkgs; [
           black buildifier cargo fish gomodifytags gopls gotests
-          haskell-language-server impl isort jdt-language-server jq metals
-          open-policy-agent openjdk pandoc rnix-lsp rust-analyzer rustc
+          haskell-language-server impl isort jdt-language-server jq ltex-ls
+          metals open-policy-agent openjdk pandoc rnix-lsp rust-analyzer rustc
           shellcheck shfmt statix sumneko-lua-language-server
         ];
         nodePackages = with pkgs.nodePackages; [
@@ -31,9 +31,11 @@
           luafile ${toString ./config/lspconfig.lua}
         '';
         plugin =
-          let neodev-nvim = pkgs.callPackage ./plugin/neodev.nix {};
+          let
+            ltex-ls     = pkgs.callPackage ./plugin/ltex.nix {};
+            neodev-nvim = pkgs.callPackage ./plugin/neodev.nix {};
           in nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ neodev-nvim SchemaStore-nvim ];
+            dependencies = [ ltex-ls neodev-nvim SchemaStore-nvim ];
           });
       }
     ];

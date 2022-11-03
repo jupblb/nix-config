@@ -34,6 +34,52 @@ local default_config = {
 lspconfig.util.default_config = vim.tbl_extend(
     'force', lspconfig.util.default_config, default_config)
 
+-- ltex.ls
+-- https://git.vigoux.giize.com/nvim-config/blob/master/lua/lsp_config.lua#L-368
+
+require('ltex-ls').setup({
+    on_attach = _G.lsp_attach,
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    filetypes = { "latex", "tex", "bib", "markdown", "gitcommit" },
+    use_spellfile = true,
+    settings = {
+        ltex = {
+            checkFrequency = "save",
+            enabled = { "latex", "tex", "bib", "markdown", },
+            language = "auto",
+            diagnosticSeverity = "information",
+            additionalRules = {
+                enablePickyRules = true,
+                motherTongue = "pl",
+            },
+            disabledRules = {
+                -- https://community.languagetool.org/rule/list?lang=en
+                en = { "DASH_RULE", "ELLIPSIS", "EN_QUOTES" },
+                pl = {}
+            },
+            dictionary = (function()
+                local files = {}
+                for _, file in ipairs(vim.api.nvim_get_runtime_file("spell/*.add", true)) do
+                    local lang = vim.fn.fnamemodify(file, ":t:r:r")
+                    local fullpath = vim.fn.fnamemodify(file, ":p")
+                    files[lang] = { ":" .. fullpath }
+                end
+
+                if files.default then
+                    for lang, _ in pairs(files) do
+                        if lang ~= "default" then
+                            vim.list_extend(files[lang], files.default)
+                        end
+                    end
+                    files.default = nil
+                end
+                return files
+            end)(),
+        },
+    },
+})
+
+
 -- neodev.nvim
 require('neodev').setup({
     override = function(root_dir, library)
