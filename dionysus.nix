@@ -405,7 +405,8 @@
     rstudio-server = {
       enable             = true;
       package            = pkgs.rstudioServerWrapper.override {
-        packages = with pkgs.rPackages; [ haven plyr Rcpp ];
+        packages = with pkgs.rPackages;
+          [ dplyr learnr haven plyr purrr Rcpp shiny ];
       };
       rserverExtraConfig = ''
         www-port=3939
