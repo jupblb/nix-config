@@ -76,9 +76,6 @@
           config = "luafile ${toString ./config/devicons.lua}";
           plugin = nvim-web-devicons;
         } {
-          config = "source ${toString ./config/pounce.vim}";
-          plugin = pkgs.callPackage ./plugin/pounce.nix {};
-        } {
           config = ''
             source ${toString ./config/telescope.vim}
             luafile ${toString ./config/telescope.lua}

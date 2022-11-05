@@ -31,9 +31,7 @@
           luafile ${toString ./config/lspconfig.lua}
         '';
         plugin =
-          let
-            ltex-ls     = pkgs.callPackage ./plugin/ltex.nix {};
-            neodev-nvim = pkgs.callPackage ./plugin/neodev.nix {};
+          let ltex-ls     = pkgs.callPackage ./plugin/ltex.nix {};
           in nvim-lspconfig.overrideAttrs(_: {
             dependencies = [ ltex-ls neodev-nvim SchemaStore-nvim ];
           });

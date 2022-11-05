@@ -35,6 +35,8 @@ map <silent> gf <Cmd>execute('edit ' . fnamemodify(expand('%:p:h') . '/' . expan
 nnoremap <C-f> 5<C-e>
 nnoremap <C-b> 5<C-y>
 
+autocmd VimResized * wincmd =
+
 autocmd InsertEnter * setlocal norelativenumber
 autocmd InsertLeave * setlocal relativenumber
 
