@@ -406,7 +406,7 @@
       enable             = true;
       package            = pkgs.rstudioServerWrapper.override {
         packages = with pkgs.rPackages;
-          [ dplyr learnr haven plyr purrr Rcpp shiny ];
+          [ e1071 haven learnr moments plyr Rcpp shiny tidyverse ];
       };
       rserverExtraConfig = ''
         www-port=3939
