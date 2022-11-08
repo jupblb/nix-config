@@ -8,12 +8,13 @@
           metals open-policy-agent openjdk pandoc rnix-lsp rust-analyzer rustc
           shellcheck shfmt statix sumneko-lua-language-server
         ];
+        latexindent  = pkgs.texlive.latexindent.pkgs;
         nodePackages = with pkgs.nodePackages; [
           bash-language-server dockerfile-language-server-nodejs
           markdownlint-cli pyright vim-language-server
           vscode-json-languageserver
         ];
-      in default ++ nodePackages;
+      in default ++ latexindent ++ nodePackages;
     plugins       = with pkgs.vimPlugins; [ {
         config = "source ${toString ./config/fidget.vim}";
         plugin = fidget-nvim;

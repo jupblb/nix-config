@@ -14,6 +14,7 @@ null_ls.setup({
         null_ls.builtins.formatting.fish_indent,
         null_ls.builtins.formatting.isort,
         null_ls.builtins.formatting.jq,
+        null_ls.builtins.formatting.latexindent.with({ filetypes = { 'bib', 'tex' } }),
         null_ls.builtins.formatting.shfmt.with({ extra_args = { '-i=4' } }),
         null_ls.builtins.formatting.rego,
     }

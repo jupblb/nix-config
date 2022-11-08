@@ -50,7 +50,6 @@ require('ltex-ls').setup({
             diagnosticSeverity = "information",
             additionalRules = {
                 enablePickyRules = true,
-                motherTongue = "pl",
             },
             disabledRules = {
                 -- https://community.languagetool.org/rule/list?lang=en
