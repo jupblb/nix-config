@@ -8,7 +8,7 @@ vimUtils.buildVimPlugin rec {
     owner  = "nvim-telescope";
     repo   = "telescope-live-grep-args.nvim";
     rev    = version;
-    sha256 = "sha256-GAJuPtxbGp+JGHjE4IhqJaZzXB2d25Z28EdW848FSdw=";
+    sha256 = "sha256-RgGCaAolEWMXJet547ce0oW0+zsxQzXrKn+O9WgV1nk=";
   };
 }
 

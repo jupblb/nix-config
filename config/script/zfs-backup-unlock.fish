@@ -8,5 +8,4 @@ sudo systemctl start paperless-consumer.service
 sudo systemctl start paperless-scheduler.service
 sudo systemctl start paperless-web.service
 sudo systemctl start syncthing.service
-sudo systemctl start podman-photoview.service
 sudo systemctl start podman-simply-shorten.service

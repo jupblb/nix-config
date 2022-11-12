@@ -47,8 +47,8 @@
                 dependencies = [];
               });
               in [
-                cmp-buffer cmp-nvim-lsp cmp-pandoc-references cmp-path
-                cmp-signature cmp_luasnip luasnip
+                cmp-buffer cmp-latex-symbols cmp-nvim-lsp cmp-pandoc-references
+                cmp-path cmp-signature cmp_luasnip luasnip
               ];
           });
         } {
