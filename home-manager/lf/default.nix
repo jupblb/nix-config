@@ -1,5 +1,10 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ fd ];
+  home = {
+    packages         = with pkgs; [ fd ];
+    sessionVariables = {
+      ZO_METHOD = "lf";
+    };
+  };
 
   programs = {
     fish.functions = {

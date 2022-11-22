@@ -17,10 +17,6 @@
       functions.vim = builtins.readFile ./singleton.fish;
     };
 
-    git = {
-      ignores = [ ".vim-bookmarks" ];
-    };
-
     kitty = {
       settings.scrollback_pager =
         "kitty @ launch --type=overlay --stdin-source=@screen_scrollback nvim -R -c 'autocmd VimEnter * norm G{}' -";
@@ -99,7 +95,8 @@
           config = "luafile ${toString ./config/zen-mode.lua}";
           plugin = zen-mode-nvim;
         }
-        commentary git-messenger-vim surround vim-cool vim-gh-line vim-sleuth
+        commentary git-messenger-vim mkdir-nvim surround vim-cool vim-gh-line
+        vim-sleuth
       ];
       vimdiffAlias  = true;
       withNodeJs    = false;

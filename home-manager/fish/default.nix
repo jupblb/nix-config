@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
+  home.sessionVariables = {
+    Z_OWNER = config.home.username;
+  };
+
   programs = {
     exa.enable = true;
 
@@ -22,8 +26,14 @@
       interactiveShellInit = builtins.readFile ./init.fish;
       plugins              = [ {
         name = "fish-async-prompt";
-        src  = pkgs.callPackage ./fish-async-prompt.nix {};
-      } ];
+        src  = pkgs.callPackage ./plugin/fish-async-prompt.nix {};
+      } {
+        name = "z";
+        src  = pkgs.callPackage ./plugin/z.nix {};
+      } ] ++ [ (lib.mkIf (!builtins.pathExists "/etc/nixos") {
+        name = "nix-env";
+        src  = pkgs.callPackage ./plugin/nix-env.nix {};
+      }) ];
       shellAliases         = {
         cat  = "${pkgs.bat}/bin/bat -p --paging=never";
         diff = "${pkgs.difftastic}/bin/difft --background=light --tab-width=2";

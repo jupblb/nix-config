@@ -53,7 +53,6 @@
       ./home-manager/neovim
       ./home-manager/neovim/lsp.nix
       ./home-manager/zk
-      ./home-manager/zoxide.nix
     ];
 
     programs = {

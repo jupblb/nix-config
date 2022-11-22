@@ -73,7 +73,6 @@
       ./home-manager/lf
       ./home-manager/neovim
       ./home-manager/wezterm
-      ./home-manager/zoxide.nix
     ];
 
     programs = {
