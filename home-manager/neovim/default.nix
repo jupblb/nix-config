@@ -81,13 +81,10 @@
             luafile ${toString ./config/telescope.lua}
           '';
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
-            dependencies =
-              let telescope-live-grep =
-                pkgs.callPackage ./plugin/telescope-live-grep.nix {};
-              in old.dependencies ++ [
-                nvim-neoclip-lua telescope-live-grep telescope-lsp-handlers-nvim
-                telescope-ui-select-nvim
-              ];
+            dependencies = old.dependencies ++ [
+              nvim-neoclip-lua telescope-live-grep-args-nvim
+              telescope-lsp-handlers-nvim telescope-ui-select-nvim
+            ];
           });
         } {
           config = "vmap <C-v><C-v> :VBox<CR>";
