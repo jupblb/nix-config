@@ -7,7 +7,6 @@
     ];
     kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "204800";
-      "net.core.rmem_max"           = "4194304";
     };
     kernelModules                    = [ "kvm-amd" ];
     loader.efi.canTouchEfiVariables  = true;
@@ -406,7 +405,7 @@
       enable             = true;
       package            = pkgs.rstudioServerWrapper.override {
         packages = with pkgs.rPackages;
-          [ e1071 haven learnr moments plyr Rcpp shiny tidyverse ];
+          [ e1071 effsize haven learnr lsr moments plyr Rcpp shiny tidyverse ];
       };
       rserverExtraConfig = ''
         www-port=3939
