@@ -26,14 +26,28 @@
     };
 
     fzf = {
+      colors                 = {
+        bg      = "#fbf1c7";
+        "bg+"   = "#ebdbb2";
+        fg      = "#3c3836";
+        "fg+"   = "#3c3836";
+        header  = "#bdae93";
+        hl      = "#d79921";
+        "hl+"   = "#d79921";
+        info    = "#458588";
+        marker  = "#d65d0e";
+        pointer = "#458588";
+        prompt  = "#665c54";
+        spinner = "#d79921";
+      };
       enable                 = true;
       changeDirWidgetCommand = "${pkgs.fd}/bin/fd --hidden --type d";
       changeDirWidgetOptions = [
         "--preview '${pkgs.exa}/bin/exa -RT -L 2 --icons {} | head -200'"
       ];
-      defaultCommand         = "${pkgs.fd}/bin/fd --hidden --type f";
+      defaultCommand         = "${pkgs.fd}/bin/fd --type f";
       defaultOptions         = [ "--color=light" ];
-      fileWidgetCommand      = "${pkgs.fd}/bin/fd --hidden --type f";
+      fileWidgetCommand      = "${pkgs.fd}/bin/fd --type f";
       fileWidgetOptions      = [
         "--preview '${pkgs.bat}/bin/bat --color=always -pp {}'"
       ];
