@@ -1,12 +1,18 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   environment = {
     gnome.excludePackages = with pkgs.gnome; [
-      baobab cheese epiphany gedit gnome-calculator gnome-disk-utility
-      gnome-logs gnome-music gnome-shell-extensions gnome-terminal
-      pkgs.gnome-connections simple-scan yelp
+      baobab cheese epiphany gedit gnome-calculator gnome-calendar gnome-clocks
+      gnome-contacts gnome-logs gnome-maps gnome-music gnome-shell-extensions
+      gnome-weather pkgs.gnome-connections simple-scan yelp
     ];
     systemPackages        = with pkgs.gnomeExtensions;
-      [ compiz-windows-effect hide-top-bar removable-drive-menu ];
+      [ hide-top-bar removable-drive-menu ];
+  };
+
+  programs = {
+    geary.enable          = false;
+    gnome-disks.enable    = false;
+    gnome-terminal.enable = false;
   };
 
   services = {
@@ -15,9 +21,11 @@
     dleyna-server.enable = false;
 
     gnome = {
-      chrome-gnome-shell.enable   = false;
-      gnome-remote-desktop.enable = false;
-      rygel.enable                = false;
+      evolution-data-server.enable   = lib.mkForce false;
+      gnome-browser-connector.enable = false;
+      gnome-initial-setup.enable     = false;
+      gnome-remote-desktop.enable    = false;
+      rygel.enable                   = false;
     };
 
     power-profiles-daemon.enable = false;

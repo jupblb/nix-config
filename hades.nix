@@ -11,7 +11,8 @@
     loader.systemd-boot.enable      = true;
   };
 
-  environment.systemPackages = with pkgs; [ uhk-agent ];
+  environment.systemPackages = with pkgs;
+    [ gnomeExtensions.compiz-windows-effect uhk-agent ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos";
