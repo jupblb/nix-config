@@ -41,20 +41,24 @@
     '';
 
     pistol = {
-      config = {
-        "application/json" =
-          "${pkgs.jq}/bin/jq --color-output . %pistol-filename%";
-        "application/pdf"  =
-          "${pkgs.poppler_utils}/bin/pdftotext %pistol-filename% -";
-        "inode/directory"  =
+      associations = [ {
+        command = "${pkgs.jq}/bin/jq --color-output . %pistol-filename%";
+        mime    = "application/json";
+      } {
+        command = "${pkgs.poppler_utils}/bin/pdftotext %pistol-filename% -";
+        mime    = "application/pdf";
+      } {
+        command =
           "sh: ${pkgs.exa}/bin/exa -RT --color=always --icons %pistol-filename% | head -10000";
-        "text/*"           =
-          "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
-
-        "fpath .*.md$" =
-          "${pkgs.glow}/bin/glow -s light -- %pistol-filename%";
-      };
-      enable = true;
+        mime    = "inode/directory";
+      } {
+        command = "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
+        mime    = "text/*";
+      } {
+        command = "${pkgs.glow}/bin/glow -s light -- %pistol-filename%";
+        fpath   = ".*.md$";
+      } ];
+      enable       = true;
     };
   };
 
