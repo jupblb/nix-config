@@ -403,8 +403,10 @@
     rstudio-server = {
       enable             = true;
       package            = pkgs.rstudioServerWrapper.override {
-        packages = with pkgs.rPackages;
-          [ e1071 effsize haven learnr lsr moments plyr Rcpp shiny tidyverse ];
+        packages = with pkgs.rPackages; [
+          dbscan e1071 effsize factoextra fpc haven learnr lm_beta lsr mclust
+          moments NbClust plyr Rcpp shiny tidyverse
+        ];
       };
       rserverExtraConfig = ''
         www-port=3939
