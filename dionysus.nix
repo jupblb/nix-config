@@ -5,6 +5,7 @@
     initrd.availableKernelModules    = [
       "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci"
     ];
+    initrd.kernelModules             = [ "amdgpu" ];
     kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "204800";
     };
@@ -15,7 +16,8 @@
     zfs.requestEncryptionCredentials = false;
   };
 
-  environment.systemPackages = with pkgs; [ python3Packages.subliminal ];
+  environment.systemPackages = with pkgs;
+    [ python3Packages.subliminal ncpamixer ];
 
   fileSystems = {
     "/"              = {
@@ -58,9 +60,15 @@
     bluetooth.enable   = true;
     cpu.amd            = { updateMicrocode = true; };
     opengl             = {
-      driSupport    = true;
-      enable        = true;
-      extraPackages = with pkgs; [ libva libvdpau-va-gl vaapiVdpau ];
+      driSupport      = true;
+      driSupport32Bit = true;
+      enable          = true;
+      extraPackages   = with pkgs; [ libva libvdpau-va-gl vaapiVdpau ];
+    };
+    pulseaudio         = {
+      enable       = true;
+      package      = pkgs.pulseaudioFull;
+      support32Bit = true;
     };
     video.hidpi.enable = true;
   };
@@ -90,8 +98,7 @@
     };
   };
 
-  imports =
-    [ ./nixos ./nixos/amdgpu.nix ./nixos/syncthing.nix ];
+  imports = [ ./nixos ./nixos/syncthing.nix ];
 
   networking = {
     defaultGateway           = "192.168.1.1";
@@ -130,6 +137,34 @@
       };
     };
 
+    steam = {
+      enable  = true;
+      package = pkgs.steam.override({
+        buildFHSUserEnv = pkgs.buildFHSUserEnvBubblewrap.override({
+          bubblewrap = "/run/wrappers";
+        });
+        extraLibraries = pkgs: with config.hardware.opengl;
+          [ package ] ++ extraPackages;
+      });
+    };
+  };
+
+  security = {
+    polkit   = { enable = true; };
+    wrappers = {
+      gamescope = {
+        owner = "root";
+        group = "root";
+        source = "${pkgs.gamescope}/bin/gamescope";
+        capabilities = "cap_sys_nice+pie";
+      };
+      bwrap = {
+        owner = "root";
+        group = "root";
+        source = "${pkgs.bubblewrap}/bin/bwrap";
+        setuid = true;
+      };
+    };
   };
 
   services = {
@@ -497,10 +532,10 @@
       };
     };
 
-    zfs.autoScrub = {
-      enable   = true;
-      interval = "monthly";
-    };
+    udev.extraRules = ''
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="8087", ATTRS{idProduct}=="0aa7",\
+        ATTR{authorized}="0"
+    '';
 
     vaultwarden = {
       config          = let smtpCfg = (import ./config/secret.nix).mailgun; in {
@@ -518,6 +553,36 @@
       dbBackend       = "postgresql";
       enable          = true;
       environmentFile = toString ./config/vaultwarden.env;
+    };
+
+    xserver = {
+      enable         = true;
+      displayManager = {
+        autoLogin.user  = "jupblb";
+        sddm            = {
+          autoLogin.relogin = true;
+          enable            = true;
+        };
+        sessionPackages =
+          let
+            gamescopeScript      = pkgs.writeShellScript "steam-gamescope" ''
+              ${pkgs.gamescope}/bin/gamescope --steam --rt -- steam -tenfoot -pipewire-dmabuf
+            '';
+            gamescopeSessionFile = (pkgs.writeTextDir "share/wayland-sessions/steam.desktop" ''
+              [Desktop Entry]
+              Name=Steam
+              Comment=A digital distribution platform
+              Exec=${gamescopeScript}
+              Type=Application
+            '').overrideAttrs (_: { passthru.providedSessions = [ "steam" ]; });
+          in [ gamescopeSessionFile ];
+      };
+      videoDrivers   = [ "amdgpu" ];
+    };
+
+    zfs.autoScrub = {
+      enable   = true;
+      interval = "monthly";
     };
   };
 
@@ -565,7 +630,7 @@
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   users.users = {
-    jupblb.extraGroups = [ "adbusers" "docker" "podman" ];
+    jupblb.extraGroups = [ "audio" "adbusers" "docker" "podman" ];
     paperless.group    = lib.mkForce "users";
     rstudio            = {
       description                     = "RStudio user";
