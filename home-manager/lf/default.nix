@@ -12,17 +12,12 @@
     };
 
     lf = {
-      commands    = {
-        fzf_open = "\${{${builtins.readFile ./fzf-open.sh}}}";
-      };
       enable      = true;
       extraConfig =
         let cleaner = pkgs.writeScript "lf-cleaner"
           (builtins.readFile ./cleaner.bash);
         in ''
           set cleaner ${cleaner}
-          map <a-c> :fzf_open d
-          map <c-t> :fzf_open f
           map <c-z> $ kill -STOP $PPID
         '';
       previewer   = {

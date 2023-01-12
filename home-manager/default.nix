@@ -25,40 +25,6 @@
       initExtra      = "source ${toString ../config/bashrc.bash}";
     };
 
-    fzf = {
-      colors                 = {
-        bg      = "#fbf1c7";
-        "bg+"   = "#ebdbb2";
-        fg      = "#3c3836";
-        "fg+"   = "#3c3836";
-        header  = "#bdae93";
-        hl      = "#d79921";
-        "hl+"   = "#d79921";
-        info    = "#458588";
-        marker  = "#d65d0e";
-        pointer = "#458588";
-        prompt  = "#665c54";
-        spinner = "#d79921";
-      };
-      enable                 = true;
-      changeDirWidgetCommand = "${pkgs.fd}/bin/fd --hidden --type d";
-      changeDirWidgetOptions = [
-        "--preview '${pkgs.exa}/bin/exa -RT -L 2 --icons {} | head -200'"
-      ];
-      defaultCommand         = "${pkgs.fd}/bin/fd --type f";
-      defaultOptions         = [ "--color=light" ];
-      fileWidgetCommand      = "${pkgs.fd}/bin/fd --type f";
-      fileWidgetOptions      = [
-        "--preview '${pkgs.bat}/bin/bat --color=always -pp {}'"
-      ];
-      historyWidgetOptions   = [
-        "--bind ctrl-e:preview-down,ctrl-y:preview-up"
-        "--preview='echo -- {1..} | ${pkgs.fish}/bin/fish_indent --ansi'"
-        "--preview-window='bottom:3:wrap'"
-        "--reverse"
-      ];
-    };
-
     gpg.enable = true;
 
     git = {
@@ -93,10 +59,6 @@
         push.default                  = "upstream";
         sendemail.sendmailcmd         = "${pkgs.msmtp}/bin/msmtp";
         submodule.recurse             = true;
-      };
-      iniContent  = {
-        core.pager =
-          lib.mkForce "sh -c 'delta --width \${FZF_PREVIEW_COLUMNS-$COLUMNS}'";
       };
       signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
       userEmail   = "git@kielbowi.cz";
