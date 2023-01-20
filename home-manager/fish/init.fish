@@ -3,6 +3,8 @@
 delta-view
 fish_vi_key_bindings
 
+bind -M insert \cr history-pager
+
 set -U fish_cursor_default block
 set -U fish_cursor_insert line
 set -U fish_cursor_replace_one underscore
