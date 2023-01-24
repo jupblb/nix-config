@@ -84,34 +84,33 @@
     };
 
     ssh = {
-      compression         = true;
-      controlMaster       = "auto";
-      controlPersist      = "yes";
-      enable              = true;
-      forwardAgent        = true;
-      matchBlocks         =
-        let identity = {
+      controlMaster  = "auto";
+      controlPersist = "yes";
+      enable         = true;
+      matchBlocks    =
+        let common = {
           identitiesOnly = true;
           identityFile   = [ (toString ../config/ssh/jupblb/id_ed25519) ];
         };
         in {
-          cerberus     = identity // {
-            hostname     = "192.168.1.1";
-            user         = "root";
+          cerberus     = common // {
+            hostname = "192.168.1.1";
+            user     = "root";
           };
-          dionysus     = identity // {
-            hostname     = "dionysus.kielbowi.cz";
-            port         = 1995;
+          dionysus     = common // {
+            hostname = "dionysus.kielbowi.cz";
+            port     = 1995;
           };
-          "github.com" = identity // {
-            hostname     = "github.com";
-            identityFile = [ (toString ../config/ssh/git/id_ed25519) ];
+          "github.com" = {
+            compression    = true;
+            hostname       = "github.com";
+            identitiesOnly = true;
+            identityFile   = [ (toString ../config/ssh/git/id_ed25519) ];
           };
-          "prose.sh"   = identity // {
+          "prose.sh"   = common // {
             hostname = "prose.sh";
           };
         };
-      serverAliveInterval = 30;
     };
 
     tealdeer = {
