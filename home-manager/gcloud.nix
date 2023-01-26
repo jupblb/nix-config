@@ -9,7 +9,7 @@
         # disable telemetry
         ${gcloud}/bin/gcloud config set disable_usage_reporting true
       '';
-      packages          = [ gcloud ];
+      packages          = [ gcloud pkgs.kubectl ];
       sessionVariables  = {
         CLOUDSDK_CONFIG = "${config.xdg.configHome}/gcloud";
     };
