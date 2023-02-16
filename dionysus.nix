@@ -16,8 +16,14 @@
     zfs.requestEncryptionCredentials = false;
   };
 
-  environment.systemPackages = with pkgs;
-    [ python3Packages.subliminal ncpamixer ];
+  environment = {
+    systemPackages = with pkgs; [ python3Packages.subliminal ncpamixer ];
+    variables      = {
+      AMD_VULKAN_ICD   = "RADV";
+      VK_ICD_FILENAMES =
+        "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
+    };
+  };
 
   fileSystems = {
     "/"              = {
@@ -566,7 +572,7 @@
         sessionPackages =
           let
             gamescopeScript      = pkgs.writeShellScript "steam-gamescope" ''
-              ${pkgs.gamescope}/bin/gamescope --steam --rt -- steam -tenfoot -pipewire-dmabuf
+              ${pkgs.gamescope}/bin/gamescope -e -f -r 60 --rt -- steam -tenfoot
             '';
             gamescopeSessionFile = (pkgs.writeTextDir "share/wayland-sessions/steam.desktop" ''
               [Desktop Entry]
