@@ -86,7 +86,6 @@
       ./home-manager/fish
       ./home-manager/lf
       ./home-manager/neovim
-      ./home-manager/wezterm
     ];
 
     programs = {
