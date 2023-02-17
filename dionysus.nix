@@ -338,7 +338,7 @@
         PAPERLESS_ALLOWED_HOSTS              = "paperless.kielbowi.cz";
         PAPERLESS_CONSUMER_DELETE_DUPLICATES = true;
         PAPERLESS_OCR_LANGUAGE               = "pol+eng";
-        PAPERLESS_DBHOST                     = "localhost";
+        PAPERLESS_DBHOST                     = "/run/postgresql";
       };
       mediaDir               = "/backup/paperless";
     };
