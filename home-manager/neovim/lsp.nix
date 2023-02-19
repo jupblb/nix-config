@@ -3,7 +3,7 @@
     extraPackages =
       let
         default      = with pkgs; [
-          black buildifier cargo fish gomodifytags gopls gotests
+          black buildifier cargo dart fish gomodifytags gopls gotests
           haskell-language-server impl isort jdt-language-server jq ltex-ls
           metals open-policy-agent openjdk pandoc rnix-lsp rust-analyzer rustc
           shellcheck shfmt statix sumneko-lua-language-server

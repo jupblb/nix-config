@@ -15,10 +15,10 @@ local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
     opts.border = opts.border or {
-        { '╭', 'FloatBorder' }, { '─', 'FloatBorder' }, { '╮', 'FloatBorder' },
-        { '│', 'FloatBorder' }, { '╯', 'FloatBorder' }, { '─', 'FloatBorder' },
-        { '╰', 'FloatBorder' }, { '│', 'FloatBorder' }
-    }
+            { '╭', 'FloatBorder' }, { '─', 'FloatBorder' }, { '╮', 'FloatBorder' },
+            { '│', 'FloatBorder' }, { '╯', 'FloatBorder' }, { '─', 'FloatBorder' },
+            { '╰', 'FloatBorder' }, { '│', 'FloatBorder' }
+        }
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
@@ -32,7 +32,7 @@ local default_config = {
     on_attach = lsp_attach
 }
 lspconfig.util.default_config = vim.tbl_extend(
-    'force', lspconfig.util.default_config, default_config)
+        'force', lspconfig.util.default_config, default_config)
 
 -- ltex.ls
 -- https://git.vigoux.giize.com/nvim-config/blob/master/lua/lsp_config.lua#L-368
@@ -91,7 +91,8 @@ require('neodev').setup({
 
 -- other LSPs
 local default_servers = {
-    'bashls', 'dockerls', 'hls', 'rnix', 'rust_analyzer', 'sumneko_lua', 'vimls'
+    'bashls', 'dartls', 'dockerls', 'hls', 'lua_ls', 'rnix', 'rust_analyzer',
+    'vimls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
@@ -112,10 +113,11 @@ lspconfig.jsonls.setup({
     settings = { json = { schemas = require('schemastore').json.schemas() } }
 })
 
+
 lspconfig.metals.setup({
     root_dir = function(filename)
         local pattern = lspconfig.util.root_pattern(
-            'build.sbt', 'build.sc', 'build.gradle', 'pom.xml')
+                'build.sbt', 'build.sc', 'build.gradle', 'pom.xml')
         return pattern(filename) or vim.fn.getcwd()
     end,
     single_file_mode = true,
