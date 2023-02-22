@@ -44,6 +44,7 @@ autocmd BufRead,BufNewFile *.fish set filetype=fish
 autocmd BufRead,BufNewFile *.log set filetype=text
 autocmd BufRead,BufNewFile *.nix set filetype=nix
 autocmd BufRead,BufNewFile *.sc set filetype=scala
+autocmd BufRead,BufNewFile .envrc set filetype=sh
 
 autocmd FileType gitcommit,hgcommit setlocal colorcolumn=72
 autocmd FileType go setlocal colorcolumn=100 noexpandtab shiftwidth=0 tabstop=2

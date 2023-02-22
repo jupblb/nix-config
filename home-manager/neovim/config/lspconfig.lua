@@ -32,7 +32,7 @@ local default_config = {
     on_attach = lsp_attach
 }
 lspconfig.util.default_config = vim.tbl_extend(
-        'force', lspconfig.util.default_config, default_config)
+    'force', lspconfig.util.default_config, default_config)
 
 -- ltex.ls
 -- https://git.vigoux.giize.com/nvim-config/blob/master/lua/lsp_config.lua#L-368
@@ -91,10 +91,15 @@ require('neodev').setup({
 
 -- other LSPs
 local default_servers = {
-    'bashls', 'dartls', 'dockerls', 'hls', 'lua_ls', 'rnix', 'rust_analyzer',
-    'vimls'
+    'dartls', 'dockerls', 'hls', 'lua_ls', 'rnix', 'rust_analyzer', 'vimls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
+
+lspconfig.bashls.setup({
+    cmd_env = {
+        GLOB_PATTERN = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.command|.envrc)',
+    },
+})
 
 lspconfig.jdtls.setup({
     cmd = { 'jdt-language-server', '-data', os.getenv('HOME') .. '/.cache/jdtls' }
@@ -117,7 +122,7 @@ lspconfig.jsonls.setup({
 lspconfig.metals.setup({
     root_dir = function(filename)
         local pattern = lspconfig.util.root_pattern(
-                'build.sbt', 'build.sc', 'build.gradle', 'pom.xml')
+            'build.sbt', 'build.sc', 'build.gradle', 'pom.xml')
         return pattern(filename) or vim.fn.getcwd()
     end,
     single_file_mode = true,
