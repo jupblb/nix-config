@@ -2,13 +2,20 @@
 
 {
   boot = {
-    initrd.availableKernelModules   = [
+    initrd.availableKernelModules = [
       "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
     ];
-    kernelPackages                  = pkgs.linuxPackages_latest;
-    kernelParams                    = [ "mitigations=off" ];
-    loader.efi.canTouchEfiVariables = true;
-    loader.systemd-boot.enable      = true;
+
+    kernelParams = [ "mitigations=off" ];
+
+    loader = {
+      efi.canTouchEfiVariables = true;
+
+      systemd-boot = {
+        enable             = true;
+        configurationLimit = 5;
+      };
+    };
   };
 
   environment.systemPackages = with pkgs;
@@ -34,6 +41,10 @@
       enable          = true;
       extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+    };
+    nvidia             = {
+      package            = config.boot.kernelPackages.nvidiaPackages.beta;
+      modesetting.enable = true;
     };
     pulseaudio         = {
       enable  = true;
@@ -83,7 +94,6 @@
 
   imports = [
     ./nixos
-    ./nixos/amdgpu.nix
     ./nixos/gnome.nix
     ./nixos/syncthing.nix
   ];
@@ -106,10 +116,7 @@
       enable     = true;
     };
 
-    printing = {
-      drivers = with pkgs; [ samsung-unified-linux-driver_1_00_37 ];
-      enable  = true;
-    };
+    printing.enable = true;
 
     syncthing = {
       configDir = "/home/jupblb/.config/syncthing";
@@ -133,6 +140,8 @@
       SUBSYSTEM=="usb", ATTRS{idVendor}=="8087", ATTRS{idProduct}=="0aaa",\
         ATTR{authorized}="0"
     '';
+
+    xserver.videoDrivers = [ "nvidia" ];
   };
 
   sound.enable = true;
