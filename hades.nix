@@ -2,9 +2,13 @@
 
 {
   boot = {
-    initrd.availableKernelModules = [
-      "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
-    ];
+    initrd = {
+      availableKernelModules = [
+        "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
+      ];
+      luks.devices."nixos-home".device = 
+        "/dev/disk/by-label/nixos-home-enc";
+    };
 
     kernelParams = [ "mitigations=off" ];
 
@@ -22,10 +26,12 @@
     [ gnomeExtensions.compiz-windows-effect uhk-agent ];
 
   fileSystems = {
-    "/".device     = "/dev/disk/by-label/nixos";
+    "/".device     = "/dev/disk/by-label/nixos-root";
     "/".fsType     = "xfs";
-    "/boot".device = "/dev/disk/by-uuid/9E04-A8F9";
+    "/boot".device = "/dev/disk/by-uuid/C301-A009";
     "/boot".fsType = "vfat";
+    "/home".device = "/dev/mapper/nixos-home";
+    "/home".fsType = "xfs";
   };
 
   fonts.enableDefaultFonts = true;
@@ -54,7 +60,7 @@
   };
 
   home-manager.users.jupblb = {
-    home.stateVersion = "20.03";
+    home.stateVersion = "22.11";
 
     imports = [
       ./home-manager/direnv.nix
@@ -100,6 +106,8 @@
   ];
 
   networking.hostName = "hades";
+
+  powerManagement.cpuFreqGovernor = "ondemand";
 
   programs.steam = {
     enable     = true;
@@ -147,7 +155,7 @@
 
   sound.enable = true;
 
-  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
+  swapDevices = [ { device = "/dev/disk/by-label/nixos-swap"; } ];
 
   system.stateVersion = "20.03";
 
