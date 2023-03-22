@@ -481,7 +481,7 @@
         let simpleVersioning = {
           params = {
             cleanInterval = "3600";
-            maxAge        = toString(3600 * 24 * 30);
+            maxAge        = toString(3600 * 24 * 30 * 3); # 3 months
           };
           type   = "staggered";
         };
