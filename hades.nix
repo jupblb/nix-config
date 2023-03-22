@@ -80,6 +80,11 @@
           commandLineArgs = [ "--ozone-platform-hint=auto" ];
         };
       };
+
+      qutebrowser.settings = {
+        qt.highdpi             = true;
+        window.hide_decoration = true;
+      };
     };
 
     services.gpg-agent = {
