@@ -1,7 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  console.keyMap = "pl";
+  console = {
+    earlySetup = true;
+    keyMap     = "pl";
+  };
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
   environment.systemPackages   = with pkgs; [ file unzip ];
@@ -42,6 +45,16 @@
   services = {
     fstrim.enable = true;
 
+    kmscon = {
+      autologinUser = "jupblb";
+      enable        = true;
+      fonts         = [
+        { name = "PragmataPro Mono"; package = pkgs.pragmata-pro; }
+        { name = "Source Code Pro"; package = pkgs.source-code-pro; }
+      ];
+      hwRender      = true;
+    };
+
     openssh = {
       openFirewall           = true;
       enable                 = true;
@@ -64,6 +77,6 @@
     initialPassword                 = "changeme";
     isNormalUser                    = true;
     openssh.authorizedKeys.keyFiles = [ ../config/ssh/jupblb/id_ed25519.pub ];
-    shell                           = pkgs.bashInteractive;
+    shell                           = pkgs.fish;
   };
 }

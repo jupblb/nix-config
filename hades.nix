@@ -82,13 +82,9 @@
       };
     };
 
-    services = {
-      dropbox.enable = true;
-
-      gpg-agent = {
-        enable         = true;
-        pinentryFlavor = "gnome3";
-      };
+    services.gpg-agent = {
+      enable         = true;
+      pinentryFlavor = "gnome3";
     };
   };
 
