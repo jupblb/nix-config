@@ -3,10 +3,10 @@
     gnome.excludePackages = with pkgs.gnome; [
       baobab cheese epiphany gedit gnome-calculator gnome-calendar gnome-clocks
       gnome-contacts gnome-logs gnome-maps gnome-music gnome-shell-extensions
-      gnome-weather pkgs.gnome-connections simple-scan yelp
+      pkgs.gnome-tour gnome-weather pkgs.gnome-connections simple-scan yelp
     ];
     systemPackages        = with pkgs.gnomeExtensions;
-      [ hide-top-bar removable-drive-menu ];
+      [ just-perfection removable-drive-menu ];
   };
 
   programs = {
