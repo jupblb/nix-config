@@ -7,8 +7,6 @@
         [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
 
       luks.devices."nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
-
-      systemd.enable = true;
     };
 
     kernelParams = [ "mitigations=off" ];
@@ -24,7 +22,7 @@
   };
 
   environment.systemPackages = with pkgs;
-    [ gnomeExtensions.compiz-windows-effect uhk-agent ];
+    [ gnomeExtensions.compiz-windows-effect ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos-root";
@@ -53,10 +51,7 @@
       modesetting.enable = true;
       package            = config.boot.kernelPackages.nvidiaPackages.beta;
     };
-    pulseaudio         = {
-      enable  = true;
-      package = pkgs.pulseaudioFull;
-    };
+    pulseaudio         = { enable = false; };
     xpadneo            = { enable = true; };
   };
 
@@ -115,6 +110,8 @@
     remotePlay = { openFirewall = true; };
   };
 
+  security.rtkit.enable = true;
+
   services = {
     apcupsd = {
       configText = ''
@@ -124,6 +121,15 @@
         BATTERYLEVEL 10
       '';
       enable     = true;
+    };
+
+    pipewire = {
+      enable = true;
+      alsa   = {
+        enable       = true;
+        support32Bit = true;
+      };
+      pulse  = { enable = true; };
     };
 
     printing.enable = true;
@@ -153,8 +159,6 @@
 
     xserver.videoDrivers = [ "nvidia" ];
   };
-
-  sound.enable = true;
 
   swapDevices = [ { device = "/dev/disk/by-label/nixos-swap"; } ];
 
