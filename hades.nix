@@ -3,11 +3,12 @@
 {
   boot = {
     initrd = {
-      availableKernelModules = [
-        "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"
-      ];
-      luks.devices."nixos-home".device = 
-        "/dev/disk/by-label/nixos-home-enc";
+      availableKernelModules =
+        [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+
+      luks.devices."nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
+
+      systemd.enable = true;
     };
 
     kernelParams = [ "mitigations=off" ];
@@ -17,7 +18,7 @@
 
       systemd-boot = {
         enable             = true;
-        configurationLimit = 5;
+        configurationLimit = 10;
       };
     };
   };
@@ -49,14 +50,14 @@
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     nvidia             = {
-      package            = config.boot.kernelPackages.nvidiaPackages.beta;
       modesetting.enable = true;
+      package            = config.boot.kernelPackages.nvidiaPackages.beta;
     };
     pulseaudio         = {
       enable  = true;
       package = pkgs.pulseaudioFull;
     };
-    video.hidpi.enable = true;
+    xpadneo            = { enable = true; };
   };
 
   home-manager.users.jupblb = {
