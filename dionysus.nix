@@ -16,14 +16,7 @@
     zfs.requestEncryptionCredentials = false;
   };
 
-  environment = {
-    systemPackages = with pkgs; [ python3Packages.subliminal ncpamixer ];
-    variables      = {
-      AMD_VULKAN_ICD   = "RADV";
-      VK_ICD_FILENAMES =
-        "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
-    };
-  };
+  environment.systemPackages = with pkgs; [ python3Packages.subliminal ];
 
   fileSystems = {
     "/"              = {
@@ -63,19 +56,7 @@
   fonts.enableDefaultFonts = true;
 
   hardware = {
-    bluetooth.enable   = true;
     cpu.amd            = { updateMicrocode = true; };
-    opengl             = {
-      driSupport      = true;
-      driSupport32Bit = true;
-      enable          = true;
-      extraPackages   = with pkgs; [ libva libvdpau-va-gl vaapiVdpau ];
-    };
-    pulseaudio         = {
-      enable       = true;
-      package      = pkgs.pulseaudioFull;
-      support32Bit = true;
-    };
     video.hidpi.enable = true;
   };
 
@@ -95,11 +76,9 @@
       };
     };
 
-    services = {
-      dropbox = {
-        enable = true;
-        path   = "/data";
-      };
+    services.dropbox = {
+      enable = true;
+      path   = "/data";
     };
   };
 
@@ -141,35 +120,6 @@
         user         = cfg.login;
       };
     };
-
-    steam = {
-      enable  = true;
-      package = pkgs.steam.override({
-        buildFHSUserEnv = pkgs.buildFHSUserEnvBubblewrap.override({
-          bubblewrap = "/run/wrappers";
-        });
-        extraLibraries = pkgs: with config.hardware.opengl;
-          [ package ] ++ extraPackages;
-      });
-    };
-  };
-
-  security = {
-    polkit   = { enable = true; };
-    wrappers = {
-      gamescope = {
-        owner = "root";
-        group = "root";
-        source = "${pkgs.gamescope}/bin/gamescope";
-        capabilities = "cap_sys_nice+pie";
-      };
-      bwrap = {
-        owner = "root";
-        group = "root";
-        source = "${pkgs.bubblewrap}/bin/bwrap";
-        setuid = true;
-      };
-    };
   };
 
   services = {
@@ -179,8 +129,6 @@
       enable = true;
       group  = "users";
     };
-
-    blueman.enable = true;
 
     caddy = {
       email        = "caddy@kielbowi.cz";
@@ -537,11 +485,6 @@
       };
     };
 
-    udev.extraRules = ''
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="8087", ATTRS{idProduct}=="0aa7",\
-        ATTR{authorized}="0"
-    '';
-
     vaultwarden = {
       config          = let smtpCfg = (import ./config/secret.nix).mailgun; in {
         databaseUrl      = "postgresql://vaultwarden@localhost/vaultwarden";
@@ -560,38 +503,11 @@
       environmentFile = toString ./config/vaultwarden.env;
     };
 
-    xserver = {
-      enable         = true;
-      displayManager = {
-        autoLogin.user  = "jupblb";
-        sddm            = {
-          autoLogin.relogin = true;
-          enable            = true;
-        };
-        sessionPackages =
-          let
-            gamescopeScript      = pkgs.writeShellScript "steam-gamescope" ''
-              ${pkgs.gamescope}/bin/gamescope -e -f -r 60 --rt -- steam -tenfoot
-            '';
-            gamescopeSessionFile = (pkgs.writeTextDir "share/wayland-sessions/steam.desktop" ''
-              [Desktop Entry]
-              Name=Steam
-              Comment=A digital distribution platform
-              Exec=${gamescopeScript}
-              Type=Application
-            '').overrideAttrs (_: { passthru.providedSessions = [ "steam" ]; });
-          in [ gamescopeSessionFile ];
-      };
-      videoDrivers   = [ "amdgpu" ];
-    };
-
     zfs.autoScrub = {
       enable   = true;
       interval = "monthly";
     };
   };
-
-  sound.enable = true;
 
   system.stateVersion = "20.09";
 
@@ -635,7 +551,7 @@
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   users.users = {
-    jupblb.extraGroups = [ "audio" "adbusers" "docker" "podman" ];
+    jupblb.extraGroups = [ "adbusers" "docker" "podman" ];
     paperless.group    = lib.mkForce "users";
     rstudio            = {
       description                     = "RStudio user";
