@@ -21,8 +21,10 @@
     };
   };
 
+  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+
   environment.systemPackages = with pkgs;
-    [ gnomeExtensions.compiz-windows-effect ];
+    [ gnomeExtensions.compiz-windows-effect nvidia-offload ];
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos-root";
@@ -44,19 +46,31 @@
       driSupport      = true;
       driSupport32Bit = true;
       enable          = true;
-      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
-      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiIntel vaapiVdpau ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [ libva vaapiIntel ];
     };
     nvidia             = {
-      modesetting.enable = true;
-      package            = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      prime   = {
+        offload.enable = true;
+        intelBusId     = "PCI:0:2:0";
+        nvidiaBusId    = "PCI:1:0:0";
+      };
     };
     pulseaudio         = { enable = false; };
     xpadneo            = { enable = true; };
   };
 
-  home-manager.users.jupblb = {
-    home.stateVersion = "22.11";
+  home-manager.users.jupblb = { lib, pkgs, ... }: {
+    home = {
+      activation.steam = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD sed 's/^Exec=/&nvidia-offload /' \
+          ${pkgs.steam}/share/applications/steam.desktop \
+          > ~/.local/share/applications/steam.desktop
+        $DRY_RUN_CMD chmod +x ~/.local/share/applications/steam.desktop
+      '';
+      stateVersion     = "22.11";
+    };
 
     imports = [
       ./home-manager/direnv.nix
@@ -71,16 +85,16 @@
     ];
 
     programs = {
-      kitty.settings = {
-        hide_window_decorations = "yes";
-        linux_display_server    = "wayland";
-      };
-
       google-chrome = {
         enable  = true;
         package = pkgs.google-chrome.override {
           commandLineArgs = [ "--ozone-platform-hint=auto" ];
         };
+      };
+
+      kitty.settings = {
+        hide_window_decorations = "yes";
+        linux_display_server    = "wayland";
       };
 
       qutebrowser.settings = {
@@ -122,6 +136,8 @@
       '';
       enable     = true;
     };
+
+    kmscon.extraConfig = "font-dpi=192";
 
     pipewire = {
       enable = true;

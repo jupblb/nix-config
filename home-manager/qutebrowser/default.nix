@@ -15,6 +15,7 @@ _: {
       nixos       = "search.nixos.org/options?channel=unstable&query={}";
       nixpkgs     = "search.nixos.org/packages?channel=unstable&query={}";
       nitter      = "nitter.net/search?f=users&q={}";
+      protondb    = "https://www.protondb.com/search?q={}";
       reddit      = "google.com/search?hl=en&q={}+site%3Areddit.com";
       youtube     = "youtube.com/results?search_query={}";
     };
