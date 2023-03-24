@@ -7,9 +7,13 @@
         [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
 
       luks.devices."nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
+
+      kernelModules = [ "i915" ];
+
+      systemd.enable = true;
     };
 
-    kernelParams = [ "mitigations=off" ];
+    kernelParams = [ "mitigations=off" "quiet" "splash" ];
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -18,6 +22,11 @@
         enable             = true;
         configurationLimit = 10;
       };
+    };
+
+    plymouth = {
+      enable      = true;
+      extraConfig = "DeviceScale=2";
     };
   };
 
@@ -46,8 +55,8 @@
       driSupport      = true;
       driSupport32Bit = true;
       enable          = true;
-      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiIntel vaapiVdpau ];
-      extraPackages32 = with pkgs.pkgsi686Linux; [ libva vaapiIntel ];
+      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     nvidia             = {
       package = config.boot.kernelPackages.nvidiaPackages.beta;
@@ -180,10 +189,22 @@
 
   system.stateVersion = "20.03";
 
-  systemd.services = {
-    # https://github.com/NixOS/nixpkgs/issues/103746
-    "getty@tty1".enable  = false;
-    "autovt@tty1".enable = false;
+  systemd = {
+    services = {
+      # https://github.com/NixOS/nixpkgs/issues/103746
+      "getty@tty1".enable  = false;
+      "autovt@tty1".enable = false;
+    };
+    shutdown = {
+      "nvidia" = pkgs.writeShellScript "nvidia-shutdown" ''
+        # https://bbs.archlinux.org/viewtopic.php?pid=2049247#p2049247
+        for MODULE in nvidia_drm nvidia_modeset nvidia_uvm nvidia; do
+            if lsmod | grep "$MODULE" &> /dev/null ; then
+               rmmod $MODULE
+            fi
+        done
+      '';
+    };
   };
 
   time.hardwareClockInLocalTime = true;
