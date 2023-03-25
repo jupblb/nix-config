@@ -1,13 +1,30 @@
 { config, lib, pkgs, ... }:
 
 {
+  boot = {
+    initrd.availableKernelModules = [
+      "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci"
+    ];
+
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot             = {
+        enable             = true;
+        configurationLimit = 10;
+      };
+    };
+  };
+
   console = {
     earlySetup = true;
+    font       = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
     keyMap     = "pl";
   };
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
   environment.systemPackages   = with pkgs; [ file unzip ];
+
+  fonts.enableDefaultFonts = true;
 
   hardware.enableRedistributableFirmware = true;
 

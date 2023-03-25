@@ -2,16 +2,11 @@
 
 {
   boot = {
-    initrd.availableKernelModules    = [
-      "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci"
-    ];
     initrd.kernelModules             = [ "amdgpu" ];
     kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "204800";
     };
     kernelModules                    = [ "kvm-amd" ];
-    loader.efi.canTouchEfiVariables  = true;
-    loader.systemd-boot.enable       = true;
     supportedFilesystems             = [ "zfs" ];
     zfs.requestEncryptionCredentials = false;
   };
@@ -53,12 +48,7 @@
     };
   };
 
-  fonts.enableDefaultFonts = true;
-
-  hardware = {
-    cpu.amd            = { updateMicrocode = true; };
-    video.hidpi.enable = true;
-  };
+  hardware.cpu.amd = { updateMicrocode = true; };
 
   home-manager.users.jupblb = {
     home.stateVersion = "21.11";

@@ -2,37 +2,16 @@
 
 {
   boot = {
-    consoleLogLevel = 0;
-
     initrd = {
-      availableKernelModules =
-        [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-
-      luks.devices."nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
-
-      kernelModules = [ "i915" ];
-
+      luks.devices   = {
+        "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
+      };
+      kernelModules  = [ "i915" ];
       systemd.enable = true;
     };
 
-    kernelParams = [ "mitigations=off" "quiet" "udev.log_level=3" ];
-
-    loader = {
-      efi.canTouchEfiVariables = true;
-
-      systemd-boot = {
-        enable             = true;
-        configurationLimit = 10;
-      };
-    };
-
-    plymouth = {
-      enable      = true;
-      extraConfig = "DeviceScale=2";
-    };
+    kernelParams = [ "mitigations=off" ];
   };
-
-  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
 
   environment.systemPackages = with pkgs;
     [ gnomeExtensions.compiz-windows-effect nvidia-offload ];
@@ -46,8 +25,7 @@
     "/home".fsType = "xfs";
   };
 
-  fonts.enableDefaultFonts = true;
-  fonts.fonts              = with pkgs; [ pragmata-pro ];
+  fonts.fonts = with pkgs; [ pragmata-pro ];
 
   hardware = {
     bluetooth.enable   = true;
@@ -61,7 +39,7 @@
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     nvidia             = {
-      package         = config.boot.kernelPackages.nvidiaPackages.beta;
+      package         = config.boot.kernelPackages.nvidiaPackages.stable;
       powerManagement = {
         enable      = true;
         finegrained = true;
@@ -127,6 +105,7 @@
   imports = [
     ./nixos
     ./nixos/gnome.nix
+    ./nixos/plymouth.nix
     ./nixos/syncthing.nix
   ];
 
@@ -212,8 +191,6 @@
       '';
     };
   };
-
-  time.hardwareClockInLocalTime = true;
 
   users.users.jupblb.extraGroups = [ "input" "lp" ];
 }
