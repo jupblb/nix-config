@@ -2,6 +2,8 @@
 
 {
   boot = {
+    consoleLogLevel = 0;
+
     initrd = {
       availableKernelModules =
         [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
@@ -13,7 +15,7 @@
       systemd.enable = true;
     };
 
-    kernelParams = [ "mitigations=off" "quiet" "splash" ];
+    kernelParams = [ "mitigations=off" "quiet" "udev.log_level=3" ];
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -59,8 +61,12 @@
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     nvidia             = {
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
-      prime   = {
+      package         = config.boot.kernelPackages.nvidiaPackages.beta;
+      powerManagement = {
+        enable      = true;
+        finegrained = true;
+      };
+      prime           = {
         offload.enable = true;
         intelBusId     = "PCI:0:2:0";
         nvidiaBusId    = "PCI:1:0:0";
@@ -187,7 +193,7 @@
 
   swapDevices = [ { device = "/dev/disk/by-label/nixos-swap"; } ];
 
-  system.stateVersion = "20.03";
+  system.stateVersion = "22.11";
 
   systemd = {
     services = {
