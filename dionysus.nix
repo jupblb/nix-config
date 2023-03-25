@@ -168,6 +168,9 @@
           "radarr.kielbowi.cz"       = {
             extraConfig = "reverse_proxy http://localhost:7878";
           };
+          "rss.kielbowi.cz"       = {
+            extraConfig = "reverse_proxy http://localhost:9283";
+          };
           "rstudio.kielbowi.cz"      = {
             extraConfig = "reverse_proxy http://localhost:3939";
           };
@@ -253,6 +256,17 @@
     lidarr = {
       enable = true;
       group  = "users";
+    };
+
+    miniflux = {
+      adminCredentialsFile = pkgs.writeText "miniflux-credentials"
+        (import ./config/secret.nix).miniflux;
+      config               = {
+        BASE_URL                 = "https://rss.kielbowi.cz/";
+        FETCH_YOUTUBE_WATCH_TIME = "1";
+        LISTEN_ADDR              = "127.0.0.1:9283";
+      };
+      enable               = true;
     };
 
     nfs.server = {
@@ -352,30 +366,6 @@
         repository      =
           "sftp:restic@poseidon.kielbowi.cz:/data/restic/syncthing";
       };
-    };
-
-    rss2email = {
-      config = {
-        "DATE-HEADER" = 1;
-        "FROM"        = "mailgun@kielbowi.cz";
-        "HTML-MAIL"   = 1;
-      };
-      enable = true;
-      feeds  = {
-        "bartosz-ciechanowski" = { url = "https://ciechanow.ski/atom.xml"; };
-        "console-interviews"   = {
-          url = "https://console.dev/interviews/rss.xml";
-        };
-        "console-tools"        = { url = "https://console.dev/tools/rss.xml"; };
-        "drew-devault"         = { url = "https://drewdevault.com/feed.xml"; };
-        "jonathan-turner"      = { url = "https://www.jntrnr.com/atom.xml"; };
-        "kubernetes"           = { url = "https://kubernetes.io/feed.xml"; };
-        "nick-case"            = { url = "http://blog.ncase.me/rss/"; };
-        "the-morning-paper"    = { url = "http://blog.acolyer.org/feed/"; };
-        "xkcd"                 = { url = "http://xkcd.com/rss.xml"; };
-        "whynothugo"           = { url = "https://hugo.barrera.io/posts.xml"; };
-      };
-      to     = "rss@kielbowi.cz";
     };
 
     rstudio-server = {
