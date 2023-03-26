@@ -6,9 +6,11 @@ _: {
       hacker-news  = "news.ycombinator.com";
       home-manager = "nix-community.github.io/home-manager/options.html";
       nixpkgs      = "github.com/NixOS/nixpkgs";
+      tasks-api-py =
+        "googleapis.github.io/google-api-python-client/docs/dyn/tasks_v1.html";
     };
-    searchEngines = {
-      DEFAULT     = "google.com/search?hl=en&q={}";
+    searchEngines = rec {
+      DEFAULT     = google;
       arch        = "wiki.archlinux.org/?search={}";
       google      = "google.com/search?hl=en&q={}";
       hacker-news = "google.com/search?hl=en&q={}+site%3Anews.ycombinator.com";
