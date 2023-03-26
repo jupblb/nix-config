@@ -6,7 +6,6 @@
           --headless +UpdateRemotePlugins +quit && echo
       '';
     };
-    packages         = with pkgs; [ wl-clipboard ];
     sessionVariables = {
       EDITOR              = "nvim";
       NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";

@@ -22,7 +22,7 @@
   };
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
-  environment.systemPackages   = with pkgs; [ file unzip ];
+  environment.systemPackages   = with pkgs; [ file unzip wl-clipboard ];
 
   fonts.enableDefaultFonts = true;
 
