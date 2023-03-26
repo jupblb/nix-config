@@ -11,8 +11,6 @@
     zfs.requestEncryptionCredentials = false;
   };
 
-  environment.systemPackages = with pkgs; [ python3Packages.subliminal ];
-
   fileSystems = {
     "/"              = {
       device = "/dev/disk/by-label/nixos";
@@ -313,7 +311,7 @@
         name              = "vaultwarden";
         ensurePermissions = { "DATABASE vaultwarden" = "ALL PRIVILEGES"; };
       } ];
-      package         = pkgs.postgresql_14;
+      package         = pkgs.postgresql_15;
     };
 
     postgresqlBackup = {
