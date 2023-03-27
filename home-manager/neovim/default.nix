@@ -3,7 +3,7 @@
     activation       = {
       nvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD ${config.programs.neovim.finalPackage}/bin/nvim \
-          --headless +UpdateRemotePlugins +quit && echo
+          --headless +TSUpdate +UpdateRemotePlugins +quit && echo
       '';
     };
     sessionVariables = {
@@ -28,7 +28,7 @@
         source ${toString ./config/init.vim}
         luafile ${toString ./config/init.lua}
       '';
-      extraPackages = with pkgs; [ fd ripgrep ];
+      extraPackages = with pkgs; [ fd ripgrep zig ];
       plugins       = with pkgs.vimPlugins; [ {
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
@@ -58,16 +58,12 @@
             autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f
             luafile ${toString ./config/treesitter.lua}
           '';
-          plugin =
-            let nvim-treesitter' = pkgs.callPackage ./plugin/tree-sitter.nix {
-              inherit (pkgs.vimPlugins) nvim-treesitter;
-            };
-            in nvim-treesitter'.overrideAttrs(_: {
-              dependencies = [
-                nvim-treesitter-refactor nvim-treesitter-textobjects
-                nvim-ts-context-commentstring vim-matchup
-              ];
-            });
+          plugin = nvim-treesitter.overrideAttrs(_: {
+            dependencies = [
+              nvim-treesitter-refactor nvim-treesitter-textobjects
+              nvim-ts-context-commentstring vim-matchup
+            ];
+          });
         } {
           config = "luafile ${toString ./config/devicons.lua}";
           plugin = nvim-web-devicons;
