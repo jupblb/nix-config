@@ -62,6 +62,8 @@
   services = {
     fstrim.enable = true;
 
+    fwupd.enable = true;
+
     kmscon = {
       autologinUser = "jupblb";
       # https://github.com/Aetf/kmscon/issues/29

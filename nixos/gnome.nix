@@ -5,8 +5,12 @@
       gnome-contacts gnome-logs gnome-maps gnome-music gnome-shell-extensions
       pkgs.gnome-tour gnome-weather pkgs.gnome-connections simple-scan yelp
     ];
-    systemPackages        = with pkgs.gnomeExtensions;
-      [ just-perfection removable-drive-menu ];
+    systemPackages        =
+      let
+        extensions = with pkgs.gnomeExtensions;
+          [ just-perfection removable-drive-menu ];
+        packages   = with pkgs; [ gnome-firmware ];
+      in extensions ++ packages;
   };
 
   programs = {
