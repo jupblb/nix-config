@@ -157,6 +157,10 @@
           enable = true;
           path   = "/home/jupblb/Pictures";
         };
+        "jupblb/Workspace" = {
+          enable = true;
+          path   = "/home/jupblb/Workspace";
+        };
       };
       key       = toString ./config/syncthing/hades/key.pem;
       user      = "jupblb";

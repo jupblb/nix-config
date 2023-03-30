@@ -436,6 +436,10 @@
             path       = "/backup/jupblb/Pictures";
             versioning = simpleVersioning;
           };
+          "jupblb/Workspace" = {
+            enable = true;
+            path   = "/backup/jupblb/Workspace";
+          };
         };
       key          = toString ./config/syncthing/dionysus/key.pem;
       relay        = {

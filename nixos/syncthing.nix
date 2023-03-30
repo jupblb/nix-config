@@ -36,6 +36,10 @@
         devices = [ "artemis" "dionysus" "hades" ];
         enable  = lib.mkDefault false;
       };
+      "jupblb/Workspace" = {
+        devices = [ "artemis" "dionysus" "hades" ];
+        enable  = lib.mkDefault false;
+      };
     };
     group            = "users";
     openDefaultPorts = true;
