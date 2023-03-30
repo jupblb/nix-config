@@ -318,7 +318,7 @@
     };
 
     restic.backups = {
-      gcs      = {
+      gcs   = {
         environmentFile = toString(
           pkgs.writeText "restic-gcs-env" ''
             GOOGLE_PROJECT_ID=restic-backup-342620
@@ -334,7 +334,7 @@
         repository      = "gs:dionysus-backup:/";
         timerConfig     = { OnCalendar = "weekly"; };
       };
-      local    = {
+      local = {
         extraBackupArgs =
           [ "--exclude=./**/.stversions" "--tag syncthing-local" ];
         initialize      = true;
@@ -342,19 +342,6 @@
         paths           = [ "/backup" ];
         pruneOpts       = [ "--keep-daily 14" ];
         repository      = "/data/backup";
-      };
-      poseidon = {
-        extraBackupArgs =
-          [ "--exclude=./**/.stversions" "--tag syncthing-poseidon" ];
-        extraOptions    = [
-          "sftp.command='ssh restic@poseidon.kielbowi.cz -i ${toString ./config/ssh/restic/id_ed25519} -s sftp'"
-        ];
-        initialize      = true;
-        passwordFile    = toString ./config/restic/encryption.txt;
-        paths           = [ "/backup" ];
-        pruneOpts       = [ "--keep-daily 7" "--keep-weekly 4" ];
-        repository      =
-          "sftp:restic@poseidon.kielbowi.cz:/data/restic/syncthing";
       };
     };
 
