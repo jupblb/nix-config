@@ -91,6 +91,7 @@
         let common = {
           identitiesOnly = true;
           identityFile   = [ (toString ../config/ssh/jupblb/id_ed25519) ];
+          user           = "jupblb";
         };
         in {
           cerberus     = common // {
