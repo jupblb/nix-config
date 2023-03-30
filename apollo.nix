@@ -38,8 +38,10 @@
         name        = "kitty-glx";
         paths       = with pkgs; [ kitty ];
         postBuild   =
-          let app = pkgs.writeShellScript "kitty-glx-sh"
-            "${lib.meta.getExe pkgs.nixGl.nixGLMesa} ${lib.meta.getExe pkgs.kitty}";
+          let app = pkgs.writeShellScript "kitty-glx-sh" ''
+            ${lib.meta.getExe pkgs.nixGl.nixGLMesa} \
+              ${lib.meta.getExe pkgs.kitty} --start-as fullscreen
+          '';
           in "ln -sfn ${app} $out/bin/kitty";
       };
     };
@@ -48,10 +50,17 @@
       name        = "qutebrowser-glx";
       paths       = with pkgs; [ qutebrowser ];
       postBuild   =
-        let app = pkgs.writeShellScript "qutebrowser-glx-sh"
-          "${lib.meta.getExe pkgs.nixGl.nixGLMesa} ${lib.meta.getExe pkgs.qutebrowser}";
+        let app = pkgs.writeShellScript "qutebrowser-glx-sh" ''
+          ${lib.meta.getExe pkgs.nixGl.nixGLMesa} \
+            ${lib.meta.getExe pkgs.qutebrowser}
+        '';
         in "ln -sfn ${app} $out/bin/qutebrowser";
     };
+  };
+
+  services.gpg-agent = {
+    enable         = true;
+    pinentryFlavor = "qt";
   };
 
   targets.genericLinux.enable = true;
