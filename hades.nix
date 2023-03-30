@@ -85,10 +85,7 @@
         };
       };
 
-      kitty.settings = {
-        hide_window_decorations = "yes";
-        linux_display_server    = "wayland";
-      };
+      kitty.settings.linux_display_server = "wayland";
 
       qutebrowser.settings = {
         qt.highdpi             = true;

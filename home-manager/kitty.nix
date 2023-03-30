@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
   home.shellAliases = {
     icat = "kitty +kitten icat";
     kssh = "kitty +kitten ssh";
@@ -35,6 +35,7 @@
         enabled_layouts                    = "splits";
         enable_audio_bell                  = "no";
         env                                = "SHELL=${pkgs.fish}/bin/fish";
+        hide_window_decorations            = "yes";
         listen_on                          = "unix:/tmp/kitty";
         macos_option_as_alt                = "left";
         macos_quit_when_last_window_closed = "yes";
