@@ -121,103 +121,95 @@
     caddy = {
       email        = "caddy@kielbowi.cz";
       enable       = true;
-      virtualHosts =
-        let
-          basicauth = ''
-            basicauth {
-              ${secret.login} ${secret.password}
+      virtualHosts = {
+        "bazarr.kielbowi.cz"       = {
+          extraConfig = "reverse_proxy http://localhost:6767";
+        };
+        "calibre.kielbowi.cz"      = {
+          extraConfig = "reverse_proxy http://localhost:8083";
+        };
+        "dionysus.kielbowi.cz"     = {
+          extraConfig = "respond \"Hello, world!\"";
+        };
+        "files.kielbowi.cz"        = {
+          extraConfig = "reverse_proxy http://localhost:8085";
+        };
+        "go.kielbowi.cz"           = {
+          extraConfig = "reverse_proxy http://localhost:4567";
+        };
+        "haste.kielbowi.cz"        = {
+          extraConfig = "reverse_proxy http://localhost:7777";
+        };
+        "jackett.kielbowi.cz"      = {
+          extraConfig = "reverse_proxy http://localhost:9117";
+        };
+        "jellyfin.kielbowi.cz"     = {
+          extraConfig = "reverse_proxy http://localhost:8096";
+        };
+        "komga.kielbowi.cz"        = {
+          extraConfig = "reverse_proxy http://localhost:6428";
+        };
+        "lidarr.kielbowi.cz"       = {
+          extraConfig = "reverse_proxy http://localhost:8686";
+        };
+        "paperless.kielbowi.cz"    = {
+          extraConfig = "reverse_proxy http://localhost:28981";
+        };
+        "radarr.kielbowi.cz"       = {
+          extraConfig = "reverse_proxy http://localhost:7878";
+        };
+        "rss.kielbowi.cz"       = {
+          extraConfig = "reverse_proxy http://localhost:9283";
+        };
+        "rstudio.kielbowi.cz"      = {
+          extraConfig = "reverse_proxy http://localhost:3939";
+        };
+        "sonarr.kielbowi.cz"       = {
+          extraConfig = "reverse_proxy http://localhost:8989";
+        };
+        "syncthing.kielbowi.cz"    = {
+          extraConfig = ''
+            reverse_proxy http://localhost:8384 {
+              header_up Host localhost
+              header_up X-Forwarded-Host syncthing.kielbowi.cz
             }
           '';
-          secret    = (import ./config/secret.nix).caddy;
-        in {
-          "bazarr.kielbowi.cz"       = {
-            extraConfig = "reverse_proxy http://localhost:6767";
-          };
-          "calibre.kielbowi.cz"      = {
-            extraConfig = "reverse_proxy http://localhost:8083";
-          };
-          "dionysus.kielbowi.cz"     = {
-            extraConfig = "respond \"Hello, world!\"";
-          };
-          "files.kielbowi.cz"        = {
-            extraConfig = "reverse_proxy http://localhost:8085";
-          };
-          "go.kielbowi.cz"           = {
-            extraConfig = "reverse_proxy http://localhost:4567";
-          };
-          "haste.kielbowi.cz"        = {
-            extraConfig = "reverse_proxy http://localhost:7777";
-          };
-          "jackett.kielbowi.cz"      = {
-            extraConfig = "reverse_proxy http://localhost:9117";
-          };
-          "jellyfin.kielbowi.cz"     = {
-            extraConfig = "reverse_proxy http://localhost:8096";
-          };
-          "komga.kielbowi.cz"        = {
-            extraConfig = "reverse_proxy http://localhost:6428";
-          };
-          "lidarr.kielbowi.cz"       = {
-            extraConfig = "reverse_proxy http://localhost:8686";
-          };
-          "paperless.kielbowi.cz"    = {
-            extraConfig = "reverse_proxy http://localhost:28981";
-          };
-          "radarr.kielbowi.cz"       = {
-            extraConfig = "reverse_proxy http://localhost:7878";
-          };
-          "rss.kielbowi.cz"       = {
-            extraConfig = "reverse_proxy http://localhost:9283";
-          };
-          "rstudio.kielbowi.cz"      = {
-            extraConfig = "reverse_proxy http://localhost:3939";
-          };
-          "sonarr.kielbowi.cz"       = {
-            extraConfig = "reverse_proxy http://localhost:8989";
-          };
-          "syncthing.kielbowi.cz"    = {
-            extraConfig = basicauth + ''
-              reverse_proxy http://localhost:8384 {
-                header_up Host localhost
-                header_up X-Forwarded-Host syncthing.kielbowi.cz
-              }
-            '';
-          };
-          "transmission.kielbowi.cz" = {
-            extraConfig = basicauth + "reverse_proxy http://127.0.0.1:9091";
-          };
-          "vaultwarden.kielbowi.cz"  = {
-            extraConfig = ''
-              encode gzip
-
-              header / {
-                # Enable HTTP Strict Transport Security (HSTS)
-                Strict-Transport-Security "max-age=31536000;"
-                # Enable cross-site filter (XSS) and tell browser to block detected attacks
-                X-XSS-Protection "1; mode=block"
-                # Disallow the site to be rendered within a frame (clickjacking protection)
-                X-Frame-Options "DENY"
-                # Prevent search engines from indexing (optional)
-                X-Robots-Tag "none"
-                # Server name removing
-                -Server
-              }
-
-              # The negotiation endpoint is also proxied to Rocket
-              reverse_proxy /notifications/hub/negotiate http://localhost:8222
-
-              # Notifications redirected to the websockets server
-              reverse_proxy /notifications/hub http://localhost:3012
-
-              # Proxy the Root directory to Rocket
-              reverse_proxy http://localhost:8222 {
-                   # Send the true remote IP to Rocket, so that vaultwarden can put this in the
-                   # log, so that fail2ban can ban the correct IP.
-                   header_up X-Real-IP {remote_host}
-              }
-            '';
-          };
         };
+        "transmission.kielbowi.cz" = {
+          extraConfig = "reverse_proxy http://127.0.0.1:9091";
+        };
+        "vaultwarden.kielbowi.cz"  = {
+          extraConfig = ''
+            encode gzip
+
+            header / {
+              # Enable HTTP Strict Transport Security (HSTS)
+              Strict-Transport-Security "max-age=31536000;"
+              # Enable cross-site filter (XSS) and tell browser to block detected attacks
+              X-XSS-Protection "1; mode=block"
+              # Disallow the site to be rendered within a frame (clickjacking protection)
+              X-Frame-Options "DENY"
+              # Prevent search engines from indexing (optional)
+              X-Robots-Tag "none"
+              # Server name removing
+              -Server
+            }
+
+            # The negotiation endpoint is also proxied to Rocket
+            reverse_proxy /notifications/hub/negotiate http://localhost:8222
+
+            # Notifications redirected to the websockets server
+            reverse_proxy /notifications/hub http://localhost:3012
+
+            # Proxy the Root directory to Rocket
+            reverse_proxy http://localhost:8222 {
+                 # Send the true remote IP to Rocket, so that vaultwarden can put this in the
+                 # log, so that fail2ban can ban the correct IP.
+                 header_up X-Real-IP {remote_host}
+            }
+          '';
+        };
+      };
     };
 
     calibre-web = {
@@ -402,8 +394,11 @@
     };
 
     syncthing = {
-      cert        = toString ./config/syncthing/dionysus/cert.pem;
-      folders     =
+      cert         = toString ./config/syncthing/dionysus/cert.pem;
+      extraOptions = {
+        gui = (import ./config/secret.nix).syncthing;
+      };
+      folders      =
         let simpleVersioning = {
           params = {
             cleanInterval = "3600";
@@ -442,8 +437,8 @@
             versioning = simpleVersioning;
           };
         };
-      key         = toString ./config/syncthing/dionysus/key.pem;
-      relay       = {
+      key          = toString ./config/syncthing/dionysus/key.pem;
+      relay        = {
         enable        = true;
         listenAddress = "0.0.0.0";
         pools         = [ "" ];
@@ -454,12 +449,14 @@
       enable       = true;
       group        = "users";
       openFirewall = true;
-      settings     = {
-        download-dir        = "/data/downloads";
-        incomplete-dir      = "/data/downloads/.incomplete";
-        ratio-limit         = 0;
-        ratio-limit-enabled = true;
-        rpc-host-whitelist  = "transmission.kielbowi.cz";
+      settings     = (import ./config/secret.nix).transmission // {
+        download-dir                = "/data/downloads";
+        incomplete-dir              = "/data/downloads/.incomplete";
+        ratio-limit                 = 0;
+        ratio-limit-enabled         = true;
+        rpc-enabled                 = true;
+        rpc-authentication-required = true;
+        rpc-host-whitelist          = "transmission.kielbowi.cz";
       };
     };
 
