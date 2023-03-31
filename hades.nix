@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   boot = {
@@ -13,8 +13,15 @@
     kernelParams = [ "mitigations=off" ];
   };
 
-  environment.systemPackages = with pkgs;
-    [ gnomeExtensions.compiz-windows-effect nvidia-offload ];
+  environment = {
+    systemPackages = with pkgs;
+      [ gnomeExtensions.compiz-windows-effect nvidia-offload ];
+    variables      = {
+      NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [ stdenv.cc.cc ]);
+      NIX_LD              = lib.fileContents
+        "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
+    };
+  };
 
   fileSystems = {
     "/".device     = "/dev/disk/by-label/nixos-root";
@@ -110,9 +117,13 @@
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
-  programs.steam = {
-    enable     = true;
-    remotePlay = { openFirewall = true; };
+  programs = {
+    nix-ld.enable = true; # https://unix.stackexchange.com/a/522823
+
+    steam = {
+      enable     = true;
+      remotePlay = { openFirewall = true; };
+    };
   };
 
   security.rtkit.enable = true;
