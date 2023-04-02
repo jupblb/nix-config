@@ -15,7 +15,7 @@
 
   environment = {
     systemPackages = with pkgs;
-      [ gnomeExtensions.compiz-windows-effect nvidia-offload ];
+      [ element-desktop gnomeExtensions.compiz-windows-effect nvidia-offload ];
     variables      = {
       NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [ stdenv.cc.cc ]);
       NIX_LD              = lib.fileContents
@@ -69,7 +69,6 @@
           > ~/.local/share/applications/steam.desktop
         $DRY_RUN_CMD chmod +x ~/.local/share/applications/steam.desktop
       '';
-      packages         = with pkgs; [ element-desktop-wayland ];
       stateVersion     = "22.11";
     };
 
