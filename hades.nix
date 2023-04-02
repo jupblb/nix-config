@@ -69,6 +69,7 @@
           > ~/.local/share/applications/steam.desktop
         $DRY_RUN_CMD chmod +x ~/.local/share/applications/steam.desktop
       '';
+      packages         = with pkgs; [ element-desktop-wayland ];
       stateVersion     = "22.11";
     };
 

@@ -122,6 +122,15 @@
       email        = "caddy@kielbowi.cz";
       enable       = true;
       virtualHosts = {
+        "kielbowi.cz"              = {
+          extraConfig = ''
+            header /.well-known/matrix/* Content-Type application/json
+            header /.well-known/matrix/* Access-Control-Allow-Origin *
+            respond /.well-known/matrix/server `{"m.server": "matrix.kielbowi.cz:443"}`
+            respond /.well-known/matrix/client `{"m.homeserver":{"base_url":"https://matrix.kielbowi.cz"}}`
+            respond "Hello, world!!"
+          '';
+        };
         "bazarr.kielbowi.cz"       = {
           extraConfig = "reverse_proxy http://localhost:6767";
         };
@@ -151,6 +160,13 @@
         };
         "lidarr.kielbowi.cz"       = {
           extraConfig = "reverse_proxy http://localhost:8686";
+        };
+        "matrix.kielbowi.cz"       = {
+          # https://github.com/matrix-org/synapse/blob/develop/docs/reverse_proxy.md#caddy-v2
+          extraConfig = ''
+            reverse_proxy /_matrix/* http://localhost:8008
+            reverse_proxy /_synapse/client/* http://localhost:8008
+          '';
         };
         "paperless.kielbowi.cz"    = {
           extraConfig = "reverse_proxy http://localhost:28981";
@@ -248,6 +264,48 @@
       group  = "users";
     };
 
+    matrix-synapse = {
+      enable   = true;
+      settings = {
+        app_service_config_files   = [
+          "/var/lib/matrix-synapse/registration-facebook.yaml"
+        ];
+        listeners                  = [ {
+          port           = 8008;
+          bind_addresses = [ "127.0.0.1" ];
+          type           = "http";
+          tls            = false;
+          x_forwarded    = true;
+          resources      = [ {
+            names    = [ "client" "federation" ];
+            compress = true;
+          } ];
+        } ];
+        registration_shared_secret =
+          (import ./config/secret.nix).matrix.registration;
+        server_name                = config.networking.domain;
+      };
+    };
+
+    mautrix-facebook = {
+      configurePostgresql = true;
+      enable              = true;
+      # https://github.com/mautrix/facebook/blob/master/mautrix_facebook/example-config.yaml
+      settings            = {
+        appservice = (import ./config/secret.nix).matrix.facebook;
+
+        bridge.permissions = {
+          "@jupblb:kielbowi.cz" = "admin";
+          "kielbowi.cz"         = "user";
+        };
+
+        homeserver = {
+          address = "https://matrix.kielbowi.cz";
+          domain  = "kielbowi.cz";
+        };
+      };
+    };
+
     miniflux = {
       adminCredentialsFile = pkgs.writeText "miniflux-credentials"
         (import ./config/secret.nix).miniflux;
@@ -303,11 +361,19 @@
         name              = "vaultwarden";
         ensurePermissions = { "DATABASE vaultwarden" = "ALL PRIVILEGES"; };
       } ];
+      initialScript   = pkgs.writeText "synapse-init.sql" ''
+        CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
+        CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
+          TEMPLATE template0
+          LC_COLLATE = "C"
+          LC_CTYPE = "C";
+      '';
       package         = pkgs.postgresql_15;
     };
 
     postgresqlBackup = {
-      databases = config.services.postgresql.ensureDatabases;
+      databases = config.services.postgresql.ensureDatabases ++
+        [ "matrix-synapse" ];
       enable    = true;
       location  = "/backup/postgresql";
     };
