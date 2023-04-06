@@ -17,6 +17,7 @@
     systemPackages = with pkgs;
       [ element-desktop gnomeExtensions.compiz-windows-effect nvidia-offload ];
     variables      = {
+      CUDA_CACHE_PATH     = "\${XDG_CACHE_HOME}/nv";
       NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [ stdenv.cc.cc ]);
       NIX_LD              = lib.fileContents
         "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
@@ -119,6 +120,17 @@
 
   programs = {
     nix-ld.enable = true; # https://unix.stackexchange.com/a/522823
+
+    npm = {
+      enable  = true;
+      npmrc   = ''
+        cache=''${XDG_CACHE_HOME}/npm
+        init-module=''${XDG_CONFIG_HOME}/npm/npm-init.js
+        prefix=''${XDG_DATA_HOME}/npm
+        userconfig=''${XDG_CONFIG_HOME}/npm/npmrc
+      '';
+      package = pkgs.hello;
+    };
 
     steam = {
       enable     = true;
