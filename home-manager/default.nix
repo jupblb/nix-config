@@ -54,6 +54,7 @@
         "difftool \"difftastic\"".cmd =
           "${pkgs.difftastic}/bin/difft --background=light --tab-width=2 $LOCAL $REMOTE";
         fetch.prune                   = true;
+        init.defaultBranch            = "main";
         merge.conflictStyle           = "diff3";
         pull.rebase                   = true;
         push.default                  = "upstream";
