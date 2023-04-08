@@ -2,19 +2,24 @@
   programs.neovim = {
     extraPackages =
       let
-        default      = with pkgs; [
+        default        = with pkgs; [
           black buildifier cargo dart fish gomodifytags gopls gotests
           haskell-language-server impl isort jdt-language-server jq ltex-ls
-          metals open-policy-agent openjdk pandoc rnix-lsp rust-analyzer rustc
+          metals nil open-policy-agent openjdk pandoc rust-analyzer rustc
           shellcheck shfmt statix sumneko-lua-language-server
         ];
-        latexindent  = pkgs.texlive.latexindent.pkgs;
-        nodePackages = with pkgs.nodePackages; [
-          bash-language-server dockerfile-language-server-nodejs
-          markdownlint-cli pyright vim-language-server
-          vscode-json-languageserver
+        latexindent    = pkgs.texlive.latexindent.pkgs;
+        nodePackages   = with pkgs.nodePackages; [
+          bash-language-server dockerfile-language-server-nodejs eslint
+          markdownlint-cli pyright typescript-language-server
+          vim-language-server vscode-langservers-extracted
         ];
-      in default ++ latexindent ++ nodePackages;
+        nodeAtPackages = [
+          pkgs.nodePackages."@prisma/language-server"
+          pkgs.nodePackages."@tailwindcss/language-server"
+        ];
+        rPackages      = with pkgs.rPackages; [ languageserver ];
+      in default ++ latexindent ++ nodePackages ++ nodeAtPackages ++ rPackages;
     plugins       = with pkgs.vimPlugins; [ {
         config = "source ${toString ./config/fidget.vim}";
         plugin = fidget-nvim;

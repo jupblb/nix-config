@@ -15,10 +15,10 @@ local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     opts = opts or {}
     opts.border = opts.border or {
-            { '╭', 'FloatBorder' }, { '─', 'FloatBorder' }, { '╮', 'FloatBorder' },
-            { '│', 'FloatBorder' }, { '╯', 'FloatBorder' }, { '─', 'FloatBorder' },
-            { '╰', 'FloatBorder' }, { '│', 'FloatBorder' }
-        }
+        { '╭', 'FloatBorder' }, { '─', 'FloatBorder' }, { '╮', 'FloatBorder' },
+        { '│', 'FloatBorder' }, { '╯', 'FloatBorder' }, { '─', 'FloatBorder' },
+        { '╰', 'FloatBorder' }, { '│', 'FloatBorder' }
+    }
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
@@ -91,7 +91,9 @@ require('neodev').setup({
 
 -- other LSPs
 local default_servers = {
-    'dartls', 'dockerls', 'hls', 'lua_ls', 'rnix', 'rust_analyzer', 'vimls'
+    'cssls', 'dartls', 'dockerls', 'eslint', 'hls', 'html', 'lua_ls', 'nil_ls',
+    'prismals', 'r_language_server', 'rust_analyzer', 'tailwindcss', 'tsserver',
+    'vimls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
@@ -106,18 +108,29 @@ lspconfig.jdtls.setup({
 })
 
 lspconfig.jsonls.setup({
-    cmd = { 'vscode-json-languageserver', '--stdio' },
-    commands = {
-        Format = {
-            function()
-                vim.lsp.buf.range_formatting(
-                    {}, { 0, 0 }, { vim.fn.line('$'), 0 })
-            end
-        }
-    },
+    cmd = { 'vscode-json-language-server', '--stdio' },
     settings = { json = { schemas = require('schemastore').json.schemas() } }
 })
 
+lspconfig.lua_ls.setup({
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                globals = { 'vim' },
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+})
 
 lspconfig.metals.setup({
     root_dir = function(filename)
