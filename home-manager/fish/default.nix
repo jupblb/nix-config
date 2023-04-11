@@ -49,5 +49,8 @@
       showInformativeStatus = true;
       showUntrackedFiles    = true;
     };
+
+    neovim.extraConfig =
+      "set shell=${lib.meta.getExe config.programs.fish.package}";
   };
 }

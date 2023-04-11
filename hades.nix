@@ -47,6 +47,7 @@
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     nvidia             = {
+      nvidiaSettings  = false;
       package         = config.boot.kernelPackages.nvidiaPackages.beta;
       powerManagement = {
         enable      = true;

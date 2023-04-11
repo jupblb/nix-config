@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   boot = {
@@ -22,7 +22,8 @@
   };
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
-  environment.systemPackages   = with pkgs; [ file unzip wl-clipboard ];
+  environment.systemPackages   = with pkgs;
+    [ file unzip wl-clipboard pciutils usbutils ];
 
   fonts.enableDefaultFonts = true;
 
