@@ -2,20 +2,8 @@
 
 {
   boot = {
-    initrd = {
-      availableKernelModules =
-        [ "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci" ];
-
-      network = {
-        enable = true;
-        ssh    = {
-          authorizedKeys = [ (toString ../config/ssh/jupblb/id_ed25519.pub) ];
-          enable         = true;
-          hostKeys       = [ ../config/ssh/jupblb/id_ed25519 ];
-          shell          = "${lib.meta.getExe pkgs.fish}";
-        };
-      };
-    };
+    initrd.availableKernelModules =
+      [ "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci" ];
 
     loader = {
       efi.canTouchEfiVariables = true;

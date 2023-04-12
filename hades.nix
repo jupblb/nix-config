@@ -3,12 +3,21 @@
 {
   boot = {
     initrd = {
-      availableKernelModules = [ "e1000e" ];
+      kernelModules          = [ "e1000e" "i915" ];
       luks.devices           = {
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
-      kernelModules          = [ "i915" ];
-      systemd.enable         = true;
+      network                = {
+        enable = true;
+        ssh    = {
+          authorizedKeys =
+            [ (builtins.readFile ./config/ssh/jupblb/id_ed25519.pub) ];
+          enable         = true;
+          hostKeys       = [ /boot/ssh-key ];
+        };
+      };
+      # https://github.com/NixOS/nixpkgs/pull/169116
+      systemd.enable         = lib.mkForce false;
     };
 
     kernelParams = [ "mitigations=off" ];
@@ -117,9 +126,13 @@
   ];
 
   networking = {
-    hostName   = "hades";
-    interfaces = {
-      eno2 = { wakeOnLan.enable = true; };
+    hostName       = "hades";
+    interfaces     = {
+      eno2 = {
+        macAddress       = "00:d8:61:50:ae:85";
+        useDHCP          = true;
+        wakeOnLan.enable = true;
+      };
     };
   };
 
