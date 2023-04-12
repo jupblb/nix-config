@@ -2,9 +2,19 @@
 
 {
   boot = {
-    initrd.availableKernelModules = [
-      "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci"
-    ];
+    initrd = {
+      availableKernelModules =
+        [ "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci" ];
+
+      network = {
+        enable = true;
+        ssh    = {
+          enable         = true;
+          authorizedKeys = [ ../config/ssh/jupblb/id_ed25519.pub ];
+          hostKeys       = [ ../config/ssh/jupblb/id_ed25519 ];
+        };
+      };
+    };
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -33,7 +43,7 @@
     imports = [ ../home-manager ];
 
     nixpkgs.config.packageOverrides = _:
-      let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable-small.tar.gz";
+      let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
       in import (fetchTarball t) {};
 
     services.gpg-agent.enable = true;

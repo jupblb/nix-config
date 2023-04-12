@@ -3,11 +3,12 @@
 {
   boot = {
     initrd = {
-      luks.devices   = {
+      availableKernelModules = [ "e1000e" ];
+      luks.devices           = {
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
-      kernelModules  = [ "i915" ];
-      systemd.enable = true;
+      kernelModules          = [ "i915" ];
+      systemd.enable         = true;
     };
 
     kernelParams = [ "mitigations=off" ];

@@ -100,7 +100,7 @@
             user     = "root";
           };
           dionysus     = common // {
-            hostname = "dionysus.kielbowi.cz";
+            hostname = "warszawa.kielbowi.cz";
             port     = 1995;
           };
           "github.com" = {
@@ -108,6 +108,10 @@
             hostname       = "github.com";
             identitiesOnly = true;
             identityFile   = [ (toString ../config/ssh/git/id_ed25519) ];
+          };
+          hades        = common // {
+            hostname = "warszawa.kielbowi.cz";
+            port     = 1993;
           };
           "prose.sh"   = common // {
             hostname = "prose.sh";
