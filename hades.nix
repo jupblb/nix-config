@@ -116,7 +116,12 @@
     ./nixos/syncthing.nix
   ];
 
-  networking.hostName = "hades";
+  networking = {
+    hostName   = "hades";
+    interfaces = {
+      eno2 = { wakeOnLan.enable = true; };
+    };
+  };
 
   powerManagement.cpuFreqGovernor = "ondemand";
 

@@ -9,9 +9,10 @@
       network = {
         enable = true;
         ssh    = {
+          authorizedKeys = [ (toString ../config/ssh/jupblb/id_ed25519.pub) ];
           enable         = true;
-          authorizedKeys = [ ../config/ssh/jupblb/id_ed25519.pub ];
           hostKeys       = [ ../config/ssh/jupblb/id_ed25519 ];
+          shell          = "${lib.meta.getExe pkgs.fish}";
         };
       };
     };
@@ -33,7 +34,7 @@
 
   environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
   environment.systemPackages   = with pkgs;
-    [ file unzip wl-clipboard pciutils usbutils ];
+    [ file unzip wl-clipboard pciutils usbutils wol ];
 
   fonts.enableDefaultFonts = true;
 
