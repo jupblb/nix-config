@@ -24,9 +24,12 @@
   };
 
   environment = {
-    systemPackages = with pkgs;
-      [ element-desktop gnomeExtensions.compiz-windows-effect nvidia-offload ];
-    variables      = {
+    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+    systemPackages   = with pkgs; [
+      element-desktop gnomeExtensions.compiz-windows-effect google-chrome
+      nvidia-offload
+    ];
+    variables        = {
       CUDA_CACHE_PATH     = "\${XDG_CACHE_HOME}/nv";
       NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [ stdenv.cc.cc ]);
       NIX_LD              = lib.fileContents
@@ -53,7 +56,7 @@
       driSupport      = true;
       driSupport32Bit = true;
       enable          = true;
-      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiIntel vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     nvidia             = {
@@ -73,13 +76,16 @@
     xpadneo            = { enable = true; };
   };
 
-  home-manager.users.jupblb = { lib, pkgs, ... }: {
+  home-manager.users.jupblb = { config, lib, pkgs, ... }: {
     home = {
       activation.steam = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD sed 's/^Exec=/&nvidia-offload /' \
           ${pkgs.steam}/share/applications/steam.desktop \
-          > ~/.local/share/applications/steam.desktop
-        $DRY_RUN_CMD chmod +x ~/.local/share/applications/steam.desktop
+          > ${config.xdg.dataHome}/applications/steam.desktop
+        $DRY_RUN_CMD chmod +x ${config.xdg.dataHome}/applications/steam.desktop
+        $DRY_RUN_CMD mkdir -p ${config.xdg.configHome}/autostart
+        $DRY_RUN_CMD ln -sfn ${config.xdg.dataHome}/applications/steam.desktop \
+          ${config.xdg.configHome}/autostart
       '';
       stateVersion     = "22.11";
     };
@@ -97,13 +103,6 @@
     ];
 
     programs = {
-      google-chrome = {
-        enable  = true;
-        package = pkgs.google-chrome.override {
-          commandLineArgs = [ "--ozone-platform-hint=auto" ];
-        };
-      };
-
       kitty.settings.linux_display_server = "wayland";
 
       qutebrowser.settings = {
@@ -126,6 +125,7 @@
   ];
 
   networking = {
+    firewall       = { allowedTCPPorts = [ 3000 ]; };
     hostName       = "hades";
     interfaces     = {
       eno2 = {
@@ -149,7 +149,7 @@
         prefix=''${XDG_DATA_HOME}/npm
         userconfig=''${XDG_CONFIG_HOME}/npm/npmrc
       '';
-      package = pkgs.hello;
+      package = pkgs.nodejs;
     };
 
     steam = {
@@ -158,7 +158,16 @@
     };
   };
 
-  security.rtkit.enable = true;
+  security = {
+    rtkit.enable    = true;
+    sudo.extraRules = [ {
+      commands = [ {
+        command = "/run/current-system/sw/bin/poweroff";
+        options = [ "SETENV" "NOPASSWD" ];
+      } ];
+      users    = [ "jupblb" ];
+    } ];
+  };
 
   services = {
     apcupsd = {
@@ -218,22 +227,10 @@
 
   system.stateVersion = "22.11";
 
-  systemd = {
-    services = {
-      # https://github.com/NixOS/nixpkgs/issues/103746
-      "getty@tty1".enable  = false;
-      "autovt@tty1".enable = false;
-    };
-    shutdown = {
-      "nvidia" = pkgs.writeShellScript "nvidia-shutdown" ''
-        # https://bbs.archlinux.org/viewtopic.php?pid=2049247#p2049247
-        for MODULE in nvidia_drm nvidia_modeset nvidia_uvm nvidia; do
-            if lsmod | grep "$MODULE" &> /dev/null ; then
-               rmmod $MODULE
-            fi
-        done
-      '';
-    };
+  systemd.services = {
+    # https://github.com/NixOS/nixpkgs/issues/103746
+    "getty@tty1".enable  = false;
+    "autovt@tty1".enable = false;
   };
 
   users.users.jupblb.extraGroups = [ "input" "lp" ];
