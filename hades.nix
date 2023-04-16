@@ -183,6 +183,8 @@
 
     printing.enable = true;
 
+    sshguard.whitelist = [ "192.168.1.0/24" ];
+
     syncthing = {
       configDir = "/home/jupblb/.config/syncthing";
       dataDir   = "/home/jupblb/.local/share/syncthing";
