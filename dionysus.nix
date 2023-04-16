@@ -70,7 +70,7 @@
     };
   };
 
-  imports = [ ./nixos ./nixos/syncthing.nix ];
+  imports = [ ./nixos ./nixos/npm.nix ./nixos/syncthing.nix ];
 
   networking = {
     defaultGateway           = "192.168.1.1";
@@ -224,6 +224,9 @@
                  header_up X-Real-IP {remote_host}
             }
           '';
+        };
+        "wolock.kielbowi.cz"       = {
+          extraConfig = "reverse_proxy http://127.0.0.1:9247";
         };
       };
     };
@@ -553,8 +556,8 @@
       script        = builtins.readFile ./config/script/ip-updater.sh;
       serviceConfig = {
         ProtectSystem = "full";
-        Type          = "oneshot";
         User          = "jupblb";
+        Type          = "oneshot";
       };
       startAt       = "*:0/5";
     };
@@ -578,6 +581,22 @@
     paperless-web         = { wantedBy = lib.mkForce []; };
     podman-simply-shorten = { wantedBy = lib.mkForce []; };
     syncthing             = { wantedBy = lib.mkForce []; };
+    wolock                = {
+      after         = [ "network.target" ];
+      description   = "Wake on Lan companion app";
+      environment   = {
+        NODE_ENV       = "production";
+        PORT           = "9247";
+        SESSION_SECRET = "sasdasgs124818fa0aa9dm21asdfa9as";
+      };
+      path          = with pkgs; [ bash nodejs ];
+      script        = "npm run build && npm run start";
+      serviceConfig = {
+        ProtectSystem    = "full";
+        WorkingDirectory = "/home/jupblb/Workspace/wolock";
+        User             = "jupblb";
+      };
+    };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
