@@ -56,6 +56,7 @@
     bash.enableLsColors   = true;
     bash.promptInit       = builtins.readFile ../config/bashrc.bash;
     gnupg.agent.enable    = true;
+    ssh.startAgent        = true;
     vim.defaultEditor     = true;
   };
 
@@ -83,6 +84,8 @@
     };
 
     sshguard.enable = true;
+
+    tailscale.enable = true;
   };
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
