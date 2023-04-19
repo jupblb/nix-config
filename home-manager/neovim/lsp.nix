@@ -1,12 +1,10 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   programs.neovim = {
     extraPackages =
       let
         default        = with pkgs; [
-          black buildifier cargo dart fish gomodifytags gopls gotests
-          haskell-language-server impl isort jdt-language-server jq ltex-ls
-          metals nil open-policy-agent openjdk pandoc rust-analyzer rustc
-          shellcheck shfmt statix sumneko-lua-language-server
+          black dart fish gomodifytags gopls gotests impl isort jq ltex-ls nil
+          pandoc shellcheck shfmt statix sumneko-lua-language-server
         ];
         latexindent    = pkgs.texlive.latexindent.pkgs;
         nodePackages   = with pkgs.nodePackages; [
@@ -18,8 +16,7 @@
           pkgs.nodePackages."@prisma/language-server"
           pkgs.nodePackages."@tailwindcss/language-server"
         ];
-        rPackages      = with pkgs.rPackages; [ languageserver ];
-      in default ++ latexindent ++ nodePackages ++ nodeAtPackages ++ rPackages;
+      in default ++ latexindent ++ nodePackages ++ nodeAtPackages;
     plugins       = with pkgs.vimPlugins; [ {
         config = "source ${toString ./config/fidget.vim}";
         plugin = fidget-nvim;

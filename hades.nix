@@ -26,8 +26,7 @@
   environment = {
     sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages   = with pkgs; [
-      element-desktop gnomeExtensions.compiz-windows-effect google-chrome
-      nvidia-offload
+      gnomeExtensions.compiz-windows-effect google-chrome nvidia-offload
     ];
     variables        = {
       CUDA_CACHE_PATH     = "\${XDG_CACHE_HOME}/nv";
