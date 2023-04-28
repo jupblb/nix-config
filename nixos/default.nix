@@ -52,12 +52,15 @@
   nixpkgs.overlays           = [ (import ../overlay) ];
 
   programs = {
-    bash.enableCompletion = true;
-    bash.enableLsColors   = true;
-    bash.promptInit       = builtins.readFile ../config/bashrc.bash;
-    gnupg.agent.enable    = true;
-    ssh.startAgent        = true;
-    vim.defaultEditor     = true;
+    adb   = { enable = true; };
+    bash  = {
+      enableCompletion = true;
+      enableLsColors   = true;
+      promptInit       = builtins.readFile ../config/bashrc.bash;
+    };
+    gnupg = { agent.enable = true; };
+    ssh   = { startAgent = true; };
+    vim   = { defaultEditor = true; };
   };
 
   services = {
