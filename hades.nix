@@ -29,11 +29,8 @@
       gnomeExtensions.compiz-windows-effect google-chrome nvidia-offload
     ];
     variables        = {
-      CHROME_EXECUTABLE   = pkgs.lib.meta.getExe pkgs.google-chrome;
-      CUDA_CACHE_PATH     = "\${XDG_CACHE_HOME}/nv";
-      NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [ stdenv.cc.cc ]);
-      NIX_LD              = lib.fileContents
-        "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
+      CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome;
+      CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv";
     };
   };
 
