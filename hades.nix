@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   boot = {
@@ -16,15 +16,19 @@
           hostKeys       = [ /boot/ssh-key ];
         };
       };
-      # https://github.com/NixOS/nixpkgs/pull/169116
-      systemd.enable         = lib.mkForce false;
+      systemd = {
+        enable   = true;
+        extraBin = {
+          cryptsetup = "${pkgs.cryptsetup}/bin/cryptsetup";
+        };
+      };
     };
 
     kernelParams = [ "mitigations=off" ];
   };
 
   environment = {
-    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+#   sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages   = with pkgs; [
       gnomeExtensions.compiz-windows-effect google-chrome nvidia-offload
     ];
@@ -58,7 +62,6 @@
     };
     nvidia             = {
       nvidiaSettings  = false;
-      package         = config.boot.kernelPackages.nvidiaPackages.beta;
       powerManagement = {
         enable      = true;
         finegrained = true;
