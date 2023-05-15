@@ -1,4 +1,4 @@
-{ lib, pkgs, stdenv, ... }: {
+{ lib, pkgs, ... }: {
   home = {
     activation       = {
       bat = lib.hm.dag.entryAfter ["writeBoundary"]

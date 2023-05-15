@@ -1,6 +1,10 @@
 { pkgs, ... }: {
-  home.sessionVariables = {
-    DIRENV_WARN_TIMEOUT = "1h";
+  home = {
+    packages         =
+      let devenv =
+        (import (fetchTarball "https://github.com/cachix/devenv/archive/latest.tar.gz")).default;
+      in with pkgs; [ cachix devenv ];
+    sessionVariables = { DIRENV_WARN_TIMEOUT = "1h"; };
   };
 
   programs.direnv = {
