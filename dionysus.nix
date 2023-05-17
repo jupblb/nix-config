@@ -394,8 +394,8 @@
             GOOGLE_APPLICATION_CREDENTIALS=${./config/restic/restic-gcs.json}
           ''
         );
-        extraBackupArgs =
-          [ "--exclude=./**/.stversions" "--tag syncthing-gcs" ];
+        exclude         = [ "**/.stversions" "jupblb/Workspace" ];
+        extraBackupArgs = [ "--tag syncthing-gcs" ];
         initialize      = true;
         passwordFile    = toString ./config/restic/encryption.txt;
         paths           = [ "/backup" ];
@@ -404,8 +404,8 @@
         timerConfig     = { OnCalendar = "weekly"; };
       };
       local = {
-        extraBackupArgs =
-          [ "--exclude=./**/.stversions" "--tag syncthing-local" ];
+        exclude         = [ "**/.stversions" ];
+        extraBackupArgs = [ "--tag syncthing-local" ];
         initialize      = true;
         passwordFile    = toString ./config/restic/encryption.txt;
         paths           = [ "/backup" ];
@@ -467,10 +467,6 @@
             enable     = true;
             path       = "/backup/domci/Documents";
             versioning = simpleVersioning;
-          };
-          "domci/Downloads"  = {
-            enable = true;
-            path   = "/backup/domci/Downloads";
           };
           "domci/Pictures"   = {
             enable     = true;

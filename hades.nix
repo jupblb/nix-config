@@ -30,7 +30,8 @@
   environment = {
 #   sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages   = with pkgs; [
-      gnomeExtensions.compiz-windows-effect google-chrome nvidia-offload
+      discord gnomeExtensions.compiz-windows-effect google-chrome nvidia-offload
+      solaar
     ];
     variables        = {
       CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome;

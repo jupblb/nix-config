@@ -16,10 +16,6 @@
         devices = [ "dionysus" "domci-mac" ];
         enable  = lib.mkDefault false;
       };
-      "domci/Downloads"  = {
-        devices = [ "dionysus" "domci-mac" ];
-        enable  = lib.mkDefault false;
-      };
       "domci/Pictures"   = {
         devices = [ "dionysus" "domci-mac" ];
         enable  = lib.mkDefault false;
