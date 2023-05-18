@@ -187,10 +187,11 @@
     sshguard.whitelist = [ "192.168.1.0/24" ];
 
     syncthing = {
-      configDir = "/home/jupblb/.config/syncthing";
-      dataDir   = "/home/jupblb/.local/share/syncthing";
-      cert      = toString ./config/syncthing/hades/cert.pem;
-      folders   = {
+      configDir        = "/home/jupblb/.config/syncthing";
+      dataDir          = "/home/jupblb/.local/share/syncthing";
+      cert             = toString ./config/syncthing/hades/cert.pem;
+      key              = toString ./config/syncthing/hades/key.pem;
+      settings.folders = {
         "jupblb/Documents" = {
           enable = true;
           path   = "/home/jupblb/Documents";
@@ -204,8 +205,7 @@
           path   = "/home/jupblb/Workspace";
         };
       };
-      key       = toString ./config/syncthing/hades/key.pem;
-      user      = "jupblb";
+      user             = "jupblb";
     };
 
     udev.extraRules = ''
