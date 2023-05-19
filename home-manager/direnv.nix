@@ -1,10 +1,13 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   home = {
-    packages         =
+    activation.cachix = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      $DRY_RUN_CMD cachix use devenv
+    '';
+    packages          =
       let devenv =
         (import (fetchTarball "https://github.com/cachix/devenv/archive/latest.tar.gz")).default;
       in with pkgs; [ cachix devenv ];
-    sessionVariables = { DIRENV_WARN_TIMEOUT = "1h"; };
+    sessionVariables  = { DIRENV_WARN_TIMEOUT = "1h"; };
   };
 
   programs.direnv = {
