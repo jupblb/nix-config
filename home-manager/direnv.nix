@@ -1,7 +1,7 @@
 { lib, pkgs, ... }: {
   home = {
     activation.cachix = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      $DRY_RUN_CMD cachix use devenv
+      $DRY_RUN_CMD ${pkgs.cachix}/bin/cachix use devenv
     '';
     packages          =
       let devenv =

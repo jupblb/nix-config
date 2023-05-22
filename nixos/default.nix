@@ -48,6 +48,8 @@
 
   networking.useDHCP = false;
 
+  nix.settings.trusted-users = [ "root" "jupblb" ];
+
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays           = [ (import ../overlay) ];
 
@@ -80,10 +82,12 @@
     };
 
     openssh = {
-      openFirewall           = true;
-      enable                 = true;
-      passwordAuthentication = false;
-      permitRootLogin        = "no";
+      openFirewall = true;
+      enable       = true;
+      settings     = {
+        PasswordAuthentication = false;
+        PermitRootLogin        = "no";
+      };
     };
 
     sshguard.enable = true;
