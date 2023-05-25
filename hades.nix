@@ -188,11 +188,11 @@
     sshguard.whitelist = [ "192.168.1.0/24" ];
 
     syncthing = {
-      configDir        = "/home/jupblb/.config/syncthing";
-      dataDir          = "/home/jupblb/.local/share/syncthing";
-      cert             = toString ./config/syncthing/hades/cert.pem;
-      key              = toString ./config/syncthing/hades/key.pem;
-      settings.folders = {
+      configDir = "/home/jupblb/.config/syncthing";
+      dataDir   = "/home/jupblb/.local/share/syncthing";
+      cert      = toString ./config/syncthing/hades/cert.pem;
+      key       = toString ./config/syncthing/hades/key.pem;
+      folders   = {
         "jupblb/Documents" = {
           enable = true;
           path   = "/home/jupblb/Documents";
@@ -206,7 +206,7 @@
           path   = "/home/jupblb/Workspace";
         };
       };
-      user             = "jupblb";
+      user      = "jupblb";
     };
 
     udev.extraRules = ''
@@ -228,4 +228,9 @@
   };
 
   users.users.jupblb.extraGroups = [ "input" "lp" ];
+
+  virtualisation.docker.rootless = {
+    enable            = true;
+    setSocketVariable = true;
+  };
 }

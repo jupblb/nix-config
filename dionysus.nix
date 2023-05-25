@@ -450,51 +450,51 @@
     };
 
     syncthing = {
-      cert     = toString ./config/syncthing/dionysus/cert.pem;
-      settings = {
-        folders     =
-          let simpleVersioning = {
-            params = {
-              cleanInterval = "3600";
-              maxAge        = toString(3600 * 24 * 30 * 3); # 3 months
-            };
-            type   = "staggered";
-          };
-          in {
-            "domci/Documents"  = {
-              enable     = true;
-              path       = "/backup/domci/Documents";
-              versioning = simpleVersioning;
-            };
-            "domci/Pictures"   = {
-              enable     = true;
-              path       = "/backup/domci/Pictures";
-              versioning = simpleVersioning;
-            };
-            "domci/Videos"     = {
-              enable     = true;
-              path       = "/backup/domci/Videos";
-              versioning = simpleVersioning;
-            };
-            "jupblb/Documents" = {
-              enable     = true;
-              path       = "/backup/jupblb/Documents";
-              versioning = simpleVersioning;
-            };
-            "jupblb/Pictures"  = {
-              enable     = true;
-              path       = "/backup/jupblb/Pictures";
-              versioning = simpleVersioning;
-            };
-            "jupblb/Workspace" = {
-              enable = true;
-              path   = "/backup/jupblb/Workspace";
-            };
-          };
-        options.gui = (import ./config/secret.nix).syncthing;
+      cert         = toString ./config/syncthing/dionysus/cert.pem;
+      extraOptions = {
+        gui = (import ./config/secret.nix).syncthing;
       };
-      key      = toString ./config/syncthing/dionysus/key.pem;
-      relay    = {
+      folders      =
+        let simpleVersioning = {
+          params = {
+            cleanInterval = "3600";
+            maxAge        = toString(3600 * 24 * 30 * 3); # 3 months
+          };
+          type   = "staggered";
+        };
+        in {
+          "domci/Documents"  = {
+            enable     = true;
+            path       = "/backup/domci/Documents";
+            versioning = simpleVersioning;
+          };
+          "domci/Pictures"   = {
+            enable     = true;
+            path       = "/backup/domci/Pictures";
+            versioning = simpleVersioning;
+          };
+          "domci/Videos"     = {
+            enable     = true;
+            path       = "/backup/domci/Videos";
+            versioning = simpleVersioning;
+          };
+          "jupblb/Documents" = {
+            enable     = true;
+            path       = "/backup/jupblb/Documents";
+            versioning = simpleVersioning;
+          };
+          "jupblb/Pictures"  = {
+            enable     = true;
+            path       = "/backup/jupblb/Pictures";
+            versioning = simpleVersioning;
+          };
+          "jupblb/Workspace" = {
+            enable = true;
+            path   = "/backup/jupblb/Workspace";
+          };
+        };
+      key          = toString ./config/syncthing/dionysus/key.pem;
+      relay        = {
         enable        = true;
         listenAddress = "0.0.0.0";
         pools         = [ "" ];
