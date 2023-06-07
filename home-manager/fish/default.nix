@@ -40,6 +40,7 @@
       shellAliases         = {
         cat  = "${pkgs.bat}/bin/bat -p --paging=never";
         diff = "${pkgs.difftastic}/bin/difft --background=light --tab-width=2";
+        fhs  = "nix-shell -p steam-run --command 'steam-run bash'";
         less = "${pkgs.bat}/bin/bat -p --paging=always";
       };
     };
