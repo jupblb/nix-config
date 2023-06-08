@@ -58,7 +58,7 @@
             autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f
             luafile ${toString ./config/treesitter.lua}
           '';
-          plugin = nvim-treesitter.overrideAttrs(_: {
+          plugin = nvim-treesitter.withAllGrammars.overrideAttrs(_: {
             dependencies = [
               nvim-treesitter-refactor nvim-treesitter-textobjects
               nvim-ts-context-commentstring vim-matchup

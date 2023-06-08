@@ -101,7 +101,6 @@
       ./home-manager/neovim
       ./home-manager/neovim/lsp.nix
       ./home-manager/qutebrowser
-      ./home-manager/zk
     ];
 
     programs = {

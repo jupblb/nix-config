@@ -12,7 +12,7 @@ require('nvim-treesitter.configs').setup({
             node_decremental = '<S-TAB>',
         }
     },
-    matchup = { enable = true },
+    matchup = { enable = false },
     parser_install_dir = parser_install_dir,
     refactor = {
         highlight_definitions = { enable = true },

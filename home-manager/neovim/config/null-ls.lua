@@ -8,7 +8,6 @@ null_ls.setup({
         null_ls.builtins.code_actions.statix,
         null_ls.builtins.diagnostics.fish,
         null_ls.builtins.diagnostics.markdownlint,
-        null_ls.builtins.diagnostics.opacheck,
         null_ls.builtins.diagnostics.statix,
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.fish_indent,
