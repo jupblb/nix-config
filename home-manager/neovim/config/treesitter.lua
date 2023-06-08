@@ -12,26 +12,12 @@ require('nvim-treesitter.configs').setup({
             node_decremental = '<S-TAB>',
         }
     },
-    matchup = { enable = false },
+    matchup = { enable = true },
     parser_install_dir = parser_install_dir,
     refactor = {
         highlight_definitions = { enable = true },
         navigation = { enable = true, keymaps = { goto_definition = 'gd' } }
     },
-    textobjects = {
-        select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-                ['ab'] = '@block.outer',
-                ['ib'] = '@block.inner',
-                ['ac'] = '@class.outer',
-                ['ic'] = '@class.inner',
-                ['af'] = '@function.outer',
-                ['if'] = '@function.inner'
-            }
-        }
-    }
 })
 
 vim.opt.runtimepath:append(parser_install_dir)

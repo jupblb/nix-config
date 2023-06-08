@@ -60,8 +60,7 @@
           '';
           plugin = nvim-treesitter.withAllGrammars.overrideAttrs(_: {
             dependencies = [
-              nvim-treesitter-refactor nvim-treesitter-textobjects
-              nvim-ts-context-commentstring vim-matchup
+              nvim-treesitter-refactor nvim-ts-context-commentstring vim-matchup
             ];
           });
         } {
