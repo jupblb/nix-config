@@ -6,8 +6,9 @@
       extraPackages =
         let
           default        = with pkgs; [
-            black dart fish gomodifytags gopls gotests impl isort jq ltex-ls
-            lua-language-server marksman nil pandoc shellcheck shfmt statix
+            black dart fish gomodifytags gopls gotests impl isort jq
+            jdt-language-server ltex-ls lua-language-server marksman nil
+            pandoc shellcheck shfmt statix
           ];
           latexindent    = pkgs.texlive.latexindent.pkgs;
           nodePackages   = with pkgs.nodePackages; [
