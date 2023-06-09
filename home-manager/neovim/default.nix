@@ -19,7 +19,7 @@
 
     kitty = {
       settings.scrollback_pager =
-        "kitty @ launch --type=overlay --stdin-source=@screen_scrollback nvim -R -c 'autocmd VimEnter * norm G{}' -";
+        "sh -c '${pkgs.vtclean}/bin/vtclean | nvim -R -c \"normal G{}\"'";
     };
 
     neovim = {

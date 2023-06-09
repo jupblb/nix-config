@@ -8,4 +8,5 @@ self: super: with super; {
   };
   pragmata-pro          = callPackage ./pragmata-pro {};
   nvidia-offload        = callPackage ./nvidia-offload {};
+  vtclean               = callPackage ./vtclean.nix {};
 }
