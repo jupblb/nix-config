@@ -4,7 +4,7 @@
       bat = lib.hm.dag.entryAfter ["writeBoundary"]
         "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
     };
-    packages         = with pkgs; [ git-crypt ripgrep ];
+    packages         = with pkgs; [ entr git-crypt ripgrep ];
     username         = "jupblb";
     sessionVariables = { PAGER = "${pkgs.less}/bin/less -R"; };
   };

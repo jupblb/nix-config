@@ -12,6 +12,7 @@ telescope.setup({
         },
         layout_strategy = "flex",
         path_display = { "truncate" },
+        wrap_results = true,
     },
     pickers = {
         find_files = {

@@ -25,9 +25,6 @@
           config = "source ${toString ./config/fidget.vim}";
           plugin = fidget-nvim;
         } {
-          config = "lua require('lsp_lines').setup({})";
-          plugin = lsp_lines-nvim;
-        } {
           config = "luafile ${toString ./config/null-ls.lua}";
           plugin = null-ls-nvim.overrideAttrs(_: {
             dependencies = [ plenary-nvim ];
