@@ -15,11 +15,11 @@ vim.keymap.set('n', '<Leader>d', diagnostics_toggle, {})
 _G.markdown_formatters = {
     ['Pandoc (with reference-links)'] = {
         'pandoc', '--columns=80', '--reference-links', '-s', '-f', 'markdown',
-        '-t', 'markdown-simple_tables-raw_attribute', '-'
+        '-t', 'commonmark+pipe_tables', '-'
     },
     ['Pandoc (without reference-links)'] = {
         'pandoc', '--columns=80', '-s', '-f', 'markdown', '-t',
-        'markdown-simple_tables-raw_attribute', '-'
+        'commonmark+pipe_tables', '-'
     },
     ['Pandoc (gfm)'] = {
         'pandoc', '--columns=80', '-s', '-f', 'gfm', '-t', 'gfm', '-'

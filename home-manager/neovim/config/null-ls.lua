@@ -26,7 +26,7 @@ null_ls.register({
         args = function(params)
             local args = {
                 '--columns=80', '-s', '-f', 'markdown', '-t',
-                'markdown-simple_tables-raw_attribute', '-'
+                'commonmark+pipe_tables', '-'
             }
 
             if string.find(params.bufname, "jupblb/Documents") then

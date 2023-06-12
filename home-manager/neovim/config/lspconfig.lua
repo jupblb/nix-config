@@ -68,7 +68,7 @@ require('ltex-ls').setup({
             },
             disabledRules = {
                 -- https://community.languagetool.org/rule/list?lang=en
-                en = { "DASH_RULE", "ELLIPSIS", "EN_QUOTES" },
+                en = { "DASH_RULE", "ELLIPSIS", "EN_QUOTES", "WHITESPACE_RULE" },
                 pl = {}
             },
             dictionary = (function()
