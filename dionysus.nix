@@ -75,6 +75,7 @@
   networking = {
     defaultGateway           = "192.168.1.1";
     domain                   = "kielbowi.cz";
+    firewall.checkReversePath = "loose";
     firewall.allowedTCPPorts = [
       80 111 443 2049 2267 3012 4000 4001 4002 8181 22067 22070
     ];
