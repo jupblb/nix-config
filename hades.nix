@@ -3,7 +3,7 @@
 {
   boot = {
     initrd = {
-      kernelModules          = [ "e1000e" "i915" ];
+      kernelModules          = [ "e1000e" "i915" "kvm-intel" ];
       luks.devices           = {
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
@@ -184,6 +184,11 @@
 
     printing.enable = true;
 
+    psd = {
+      enable      = true;
+      resyncTimer = "30m";
+    };
+
     sshguard.whitelist = [ "192.168.1.0/24" ];
 
     syncthing = {
@@ -226,10 +231,12 @@
     "autovt@tty1".enable = false;
   };
 
-  users.users.jupblb.extraGroups = [ "input" "lp" ];
+  users.users.jupblb.extraGroups = [ "docker" "input" "lp" ];
 
-  virtualisation.docker.rootless = {
-    enable            = true;
-    setSocketVariable = true;
+  virtualisation.docker = {
+    autoPrune    = { enable = true; };
+    enable       = true;
+    enableNvidia = true;
+    enableOnBoot = true;
   };
 }
