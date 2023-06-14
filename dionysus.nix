@@ -114,6 +114,36 @@
   services = {
     acpid.enable = true;
 
+    authelia.instances.default = {
+      enable   = true;
+      secrets  = let secrets = (import ./config/secret.nix).authelia; in {
+        jwtSecretFile            = pkgs.writeText "authelia-jwt" secrets.jwt;
+        storageEncryptionKeyFile =
+          pkgs.writeText "authelia-storage" secrets.storage;
+      };
+      settings = {
+        access_control                = { default_policy = "one_factor"; };
+        authentication_backend        = {
+          file.path              = "/backup/authelia.yaml";
+          password_reset.disable = true;
+        };
+        notifier                      = {
+          smtp = let cfg = (import ./config/secret.nix).mailgun; in {
+            host     = "smtp.eu.mailgun.org";
+            password = cfg.password;
+            port     = 587;
+            sender   = "mailgun@kielbowi.cz";
+            username = cfg.login;
+          };
+        };
+        server                        = { port = 9092; };
+        session                       = { domain = "kielbowi.cz"; };
+        storage                       = {
+          local.path = "/var/lib/authelia-default/authelia.sqlite";
+        };
+      };
+    };
+
     bazarr = {
       enable = true;
       group  = "users";
@@ -122,7 +152,14 @@
     caddy = {
       email        = "caddy@kielbowi.cz";
       enable       = true;
-      virtualHosts = {
+      virtualHosts =
+      let auth = ''
+        forward_auth http://localhost:9092 {
+            uri /api/verify?rd=https://auth.kielbowi.cz/
+            copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+        }
+      '';
+      in {
         "kielbowi.cz"              = {
           extraConfig = ''
             header /.well-known/matrix/* Content-Type application/json
@@ -132,8 +169,11 @@
             respond "Hello, world!!"
           '';
         };
+        "auth.kielbowi.cz"         = {
+          extraConfig = "reverse_proxy http://localhost:9092";
+        };
         "bazarr.kielbowi.cz"       = {
-          extraConfig = "reverse_proxy http://localhost:6767";
+          extraConfig = auth + "reverse_proxy http://localhost:6767";
         };
         "calibre.kielbowi.cz"      = {
           extraConfig = "reverse_proxy http://localhost:8083";
@@ -151,7 +191,7 @@
           extraConfig = "reverse_proxy http://localhost:7777";
         };
         "jackett.kielbowi.cz"      = {
-          extraConfig = "reverse_proxy http://localhost:9117";
+          extraConfig = auth + "reverse_proxy http://localhost:9117";
         };
         "jellyfin.kielbowi.cz"     = {
           extraConfig = "reverse_proxy http://localhost:8096";
@@ -160,7 +200,7 @@
           extraConfig = "reverse_proxy http://localhost:6428";
         };
         "lidarr.kielbowi.cz"       = {
-          extraConfig = "reverse_proxy http://localhost:8686";
+          extraConfig = auth + "reverse_proxy http://localhost:8686";
         };
         "matrix.kielbowi.cz"       = {
           # https://github.com/matrix-org/synapse/blob/develop/docs/reverse_proxy.md#caddy-v2
@@ -173,7 +213,7 @@
           extraConfig = "reverse_proxy http://localhost:28981";
         };
         "radarr.kielbowi.cz"       = {
-          extraConfig = "reverse_proxy http://localhost:7878";
+          extraConfig = auth + "reverse_proxy http://localhost:7878";
         };
         "rss.kielbowi.cz"       = {
           extraConfig = "reverse_proxy http://localhost:9283";
@@ -182,10 +222,10 @@
           extraConfig = "reverse_proxy http://localhost:3939";
         };
         "sonarr.kielbowi.cz"       = {
-          extraConfig = "reverse_proxy http://localhost:8989";
+          extraConfig = auth + "reverse_proxy http://localhost:8989";
         };
         "syncthing.kielbowi.cz"    = {
-          extraConfig = ''
+          extraConfig = auth + ''
             reverse_proxy http://localhost:8384 {
               header_up Host localhost
               header_up X-Forwarded-Host syncthing.kielbowi.cz
@@ -193,7 +233,7 @@
           '';
         };
         "transmission.kielbowi.cz" = {
-          extraConfig = "reverse_proxy http://127.0.0.1:9091";
+          extraConfig = auth + "reverse_proxy http://127.0.0.1:9091";
         };
         "vaultwarden.kielbowi.cz"  = {
           extraConfig = ''
@@ -227,7 +267,7 @@
           '';
         };
         "wolock.kielbowi.cz"       = {
-          extraConfig = "reverse_proxy http://127.0.0.1:9247";
+          extraConfig = auth + "reverse_proxy http://127.0.0.1:9247";
         };
       };
     };
@@ -452,9 +492,6 @@
 
     syncthing = {
       cert         = toString ./config/syncthing/dionysus/cert.pem;
-      extraOptions = {
-        gui = (import ./config/secret.nix).syncthing;
-      };
       folders      =
         let simpleVersioning = {
           params = {
@@ -503,17 +540,14 @@
     };
 
     transmission = {
-      enable       = true;
-      group        = "users";
-      openFirewall = true;
-      settings     = (import ./config/secret.nix).transmission // {
-        download-dir                = "/data/downloads";
-        incomplete-dir              = "/data/downloads/.incomplete";
-        ratio-limit                 = 0;
-        ratio-limit-enabled         = true;
-        rpc-enabled                 = true;
-        rpc-authentication-required = true;
-        rpc-host-whitelist          = "transmission.kielbowi.cz";
+      enable   = true;
+      group    = "users";
+      settings = {
+        download-dir         = "/data/downloads";
+        incomplete-dir       = "/data/downloads/.incomplete";
+        ratio-limit          = 0;
+        ratio-limit-enabled  = true;
+        rpc-host-whitelist   = "transmission.kielbowi.cz";
       };
     };
 
