@@ -3,7 +3,7 @@
     activation       = {
       nvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD ${config.programs.neovim.finalPackage}/bin/nvim \
-          --headless +TSUpdate +UpdateRemotePlugins +quit && echo
+          --headless +UpdateRemotePlugins +quit && echo
       '';
     };
     sessionVariables = {
