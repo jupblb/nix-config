@@ -122,7 +122,14 @@
           pkgs.writeText "authelia-storage" secrets.storage;
       };
       settings = {
-        access_control                = { default_policy = "one_factor"; };
+        access_control                = {
+          default_policy = "one_factor";
+          rules          = [ {
+            domain   = "*.kielbowi.cz";
+            networks = [ "192.168.1.0/18" ];
+            policy   = "bypass";
+          } ];
+        };
         authentication_backend        = {
           file.path              = "/backup/authelia.yaml";
           password_reset.disable = true;
