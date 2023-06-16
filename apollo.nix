@@ -33,8 +33,7 @@
 
   programs = {
     kitty               = {
-      font.package  = pkgs.pragmata-pro;
-      package       = pkgs.symlinkJoin {
+      package = pkgs.symlinkJoin {
         name        = "kitty-glx";
         paths       = with pkgs; [ kitty ];
         postBuild   =

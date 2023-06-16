@@ -8,8 +8,9 @@
     kitty = {
       enable      = true;
       font        = {
-        name = "PragmataPro Mono Liga";
-        size = 10;
+        name    = "Iosevka Term Custom";
+        package = pkgs.iosevka-term-custom;
+        size    = 10;
       };
       keybindings = {
         "ctrl+shift+backspace" = "select_tab";

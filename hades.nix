@@ -48,7 +48,7 @@
     "/home".fsType = "xfs";
   };
 
-  fonts.fonts = with pkgs; [ pragmata-pro ];
+  fonts.fonts = with pkgs; [ iosevka iosevka-term-custom ];
 
   hardware = {
     bluetooth.enable   = true;

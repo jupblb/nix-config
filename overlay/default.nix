@@ -6,7 +6,18 @@ self: super: with super; {
       "--enable-features=UseOzonePlatform" "--ozone-platform=wayland"
     ];
   };
-  pragmata-pro          = callPackage ./pragmata-pro {};
+  iosevka-term          = super.iosevka-bin.override {
+    variant = "sgr-iosevka-term";
+  };
+  iosevka-term-custom   = super.iosevka.override {
+    set              = "custom-term";
+    privateBuildPlan = {
+      export-glyph-names = true;
+      family             = "Iosevka Term Custom";
+      ligations          = { inherits = "dlig"; };
+      spacing            = "term";
+    };
+  };
   nvidia-offload        = callPackage ./nvidia-offload {};
   vtclean               = callPackage ./vtclean.nix {};
 }

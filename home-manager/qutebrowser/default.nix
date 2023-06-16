@@ -23,7 +23,7 @@ _: {
     };
     settings      = {
       content.autoplay = false;
-      fonts.default_family = "PragmataPro Mono";
+      fonts.default_family = "Iosevka";
 #     BROKEN: https://github.com/qutebrowser/qutebrowser/issues/2236
 #     statusbar.show = "in-mode";
     };

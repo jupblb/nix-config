@@ -75,7 +75,6 @@
       # https://github.com/Aetf/kmscon/issues/29
       enable        = false;
       fonts         = [
-        { name = "PragmataPro Mono"; package = pkgs.pragmata-pro; }
         { name = "Source Code Pro"; package = pkgs.source-code-pro; }
       ];
       hwRender      = true;
