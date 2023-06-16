@@ -13,7 +13,7 @@ self: super: with super; {
     set              = "custom-term";
     privateBuildPlan = {
       export-glyph-names = true;
-      family             = "Iosevka Term Custom";
+      family             = "Iosevka Term";
       ligations          = { inherits = "dlig"; };
       spacing            = "term";
     };

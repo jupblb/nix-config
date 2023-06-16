@@ -105,11 +105,7 @@
 
     programs = {
       kitty = {
-        font = {
-          name    = "Iosevka Term Custom";
-          package = pkgs.iosevka-term-custom;
-        };
-
+        font.package                  = lib.mkForce pkgs.iosevka-term-custom;
         settings.linux_display_server = "wayland";
       };
 
