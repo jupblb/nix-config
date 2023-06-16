@@ -19,7 +19,7 @@
 
     kitty = {
       settings.scrollback_pager =
-        "sh -c '${pkgs.vtclean}/bin/vtclean | nvim -R -c \"normal G{}\"'";
+        "${pkgs.fish}/bin/fish -c '${pkgs.vtclean}/bin/vtclean | ${config.programs.neovim.finalPackage}/bin/nvim -R -c \"normal G{}\"'";
     };
 
     neovim = {
