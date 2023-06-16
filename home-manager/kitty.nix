@@ -8,8 +8,8 @@
     kitty = {
       enable      = true;
       font        = {
-        name    = "Iosevka Term Custom";
-        package = pkgs.iosevka-term-custom;
+        name    = "Iosevka Term";
+        package = pkgs.iosevka-term;
         size    = 10;
       };
       keybindings = {

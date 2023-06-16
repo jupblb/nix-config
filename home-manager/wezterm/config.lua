@@ -9,7 +9,7 @@ return {
 	enable_csi_u_key_encoding = true,
 	enable_tab_bar = false,
 	font = wezterm.font_with_fallback {
-		'Iosevka Term Custom',
+		'Iosevka Term',
 		'JetBrains Mono',
 	},
 	font_size = font_size,

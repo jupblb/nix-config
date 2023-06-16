@@ -48,7 +48,7 @@
     "/home".fsType = "xfs";
   };
 
-  fonts.fonts = with pkgs; [ iosevka iosevka-term-custom ];
+  fonts.fonts = with pkgs; [ iosevka ];
 
   hardware = {
     bluetooth.enable   = true;
@@ -104,7 +104,14 @@
     ];
 
     programs = {
-      kitty.settings.linux_display_server = "wayland";
+      kitty = {
+        font = {
+          name    = "Iosevka Term Custom";
+          package = pkgs.iosevka-term-custom;
+        };
+
+        settings.linux_display_server = "wayland";
+      };
 
       qutebrowser.settings = {
         qt.highdpi             = true;
