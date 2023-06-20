@@ -584,55 +584,78 @@
 
   system.stateVersion = "20.09";
 
-  systemd.services = {
-    calibre-web           = { wantedBy = lib.mkForce []; };
-    ip-updater            = {
-      after         = [ "network.target" ];
-      description   = "Public IP updater";
-      environment   = (import ./config/secret.nix).ovh;
-      path          = with pkgs; [ curl gawk ];
-      script        = builtins.readFile ./config/script/ip-updater.sh;
-      serviceConfig = {
-        ProtectSystem = "full";
-        User          = "jupblb";
-        Type          = "oneshot";
+  systemd = {
+    paths    = {
+      stignore = {
+        pathConfig = {
+          PathModified = "/backup/jupblb/Workspace";
+        };
+        wantedBy   = [ "multi-user.target" ];
       };
-      startAt       = "*:0/5";
     };
-    jellyfin              = {
-      serviceConfig.PrivateDevices = lib.mkForce false;
-    };
-    komga                 = { wantedBy = lib.mkForce []; };
-    paperless-consumer    = { wantedBy = lib.mkForce []; };
-    paperless-inbox       = {
-      after         = [ "network.target" ];
-      description   = "Sync dropbox scans with paperless";
-      script        = builtins.readFile ./config/script/paperless-db-sync.sh;
-      serviceConfig = {
-        ProtectSystem = "full";
-        Type          = "oneshot";
-        User          = "jupblb";
+    services = {
+      calibre-web           = { wantedBy = lib.mkForce []; };
+      ip-updater            = {
+        after         = [ "network.target" ];
+        description   = "Public IP updater";
+        environment   = (import ./config/secret.nix).ovh;
+        path          = with pkgs; [ curl gawk ];
+        script        = builtins.readFile ./config/script/ip-updater.sh;
+        serviceConfig = {
+          ProtectSystem = "full";
+          User          = "jupblb";
+          Type          = "oneshot";
+        };
+        startAt       = "*:0";
       };
-      startAt       = "*:0";
-    };
-    paperless-scheduler   = { wantedBy = lib.mkForce []; };
-    paperless-web         = { wantedBy = lib.mkForce []; };
-    podman-simply-shorten = { wantedBy = lib.mkForce []; };
-    syncthing             = { wantedBy = lib.mkForce []; };
-    wolock                = {
-      after         = [ "network.target" ];
-      description   = "Wake on Lan companion app";
-      environment   = {
-        NODE_ENV       = "production";
-        PORT           = "9247";
-        SESSION_SECRET = "sasdasgs124818fa0aa9dm21asdfa9as";
+      jellyfin              = {
+        serviceConfig.PrivateDevices = lib.mkForce false;
       };
-      path          = with pkgs; [ bash nodejs ];
-      script        = "npm run build && npm run start";
-      serviceConfig = {
-        ProtectSystem    = "full";
-        WorkingDirectory = "/home/jupblb/Workspace/wolock";
-        User             = "jupblb";
+      komga                 = { wantedBy = lib.mkForce []; };
+      paperless-consumer    = { wantedBy = lib.mkForce []; };
+      paperless-inbox       = {
+        after         = [ "network.target" ];
+        description   = "Sync dropbox scans with paperless";
+        script        = builtins.readFile ./config/script/paperless-db-sync.sh;
+        serviceConfig = {
+          ProtectSystem = "full";
+          Type          = "oneshot";
+          User          = "jupblb";
+        };
+        startAt       = "*:0";
+      };
+      paperless-scheduler   = { wantedBy = lib.mkForce []; };
+      paperless-web         = { wantedBy = lib.mkForce []; };
+      podman-simply-shorten = { wantedBy = lib.mkForce []; };
+      stignore              = {
+        description   = "Update jupblb/Workspace stignore";
+        path          = with pkgs; [
+          diffutils (python311.withPackages(p: with p; [ gitignore-parser ]))
+        ];
+        script        = builtins.readFile ./config/script/stignore.sh;
+        serviceConfig = {
+          ProtectSystem = "full";
+          User          = "syncthing";
+          Type          = "oneshot";
+        };
+        startAt       = "*:0/15";
+        wantedBy      = [ "multi-user.target" ];
+      };
+      syncthing             = { wantedBy = lib.mkForce []; };
+      wolock                = {
+        after         = [ "network.target" ];
+        description   = "Wake on Lan companion app";
+        environment   = {
+          NODE_ENV       = "production";
+          PORT           = "9247";
+        };
+        path          = with pkgs; [ bash nodejs ];
+        script        = "npm run build && npm run start";
+        serviceConfig = {
+          ProtectSystem    = "full";
+          WorkingDirectory = "/home/jupblb/Workspace/wolock";
+          User             = "jupblb";
+        };
       };
     };
   };
