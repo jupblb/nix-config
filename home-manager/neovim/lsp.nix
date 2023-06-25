@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
+  nixpkgs.config.allowUnfreePredicate = pkg: (lib.getName pkg) == "vscode";
+
   programs = {
     git.ignores = [ ".ltex_ls_cache.json" ];
 
