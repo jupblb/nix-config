@@ -26,7 +26,8 @@ null_ls.register({
         args = function(params)
             local args = {
                 '--columns=80', '-s', '-f', 'markdown', '-t',
-                'commonmark+pipe_tables', '-'
+                'commonmark+footnotes+pipe_tables+task_lists+tex_math_dollars+yaml_metadata_block',
+                '-'
             }
 
             if string.find(params.bufname, "jupblb/Documents") then
