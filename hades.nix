@@ -48,7 +48,8 @@
     "/home".fsType = "xfs";
   };
 
-  fonts.fonts = with pkgs; [ iosevka ];
+  fonts.fonts = with pkgs;
+    [ iosevka (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
 
   hardware = {
     bluetooth.enable   = true;
@@ -104,10 +105,7 @@
     ];
 
     programs = {
-      kitty = {
-        font.package                  = lib.mkForce pkgs.iosevka-term-custom;
-        settings.linux_display_server = "wayland";
-      };
+      kitty.settings.linux_display_server = "wayland";
 
       qutebrowser.settings = {
         qt.highdpi             = true;

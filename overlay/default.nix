@@ -9,15 +9,6 @@ self: super: with super; {
   iosevka-term          = super.iosevka-bin.override {
     variant = "sgr-iosevka-term";
   };
-  iosevka-term-custom   = super.iosevka.override {
-    set              = "custom-term";
-    privateBuildPlan = {
-      export-glyph-names = true;
-      family             = "Iosevka Term";
-      ligations          = { inherits = "dlig"; };
-      spacing            = "term";
-    };
-  };
   nvidia-offload        = callPackage ./nvidia-offload {};
   vtclean               = callPackage ./vtclean.nix {};
 }
