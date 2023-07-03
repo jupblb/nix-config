@@ -1,6 +1,4 @@
 { config, lib, pkgs, ... }: {
-  fonts.fontconfig.enable = true;
-
   home = {
     activation    = {
       linkDesktopApplications =

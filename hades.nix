@@ -48,8 +48,7 @@
     "/home".fsType = "xfs";
   };
 
-  fonts.fonts = with pkgs;
-    [ iosevka (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
+  fonts.fonts = with pkgs; [ iosevka ];
 
   hardware = {
     bluetooth.enable   = true;

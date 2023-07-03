@@ -6,9 +6,6 @@ self: super: with super; {
       "--enable-features=UseOzonePlatform" "--ozone-platform=wayland"
     ];
   };
-  iosevka-term          = super.iosevka-bin.override {
-    variant = "sgr-iosevka-term";
-  };
   nvidia-offload        = callPackage ./nvidia-offload {};
   vtclean               = callPackage ./vtclean.nix {};
 }

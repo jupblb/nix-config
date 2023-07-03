@@ -8,10 +8,7 @@ return {
 	default_prog = fish,
 	enable_csi_u_key_encoding = true,
 	enable_tab_bar = false,
-	font = wezterm.font_with_fallback {
-		'Iosevka Term',
-		'JetBrains Mono',
-	},
+	font = wezterm.font('Iosevka Term'),
 	font_size = font_size,
 	keys = {
 		{

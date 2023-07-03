@@ -1,4 +1,11 @@
 { pkgs, ... }: {
+  home.packages = with pkgs; [
+    (iosevka-bin.override { variant = "sgr-iosevka-term"; })
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+  ];
+
+  fonts.fontconfig.enable = true;
+
   home.shellAliases = {
     icat = "kitty +kitten icat";
     kssh = "kitty +kitten ssh";
@@ -8,9 +15,8 @@
     kitty = {
       enable      = true;
       font        = {
-        name    = "Iosevka Term";
-        package = pkgs.iosevka-term;
-        size    = 10;
+        name = "Iosevka Term";
+        size = 10;
       };
       keybindings = {
         "ctrl+shift+backspace" = "select_tab";
