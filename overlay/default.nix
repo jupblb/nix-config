@@ -1,5 +1,8 @@
 self: super: with super; {
   calibre-web           = callPackage ./calibre-web { inherit (super) calibre-web; };
+  git-tidy              = callPackage ./git-tidy.nix {
+    inherit (super.rustPlatform) buildRustPackage;
+  };
   google-chrome-wayland = super.google-chrome.override {
     commandLineArgs = super.lib.concatStringsSep " " [
       "--disable-features=WaylandFractionalScaleV1"

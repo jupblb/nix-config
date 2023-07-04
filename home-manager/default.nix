@@ -4,7 +4,7 @@
       bat = lib.hm.dag.entryAfter ["writeBoundary"]
         "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
     };
-    packages         = with pkgs; [ entr git-crypt ripgrep ];
+    packages         = with pkgs; [ entr ripgrep ];
     username         = "jupblb";
     sessionVariables = { PAGER = "${pkgs.less}/bin/less -R"; };
   };
@@ -63,6 +63,10 @@
         push.default                  = "upstream";
         sendemail.sendmailcmd         = "${pkgs.msmtp}/bin/msmtp";
         submodule.recurse             = true;
+      };
+      package     = pkgs.buildEnv {
+        name  = "git-custom";
+        paths = with pkgs; [ git git-crypt git-tidy ];
       };
       signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
       userEmail   = "git@kielbowi.cz";
