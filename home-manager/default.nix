@@ -35,6 +35,7 @@
         fuck     = "reset --hard HEAD";
         line     = "!sh -c 'git log -L$2,+1:\${GIT_PREFIX:-./}$1' -";
         lines    = "!sh -c 'git log -L$2,$3:\${GIT_PREFIX:-./}$1' -";
+        pr       = "!${pkgs.gh}/bin/gh pr checkout";
       };
       delta       = {
         enable  = true;
