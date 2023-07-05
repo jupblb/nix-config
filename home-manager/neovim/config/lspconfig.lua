@@ -65,6 +65,7 @@ require('ltex-ls').setup({
             diagnosticSeverity = "information",
             additionalRules = {
                 enablePickyRules = true,
+                languageModel = "~/.local/share/ngrams",
             },
             disabledRules = {
                 -- https://community.languagetool.org/rule/list?lang=en

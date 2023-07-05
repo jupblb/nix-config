@@ -46,9 +46,19 @@
     };
   };
 
-  xdg.configFile = {
-    # https://github.com/igorshubovych/markdownlint-cli#configuration
-    # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
-    "markdownlint".source = toString ./config/markdownlint.json;
+  xdg = {
+    configFile = {
+      # https://github.com/igorshubovych/markdownlint-cli#configuration
+      # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+      "markdownlint".source = toString ./config/markdownlint.json;
+    };
+    dataFile   = {
+      # https://dev.languagetool.org/finding-errors-using-n-gram-data.html
+      "ngrams/en".source = pkgs.fetchzip {
+        url    =
+          "https://languagetool.org/download/ngram-data/ngrams-en-20150817.zip";
+        sha256 = "sha256-v3Ym6CBJftQCY5FuY6s5ziFvHKAyYD3fTHr99i6N8sE=";
+      };
+    };
   };
 }
