@@ -44,7 +44,7 @@
         mime    = "application/pdf";
       } {
         command =
-          "sh: ${pkgs.exa}/bin/exa -RT --color=always --icons %pistol-filename% | head -10000";
+          "sh: ${pkgs.exa}/bin/exa -RT --color=always --icons %pistol-filename% | head -1000";
         mime    = "inode/directory";
       } {
         command = "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
