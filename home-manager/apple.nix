@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ lib, ... }: {
   programs.kitty = { font.size = lib.mkForce 14; };
 
   targets.darwin.defaults = {

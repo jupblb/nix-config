@@ -18,6 +18,8 @@ null_ls.setup({
     }
 })
 
+local commonmark = 'commonmark+footnotes+pipe_tables+task_lists+tex_math_dollars+yaml_metadata_block'
+
 null_ls.register({
     method = null_ls.methods.FORMATTING,
     filetypes = { 'markdown' },
@@ -25,9 +27,7 @@ null_ls.register({
         command = 'pandoc',
         args = function(params)
             local args = {
-                '--columns=80', '-s', '-f', 'markdown', '-t',
-                'commonmark+footnotes+pipe_tables+task_lists+tex_math_dollars+yaml_metadata_block',
-                '-'
+                '--columns=80', '-s', '-f', 'markdown', '-t', commonmark, '-'
             }
 
             if string.find(params.bufname, "jupblb/Documents") then
