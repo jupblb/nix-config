@@ -95,7 +95,10 @@
   programs = {
     adb.enable = true;
 
-    gnupg.agent.pinentryFlavor = "curses";
+    gnupg.agent = {
+      enable         = true;
+      pinentryFlavor = "curses";
+    };
 
     msmtp = {
       enable           = true;
