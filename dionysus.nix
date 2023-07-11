@@ -131,6 +131,14 @@
             domain   = "*.kielbowi.cz";
             networks = [ "192.168.1.0/18" ];
             policy   = "bypass";
+          } {
+            domain    = "files.kielbowi.cz";
+            # https://github.com/filebrowser/filebrowser/issues/1827#issuecomment-1047777732
+            resources = [
+              "^/api/public/dl/*" "/share/*" "/static/js/*" "/static/css/*"
+              "/static/img/*" "/static/themes/*" "/static/fonts/*"
+            ];
+            policy    = "bypass";
           } ];
         };
         authentication_backend        = {
@@ -192,7 +200,7 @@
           extraConfig = "respond \"Hello, world!\"";
         };
         "files.kielbowi.cz"        = {
-          extraConfig = "reverse_proxy http://localhost:8085";
+          extraConfig = auth + "reverse_proxy http://localhost:8085";
         };
         "go.kielbowi.cz"           = {
           extraConfig = "reverse_proxy http://localhost:4567";
@@ -659,6 +667,7 @@
       backend    = "podman";
       containers = {
         filebrowser    = {
+          cmd     = [ "--noauth" ];
           image   = "filebrowser/filebrowser";
           ports   = [ "8085:80" ];
           volumes = [
