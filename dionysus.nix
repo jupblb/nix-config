@@ -225,9 +225,6 @@
         "rss.kielbowi.cz"       = {
           extraConfig = "reverse_proxy http://localhost:9283";
         };
-        "rstudio.kielbowi.cz"      = {
-          extraConfig = "reverse_proxy http://localhost:3939";
-        };
         "sonarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:8989";
         };
@@ -462,19 +459,6 @@
       };
     };
 
-    rstudio-server = {
-      enable             = true;
-      package            = pkgs.rstudioServerWrapper.override {
-        packages = with pkgs.rPackages; [
-          dbscan e1071 effsize factoextra fpc haven learnr lm_beta lsr mclust
-          moments NbClust plyr Rcpp shiny tidyverse
-        ];
-      };
-      rserverExtraConfig = ''
-        www-port=3939
-      '';
-    };
-
     smartd = {
       autodetect    = false;
       devices       = [
@@ -664,12 +648,6 @@
   users.users = {
     jupblb.extraGroups = [ "adbusers" "docker" "podman" ];
     paperless.group    = lib.mkForce "users";
-    rstudio            = {
-      description                     = "RStudio user";
-      initialPassword                 = "changeme";
-      isNormalUser                    = true;
-      openssh.authorizedKeys.keyFiles = [ ./config/ssh/jupblb/id_ed25519.pub ];
-    };
   };
 
   virtualisation = {
