@@ -53,7 +53,5 @@
 
     neovim.extraConfig =
       "set shell=${lib.meta.getExe config.programs.fish.package}";
-
-    zellij.settings.default_shell = "fish";
   };
 }
