@@ -1,4 +1,5 @@
 #!/usr/bin/env fish
+# https://github.com/evanpurkhiser/dots-personal/blob/main/base/bash/functions.d/vim-singleton
 
 set -l nvim_id (jobs | grep "nvim --listen" | head -1 | awk '{print $1}')
 
@@ -15,5 +16,5 @@ for i in (seq 1 (count $argv))
     end
 end
 
-nvim --server $NVIM_LISTEN_ADDRESS --remote $argv &
+nvim --server $NVIM_LISTEN_ADDRESS --remote $argv
 fg "%$nvim_id"
