@@ -8,7 +8,7 @@
     };
     sessionVariables = {
       EDITOR              = "nvim";
-      NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE\$ZELLIJ_SESSION_NAME.socket";
+      NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
     };
   };
 
