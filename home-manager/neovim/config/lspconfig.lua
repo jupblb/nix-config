@@ -49,6 +49,10 @@ local default_config = {
 lspconfig.util.default_config = vim.tbl_extend(
     'force', lspconfig.util.default_config, default_config)
 
+if vim.fn.getcwd():find('/google/src/') ~= nil then
+    return
+end
+
 -- ltex.ls
 -- https://git.vigoux.giize.com/nvim-config/blob/master/lua/lsp_config.lua#L-368
 
@@ -108,8 +112,8 @@ require('neodev').setup({
 -- other LSPs
 local default_servers = {
     'cssls', 'dartls', 'dockerls', 'eslint', 'hls', 'html', 'lua_ls',
-    'marksman', 'nil_ls', 'prismals', 'rust_analyzer', 'tailwindcss',
-    'tsserver', 'vimls'
+    'marksman', 'nil_ls', 'prismals', 'pyright', 'rust_analyzer', 'statix',
+    'tailwindcss', 'tsserver', 'vimls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
@@ -117,6 +121,10 @@ lspconfig.bashls.setup({
     cmd_env = {
         GLOB_PATTERN = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.command|.envrc)',
     },
+})
+
+lspconfig.gopls.setup({
+    settings = { gopls = { gofumpt = true, staticcheck = true } }
 })
 
 lspconfig.jdtls.setup({
@@ -141,9 +149,6 @@ lspconfig.lua_ls.setup({
                 -- Make the server aware of Neovim runtime files
                 library = vim.api.nvim_get_runtime_file("", true),
             },
-            telemetry = {
-                enable = false,
-            },
         },
     },
 })
@@ -156,10 +161,3 @@ lspconfig.metals.setup({
     end,
     single_file_mode = true,
 })
-
-if vim.fn.getcwd():find('/google/src/') == nil then
-    lspconfig.gopls.setup({
-        settings = { gopls = { gofumpt = true, staticcheck = true } }
-    })
-    lspconfig.pyright.setup({})
-end
