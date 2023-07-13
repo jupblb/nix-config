@@ -100,16 +100,10 @@
       ./home-manager/lf
       ./home-manager/neovim
       ./home-manager/neovim/lsp.nix
-      ./home-manager/qutebrowser
     ];
 
     programs = {
       kitty.settings.linux_display_server = "wayland";
-
-      qutebrowser.settings = {
-        qt.highdpi             = true;
-        window.hide_decoration = true;
-      };
     };
 
     services.gpg-agent = {

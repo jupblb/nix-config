@@ -19,7 +19,6 @@
     ./home-manager/kitty.nix
     ./home-manager/neovim
     ./home-manager/direnv.nix
-    ./home-manager/qutebrowser
   ];
 
   nixpkgs.config.packageOverrides = _: {
@@ -30,7 +29,7 @@
   };
 
   programs = {
-    kitty               = {
+    kitty = {
       package = pkgs.symlinkJoin {
         name        = "kitty-glx";
         paths       = with pkgs; [ kitty ];
@@ -42,17 +41,8 @@
           in "ln -sfn ${app} $out/bin/kitty";
       };
     };
+
     home-manager.enable = true;
-    qutebrowser.package = pkgs.symlinkJoin {
-      name        = "qutebrowser-glx";
-      paths       = with pkgs; [ qutebrowser ];
-      postBuild   =
-        let app = pkgs.writeShellScript "qutebrowser-glx-sh" ''
-          ${lib.meta.getExe pkgs.nixGl.nixGLMesa} \
-            ${lib.meta.getExe pkgs.qutebrowser}
-        '';
-        in "ln -sfn ${app} $out/bin/qutebrowser";
-    };
   };
 
   services.gpg-agent = {
