@@ -48,10 +48,6 @@
               ];
           });
         } {
-          config =
-            "lua require('copilot').setup({suggestion = {enabled = false}})";
-          plugin = copilot-lua;
-        } {
           config = "luafile ${toString ./config/colorizer.lua}";
           plugin = nvim-colorizer-lua;
         } {
