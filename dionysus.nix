@@ -544,6 +544,7 @@
     transmission = {
       enable   = true;
       group    = "users";
+      package  = pkgs.transmission_4;
       settings = {
         download-dir         = "/data/downloads";
         incomplete-dir       = "/data/downloads/.incomplete";
