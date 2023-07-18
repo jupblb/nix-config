@@ -24,8 +24,8 @@
           ];
         in default ++ latexindent ++ nodePackages ++ nodeAtPackages;
       plugins       = with pkgs.vimPlugins; [ {
-          config = "source ${toString ./config/fidget.vim}";
-          plugin = fidget-nvim;
+          config = "lua require('lsp-notify').setup({ icons = false })";
+          plugin = nvim-lsp-notify;
         } {
           config = "luafile ${toString ./config/null-ls.lua}";
           plugin = null-ls-nvim.overrideAttrs(_: {

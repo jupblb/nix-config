@@ -11,15 +11,16 @@ end
 
 vim.keymap.set('n', '<Leader>d', diagnostics_toggle, {})
 
--- Set up Markdown formatting
+-- Format markdown with :MarkdownFormat
+local commonmark = 'commonmark+footnotes+pipe_tables+task_lists+tex_math_dollars+yaml_metadata_block'
+
 _G.markdown_formatters = {
     ['Pandoc (with reference-links)'] = {
         'pandoc', '--columns=80', '--reference-links', '-s', '-f', 'markdown',
-        '-t', 'commonmark+pipe_tables', '-'
+        '-t', commonmark, '-'
     },
     ['Pandoc (without reference-links)'] = {
-        'pandoc', '--columns=80', '-s', '-f', 'markdown', '-t',
-        'commonmark+pipe_tables', '-'
+        'pandoc', '--columns=80', '-s', '-f', 'markdown', '-t', commonmark, '-'
     },
     ['Pandoc (gfm)'] = {
         'pandoc', '--columns=80', '-s', '-f', 'gfm', '-t', 'gfm', '-'
