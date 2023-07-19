@@ -10,7 +10,7 @@
           default        = with pkgs; [
             black dart fish gomodifytags gopls gotests impl isort jq
             jdt-language-server ltex-ls lua-language-server marksman nil
-            pandoc shellcheck shfmt statix
+            pandoc shellcheck shfmt statix yaml-language-server
           ];
           latexindent    = pkgs.texlive.latexindent.pkgs;
           nodePackages   = with pkgs.nodePackages; [

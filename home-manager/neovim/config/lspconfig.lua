@@ -111,29 +111,14 @@ require('neodev').setup({
 
 -- other LSPs
 local default_servers = {
-    'cssls', 'dartls', 'dockerls', 'eslint', 'hls', 'html', 'lua_ls',
-    'marksman', 'nil_ls', 'prismals', 'pyright', 'rust_analyzer', 'statix',
-    'tailwindcss', 'tsserver', 'vimls'
+    'bashls', 'cssls', 'dartls', 'dockerls', 'eslint', 'hls', 'html', 'jdtls',
+    'jsonls', 'lua_ls', 'marksman', 'nil_ls', 'prismals', 'pyright',
+    'rust_analyzer', 'statix', 'tailwindcss', 'tsserver', 'vimls', 'yamlls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
-lspconfig.bashls.setup({
-    cmd_env = {
-        GLOB_PATTERN = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.command|.envrc)',
-    },
-})
-
 lspconfig.gopls.setup({
     settings = { gopls = { gofumpt = true, staticcheck = true } }
-})
-
-lspconfig.jdtls.setup({
-    cmd = { 'jdt-language-server', '-data', os.getenv('HOME') .. '/.cache/jdtls' }
-})
-
-lspconfig.jsonls.setup({
-    cmd = { 'vscode-json-language-server', '--stdio' },
-    settings = { json = { schemas = require('schemastore').json.schemas() } }
 })
 
 lspconfig.lua_ls.setup({
@@ -146,6 +131,8 @@ lspconfig.lua_ls.setup({
                 globals = { 'vim' },
             },
             workspace = {
+                -- https://github.com/LunarVim/LunarVim/issues/4049#issuecomment-1634539474
+                checkThirdParty = false,
                 -- Make the server aware of Neovim runtime files
                 library = vim.api.nvim_get_runtime_file("", true),
             },
@@ -153,11 +140,4 @@ lspconfig.lua_ls.setup({
     },
 })
 
-lspconfig.metals.setup({
-    root_dir = function(filename)
-        local pattern = lspconfig.util.root_pattern(
-            'build.sbt', 'build.sc', 'build.gradle', 'pom.xml')
-        return pattern(filename) or vim.fn.getcwd()
-    end,
-    single_file_mode = true,
-})
+lspconfig.metals.setup({ single_file_support = true })
