@@ -2,24 +2,24 @@
   # The default solution doesn't work with Spotlight
   disabledModules = ["targets/darwin/linkapps.nix"];
 
-  # https://github.com/nix-community/home-manager/issues/1341#issuecomment-778820334
+  # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1466965161
   home.activation.aliasApplications =
     let apps = pkgs.buildEnv {
       name        = "home-manager-applications";
       paths       = config.home.packages;
       pathsToLink = "/Applications";
     };
-    in lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      baseDir="${config.home.homeDirectory}/Applications/Home Manager"
-      if [ -d "$baseDir" ]; then
-        $DRY_RUN_CMD rm -rf "$baseDir"
-      fi
-      $DRY_RUN_CMD mkdir -p "$baseDir"
-      for appFile in ${apps}/Applications/*; do
-        target="$baseDir/$(basename "$appFile")"
-        $DRY_RUN_CMD cp ''${VERBOSE_ARG:+-v} -fHRL "$appFile" "$baseDir"
-        $DRY_RUN_CMD chmod ''${VERBOSE_ARG:+-v} -R +w "$target"
-      done
+    in lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      echo "Linking Home Manager applications..." 2>&1
+      app_path="$HOME/Applications/Home Manager Apps"
+      tmp_path="$(mktemp -dt "home-manager-applications.XXXXXXXXXX")" || exit 1
+
+      ${pkgs.fd}/bin/fd \
+        -t l -d 1 . ${apps}/Applications \
+        -x $DRY_RUN_CMD ${pkgs.mkalias}/bin/mkalias -L {} "$tmp_path/{/}"
+
+      $DRY_RUN_CMD rm -rf "$app_path"
+      $DRY_RUN_CMD mv "$tmp_path" "$app_path"
     '';
 
   programs.kitty = { font.size = lib.mkForce 14; };
