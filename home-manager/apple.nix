@@ -3,24 +3,28 @@
   disabledModules = ["targets/darwin/linkapps.nix"];
 
   # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1466965161
-  home.activation.aliasApplications =
-    let apps = pkgs.buildEnv {
-      name        = "home-manager-applications";
-      paths       = config.home.packages;
-      pathsToLink = "/Applications";
-    };
-    in lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      echo "Linking Home Manager applications..." 2>&1
-      app_path="$HOME/Applications/Home Manager Apps"
-      tmp_path="$(mktemp -dt "home-manager-applications.XXXXXXXXXX")" || exit 1
+  home.activation = {
+    aliasApplications   =
+      let apps = pkgs.buildEnv {
+        name        = "home-manager-applications";
+        paths       = config.home.packages;
+        pathsToLink = "/Applications";
+      };
+      in lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        echo "Linking Home Manager applications..." 2>&1
+        app_path="$HOME/Applications/Home Manager Apps"
+        tmp_path="$(mktemp -dt "home-manager-applications.XXXXXXXXXX")" || exit 1
 
-      ${pkgs.fd}/bin/fd \
-        -t l -d 1 . ${apps}/Applications \
-        -x $DRY_RUN_CMD ${pkgs.mkalias}/bin/mkalias -L {} "$tmp_path/{/}"
+        ${pkgs.fd}/bin/fd \
+          -t l -d 1 . ${apps}/Applications \
+          -x $DRY_RUN_CMD ${pkgs.mkalias}/bin/mkalias -L {} "$tmp_path/{/}"
 
-      $DRY_RUN_CMD rm -rf "$app_path"
-      $DRY_RUN_CMD mv "$tmp_path" "$app_path"
-    '';
+        $DRY_RUN_CMD rm -rf "$app_path"
+        $DRY_RUN_CMD mv "$tmp_path" "$app_path"
+      '';
+    disablePressAndHold =
+      "$DRY_RUN_CMD /usr/bin/defaults write -g ApplePressAndHoldEnabled -bool false";
+  };
 
   programs.kitty = { font.size = lib.mkForce 14; };
 
