@@ -39,7 +39,8 @@
           plugin =
             let ltex-ls     = pkgs.callPackage ./plugin/ltex.nix {};
             in nvim-lspconfig.overrideAttrs(_: {
-              dependencies = [ ltex-ls neodev-nvim SchemaStore-nvim ];
+              dependencies =
+                [ ltex-ls inc-rename-nvim neodev-nvim SchemaStore-nvim ];
             });
         }
       ];

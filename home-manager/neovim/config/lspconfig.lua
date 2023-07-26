@@ -1,5 +1,15 @@
 local lspconfig = require('lspconfig')
 
+-- Incremental rename
+require("inc_rename").setup({
+    preview_empty_name = true,
+    show_message = false,
+})
+
+vim.keymap.set("n", "<leader>lr", function()
+    return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true })
+
 -- Disable virtual text for errors
 vim.diagnostic.config({ virtual_text = false })
 

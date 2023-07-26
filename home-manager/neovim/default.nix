@@ -58,9 +58,10 @@
             autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f
             luafile ${toString ./config/treesitter.lua}
           '';
-          plugin = nvim-treesitter.withAllGrammars.overrideAttrs(_: {
+          plugin = nvim-ts-context-commentstring.overrideAttrs(_: {
             dependencies = [
-              nvim-treesitter-refactor nvim-ts-context-commentstring vim-matchup
+              nvim-treesitter-refactor (nvim-treesitter.withAllGrammars)
+              vim-matchup
             ];
           });
         } {
@@ -77,9 +78,6 @@
               telescope-lsp-handlers-nvim telescope-ui-select-nvim
             ];
           });
-        } {
-          config = "vmap <C-v><C-v> :VBox<CR>";
-          plugin = venn-nvim;
         } {
           config = "source ${toString ./config/oscyank.vim}";
           plugin = vim-oscyank;
