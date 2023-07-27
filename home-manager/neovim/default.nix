@@ -1,15 +1,6 @@
 { config, lib, pkgs, ... }: {
-  home = {
-    activation       = {
-      nvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD ${config.programs.neovim.finalPackage}/bin/nvim \
-          --headless +UpdateRemotePlugins +quit && echo
-      '';
-    };
-    sessionVariables = {
-      EDITOR              = "nvim";
-      NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
-    };
+  home.sessionVariables = {
+    NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
   };
 
   programs = {
@@ -23,6 +14,7 @@
     };
 
     neovim = {
+      defaultEditor = true;
       enable        = true;
       extraConfig   = ''
         source ${toString ./config/init.vim}
@@ -32,6 +24,9 @@
       plugins       = with pkgs.vimPlugins; [ {
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
+        } {
+          config = "luafile ${toString ./config/no-neck-pain.lua}";
+          plugin = no-neck-pain-nvim;
         } {
           config = ''
             set completeopt=menu,menuone,noselect
