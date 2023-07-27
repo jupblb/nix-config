@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   fonts.fontconfig.enable = true;
 
   home = {
@@ -60,6 +60,11 @@
         tab_bar_min_tabs                   = 5;
       };
       theme       = "Gruvbox Light Hard";
+    };
+
+    vscode.userSettings = {
+      "terminal.external.linuxExec" = "${config.programs.kitty.package}/bin/kitty";
+      "terminal.external.osxExec"   = "${config.programs.kitty.package}/Applications/kitty.app";
     };
   };
 }

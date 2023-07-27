@@ -53,5 +53,16 @@
 
     neovim.extraConfig =
       "set shell=${lib.meta.getExe config.programs.fish.package}";
+
+    vscode.userSettings =
+      let fish = {
+        "fish"."path" = "${config.programs.fish.package}/bin/fish";
+      };
+      in {
+        "terminal.integrated.profiles.linux"        = fish;
+        "terminal.integrated.profiles.osx"          = fish;
+        "terminal.integrated.defaultProfile.linux"  = "fish";
+        "terminal.integrated.defaultProfile.osx"    = "fish";
+      };
   };
 }
