@@ -5,4 +5,3 @@ function YankToSystemClipboard()
 endfunction
 
 autocmd TextYankPost * call YankToSystemClipboard()
-

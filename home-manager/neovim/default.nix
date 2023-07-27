@@ -84,9 +84,6 @@
         } {
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
-        } {
-          config = "luafile ${toString ./config/zen-mode.lua}";
-          plugin = zen-mode-nvim;
         }
         commentary git-messenger-vim mkdir-nvim surround vim-cool vim-gh-line
         vim-sleuth
