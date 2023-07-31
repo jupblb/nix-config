@@ -346,25 +346,6 @@
       };
     };
 
-    mautrix-facebook = {
-      configurePostgresql = true;
-      enable              = true;
-      # https://github.com/mautrix/facebook/blob/master/mautrix_facebook/example-config.yaml
-      settings            = {
-        appservice = (import ./config/secret.nix).matrix.facebook;
-
-        bridge.permissions = {
-          "@jupblb:kielbowi.cz" = "admin";
-          "kielbowi.cz"         = "user";
-        };
-
-        homeserver = {
-          address = "https://matrix.kielbowi.cz";
-          domain  = "kielbowi.cz";
-        };
-      };
-    };
-
     miniflux = {
       adminCredentialsFile = pkgs.writeText "miniflux-credentials"
         (import ./config/secret.nix).miniflux;
