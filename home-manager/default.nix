@@ -1,10 +1,6 @@
 { lib, pkgs, ... }: {
   home = {
-    activation       = {
-      bat = lib.hm.dag.entryAfter ["writeBoundary"]
-        "$DRY_RUN_CMD ${pkgs.bat}/bin/bat cache --build";
-    };
-    packages         = with pkgs; [ entr ripgrep ];
+    packages         = with pkgs; [ fswatch ];
     username         = "jupblb";
     sessionVariables = { PAGER = "${pkgs.less}/bin/less -R"; };
   };
@@ -52,6 +48,8 @@
       extraConfig = {
         color.ui                      = true;
         core.mergeoptions             = "--no-edit";
+        credential.helper             = lib.mkBefore
+          [ "cache --timeout ${toString(60 * 60 * 10)}" ];
         diff.tool                     = "difftastic";
         difftool.prompt               = false;
         "difftool \"difftastic\"".cmd =
@@ -73,14 +71,11 @@
       userName    = "jupblb";
     };
 
+    git-credential-oauth.enable = true;
+
     htop = {
       enable   = true;
       settings = { hide_threads = true; hide_userland_threads = true; };
-    };
-
-    man = {
-      enable         = true;
-      generateCaches = true;
     };
 
     msmtp = {
@@ -89,6 +84,11 @@
         ${builtins.readFile ../config/msmtp.conf}
         passwordeval echo "${(import ../config/secret.nix).migadu.git}"
       '';
+    };
+
+    ripgrep = {
+      arguments = [ "--glob=!.git/*" "--hidden" "--no-ignore" ];
+      enable    = true;
     };
 
     ssh = {
