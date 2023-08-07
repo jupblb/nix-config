@@ -37,21 +37,17 @@
 
     pistol = {
       associations = [ {
+        command = "${pkgs.glow}/bin/glow -s light -- %pistol-filename%";
+        fpath   = ".*.md$";
+      } {
         command = "${pkgs.jq}/bin/jq --color-output . %pistol-filename%";
         mime    = "application/json";
       } {
         command = "${pkgs.poppler_utils}/bin/pdftotext %pistol-filename% -";
         mime    = "application/pdf";
       } {
-        command =
-          "sh: ${pkgs.exa}/bin/exa -RT --color=always --icons %pistol-filename% | head -1000";
-        mime    = "inode/directory";
-      } {
         command = "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
         mime    = "text/*";
-      } {
-        command = "${pkgs.glow}/bin/glow -s light -- %pistol-filename%";
-        fpath   = ".*.md$";
       } ];
       enable       = true;
     };
