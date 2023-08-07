@@ -129,7 +129,8 @@
     tealdeer = {
       enable   = true;
       settings = {
-        updates = { auto_update = true; };
+        directories = { custom_pages_dir = "${toString ./tldr}"; };
+        updates     = { auto_update = true; };
       };
     };
   };

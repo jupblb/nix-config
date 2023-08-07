@@ -5,7 +5,7 @@
   fonts.fontconfig.enable = true;
 
   programs = {
-    git.ignores = [ ".vscode" ];
+    git.ignores = [ ".vscode/" ];
 
     vscode = {
       enable               = true;
