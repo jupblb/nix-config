@@ -228,7 +228,7 @@
           '';
         };
         "paperless.kielbowi.cz"    = {
-          extraConfig = "reverse_proxy http://localhost:28981";
+          extraConfig = auth + "reverse_proxy http://localhost:28981";
         };
         "radarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:7878";
@@ -249,37 +249,6 @@
         };
         "transmission.kielbowi.cz" = {
           extraConfig = auth + "reverse_proxy http://127.0.0.1:9091";
-        };
-        "vaultwarden.kielbowi.cz"  = {
-          extraConfig = ''
-            encode gzip
-
-            header / {
-              # Enable HTTP Strict Transport Security (HSTS)
-              Strict-Transport-Security "max-age=31536000;"
-              # Enable cross-site filter (XSS) and tell browser to block detected attacks
-              X-XSS-Protection "1; mode=block"
-              # Disallow the site to be rendered within a frame (clickjacking protection)
-              X-Frame-Options "DENY"
-              # Prevent search engines from indexing (optional)
-              X-Robots-Tag "none"
-              # Server name removing
-              -Server
-            }
-
-            # The negotiation endpoint is also proxied to Rocket
-            reverse_proxy /notifications/hub/negotiate http://localhost:8222
-
-            # Notifications redirected to the websockets server
-            reverse_proxy /notifications/hub http://localhost:3012
-
-            # Proxy the Root directory to Rocket
-            reverse_proxy http://localhost:8222 {
-                 # Send the true remote IP to Rocket, so that vaultwarden can put this in the
-                 # log, so that fail2ban can ban the correct IP.
-                 header_up X-Real-IP {remote_host}
-            }
-          '';
         };
         "wolock.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://127.0.0.1:9247";
@@ -376,6 +345,7 @@
       enable                 = true;
       extraConfig            = {
         PAPERLESS_ALLOWED_HOSTS              = "paperless.kielbowi.cz";
+        PAPERLESS_AUTO_LOGIN_USERNAME        = "jupblb";
         PAPERLESS_CONSUMER_DELETE_DUPLICATES = true;
         PAPERLESS_OCR_LANGUAGE               = "pol+eng";
         PAPERLESS_DBHOST                     = "/run/postgresql";
@@ -390,16 +360,13 @@
           host  all      all  samehost     trust
       '';
       enable          = true;
-      ensureDatabases = [ "haste" "paperless" "vaultwarden" ];
+      ensureDatabases = [ "haste" "paperless" ];
       ensureUsers     = [ {
         name              = "haste";
         ensurePermissions = { "DATABASE haste" = "ALL PRIVILEGES"; };
       } {
         name              = "paperless";
         ensurePermissions = { "DATABASE paperless" = "ALL PRIVILEGES"; };
-      } {
-        name              = "vaultwarden";
-        ensurePermissions = { "DATABASE vaultwarden" = "ALL PRIVILEGES"; };
       } ];
       initialScript   = pkgs.writeText "synapse-init.sql" ''
         CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
@@ -533,24 +500,6 @@
         ratio-limit-enabled  = true;
         rpc-host-whitelist   = "transmission.kielbowi.cz";
       };
-    };
-
-    vaultwarden = {
-      config          = let smtpCfg = (import ./config/secret.nix).mailgun; in {
-        databaseUrl      = "postgresql://vaultwarden@localhost/vaultwarden";
-        domain           = "https://vaultwarden.kielbowi.cz";
-        rocketPort       = 8222;
-        signupsAllowed   = false;
-        signupsVerify    = true;
-        smtpFrom         = "mailgun@kielbowi.cz";
-        smtpHost         = "smtp.eu.mailgun.org";
-        smtpPassword     = smtpCfg.password;
-        smtpUsername     = smtpCfg.login;
-        websocketEnables = true;
-      };
-      dbBackend       = "postgresql";
-      enable          = true;
-      environmentFile = toString ./config/vaultwarden.env;
     };
 
     zfs.autoScrub = {

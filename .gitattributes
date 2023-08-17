@@ -2,4 +2,3 @@ config/restic/** filter=git-crypt diff=git-crypt
 config/secret.nix filter=git-crypt diff=git-crypt
 config/ssh/**/id_ed25519 filter=git-crypt diff=git-crypt
 config/syncthing/** filter=git-crypt diff=git-crypt
-config/vaultwarden.env filter=git-crypt diff=git-crypt
