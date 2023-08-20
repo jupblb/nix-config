@@ -47,7 +47,7 @@
           plugin = nvim-colorizer-lua;
         } {
           config = "luafile ${toString ./config/pqf.lua}";
-          plugin = pkgs.callPackage ./plugin/pqf.nix {};
+          plugin = nvim-pqf;
         } {
           config = ''
             autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f

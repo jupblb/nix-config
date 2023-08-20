@@ -1,0 +1,24 @@
+snippet stless
+  class $1 extends StatelessWidget {
+    const $1({super.key});
+
+    @override
+    Widget build(BuildContext context) {
+      return $2;
+    }
+  }
+
+snippet stful
+  class $1 extends StatefulWidget {
+    const $1({super.key});
+
+    @override
+    State<$1> createState() => _$1State();
+  }
+
+  class _$1State extends State<$1> {
+    @override
+    Widget build(BuildContext context) {
+      return $2;
+    }
+  }
