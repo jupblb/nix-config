@@ -29,6 +29,8 @@
   hardware.enableRedistributableFirmware = true;
 
   home-manager.users.jupblb = {
+    home.enableNixpkgsReleaseCheck = false;
+
     imports = [ ../home-manager ];
 
     nixpkgs.config.packageOverrides = _:
