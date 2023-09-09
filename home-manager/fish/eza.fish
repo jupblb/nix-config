@@ -7,4 +7,4 @@ else
     set extra --group-directories-first
 end
 
-exa $extra $argv
+eza $extra $argv

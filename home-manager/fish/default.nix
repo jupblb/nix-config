@@ -4,7 +4,7 @@
   };
 
   programs = {
-    exa.enable = true;
+    eza.enable = true;
 
     fish = {
       enable               = true;
@@ -19,7 +19,7 @@
         fish_prompt       = builtins.readFile ./prompt.fish;
         fish_mode_prompt  = "";
         fish_right_prompt = builtins.readFile ./rprompt.fish;
-        ls                = builtins.readFile ./exa.fish;
+        ls                = builtins.readFile ./eza.fish;
         nix-shell         =
           "${pkgs.nix}/bin/nix-shell --run \"env SHLVL=\\$((\\$SHLVL-1)) fish\" $argv";
       };
