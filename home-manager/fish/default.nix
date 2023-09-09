@@ -51,6 +51,11 @@
       showUntrackedFiles    = true;
     };
 
+    kitty.settings = {
+      env   = "SHELL=${pkgs.fish}/bin/fish";
+      shell = "${pkgs.fish}/bin/fish";
+    };
+
     neovim.extraConfig =
       "set shell=${lib.meta.getExe config.programs.fish.package}";
 

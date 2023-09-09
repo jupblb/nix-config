@@ -35,20 +35,16 @@
         "ctrl+l"               = "neighboring_window right";
       };
       settings    = {
-        clipboard_control                  =
+        clipboard_control             =
           "write-clipboard write-primary no-append";
-        confirm_os_window_close            = 0;
-        cursor_blink_interval              = 0;
-        enabled_layouts                    = "splits";
-        enable_audio_bell                  = "no";
-        env                                = "SHELL=${pkgs.fish}/bin/fish";
-        hide_window_decorations            = "yes";
-        macos_option_as_alt                = "left";
-        macos_quit_when_last_window_closed = "yes";
-        scrollback_pager_history_size      = 4096;
-        shell                              = "${pkgs.fish}/bin/fish";
+        confirm_os_window_close       = 0;
+        cursor_blink_interval         = 0;
+        enabled_layouts               = "splits";
+        enable_audio_bell             = "no";
+        hide_window_decorations       = "yes";
+        scrollback_pager_history_size = 4096;
         # https://sw.kovidgoyal.net/kitty/faq/#kitty-is-not-able-to-use-my-favorite-font
-        symbol_map                         =
+        symbol_map                    =
           let mappings = [
             "U+23FB-U+23FE" "U+2B58" "U+E200-U+E2A9" "U+E0A0-U+E0A3"
             "U+E0B0-U+E0BF" "U+E0C0-U+E0C8" "U+E0CC-U+E0CF" "U+E0D0-U+E0D2"
@@ -57,14 +53,16 @@
             "U+E5FA-U+E62B"
           ];
           in (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font";
-        tab_bar_min_tabs                   = 5;
+        tab_bar_min_tabs              = 5;
       };
       theme       = "Gruvbox Light Hard";
     };
 
     vscode.userSettings = {
-      "terminal.external.linuxExec" = "${config.programs.kitty.package}/bin/kitty";
-      "terminal.external.osxExec"   = "${config.programs.kitty.package}/Applications/kitty.app";
+      "terminal.external.linuxExec" =
+        "${config.programs.kitty.package}/bin/kitty";
+      "terminal.external.osxExec"   =
+        "${config.programs.kitty.package}/Applications/kitty.app";
     };
   };
 }
