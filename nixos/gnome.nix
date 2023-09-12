@@ -3,13 +3,14 @@
     gnome.excludePackages = with pkgs.gnome; [
       baobab cheese epiphany gedit gnome-calculator gnome-calendar gnome-clocks
       gnome-contacts gnome-logs gnome-maps gnome-music gnome-shell-extensions
-      pkgs.gnome-tour gnome-weather pkgs.gnome-connections simple-scan yelp
+      pkgs.gnome-tour gnome-weather pkgs.gnome-connections simple-scan totem
+      yelp
     ];
     systemPackages        =
       let
         extensions = with pkgs.gnomeExtensions;
-          [ just-perfection removable-drive-menu ];
-        packages   = with pkgs; [ gnome-firmware ];
+          [ compiz-windows-effect just-perfection removable-drive-menu ];
+        packages   = with pkgs; [ google-chrome-wayland gnome-firmware vlc ];
       in extensions ++ packages;
   };
 

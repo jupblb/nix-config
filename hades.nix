@@ -29,10 +29,7 @@
 
   environment = {
 #   sessionVariables = { NIXOS_OZONE_WL = "1"; };
-    systemPackages   = with pkgs; [
-      discord gnomeExtensions.compiz-windows-effect google-chrome-wayland
-      nvidia-offload solaar
-    ];
+    systemPackages   = with pkgs; [ discord nvidia-offload solaar ];
     variables        = {
       CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome-wayland;
       CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv";

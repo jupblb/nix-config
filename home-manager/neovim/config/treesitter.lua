@@ -1,7 +1,6 @@
 local parser_install_dir = vim.fn.expand('$XDG_CACHE_HOME/nvim/parsers')
 
 require('nvim-treesitter.configs').setup({
-    auto_install = true,
     context_commentstring = {
         enable = true,
         config = { dart = '// %s' },

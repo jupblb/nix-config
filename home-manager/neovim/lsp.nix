@@ -6,7 +6,7 @@
       extraPackages =
         let
           default        = with pkgs; [
-            black dart fish gomodifytags gopls gotests impl isort jq
+            black clang dart fish gomodifytags gopls gotests impl isort jq
             jdt-language-server ltex-ls lua-language-server marksman nixd
             pandoc shellcheck shfmt statix yaml-language-server
           ];

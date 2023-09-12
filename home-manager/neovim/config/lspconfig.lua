@@ -121,8 +121,8 @@ require('neodev').setup({
 
 -- other LSPs
 local default_servers = {
-    'bashls', 'cssls', 'dartls', 'dockerls', 'eslint', 'hls', 'html', 'jdtls',
-    'jsonls', 'lua_ls', 'marksman', 'nixd', 'prismals', 'pyright',
+    'bashls', 'clangd', 'cssls', 'dartls', 'dockerls', 'eslint', 'hls', 'html',
+    'jdtls', 'jsonls', 'lua_ls', 'marksman', 'nixd', 'prismals', 'pyright',
     'rust_analyzer', 'statix', 'tailwindcss', 'tsserver', 'vimls', 'yamlls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
