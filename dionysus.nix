@@ -230,6 +230,9 @@
         "paperless.kielbowi.cz"    = {
           extraConfig = auth + "reverse_proxy http://localhost:28981";
         };
+        "photos.kielbowi.cz"       = {
+          extraConfig = "reverse_proxy http://localhost:2342";
+        };
         "radarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:7878";
         };
@@ -351,6 +354,17 @@
         PAPERLESS_DBHOST                     = "/run/postgresql";
       };
       mediaDir               = "/backup/paperless";
+    };
+
+    photoprism = {
+      enable        = true;
+      originalsPath = "/backup/jupblb/Pictures/album";
+      settings      = {
+        PHOTOPRISM_DISABLE_SETTINGS = "true";
+        PHOTOPRISM_DISABLE_WEBDAV   = "true";
+        PHOTOPRISM_READONLY         = "true";
+        PHOTOPRISM_SITE_URL         = "https://photos.kielbowi.cz";
+      } // (import ./config/secret.nix).photoprism;
     };
 
     postgresql = {
