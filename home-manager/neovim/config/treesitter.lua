@@ -16,10 +16,6 @@ require('nvim-treesitter.configs').setup({
     },
     matchup = { enable = true },
     parser_install_dir = parser_install_dir,
-    refactor = {
-        highlight_definitions = { enable = true },
-        navigation = { enable = true, keymaps = { goto_definition = 'gd' } }
-    },
 })
 
 vim.opt.runtimepath:append(parser_install_dir)

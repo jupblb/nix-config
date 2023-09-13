@@ -49,15 +49,9 @@
           config = "luafile ${toString ./config/pqf.lua}";
           plugin = nvim-pqf;
         } {
-          config = ''
-            autocmd VimEnter * highlight TSDefinitionUsage guibg=#d9d87f
-            luafile ${toString ./config/treesitter.lua}
-          '';
+          config = "luafile ${toString ./config/treesitter.lua}";
           plugin = nvim-ts-context-commentstring.overrideAttrs(_: {
-            dependencies = [
-              nvim-treesitter-refactor (nvim-treesitter.withAllGrammars)
-              vim-matchup
-            ];
+            dependencies = [ (nvim-treesitter.withAllGrammars) vim-matchup ];
           });
         } {
           config = "luafile ${toString ./config/devicons.lua}";
