@@ -13,8 +13,9 @@
           latexindent    = pkgs.texlive.latexindent.pkgs;
           nodePackages   = with pkgs.nodePackages; [
             bash-language-server dockerfile-language-server-nodejs eslint
-            markdownlint-cli pyright typescript-language-server
-            vim-language-server vscode-langservers-extracted
+            graphql-language-service-cli markdownlint-cli pyright
+            typescript-language-server vim-language-server
+            vscode-langservers-extracted
           ];
           nodeAtPackages = [
             pkgs.nodePackages."@prisma/language-server"

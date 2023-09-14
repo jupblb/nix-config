@@ -33,7 +33,22 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup
-_G.lsp_attach = function(_, bufnr)
+_G.lsp_attach = function(client, bufnr)
+    if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            buffer = bufnr,
+            callback = function()
+                vim.lsp.buf.document_highlight()
+            end
+        })
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            buffer = bufnr,
+            callback = function()
+                vim.lsp.buf.clear_references()
+            end
+        })
+    end
+
     vim.api.nvim_create_autocmd("CursorHold", {
         buffer = bufnr,
         callback = function()
@@ -121,9 +136,10 @@ require('neodev').setup({
 
 -- other LSPs
 local default_servers = {
-    'bashls', 'clangd', 'cssls', 'dartls', 'dockerls', 'eslint', 'hls', 'html',
-    'jdtls', 'jsonls', 'lua_ls', 'marksman', 'nixd', 'prismals', 'pyright',
-    'rust_analyzer', 'statix', 'tailwindcss', 'tsserver', 'vimls', 'yamlls'
+    'bashls', 'clangd', 'cssls', 'dartls', 'dockerls', 'eslint', 'graphql',
+    'hls', 'html', 'jdtls', 'jsonls', 'lua_ls', 'marksman', 'nixd', 'prismals',
+    'pyright', 'rust_analyzer', 'statix', 'tailwindcss', 'tsserver', 'vimls',
+    'yamlls'
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 

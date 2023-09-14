@@ -2,10 +2,6 @@ autocmd ColorScheme * highlight NormalFloat guibg=#fbf1c7
 autocmd ColorScheme * highlight FloatBorder guifg=#282828 guibg=#fbf7c7
 autocmd ColorScheme * highlight LspReferenceText guibg=#d9d87f
 
-autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
-autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-
 nmap gD          <Cmd>lua vim.lsp.buf.declaration()<CR>
 nmap <C-]>       <Cmd>lua vim.lsp.buf.definition()<CR>
 nmap <Leader>la  <Cmd>lua vim.lsp.buf.code_action()<CR>
