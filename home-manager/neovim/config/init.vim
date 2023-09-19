@@ -7,6 +7,7 @@ set laststatus=0
 set list
 set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set mouse=a
+set mousemodel=extend
 set nowrap
 set number
 set relativenumber
