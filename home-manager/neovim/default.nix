@@ -68,8 +68,8 @@
             ];
           });
         } {
-          config = "source ${toString ./config/oscyank.vim}";
-          plugin = vim-oscyank;
+          config = "luafile ${toString ./config/osc52.lua}";
+          plugin = nvim-osc52;
         } {
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
