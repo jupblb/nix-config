@@ -1,5 +1,9 @@
 local null_ls = require("null-ls")
 
+if vim.fn.getcwd():find('/google/src/') ~= nil then
+    return
+end
+
 null_ls.setup({
     sources = {
         null_ls.builtins.code_actions.gomodifytags,

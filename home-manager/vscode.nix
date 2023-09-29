@@ -23,7 +23,7 @@
         "editor.minimap.enabled"          = false;
         "editor.rulers"                   = [ 80 120 ];
         "window.commandCenter"            = false;
-        "workbench.activityBar.visible"   = false;
+        "window.restoreWindows"           = "none";
         "workbench.colorTheme"            = "Gruvbox Light Hard";
         "workbench.editor.showTabs"       = false;
         "workbench.statusBar.visible"     = false;
