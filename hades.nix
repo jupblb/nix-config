@@ -85,7 +85,6 @@
         $DRY_RUN_CMD ln -sfn ${config.xdg.dataHome}/applications/steam.desktop \
           ${config.xdg.configHome}/autostart
       '';
-      packages         = with pkgs; [ flutter ];
       stateVersion     = "22.11";
     };
 

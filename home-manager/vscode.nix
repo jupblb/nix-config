@@ -22,17 +22,13 @@
         "editor.formatOnSave"             = true;
         "editor.minimap.enabled"          = false;
         "editor.rulers"                   = [ 80 120 ];
+        "terminal.integrated.fontFamily"  =
+          "Iosevka Term, Symbols Nerd Font Mono, monospace";
         "window.commandCenter"            = false;
         "window.restoreWindows"           = "none";
         "workbench.colorTheme"            = "Gruvbox Light Hard";
         "workbench.editor.showTabs"       = false;
         "workbench.statusBar.visible"     = false;
-
-        # Flutter
-        "dart.addSdkToTerminalPath" = false;
-        "dart.checkForSdkUpdates"   = false;
-        "dart.devToolsTheme"        = "light";
-        "dart.updateDevTools"       = false;
 
         # Nix IDE
         "nix.enableLanguageServer" = true;

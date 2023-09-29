@@ -28,9 +28,6 @@
         name = "fish-async-prompt";
         src  = pkgs.callPackage ./plugin/fish-async-prompt.nix {};
       } {
-        name = "flutter";
-        src  = pkgs.callPackage ./plugin/flutter.nix {};
-      } {
         name = "z";
         src  = pkgs.callPackage ./plugin/z.nix {};
       } ] ++ [ (lib.mkIf (!builtins.pathExists "/etc/nixos") {

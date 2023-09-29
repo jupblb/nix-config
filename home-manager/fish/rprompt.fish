@@ -4,7 +4,7 @@ set -l cmd_duration $CMD_DURATION
 
 # https://github.com/IlanCosman/tide/blob/main/functions/_tide_item_cmd_duration.fish
 if test $cmd_duration -gt 3000
-    echo -n " $(set_color 928374) "
+    echo -n " $(set_color 928374)󰄉 "
 
     set -l minutes (math --scale=0 "$CMD_DURATION/60000")
     if test $minutes -gt 0
