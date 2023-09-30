@@ -98,9 +98,7 @@
       ./home-manager/neovim/lsp.nix
     ];
 
-    programs = {
-      kitty.settings.linux_display_server = "wayland";
-    };
+    programs.kitty.settings = { linux_display_server = "wayland"; };
 
     services.gpg-agent = {
       enable         = true;
@@ -117,14 +115,12 @@
   ];
 
   networking = {
-    firewall       = { allowedTCPPorts = [ 3000 ]; };
-    hostName       = "hades";
-    interfaces     = {
-      eno2 = {
-        macAddress       = "00:d8:61:50:ae:85";
-        useDHCP          = true;
-        wakeOnLan.enable = true;
-      };
+    firewall        = { allowedTCPPorts = [ 3000 ]; };
+    hostName        = "hades";
+    interfaces.eno2 = {
+      macAddress       = "00:d8:61:50:ae:85";
+      useDHCP          = true;
+      wakeOnLan.enable = true;
     };
   };
 
@@ -151,16 +147,6 @@
   };
 
   services = {
-    apcupsd = {
-      configText = ''
-        UPSCABLE usb
-        UPSTYPE usb
-        DEVICE
-        BATTERYLEVEL 10
-      '';
-      enable     = true;
-    };
-
     kmscon.extraConfig = "font-dpi=192";
 
     pipewire = {
