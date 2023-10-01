@@ -18,9 +18,7 @@
       };
       systemd = {
         enable   = true;
-        extraBin = {
-          cryptsetup = "${pkgs.cryptsetup}/bin/cryptsetup";
-        };
+        extraBin = { cryptsetup = "${pkgs.cryptsetup}/bin/cryptsetup"; };
       };
     };
 
@@ -98,12 +96,7 @@
       ./home-manager/neovim/lsp.nix
     ];
 
-    programs.kitty.settings = { linux_display_server = "wayland"; };
-
-    services.gpg-agent = {
-      enable         = true;
-      pinentryFlavor = "gnome3";
-    };
+    services.gpg-agent.enable = true;
   };
 
   imports = [

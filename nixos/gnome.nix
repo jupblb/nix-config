@@ -14,6 +14,12 @@
       in extensions ++ packages;
   };
 
+  home-manager.users.jupblb = { config, lib, pkgs, ... }: {
+    programs.kitty.settings = { linux_display_server = "wayland"; };
+
+    services.gpg-agent.pinentryFlavor = "gnome3";
+  };
+
   programs = {
     geary.enable          = false;
     gnome-disks.enable    = false;
