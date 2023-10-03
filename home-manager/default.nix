@@ -25,13 +25,14 @@
 
     git = {
       aliases     = {
-        amend    = "commit --amend --no-edit";
-        backward = "reset --hard HEAD~1";
-        forward  = "reset --hard HEAD@{1}";
-        fuck     = "reset --hard HEAD";
-        line     = "!sh -c 'git log -L$2,+1:\${GIT_PREFIX:-./}$1' -";
-        lines    = "!sh -c 'git log -L$2,$3:\${GIT_PREFIX:-./}$1' -";
-        pr       = "!${pkgs.gh}/bin/gh pr checkout";
+        amend     = "commit --amend --no-edit";
+        backward  = "reset --hard HEAD~1";
+        forward   = "reset --hard HEAD@{1}";
+        fuck      = "reset --hard HEAD";
+        increment = "commit --allow-empty-message -m ''";
+        line      = "!sh -c 'git log -L$2,+1:\${GIT_PREFIX:-./}$1' -";
+        lines     = "!sh -c 'git log -L$2,$3:\${GIT_PREFIX:-./}$1' -";
+        pr        = "!${pkgs.gh}/bin/gh pr checkout";
       };
       delta       = {
         enable  = true;
