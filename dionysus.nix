@@ -360,10 +360,12 @@
       enable        = true;
       originalsPath = "/backup/jupblb/Pictures/album";
       settings      = {
+        PHOTOPRISM_DETECT_NSFW      = "true";
         PHOTOPRISM_DISABLE_SETTINGS = "true";
         PHOTOPRISM_DISABLE_WEBDAV   = "true";
         PHOTOPRISM_READONLY         = "true";
         PHOTOPRISM_SITE_URL         = "https://photos.kielbowi.cz";
+        PHOTOPRISM_UPLOAD_NSFW      = "false";
       } // (import ./config/secret.nix).photoprism;
     };
 
