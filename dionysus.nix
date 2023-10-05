@@ -163,6 +163,7 @@
     bazarr = {
       enable = true;
       group  = "users";
+      user   = "sonarr";
     };
 
     caddy = {
