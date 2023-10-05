@@ -1,6 +1,4 @@
-{ config, lib, pkgs, ... }:
-
-{
+{ config, lib, pkgs, ... }: {
   boot = {
     initrd.kernelModules             = [ "amdgpu" ];
     kernel.sysctl                    = {
@@ -227,9 +225,6 @@
             reverse_proxy /_synapse/client/* http://localhost:8008
           '';
         };
-        "paperless.kielbowi.cz"    = {
-          extraConfig = auth + "reverse_proxy http://localhost:28981";
-        };
         "photos.kielbowi.cz"       = {
           extraConfig = "reverse_proxy http://localhost:2342";
         };
@@ -342,20 +337,6 @@
       statdPort  = 4000;
     };
 
-    paperless = {
-      consumptionDir         = "/data/paperless-inbox";
-      consumptionDirIsPublic = true;
-      enable                 = true;
-      extraConfig            = {
-        PAPERLESS_ALLOWED_HOSTS              = "paperless.kielbowi.cz";
-        PAPERLESS_AUTO_LOGIN_USERNAME        = "jupblb";
-        PAPERLESS_CONSUMER_DELETE_DUPLICATES = true;
-        PAPERLESS_OCR_LANGUAGE               = "pol+eng";
-        PAPERLESS_DBHOST                     = "/run/postgresql";
-      };
-      mediaDir               = "/backup/paperless";
-    };
-
     photoprism = {
       enable        = true;
       originalsPath = "/backup/jupblb/Pictures/album";
@@ -376,13 +357,10 @@
           host  all      all  samehost     trust
       '';
       enable          = true;
-      ensureDatabases = [ "haste" "paperless" ];
+      ensureDatabases = [ "haste" ];
       ensureUsers     = [ {
         name              = "haste";
         ensurePermissions = { "DATABASE haste" = "ALL PRIVILEGES"; };
-      } {
-        name              = "paperless";
-        ensurePermissions = { "DATABASE paperless" = "ALL PRIVILEGES"; };
       } ];
       initialScript   = pkgs.writeText "synapse-init.sql" ''
         CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
@@ -545,20 +523,6 @@
       serviceConfig.PrivateDevices = lib.mkForce false;
     };
     komga                 = { wantedBy = lib.mkForce []; };
-    paperless-consumer    = { wantedBy = lib.mkForce []; };
-    paperless-inbox       = {
-      after         = [ "network.target" ];
-      description   = "Sync dropbox scans with paperless";
-      script        = builtins.readFile ./config/script/paperless-db-sync.sh;
-      serviceConfig = {
-        ProtectSystem = "full";
-        Type          = "oneshot";
-        User          = "jupblb";
-      };
-      startAt       = "*:0";
-    };
-    paperless-scheduler   = { wantedBy = lib.mkForce []; };
-    paperless-web         = { wantedBy = lib.mkForce []; };
     podman-simply-shorten = { wantedBy = lib.mkForce []; };
     stignore              = {
       description   = "Update jupblb/Workspace stignore";
@@ -603,10 +567,7 @@
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
-  users.users = {
-    jupblb.extraGroups = [ "adbusers" "docker" "podman" ];
-    paperless.group    = lib.mkForce "users";
-  };
+  users.users.jupblb.extraGroups = [ "adbusers" "docker" "podman" ];
 
   virtualisation = {
     docker         = { enable = true; };

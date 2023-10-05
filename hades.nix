@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   boot = {
     initrd = {
       kernelModules          = [ "e1000e" "i915" "kvm-intel" ];
