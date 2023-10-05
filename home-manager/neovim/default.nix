@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }: {
   home.sessionVariables = {
-    NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
+    NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";
   };
 
   programs = {
