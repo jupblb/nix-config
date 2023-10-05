@@ -48,6 +48,7 @@
   hardware = {
     bluetooth.enable   = true;
     cpu.intel          = { updateMicrocode = true; };
+    i2c.enable         = true;
     keyboard.uhk       = { enable = true; };
     opengl             = {
       driSupport      = true;

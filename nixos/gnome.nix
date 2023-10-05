@@ -8,9 +8,12 @@
     ];
     systemPackages        =
       let
-        extensions = with pkgs.gnomeExtensions;
-          [ compiz-windows-effect just-perfection removable-drive-menu ];
-        packages   = with pkgs; [ google-chrome-wayland gnome-firmware vlc ];
+        extensions = with pkgs.gnomeExtensions; [
+          adjust-display-brightness compiz-windows-effect just-perfection
+          removable-drive-menu
+        ];
+        packages   = with pkgs;
+          [ ddcutil google-chrome-wayland gnome-firmware vlc ];
       in extensions ++ packages;
   };
 
