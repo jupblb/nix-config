@@ -45,8 +45,9 @@
         enable  = lib.mkDefault false;
       };
       "jupblb/Workspace" = {
-        devices = [ "artemis" "dionysus" "hades" ];
-        enable  = lib.mkDefault false;
+        devices     = [ "artemis" "dionysus" "hades" ];
+        enable      = lib.mkDefault false;
+        ignorePerms = false;
       };
     };
     group            = "users";
