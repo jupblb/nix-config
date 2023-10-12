@@ -24,7 +24,7 @@
   environment.systemPackages   = with pkgs;
     [ file unzip wl-clipboard pciutils usbutils wol ];
 
-  fonts.enableDefaultFonts = true;
+  fonts.enableDefaultPackages = true;
 
   hardware.enableRedistributableFirmware = true;
 

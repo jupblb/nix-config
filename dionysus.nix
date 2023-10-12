@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }: {
   boot = {
+    enableContainers                 = false;
     initrd.kernelModules             = [ "amdgpu" ];
     kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "204800";
@@ -140,7 +141,7 @@
           } ];
         };
         authentication_backend        = {
-          file.path              = "/backup/authelia.yaml";
+          file.path              = "/var/lib/authelia-default/authelia.yaml";
           password_reset.disable = true;
         };
         notifier                      = {
@@ -374,8 +375,7 @@
     };
 
     postgresqlBackup = {
-      databases = config.services.postgresql.ensureDatabases ++
-        [ "matrix-synapse" ];
+      backupAll = true;
       enable    = true;
       location  = "/backup/postgresql";
     };
@@ -506,7 +506,7 @@
   system.stateVersion = "20.09";
 
   systemd.services = {
-    calibre-web           = { wantedBy = lib.mkForce []; };
+    calibre-web           = { requires = [ "zfs-import-backup.service" ]; };
     ip-updater            = {
       after         = [ "network.target" ];
       description   = "Public IP updater";
@@ -523,9 +523,15 @@
     jellyfin              = {
       serviceConfig.PrivateDevices = lib.mkForce false;
     };
-    komga                 = { wantedBy = lib.mkForce []; };
-    podman-simply-shorten = { wantedBy = lib.mkForce []; };
+    komga                 = { requires = [ "zfs-import-backup.service" ]; };
+    photoprism            = { requires = [ "zfs-import-backup.service" ]; };
+    podman-simply-shorten = { requires = [ "zfs-import-backup.service" ]; };
+    podman-filebrowser    = { requires = [ "zfs-import-backup.service" ]; };
+    postgresqlBackup      = { requires = [ "zfs-import-backup.service" ]; };
+    restic-backups-gcs    = { requires = [ "zfs-import-backup.service" ]; };
+    restic-backups-local  = { requires = [ "zfs-import-backup.service" ]; };
     stignore              = {
+      requires         = [ "zfs-import-backup.service" ];
       description   = "Update jupblb/Workspace stignore";
       path          = with pkgs; [
         bash diffutils inotify-tools
@@ -548,7 +554,8 @@
       };
       wantedBy      = [ "multi-user.target" ];
     };
-    syncthing             = { wantedBy = lib.mkForce []; };
+    syncthing             = { requires = [ "zfs-import-backup.service" ]; };
+    syncthing-init        = { requires = [ "zfs-import-backup.service" ]; };
     wolock                = {
       after         = [ "network.target" ];
       description   = "Wake on Lan companion app";
