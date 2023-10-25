@@ -62,17 +62,12 @@
           builtins.readFile ./config/script/zfs-backup-unlock.fish;
       };
     };
-
-    services.dropbox = {
-      enable = true;
-      path   = "/data";
-    };
   };
 
   imports = [ ./nixos ./nixos/npm.nix ./nixos/syncthing.nix ];
 
   networking = {
-    defaultGateway           = "192.168.1.1";
+    defaultGateway           = "192.168.0.1";
     domain                   = "kielbowi.cz";
     firewall.checkReversePath = "loose";
     firewall.allowedTCPPorts = [
@@ -82,7 +77,7 @@
       80 111 443 2049 3012 4000 4001 4002 22067 22070
     ];
     interfaces.enp8s0        = {
-      ipv4.addresses = [ { address = "192.168.1.4"; prefixLength = 24; } ];
+      ipv4.addresses = [ { address = "192.168.0.4"; prefixLength = 24; } ];
       wakeOnLan      = { enable = true; };
     };
     hostId                   = "ce5e3a09";
@@ -178,63 +173,23 @@
         }
       '';
       in {
-        "kielbowi.cz"              = {
-          extraConfig = ''
-            header /.well-known/matrix/* Content-Type application/json
-            header /.well-known/matrix/* Access-Control-Allow-Origin *
-            respond /.well-known/matrix/server `{"m.server": "matrix.kielbowi.cz:443"}`
-            respond /.well-known/matrix/client `{"m.homeserver":{"base_url":"https://matrix.kielbowi.cz"}}`
-            respond "Hello, world!!"
-          '';
-        };
         "auth.kielbowi.cz"         = {
           extraConfig = "reverse_proxy http://localhost:9092";
         };
         "bazarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:6767";
         };
-        "calibre.kielbowi.cz"      = {
-          extraConfig = "reverse_proxy http://localhost:8083";
-        };
-        "dionysus.kielbowi.cz"     = {
-          extraConfig = "respond \"Hello, world!\"";
-        };
         "files.kielbowi.cz"        = {
           extraConfig = auth + "reverse_proxy http://localhost:8085";
-        };
-        "go.kielbowi.cz"           = {
-          extraConfig = "reverse_proxy http://localhost:4567";
-        };
-        "haste.kielbowi.cz"        = {
-          extraConfig = "reverse_proxy http://localhost:7777";
         };
         "jackett.kielbowi.cz"      = {
           extraConfig = auth + "reverse_proxy http://localhost:9117";
         };
-        "jellyfin.kielbowi.cz"     = {
-          extraConfig = "reverse_proxy http://localhost:8096";
-        };
-        "komga.kielbowi.cz"        = {
-          extraConfig = "reverse_proxy http://localhost:6428";
-        };
         "lidarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:8686";
         };
-        "matrix.kielbowi.cz"       = {
-          # https://github.com/matrix-org/synapse/blob/develop/docs/reverse_proxy.md#caddy-v2
-          extraConfig = ''
-            reverse_proxy /_matrix/* http://localhost:8008
-            reverse_proxy /_synapse/client/* http://localhost:8008
-          '';
-        };
-        "photos.kielbowi.cz"       = {
-          extraConfig = "reverse_proxy http://localhost:2342";
-        };
         "radarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:7878";
-        };
-        "rss.kielbowi.cz"       = {
-          extraConfig = "reverse_proxy http://localhost:9283";
         };
         "sonarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:8989";
@@ -250,9 +205,6 @@
         "transmission.kielbowi.cz" = {
           extraConfig = auth + "reverse_proxy http://127.0.0.1:9091";
         };
-        "wolock.kielbowi.cz"       = {
-          extraConfig = auth + "reverse_proxy http://127.0.0.1:9247";
-        };
       };
     };
 
@@ -263,6 +215,27 @@
         calibreLibrary       = "/backup/calibre";
         enableBookConversion = true;
         enableBookUploading  = true;
+      };
+    };
+
+    cloudflared = {
+      enable  = true;
+      tunnels = {
+        "1aa88ef4-665b-41f7-bb26-81a09be0a462" = {
+          credentialsFile = builtins.toString
+            (pkgs.copyPathToStore ./config/dionysus2.json);
+          default         = "http_status:404";
+          ingress         = {
+            "calibre.kielbowi.cz"  = "http://localhost:8083";
+            "go.kielbowi.cz"       = "http://localhost:4567";
+            "haste.kielbowi.cz"    = "http://localhost:7777";
+            "jellyfin.kielbowi.cz" = "http://localhost:8096";
+            "komga.kielbowi.cz"    = "http://localhost:6428";
+            "photos.kielbowi.cz"   = "http://localhost:2342";
+            "rss.kielbowi.cz"      = "http://localhost:9283";
+            "dionysus.kielbowi.cz" = "ssh://localhost:22";
+          };
+        };
       };
     };
 
@@ -290,29 +263,6 @@
     lidarr = {
       enable = true;
       group  = "users";
-    };
-
-    matrix-synapse = {
-      enable   = true;
-      settings = {
-        app_service_config_files   = [
-          "/var/lib/matrix-synapse/registration-facebook.yaml"
-        ];
-        listeners                  = [ {
-          port           = 8008;
-          bind_addresses = [ "127.0.0.1" ];
-          type           = "http";
-          tls            = false;
-          x_forwarded    = true;
-          resources      = [ {
-            names    = [ "client" "federation" ];
-            compress = true;
-          } ];
-        } ];
-        registration_shared_secret =
-          (import ./config/secret.nix).matrix.registration;
-        server_name                = config.networking.domain;
-      };
     };
 
     miniflux = {
@@ -364,13 +314,6 @@
         name              = "haste";
         ensurePermissions = { "DATABASE haste" = "ALL PRIVILEGES"; };
       } ];
-      initialScript   = pkgs.writeText "synapse-init.sql" ''
-        CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
-        CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
-          TEMPLATE template0
-          LC_COLLATE = "C"
-          LC_CTYPE = "C";
-      '';
       package         = pkgs.postgresql_15;
     };
 
@@ -556,21 +499,6 @@
     };
     syncthing             = { requires = [ "zfs-import-backup.service" ]; };
     syncthing-init        = { requires = [ "zfs-import-backup.service" ]; };
-    wolock                = {
-      after         = [ "network.target" ];
-      description   = "Wake on Lan companion app";
-      environment   = {
-        NODE_ENV       = "production";
-        PORT           = "9247";
-      };
-      path          = with pkgs; [ bash nodejs ];
-      script        = "npm run build && npm run start";
-      serviceConfig = {
-        ProtectSystem    = "full";
-        WorkingDirectory = "/home/jupblb/Workspace/wolock";
-        User             = "jupblb";
-      };
-    };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
