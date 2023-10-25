@@ -103,23 +103,16 @@
           user           = "jupblb";
         };
         in {
-          cerberus     = common // {
-            hostname = "192.168.1.1";
-            user     = "root";
-          };
           dionysus     = common // {
-            hostname = "warszawa.kielbowi.cz";
-            port     = 1995;
+            hostname     = "dionysus.kielbowi.cz";
+            proxyCommand =
+              "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
           };
           "github.com" = {
             compression    = true;
             hostname       = "github.com";
             identitiesOnly = true;
             identityFile   = [ (toString ../config/ssh/git/id_ed25519) ];
-          };
-          hades        = common // {
-            hostname = "warszawa.kielbowi.cz";
-            port     = 1993;
           };
           "prose.sh"   = common // {
             hostname = "prose.sh";
