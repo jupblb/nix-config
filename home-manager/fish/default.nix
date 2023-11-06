@@ -35,9 +35,8 @@
         src  = pkgs.callPackage ./plugin/nix-env.nix {};
       }) ];
       shellAliases         = {
-        cat  = "${pkgs.bat}/bin/bat -p --paging=never";
+        cat  = "${pkgs.bat}/bin/bat -pp";
         diff = "${pkgs.difftastic}/bin/difft --background=light --tab-width=2";
-        fhs  = "nix-shell -p steam-run --command 'steam-run bash'";
         less = "${pkgs.bat}/bin/bat -p --paging=always";
       };
     };
