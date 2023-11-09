@@ -228,21 +228,12 @@
           ingress         = {
             "calibre.kielbowi.cz"  = "http://localhost:8083";
             "go.kielbowi.cz"       = "http://localhost:4567";
-            "haste.kielbowi.cz"    = "http://localhost:7777";
             "jellyfin.kielbowi.cz" = "http://localhost:8096";
             "photos.kielbowi.cz"   = "http://localhost:2342";
             "rss.kielbowi.cz"      = "http://localhost:9283";
             "dionysus.kielbowi.cz" = "ssh://localhost:22";
           };
         };
-      };
-    };
-
-    haste-server = {
-      enable           = true;
-      settings.storage = {
-        connectionUrl = "postgres://haste@localhost:5432/haste";
-        type          = "postgres";
       };
     };
 
@@ -302,11 +293,6 @@
           host  all      all  samehost     trust
       '';
       enable          = true;
-      ensureDatabases = [ "haste" ];
-      ensureUsers     = [ {
-        name              = "haste";
-        ensurePermissions = { "DATABASE haste" = "ALL PRIVILEGES"; };
-      } ];
       package         = pkgs.postgresql_15;
     };
 
