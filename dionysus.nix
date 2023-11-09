@@ -230,7 +230,6 @@
             "go.kielbowi.cz"       = "http://localhost:4567";
             "haste.kielbowi.cz"    = "http://localhost:7777";
             "jellyfin.kielbowi.cz" = "http://localhost:8096";
-            "komga.kielbowi.cz"    = "http://localhost:6428";
             "photos.kielbowi.cz"   = "http://localhost:2342";
             "rss.kielbowi.cz"      = "http://localhost:9283";
             "dionysus.kielbowi.cz" = "ssh://localhost:22";
@@ -252,12 +251,6 @@
     jellyfin = {
       enable = true;
       group  = "users";
-    };
-
-    komga = {
-      enable = true;
-      group  = "users";
-      port   = 6428;
     };
 
     lidarr = {
@@ -466,7 +459,6 @@
     jellyfin              = {
       serviceConfig.PrivateDevices = lib.mkForce false;
     };
-    komga                 = { requires = [ "zfs-import-backup.service" ]; };
     photoprism            = { requires = [ "zfs-import-backup.service" ]; };
     podman-simply-shorten = { requires = [ "zfs-import-backup.service" ]; };
     podman-filebrowser    = { requires = [ "zfs-import-backup.service" ]; };
