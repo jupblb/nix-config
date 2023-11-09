@@ -67,23 +67,25 @@
   imports = [ ./nixos ./nixos/npm.nix ./nixos/syncthing.nix ];
 
   networking = {
-    defaultGateway           = "192.168.0.1";
-    domain                   = "kielbowi.cz";
-    firewall.checkReversePath = "loose";
-    firewall.allowedTCPPorts = [
-      80 111 443 2049 2267 3012 4000 4001 4002 8181 22067 22070
-    ];
-    firewall.allowedUDPPorts = [
-      80 111 443 2049 3012 4000 4001 4002 22067 22070
-    ];
-    interfaces.enp8s0        = {
+    defaultGateway    = "192.168.0.1";
+    domain            = "kielbowi.cz";
+    firewall          = {
+      checkReversePath = "loose";
+      allowedTCPPorts  = [
+        80 111 443 2049 2267 3012 4000 4001 4002 8181 22067 22070
+      ];
+      allowedUDPPorts  = [
+        80 111 443 2049 3012 4000 4001 4002 22067 22070
+      ];
+    };
+    interfaces.enp8s0 = {
       ipv4.addresses = [ { address = "192.168.0.4"; prefixLength = 24; } ];
       wakeOnLan      = { enable = true; };
     };
-    hostId                   = "ce5e3a09";
-    hostName                 = "dionysus";
-    nameservers              = [ "1.1.1.1" "8.8.8.8" ];
-    wireless.enable          = false;
+    hostId            = "ce5e3a09";
+    hostName          = "dionysus";
+    nameservers       = [ "1.1.1.1" "8.8.8.8" ];
+    wireless          = { enable = false; };
   };
 
   programs = {
