@@ -167,36 +167,32 @@
     caddy = {
       email        = "caddy@kielbowi.cz";
       enable       = true;
+      globalConfig = "auto_https off";
       virtualHosts =
       let auth = ''
         forward_auth http://localhost:9092 {
             uri /api/verify?rd=https://auth.kielbowi.cz/
             copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+            trusted_proxies 192.168.0.0/16
         }
       '';
       in {
-        "auth.kielbowi.cz"         = {
-          extraConfig = "reverse_proxy http://localhost:9092";
-        };
-        "bazarr.kielbowi.cz"       = {
+        "http://bazarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:6767";
         };
-        "files.kielbowi.cz"        = {
+        "http://files.kielbowi.cz"        = {
           extraConfig = auth + "reverse_proxy http://localhost:8085";
         };
-        "jackett.kielbowi.cz"      = {
+        "http://jackett.kielbowi.cz"      = {
           extraConfig = auth + "reverse_proxy http://localhost:9117";
         };
-        "lidarr.kielbowi.cz"       = {
-          extraConfig = auth + "reverse_proxy http://localhost:8686";
-        };
-        "radarr.kielbowi.cz"       = {
+        "http://radarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:7878";
         };
-        "sonarr.kielbowi.cz"       = {
+        "http://sonarr.kielbowi.cz"       = {
           extraConfig = auth + "reverse_proxy http://localhost:8989";
         };
-        "syncthing.kielbowi.cz"    = {
+        "http://syncthing.kielbowi.cz"    = {
           extraConfig = auth + ''
             reverse_proxy http://localhost:8384 {
               header_up Host localhost
@@ -204,7 +200,7 @@
             }
           '';
         };
-        "transmission.kielbowi.cz" = {
+        "http://transmission.kielbowi.cz" = {
           extraConfig = auth + "reverse_proxy http://127.0.0.1:9091";
         };
       };
@@ -228,11 +224,14 @@
             (pkgs.copyPathToStore ./config/dionysus2.json);
           default         = "http_status:404";
           ingress         = {
+            "auth.kielbowi.cz"     = "http://localhost:9092";
             "calibre.kielbowi.cz"  = "http://localhost:8083";
             "go.kielbowi.cz"       = "http://localhost:4567";
+            "files.kielbowi.cz"    = "http://localhost:80";
             "jellyfin.kielbowi.cz" = "http://localhost:8096";
             "photos.kielbowi.cz"   = "http://localhost:2342";
             "rss.kielbowi.cz"      = "http://localhost:9283";
+
             "dionysus.kielbowi.cz" = "ssh://localhost:22";
           };
         };
