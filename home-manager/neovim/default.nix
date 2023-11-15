@@ -74,8 +74,7 @@
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        commentary git-messenger-vim mkdir-nvim surround vim-cool vim-gh-line
-        vim-sleuth
+        commentary mkdir-nvim surround vim-cool vim-gh-line vim-sleuth
       ];
       vimdiffAlias  = true;
       withNodeJs    = true;

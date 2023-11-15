@@ -27,7 +27,7 @@
           plugin = nvim-lsp-notify;
         } {
           config = "luafile ${toString ./config/null-ls.lua}";
-          plugin = null-ls-nvim.overrideAttrs(_: {
+          plugin = none-ls-nvim.overrideAttrs(_: {
             dependencies = [ plenary-nvim ];
           });
         } {
