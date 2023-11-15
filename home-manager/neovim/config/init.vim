@@ -33,6 +33,9 @@ nnoremap <C-I> <C-I>
 " Create file if it doesn't exist.
 map <silent> gf <Cmd>execute('edit ' . fnamemodify(expand('%:p:h') . '/' . expand('<cfile>'), ':p'))<CR>
 
+" Copy path to clipboard
+nmap yp <Cmd>let @+ = expand("%")<CR>
+
 nnoremap <S-CR> -
 nnoremap <C-f> 5<C-e>
 nnoremap <C-b> 5<C-y>
