@@ -27,7 +27,7 @@
         "window.commandCenter"            = false;
         "window.restoreWindows"           = "none";
         "workbench.colorTheme"            = "Gruvbox Light Hard";
-        "workbench.editor.showTabs"       = false;
+        "workbench.editor.showTabs"       = "none";
         "workbench.statusBar.visible"     = false;
 
         # Nix IDE
