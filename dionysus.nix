@@ -67,7 +67,6 @@
   imports = [ ./nixos ./nixos/npm.nix ./nixos/syncthing.nix ];
 
   networking = {
-    defaultGateway    = "192.168.0.1";
     domain            = "kielbowi.cz";
     firewall          = {
       checkReversePath = "loose";
@@ -79,12 +78,11 @@
       ];
     };
     interfaces.enp8s0 = {
-      ipv4.addresses = [ { address = "192.168.0.4"; prefixLength = 24; } ];
-      wakeOnLan      = { enable = true; };
+      useDHCP   = true;
+      wakeOnLan = { enable = true; };
     };
     hostId            = "ce5e3a09";
     hostName          = "dionysus";
-    nameservers       = [ "1.1.1.1" "8.8.8.8" ];
     wireless          = { enable = false; };
   };
 
@@ -135,7 +133,11 @@
               "/static/img/*" "/static/themes/*" "/static/fonts/*"
             ];
             policy    = "bypass";
-          } ];
+          } {
+            domain    = "go.kielbowi.cz";
+            resources = [ "^/.+" ];
+            policy    = "bypass";
+          }];
         };
         authentication_backend        = {
           file.path              = "/var/lib/authelia-default/authelia.yaml";
@@ -167,43 +169,47 @@
     caddy = {
       email        = "caddy@kielbowi.cz";
       enable       = true;
-      globalConfig = "auto_https off";
       virtualHosts =
-      let auth = ''
-        forward_auth http://localhost:9092 {
-            uri /api/verify?rd=https://auth.kielbowi.cz/
-            copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-            trusted_proxies 192.168.0.0/16
-        }
-      '';
-      in {
-        "http://bazarr.kielbowi.cz"       = {
-          extraConfig = auth + "reverse_proxy http://localhost:6767";
+        let auth = ''
+          forward_auth http://localhost:9092 {
+              uri /api/verify?rd=https://auth.kielbowi.cz/
+              copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+          }
+        '';
+        in {
+          "auth.kielbowi.cz"         = {
+            extraConfig = "reverse_proxy http://localhost:9092";
+          };
+          "bazarr.kielbowi.cz"       = {
+            extraConfig = auth + "reverse_proxy http://localhost:6767";
+          };
+          "files.kielbowi.cz"        = {
+            extraConfig = auth + "reverse_proxy http://localhost:8085";
+          };
+          "go.kielbowi.cz"           = {
+            extraConfig = auth + "reverse_proxy http://localhost:4567";
+          };
+          "jackett.kielbowi.cz"      = {
+            extraConfig = auth + "reverse_proxy http://localhost:9117";
+          };
+          "radarr.kielbowi.cz"       = {
+            extraConfig = auth + "reverse_proxy http://localhost:7878";
+          };
+          "sonarr.kielbowi.cz"       = {
+            extraConfig = auth + "reverse_proxy http://localhost:8989";
+          };
+          "syncthing.kielbowi.cz"    = {
+            extraConfig = auth + ''
+              reverse_proxy http://localhost:8384 {
+                header_up Host localhost
+                header_up X-Forwarded-Host syncthing.kielbowi.cz
+              }
+            '';
+          };
+          "transmission.kielbowi.cz" = {
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:9091";
+          };
         };
-        "http://files.kielbowi.cz"        = {
-          extraConfig = auth + "reverse_proxy http://localhost:8085";
-        };
-        "http://jackett.kielbowi.cz"      = {
-          extraConfig = auth + "reverse_proxy http://localhost:9117";
-        };
-        "http://radarr.kielbowi.cz"       = {
-          extraConfig = auth + "reverse_proxy http://localhost:7878";
-        };
-        "http://sonarr.kielbowi.cz"       = {
-          extraConfig = auth + "reverse_proxy http://localhost:8989";
-        };
-        "http://syncthing.kielbowi.cz"    = {
-          extraConfig = auth + ''
-            reverse_proxy http://localhost:8384 {
-              header_up Host localhost
-              header_up X-Forwarded-Host syncthing.kielbowi.cz
-            }
-          '';
-        };
-        "http://transmission.kielbowi.cz" = {
-          extraConfig = auth + "reverse_proxy http://127.0.0.1:9091";
-        };
-      };
     };
 
     calibre-web = {
@@ -224,10 +230,7 @@
             (pkgs.copyPathToStore ./config/dionysus2.json);
           default         = "http_status:404";
           ingress         = {
-            "auth.kielbowi.cz"     = "http://localhost:9092";
             "calibre.kielbowi.cz"  = "http://localhost:8083";
-            "go.kielbowi.cz"       = "http://localhost:4567";
-            "files.kielbowi.cz"    = "http://localhost:80";
             "jellyfin.kielbowi.cz" = "http://localhost:8096";
             "photos.kielbowi.cz"   = "http://localhost:2342";
             "rss.kielbowi.cz"      = "http://localhost:9283";
@@ -501,12 +504,10 @@
           ];
         };
         simply-shorten = {
-          environment =
-            let pass = (import ./config/secret.nix).simply-shorten;
-            in {
-              inherit (pass) username password;
-              db_url = "/urls.sqlite";
-            };
+          environment = {
+            db_url                    = "/urls.sqlite";
+            INSECURE_DISABLE_PASSWORD = "I_KNOW_ITS_BAD";
+          };
           image       = "draganczukp/simply-shorten";
           ports       = [ "4567:4567" ];
           volumes     = [ "/backup/simply-shorten.sqlite:/urls.sqlite" ];

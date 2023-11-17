@@ -48,7 +48,10 @@
       tar = "master.tar.gz";
     in [ "${fetchTarball url}/nixos" ];
 
-  networking.useDHCP = false;
+  networking = {
+    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    useDHCP     = false;
+  };
 
   nix.settings.trusted-users = [ "root" "jupblb" ];
 
