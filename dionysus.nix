@@ -10,6 +10,9 @@
     zfs.requestEncryptionCredentials = false;
   };
 
+  environment.systemPackages = with pkgs;
+    [ google-chrome jellyfin-media-player ];
+
   fileSystems = {
     "/"              = {
       device = "/dev/disk/by-label/nixos";
@@ -57,14 +60,16 @@
     ];
 
     programs = {
-      fish.functions   = {
+      fish.functions = {
         zfs-backup-unlock =
           builtins.readFile ./config/script/zfs-backup-unlock.fish;
       };
     };
+
+    services.gpg-agent.pinentryFlavor = lib.mkForce "curses";
   };
 
-  imports = [ ./nixos ./nixos/npm.nix ./nixos/syncthing.nix ];
+  imports = [ ./nixos ];
 
   networking = {
     domain            = "kielbowi.cz";
@@ -106,6 +111,8 @@
         user         = cfg.login;
       };
     };
+
+    steam = { enable = true; };
   };
 
   services = {
@@ -438,6 +445,8 @@
         rpc-host-whitelist   = "transmission.kielbowi.cz";
       };
     };
+
+    xserver.videoDrivers = [ "amdgpu" ];
 
     zfs.autoScrub = {
       enable   = true;

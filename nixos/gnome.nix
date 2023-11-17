@@ -55,4 +55,10 @@
       };
     };
   };
+
+  systemd.services = {
+    # https://github.com/NixOS/nixpkgs/issues/103746
+    "getty@tty1".enable  = false;
+    "autovt@tty1".enable = false;
+  };
 }

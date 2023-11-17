@@ -26,7 +26,17 @@
 
   fonts.enableDefaultPackages = true;
 
-  hardware.enableRedistributableFirmware = true;
+  hardware = {
+    bluetooth                     = { enable = true; };
+    enableRedistributableFirmware = true;
+    opengl                        = {
+      driSupport      = true;
+      driSupport32Bit = true;
+      enable          = true;
+    };
+    pulseaudio                    = { enable = false; };
+    xpadneo                       = { enable = true; };
+  };
 
   home-manager.users.jupblb = {
     home.enableNixpkgsReleaseCheck = false;
@@ -46,7 +56,9 @@
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
       tar = "master.tar.gz";
-    in [ "${fetchTarball url}/nixos" ];
+    in [
+      "${fetchTarball url}/nixos" ./gnome.nix ./plymouth.nix ./syncthing.nix
+    ];
 
   networking = {
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
@@ -70,6 +82,8 @@
     vim   = { defaultEditor = true; };
   };
 
+  security = { rtkit.enable = true; };
+
   services = {
     fstrim.enable = true;
 
@@ -92,6 +106,15 @@
         PasswordAuthentication = false;
         PermitRootLogin        = "no";
       };
+    };
+
+    pipewire = {
+      enable = true;
+      alsa   = {
+        enable       = true;
+        support32Bit = true;
+      };
+      pulse  = { enable = true; };
     };
 
     sshguard.enable = true;

@@ -1,23 +1,11 @@
 { pkgs, ... }: {
   boot = {
     initrd = {
-      kernelModules          = [ "e1000e" "i915" "kvm-intel" ];
-      luks.devices           = {
+      kernelModules  = [ "e1000e" "i915" "kvm-intel" ];
+      luks.devices   = {
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
-      network                = {
-        enable = true;
-        ssh    = {
-          authorizedKeys =
-            [ (builtins.readFile ./config/ssh/jupblb/id_ed25519.pub) ];
-          enable         = true;
-          hostKeys       = [ /boot/ssh-key ];
-        };
-      };
-      systemd = {
-        enable   = true;
-        extraBin = { cryptsetup = "${pkgs.cryptsetup}/bin/cryptsetup"; };
-      };
+      systemd.enable = true;
     };
 
     kernelParams = [ "mitigations=off" ];
@@ -44,14 +32,10 @@
   fonts.fonts = with pkgs; [ iosevka ];
 
   hardware = {
-    bluetooth.enable   = true;
     cpu.intel          = { updateMicrocode = true; };
     i2c.enable         = true;
     keyboard.uhk       = { enable = true; };
     opengl             = {
-      driSupport      = true;
-      driSupport32Bit = true;
-      enable          = true;
       extraPackages   = with pkgs; [ libvdpau-va-gl vaapiIntel vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
@@ -67,8 +51,6 @@
         nvidiaBusId    = "PCI:1:0:0";
       };
     };
-    pulseaudio         = { enable = false; };
-    xpadneo            = { enable = true; };
   };
 
   home-manager.users.jupblb = { config, lib, pkgs, ... }: {
@@ -98,13 +80,7 @@
     services.gpg-agent.enable = true;
   };
 
-  imports = [
-    ./nixos
-    ./nixos/gnome.nix
-    ./nixos/npm.nix
-    ./nixos/plymouth.nix
-    ./nixos/syncthing.nix
-  ];
+  imports = [ ./nixos ];
 
   networking = {
     firewall        = { allowedTCPPorts = [ 3000 ]; };
@@ -127,28 +103,16 @@
     };
   };
 
-  security = {
-    rtkit.enable    = true;
-    sudo.extraRules = [ {
-      commands = [ {
-        command = "/run/current-system/sw/bin/poweroff";
-        options = [ "SETENV" "NOPASSWD" ];
-      } ];
-      users    = [ "jupblb" ];
+  security.sudo.extraRules = [ {
+    commands = [ {
+      command = "/run/current-system/sw/bin/poweroff";
+      options = [ "SETENV" "NOPASSWD" ];
     } ];
-  };
+    users    = [ "jupblb" ];
+  } ];
 
   services = {
     kmscon.extraConfig = "font-dpi=192";
-
-    pipewire = {
-      enable = true;
-      alsa   = {
-        enable       = true;
-        support32Bit = true;
-      };
-      pulse  = { enable = true; };
-    };
 
     printing.enable = true;
 
@@ -156,8 +120,6 @@
       enable      = true;
       resyncTimer = "30m";
     };
-
-    sshguard.whitelist = [ "192.168.1.0/24" ];
 
     syncthing = {
       configDir = "/home/jupblb/.config/syncthing";
@@ -192,12 +154,6 @@
   swapDevices = [ { device = "/dev/disk/by-label/nixos-swap"; } ];
 
   system.stateVersion = "22.11";
-
-  systemd.services = {
-    # https://github.com/NixOS/nixpkgs/issues/103746
-    "getty@tty1".enable  = false;
-    "autovt@tty1".enable = false;
-  };
 
   users.users.jupblb.extraGroups = [ "docker" "input" "lp" ];
 
