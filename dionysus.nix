@@ -137,7 +137,7 @@
             domain    = "go.kielbowi.cz";
             resources = [ "^/.+" ];
             policy    = "bypass";
-          }];
+          } ];
         };
         authentication_backend        = {
           file.path              = "/var/lib/authelia-default/authelia.yaml";
@@ -241,6 +241,19 @@
       };
     };
 
+    # https://github.com/ddclient/ddclient/blob/afa127525380d8c3e19b2046bca6843346b1ab0d/ddclient.conf.in#L186-L194
+    ddclient = {
+      enable       = true;
+      domains      = [ "*.kielbowi.cz" ];
+      passwordFile = toString(pkgs.writeText "ddclient"
+        ((import ./config/secret.nix).cloudflare));
+      protocol     = "cloudflare";
+      ssl          = true;
+      use          = "web,web=ifconfig.me/ip";
+      username     = "token";
+      zone         = "kielbowi.cz";
+    };
+
     jackett.enable = true;
 
     jellyfin = {
@@ -311,32 +324,35 @@
       group  = "users";
     };
 
-    restic.backups = {
-      gcs   = {
-        environmentFile = toString(
-          pkgs.writeText "restic-gcs-env" ''
-            GOOGLE_PROJECT_ID=restic-backup-342620
-            GOOGLE_APPLICATION_CREDENTIALS=${./config/restic/restic-gcs.json}
-          ''
-        );
-        exclude         = [ "**/.stversions" "jupblb/Workspace" ];
-        extraBackupArgs = [ "--tag syncthing-gcs" ];
-        initialize      = true;
-        passwordFile    = toString ./config/restic/encryption.txt;
-        paths           = [ "/backup" ];
-        pruneOpts       = [ "--keep-weekly 4" "--keep-monthly 3" ];
-        repository      = "gs:dionysus-backup:/";
-        timerConfig     = { OnCalendar = "weekly"; };
-      };
-      local = {
-        exclude         = [ "**/.stversions" ];
-        extraBackupArgs = [ "--tag syncthing-local" ];
-        initialize      = true;
-        passwordFile    = toString ./config/restic/encryption.txt;
-        paths           = [ "/backup" ];
-        pruneOpts       = [ "--keep-daily 14" ];
-        repository      = "/data/backup";
-      };
+    restic.backups =
+      let passwordFile = pkgs.writeText "restic"
+        ((import ./config/secret.nix).restic);
+      in {
+        gcs   = {
+          environmentFile = toString(
+            pkgs.writeText "restic-gcs-env" ''
+              GOOGLE_PROJECT_ID=restic-backup-342620
+              GOOGLE_APPLICATION_CREDENTIALS=${./config/restic-gcs.json}
+            ''
+          );
+          exclude         = [ "**/.stversions" "jupblb/Workspace" ];
+          extraBackupArgs = [ "--tag syncthing-gcs" ];
+          initialize      = true;
+          passwordFile    = toString passwordFile;
+          paths           = [ "/backup" ];
+          pruneOpts       = [ "--keep-weekly 4" "--keep-monthly 3" ];
+          repository      = "gs:dionysus-backup:/";
+          timerConfig     = { OnCalendar = "weekly"; };
+        };
+        local = {
+          exclude         = [ "**/.stversions" ];
+          extraBackupArgs = [ "--tag syncthing-local" ];
+          initialize      = true;
+          passwordFile    = toString passwordFile;
+          paths           = [ "/backup" ];
+          pruneOpts       = [ "--keep-daily 14" ];
+          repository      = "/data/backup";
+        };
     };
 
     smartd = {
@@ -436,7 +452,6 @@
     ip-updater            = {
       after         = [ "network.target" ];
       description   = "Public IP updater";
-      environment   = (import ./config/secret.nix).ovh;
       path          = with pkgs; [ curl gawk ];
       script        = builtins.readFile ./config/script/ip-updater.sh;
       serviceConfig = {
