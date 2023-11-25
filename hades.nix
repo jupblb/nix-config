@@ -13,7 +13,8 @@
 
   environment = {
 #   sessionVariables = { NIXOS_OZONE_WL = "1"; };
-    systemPackages   = with pkgs; [ discord nvidia-offload solaar ];
+    systemPackages   = with pkgs;
+      [ discord nvidia-offload protontricks solaar ];
     variables        = {
       CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome-wayland;
       CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv";
@@ -127,6 +128,9 @@
       cert      = toString ./config/syncthing/hades/cert.pem;
       key       = toString ./config/syncthing/hades/key.pem;
       folders   = {
+        "domci/Documents"  = { path = "/ignore"; };
+        "domci/Pictures"   = { path = "/ignore"; };
+        "domci/Videos"     = { path = "/ignore"; };
         "jupblb/Documents" = {
           enable = true;
           path   = "/home/jupblb/Documents";

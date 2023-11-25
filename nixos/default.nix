@@ -43,10 +43,6 @@
 
     imports = [ ../home-manager ];
 
-    nixpkgs.config.packageOverrides = _:
-      let t = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      in import (fetchTarball t) {};
-
     services.gpg-agent.enable = true;
   };
 
@@ -55,7 +51,7 @@
   imports =
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
-      tar = "master.tar.gz";
+      tar = "release-23.11.tar.gz";
     in [
       "${fetchTarball url}/nixos" ./gnome.nix ./plymouth.nix ./syncthing.nix
     ];
