@@ -28,7 +28,7 @@
 
     git = {
       aliases     = {
-        amend     = "commit --amend --no-edit";
+        amend     = "commit --amend --no-edit --allow-empty-message";
         backward  = "reset --hard HEAD~1";
         forward   = "reset --hard HEAD@{1}";
         fuck      = "reset --hard HEAD";
