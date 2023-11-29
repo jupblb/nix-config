@@ -1,13 +1,13 @@
 local parser_install_dir = vim.fn.expand('$XDG_CACHE_HOME/nvim/parsers')
 
-require('nvim-treesitter.configs').setup({
-    context_commentstring = {
-        enable = true,
-        config = {
-            cpp = '// %s',
-            dart = '// %s',
-        },
+require('ts_context_commentstring').setup({
+    languages = {
+        cpp = '// %s',
+        dart = '// %s',
     },
+})
+
+require('nvim-treesitter.configs').setup({
     highlight = { enable = true, disable = { 'yaml' } },
     incremental_selection = {
         enable = true,
@@ -22,3 +22,4 @@ require('nvim-treesitter.configs').setup({
 })
 
 vim.opt.runtimepath:append(parser_install_dir)
+vim.g.skip_ts_context_commentstring_module = true
