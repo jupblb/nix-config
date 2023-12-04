@@ -184,6 +184,9 @@
           "jackett.kielbowi.cz"      = {
             extraConfig = auth + "reverse_proxy http://localhost:9117";
           };
+          "linkding.kielbowi.cz"     = {
+            extraConfig = auth + "reverse_proxy http://localhost:9090";
+          };
           "radarr.kielbowi.cz"       = {
             extraConfig = auth + "reverse_proxy http://localhost:7878";
           };
@@ -499,6 +502,16 @@
             "/data:/srv/data"
           ];
         };
+        linkding       = {
+          environment = {
+            LD_ENABLE_AUTH_PROXY = "True";
+            LD_AUTH_PROXY_USERNAME_HEADER = "HTTP_REMOTE_USER";
+            LD_AUTH_PROXY_LOGOUT_URL      = "authelia.kielbowi.cz/logout";
+          };
+          image       = "sissbruecker/linkding";
+          ports       = [ "9090:9090" ];
+          volumes     = [ "/data/linkding:/etc/linkding/data" ];
+        };
         simply-shorten = {
           environment = {
             db_url                    = "/urls.sqlite";
@@ -506,7 +519,7 @@
           };
           image       = "draganczukp/simply-shorten";
           ports       = [ "4567:4567" ];
-          volumes     = [ "/backup/simply-shorten.sqlite:/urls.sqlite" ];
+          volumes     = [ "/data/simply-shorten.sqlite:/urls.sqlite" ];
         };
       };
     };
