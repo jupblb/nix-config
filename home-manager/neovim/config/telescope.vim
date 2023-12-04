@@ -13,10 +13,6 @@ nmap <Leader>o     <Cmd>Telescope oldfiles<CR>
 nmap <Leader>ld <Cmd>Telescope diagnostics bufnr=0<CR>
 nmap <Leader>lD <Cmd>Telescope diagnostics<CR>
 
-nmap <Leader>gC <Cmd>Telescope git_commits<CR>
-nmap <Leader>gc <Cmd>Telescope git_bcommits<CR>
-nmap <Leader>gf <Cmd>Telescope git_files<CR>
-
 nmap <Leader>' <Cmd>Telescope neoclip<CR>
 
 autocmd User TelescopePreviewerLoaded setlocal wrap
