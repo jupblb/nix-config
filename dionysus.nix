@@ -31,21 +31,6 @@
       device = "/dev/disk/by-label/data";
       fsType = "ext4";
     };
-    "/nfs/downloads" = {
-      device  = "/data/downloads";
-      fsType  = "none";
-      options = [ "bind" ];
-    };
-    "/nfs/movies"    = {
-      device  = "/data/movies";
-      fsType  = "none";
-      options = [ "bind" ];
-    };
-    "/nfs/shows"     = {
-      device  = "/data/shows";
-      fsType  = "none";
-      options = [ "bind" ];
-    };
   };
 
   hardware.cpu.amd = { updateMicrocode = true; };
@@ -73,15 +58,15 @@
 
   networking = {
     domain            = "kielbowi.cz";
-    firewall          = {
-      checkReversePath = "loose";
-      allowedTCPPorts  = [
-        80 111 443 2049 2267 3012 4000 4001 4002 8181 22067 22070
-      ];
-      allowedUDPPorts  = [
-        80 111 443 2049 3012 4000 4001 4002 22067 22070
-      ];
-    };
+    firewall          =
+      let
+        caddy     = [ 80 443 ];
+        syncthing = [ 22067 22070  ];
+      in {
+        checkReversePath = "loose";
+        allowedTCPPorts  = caddy ++ syncthing;
+        allowedUDPPorts  = caddy ++ syncthing;
+      };
     interfaces.enp8s0 = {
       useDHCP   = true;
       wakeOnLan = { enable = true; };
@@ -282,19 +267,6 @@
         LISTEN_ADDR              = "127.0.0.1:9283";
       };
       enable               = true;
-    };
-
-    nfs.server = {
-      enable     = true;
-      exports    = ''
-        /nfs *(rw,fsid=0,no_subtree_check)
-        /nfs/downloads *(rw,nohide,insecure,no_subtree_check)
-        /nfs/movies *(rw,nohide,insecure,no_subtree_check)
-        /nfs/shows *(rw,nohide,insecure,no_subtree_check)
-      '';
-      lockdPort  = 4001;
-      mountdPort = 4002;
-      statdPort  = 4000;
     };
 
     photoprism = {
