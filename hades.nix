@@ -26,7 +26,7 @@
     "/home".fsType = "xfs";
   };
 
-  fonts.fonts = with pkgs; [ iosevka ];
+  fonts.packages = with pkgs; [ iosevka ];
 
   hardware = {
     cpu.intel          = { updateMicrocode = true; };
