@@ -12,13 +12,9 @@
   };
 
   environment = {
-#   sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages   = with pkgs;
       [ discord nvidia-offload protontricks solaar ];
-    variables        = {
-      CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome-wayland;
-      CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv";
-    };
+    variables        = { CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv"; };
   };
 
   fileSystems = {

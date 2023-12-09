@@ -6,15 +6,20 @@
       pkgs.gnome-tour gnome-weather pkgs.gnome-connections simple-scan totem
       yelp
     ];
+#   sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages        =
       let
         extensions = with pkgs.gnomeExtensions; [
           adjust-display-brightness compiz-windows-effect just-perfection
           removable-drive-menu
         ];
-        packages   = with pkgs;
-          [ ddcutil google-chrome-wayland gnome-firmware vlc ];
+        packages   = with pkgs; [
+          ddcutil google-chrome-wayland gnome-firmware jellyfin-media-player vlc
+        ];
       in extensions ++ packages;
+    variables             = {
+      CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome-wayland;
+    };
   };
 
   home-manager.users.jupblb = { config, lib, pkgs, ... }: {

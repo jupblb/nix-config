@@ -10,9 +10,6 @@
     zfs.requestEncryptionCredentials = false;
   };
 
-  environment.systemPackages = with pkgs;
-    [ google-chrome jellyfin-media-player ];
-
   fileSystems = {
     "/"              = {
       device = "/dev/disk/by-label/nixos";
