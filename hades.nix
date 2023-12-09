@@ -57,9 +57,6 @@
           ${pkgs.steam}/share/applications/steam.desktop \
           > ${config.xdg.dataHome}/applications/steam.desktop
         $DRY_RUN_CMD chmod +x ${config.xdg.dataHome}/applications/steam.desktop
-        $DRY_RUN_CMD mkdir -p ${config.xdg.configHome}/autostart
-        $DRY_RUN_CMD ln -sfn ${config.xdg.dataHome}/applications/steam.desktop \
-          ${config.xdg.configHome}/autostart
       '';
       stateVersion     = "22.11";
     };

@@ -35,9 +35,9 @@
         src  = pkgs.callPackage ./plugin/nix-env.nix {};
       }) ];
       shellAliases         = {
-        cat  = "${pkgs.bat}/bin/bat -pp";
+        cat  = "${pkgs.bat}/bin/bat --style=plain --paging=never";
         diff = "${pkgs.difftastic}/bin/difft --background=light --tab-width=2";
-        less = "${pkgs.bat}/bin/bat -p --paging=always";
+        less = "${pkgs.bat}/bin/bat --style=plain --paging=always";
       };
     };
 
