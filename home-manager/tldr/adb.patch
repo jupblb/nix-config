@@ -1,3 +1,0 @@
-- Pass local service endpoint to device (similar to "ssh -L")
-
-`adb reverse tcp:{{port}} tcp:{{port}}`

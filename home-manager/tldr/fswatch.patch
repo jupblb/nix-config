@@ -1,7 +1,0 @@
-- Run command on file change, indepentent from path
-
-`fswatch {{path/to/file}} | xargs -n1 -I{} {{bash command}}`
-
-- Monitor files with specific extension
-
-`fswatch {{path/to/directory}} -e ".*" -i "\\.{{extension}}\$"`

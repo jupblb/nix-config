@@ -27,13 +27,8 @@
     git = {
       aliases     = {
         amend     = "commit --amend --no-edit --allow-empty-message";
-        backward  = "reset --hard HEAD~1";
-        forward   = "reset --hard HEAD@{1}";
         fuck      = "reset --hard HEAD";
         increment = "commit --allow-empty-message -m ''";
-        line      = "!sh -c 'git log -L$2,+1:\${GIT_PREFIX:-./}$1' -";
-        lines     = "!sh -c 'git log -L$2,$3:\${GIT_PREFIX:-./}$1' -";
-        pr        = "!${pkgs.gh}/bin/gh pr checkout";
       };
       delta       = {
         enable  = true;
@@ -61,7 +56,6 @@
         merge.conflictStyle           = "diff3";
         pull.rebase                   = true;
         push.default                  = "upstream";
-        sendemail.sendmailcmd         = "${pkgs.msmtp}/bin/msmtp";
         submodule.recurse             = true;
       };
       package     = pkgs.buildEnv {
@@ -78,14 +72,6 @@
     htop = {
       enable   = true;
       settings = { hide_threads = true; hide_userland_threads = true; };
-    };
-
-    msmtp = {
-      enable        = true;
-      extraConfig   = ''
-        ${builtins.readFile ../config/msmtp.conf}
-        passwordeval echo "${(import ../config/secret.nix).migadu.git}"
-      '';
     };
 
     ripgrep = {
@@ -109,24 +95,8 @@
             proxyCommand =
               "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
           };
-          "github.com" = {
-            compression    = true;
-            hostname       = "github.com";
-            identitiesOnly = true;
-            identityFile   = [ (toString ../config/ssh/git/id_ed25519) ];
-          };
-          "prose.sh"   = common // {
-            hostname = "prose.sh";
-          };
+          "prose.sh"   = common // { hostname = "prose.sh"; };
         };
-    };
-
-    tealdeer = {
-      enable   = true;
-      settings = {
-        directories = { custom_pages_dir = "${toString ./tldr}"; };
-        updates     = { auto_update = true; };
-      };
     };
   };
 

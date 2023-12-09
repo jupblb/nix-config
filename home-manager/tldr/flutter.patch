@@ -1,4 +1,0 @@
-- Run flutter in a way that allows to externally reload the app
-
-`flutter run --pid-file {{path/to/pid-file}} <&0`
-`kill -USR1 "$(cat {{path/to/pid-file}})"`
