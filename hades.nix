@@ -29,14 +29,14 @@
   fonts.packages = with pkgs; [ iosevka ];
 
   hardware = {
-    cpu.intel          = { updateMicrocode = true; };
-    i2c.enable         = true;
-    keyboard.uhk       = { enable = true; };
-    opengl             = {
+    cpu      = { intel.updateMicrocode = true; };
+    i2c      = { enable = true; };
+    keyboard = { uhk.enable = true; };
+    opengl   = {
       extraPackages   = with pkgs; [ libvdpau-va-gl vaapiIntel vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
-    nvidia             = {
+    nvidia   = {
       nvidiaSettings  = false;
       powerManagement = {
         enable      = true;
@@ -113,8 +113,6 @@
   } ];
 
   services = {
-    kmscon.extraConfig = "font-dpi=192";
-
     printing.enable = true;
 
     psd = {

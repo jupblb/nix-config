@@ -1,16 +1,11 @@
-{ lib, pkgs, ... }:
-
-{
+{ lib, pkgs, ... }: {
   boot = {
     initrd.availableKernelModules =
       [ "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci" ];
 
     loader = {
-      efi.canTouchEfiVariables = true;
-      systemd-boot             = {
-        enable             = true;
-        configurationLimit = 10;
-      };
+      efi          = { canTouchEfiVariables = true; };
+      systemd-boot = { enable = true; };
     };
   };
 
@@ -20,9 +15,11 @@
     keyMap     = "pl";
   };
 
-  environment.sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
-  environment.systemPackages   = with pkgs;
-    [ file unzip wl-clipboard pciutils usbutils wol ];
+  environment = {
+    sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
+    systemPackages   = with pkgs;
+      [ file unzip wl-clipboard pciutils usbutils wol ];
+  };
 
   fonts.enableDefaultPackages = true;
 
@@ -39,11 +36,9 @@
   };
 
   home-manager.users.jupblb = {
-    home.enableNixpkgsReleaseCheck = false;
-
-    imports = [ ../home-manager ];
-
-    services.gpg-agent.enable = true;
+    home     = { enableNixpkgsReleaseCheck = false; };
+    imports  = [ ../home-manager ];
+    services = { gpg-agent.enable = true; };
   };
 
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
@@ -81,21 +76,9 @@
   security = { rtkit.enable = true; };
 
   services = {
-    fstrim.enable = true;
-
-    fwupd.enable = true;
-
-    kmscon = {
-      autologinUser = "jupblb";
-      # https://github.com/Aetf/kmscon/issues/29
-      enable        = false;
-      fonts         = [
-        { name = "Source Code Pro"; package = pkgs.source-code-pro; }
-      ];
-      hwRender      = true;
-    };
-
-    openssh = {
+    fstrim    = { enable = true; };
+    fwupd     = { enable = true; };
+    openssh   = {
       openFirewall = true;
       enable       = true;
       settings     = {
@@ -103,8 +86,7 @@
         PermitRootLogin        = "no";
       };
     };
-
-    pipewire = {
+    pipewire  = {
       enable = true;
       alsa   = {
         enable       = true;
@@ -112,10 +94,8 @@
       };
       pulse  = { enable = true; };
     };
-
-    sshguard.enable = true;
-
-    tailscale.enable = true;
+    sshguard  = { enable = true; };
+    tailscale = { enable = true; };
   };
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
@@ -125,11 +105,13 @@
   time.timeZone = "Europe/Warsaw";
 
   users.users.jupblb = {
-    description                     = "Michal Kielbowicz";
-    extraGroups                     = [ "wheel" ];
-    initialPassword                 = "changeme";
-    isNormalUser                    = true;
-    openssh.authorizedKeys.keyFiles = [ ../config/ssh/jupblb/id_ed25519.pub ];
-    shell                           = pkgs.bashInteractive;
+    description     = "Michal Kielbowicz";
+    extraGroups     = [ "wheel" ];
+    initialPassword = "changeme";
+    isNormalUser    = true;
+    openssh         = {
+      authorizedKeys.keyFiles = [ ../config/ssh/jupblb/id_ed25519.pub ];
+    };
+    shell           = pkgs.bashInteractive;
   };
 }

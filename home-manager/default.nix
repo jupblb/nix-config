@@ -3,7 +3,7 @@
     packages         = with pkgs; [ fswatch ];
     username         = "jupblb";
     sessionVariables = { PAGER = "${pkgs.less}/bin/less -R"; };
-    shellAliases     = { fhs = "${pkgs.steam-run}/bin/steam-run fish"; };
+    shellAliases     = { fhs = "${pkgs.steam-run}/bin/steam-run \$SHELL"; };
   };
 
   nixpkgs.overlays = [ (import ../overlay) ];
