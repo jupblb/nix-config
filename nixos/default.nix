@@ -17,6 +17,7 @@
 
   environment = {
     sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
+    shellAliases     = { fhs = "${pkgs.steam-run}/bin/steam-run \$SHELL"; };
     systemPackages   = with pkgs;
       [ file unzip wl-clipboard pciutils usbutils wol ];
   };
