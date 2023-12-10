@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   environment = {
     gnome.excludePackages = with pkgs.gnome; [
       baobab cheese epiphany gedit gnome-calculator gnome-calendar gnome-clocks
@@ -23,9 +23,14 @@
   };
 
   home-manager.users.jupblb = { config, lib, pkgs, ... }: {
-    programs.kitty.settings = { linux_display_server = "wayland"; };
-
-    services.gpg-agent.pinentryFlavor = "gnome3";
+    dconf    = {
+      settings = {
+        "/org/gnome/gnome-screenshot/".auto-save-directory =
+          "${config.home.homeDirectory}/Pictures/screenshots";
+      };
+    };
+    programs = { kitty.settings.linux_display_server = "wayland"; };
+    services = { gpg-agent.pinentryFlavor = "gnome3"; };
   };
 
   programs = {
