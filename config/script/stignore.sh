@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-cd /backup/jupblb/Workspace
+cd /backup/jupblb/Workspace || exit 1
 
 python3 generate-stignore.py > /tmp/stignore
 
