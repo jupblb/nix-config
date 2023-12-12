@@ -44,10 +44,6 @@
         core.mergeoptions             = "--no-edit";
         credential.helper             = lib.mkBefore
           [ "cache --timeout ${toString(60 * 60 * 10)}" ];
-        diff.tool                     = "difftastic";
-        difftool.prompt               = false;
-        "difftool \"difftastic\"".cmd =
-          "${pkgs.difftastic}/bin/difft --background=light --tab-width=2 $LOCAL $REMOTE";
         fetch.prune                   = true;
         init.defaultBranch            = "main";
         merge.conflictStyle           = "diff3";
