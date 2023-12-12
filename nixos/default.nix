@@ -38,7 +38,13 @@
 
   home-manager.users.jupblb = {
     home     = { enableNixpkgsReleaseCheck = false; };
-    imports  = [ ../home-manager ];
+    imports  = [
+      ../home-manager
+      ../home-manager/fish
+      ../home-manager/gpg-and-ssh.nix
+      ../home-manager/lf
+      ../home-manager/neovim
+    ];
     services = { gpg-agent.enable = true; };
   };
 

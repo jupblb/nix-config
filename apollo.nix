@@ -3,8 +3,9 @@
     activation    = {
       linkDesktopApplications =
         lib.hm.dag.entryAfter [ "writeBoundary" "createXdgUserDirectories" ] ''
-          $DRY_RUN_CMD ln -sfn ${config.home.homeDirectory}/.nix-profile/share/applications \
-            ${config.xdg.dataHome}/"applications/home-manager"
+          $DRY_RUN_CMD ln -sfn \
+            ${config.home.homeDirectory}/.nix-profile/share/applications \
+            ${config.xdg.dataHome}/applications/home-manager
         '';
     };
     homeDirectory = "/home/deck";
@@ -18,7 +19,6 @@
     ./home-manager/lf
     ./home-manager/kitty.nix
     ./home-manager/neovim
-    ./home-manager/direnv.nix
   ];
 
   nixpkgs.config.packageOverrides = _: {
@@ -43,11 +43,6 @@
     };
 
     home-manager.enable = true;
-  };
-
-  services.gpg-agent = {
-    enable         = true;
-    pinentryFlavor = "qt";
   };
 
   targets.genericLinux.enable = true;

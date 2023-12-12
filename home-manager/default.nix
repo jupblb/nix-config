@@ -21,8 +21,6 @@
       initExtra      = "source ${toString ../config/bashrc.bash}";
     };
 
-    gpg.enable = true;
-
     git = {
       aliases     = {
         amend     = "commit --amend --no-edit --allow-empty-message";
@@ -59,9 +57,8 @@
       };
       package     = pkgs.buildEnv {
         name  = "git-custom";
-        paths = with pkgs; [ git git-crypt git-tidy ];
+        paths = with pkgs; [ git git-tidy ];
       };
-      signing     = { key = "1F516D495D5D8D5B"; signByDefault = true; };
       userEmail   = "git@kielbowi.cz";
       userName    = "jupblb";
     };
@@ -76,26 +73,6 @@
     ripgrep = {
       arguments = [ "--glob=!.git/*" "--hidden" "--no-ignore" ];
       enable    = true;
-    };
-
-    ssh = {
-      controlMaster  = "auto";
-      controlPersist = "yes";
-      enable         = true;
-      matchBlocks    =
-        let common = {
-          identitiesOnly = true;
-          identityFile   = [ (toString ../config/ssh/jupblb/id_ed25519) ];
-          user           = "jupblb";
-        };
-        in {
-          dionysus     = common // {
-            hostname     = "dionysus.kielbowi.cz";
-            proxyCommand =
-              "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
-          };
-          "prose.sh"   = common // { hostname = "prose.sh"; };
-        };
     };
   };
 
