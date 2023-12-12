@@ -117,7 +117,7 @@
     initialPassword = "changeme";
     isNormalUser    = true;
     openssh         = {
-      authorizedKeys.keyFiles = [ ../config/ssh/jupblb/id_ed25519.pub ];
+      authorizedKeys.keyFiles = [ ../config/ssh/id_ed25519.pub ];
     };
     shell           = pkgs.bashInteractive;
   };
