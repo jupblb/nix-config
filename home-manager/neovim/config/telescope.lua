@@ -4,6 +4,7 @@ require('neoclip').setup({ default_register = '*' })
 
 telescope.setup({
     defaults = {
+        cache_picker = { num_pickers = 10 },
         dynamic_preview_title = true,
         mappings = { i = { ["<esc>"] = require('telescope.actions').close } },
         layout_config = {
