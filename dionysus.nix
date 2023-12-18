@@ -44,6 +44,12 @@
         zfs-backup-unlock =
           builtins.readFile ./config/script/zfs-backup-unlock.fish;
       };
+      git.extraConfig = {
+        credential.helper = lib.mkForce [
+          "cache --timeout 36000"
+          "${pkgs.git-credential-oauth}/bin/git-credential-oauth -device"
+        ];
+      };
     };
 
     services.gpg-agent.pinentryFlavor = lib.mkForce "curses";
@@ -59,8 +65,8 @@
         syncthing = [ 22067 22070  ];
       in {
         checkReversePath = "loose";
-        allowedTCPPorts  = caddy ++ syncthing;
-        allowedUDPPorts  = caddy ++ syncthing;
+        allowedTCPPorts  = caddy ++ syncthing ++ [ 3000 8080 ];
+        allowedUDPPorts  = caddy ++ syncthing ++ [ 3000 8080 ];
       };
     interfaces.enp8s0 = {
       useDHCP   = true;

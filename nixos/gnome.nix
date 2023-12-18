@@ -25,7 +25,7 @@
   home-manager.users.jupblb = { config, lib, pkgs, ... }: {
     dconf    = {
       settings = {
-        "/org/gnome/gnome-screenshot/".auto-save-directory =
+        "org/gnome/gnome-screenshot".auto-save-directory =
           "${config.home.homeDirectory}/Pictures/screenshots";
       };
     };
