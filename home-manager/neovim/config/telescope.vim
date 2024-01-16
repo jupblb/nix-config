@@ -7,6 +7,7 @@ nmap <Leader>/       <Cmd>Telescope current_buffer_fuzzy_find<CR>
 nmap <Leader>f       <Cmd>Telescope find_files<CR>
 nmap <Leader>j       <Cmd>Telescope jumplist<CR>
 nmap <Leader>?       <Cmd>Telescope live_grep_args<CR>
+nmap <Leader>`       <Cmd>Telescope marks<CR>
 nmap <Leader>o       <Cmd>Telescope oldfiles<CR>
 nmap <Leader>"       <Cmd>Telescope registers<CR>
 nmap <Leader><Space> <Cmd>Telescope resume<CR>
