@@ -460,10 +460,11 @@
       description   = "Update jupblb/Workspace stignore";
       path          = with pkgs; [
         bash diffutils inotify-tools
-        (python311.withPackages(p: with p; [ gitignore-parser ]))
+        (python3.withPackages(p: with p; [ gitignore-parser ]))
       ];
-      # https://stackoverflow.com/a/38229197
       script        = ''
+        sh ${./config/script/stignore.sh}
+
         inotifywait --format "%f" -e 'modify,create,delete' -m -r /backup/jupblb/Workspace |\
         while read line; do
           if [[ "$line" == ".gitignore" ]]; then
