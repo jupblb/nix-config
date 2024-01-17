@@ -32,15 +32,10 @@
             set completeopt=menu,menuone,noselect
             luafile ${toString ./config/cmp.lua}
           '';
-          plugin = nvim-cmp.overrideAttrs(_: {
-            dependencies =
-              let cmp-signature = cmp-nvim-lsp-signature-help.overrideAttrs(_: {
-                dependencies = [];
-              });
-              in [
-                cmp-buffer cmp-latex-symbols cmp-nvim-lsp cmp-pandoc-references
-                cmp-path cmp-signature cmp_luasnip luasnip
-              ];
+          plugin = cmp-nvim-lsp-signature-help.overrideAttrs(old: {
+            dependencies = old.dependencies ++ [
+              cmp-latex-symbols cmp-nvim-lsp cmp-path cmp_luasnip luasnip
+            ];
           });
         } {
           config = "luafile ${toString ./config/colorizer.lua}";
