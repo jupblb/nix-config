@@ -1,10 +1,10 @@
-local telescope = require('telescope')
-
 require('neoclip').setup({ default_register = '*' })
+
+local telescope = require('telescope')
 
 telescope.setup({
     defaults = {
-        cache_picker = { num_pickers = 10 },
+        cache_picker = { num_pickers = -1, limit_entries = 0 },
         dynamic_preview_title = true,
         mappings = { i = { ["<esc>"] = require('telescope.actions').close } },
         layout_config = {
@@ -24,7 +24,11 @@ telescope.setup({
             cwd_only = true,
             previewer = false,
             layout_config = { horizontal = { width = 0.5 } }
-        }
+        },
+        pickers = {
+            previewer = false,
+            layout_config = { horizontal = { width = 0.5 } }
+        },
     },
 })
 

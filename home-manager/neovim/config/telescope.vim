@@ -10,7 +10,7 @@ nmap <Leader>?       <Cmd>Telescope live_grep_args<CR>
 nmap <Leader>`       <Cmd>Telescope marks<CR>
 nmap <Leader>o       <Cmd>Telescope oldfiles<CR>
 nmap <Leader>"       <Cmd>Telescope registers<CR>
-nmap <Leader><Space> <Cmd>Telescope resume<CR>
+nmap <Leader><Space> <Cmd>Telescope pickers<CR>
 
 nmap <Leader>ld <Cmd>Telescope diagnostics bufnr=0<CR>
 nmap <Leader>lD <Cmd>Telescope diagnostics<CR>
