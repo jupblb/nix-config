@@ -7,6 +7,11 @@
       src  = pkgs.callPackage ./fish.nix {};
     } ];
 
+    neovim = {
+      extraConfig   = "lua lspconfig.dartls.setup({})";
+      extraPackages = with pkgs; [ dart ];
+    };
+
     vscode.userSettings = {
       "dart.addSdkToTerminalPath" = false;
       "dart.checkForSdkUpdates"   = false;

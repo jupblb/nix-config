@@ -22,6 +22,9 @@
       '';
       extraPackages = with pkgs; [ fd ripgrep zig ];
       plugins       = with pkgs.vimPlugins; [ {
+          config = "lua require('fidget').setup({})";
+          plugin = fidget-nvim;
+        } {
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
