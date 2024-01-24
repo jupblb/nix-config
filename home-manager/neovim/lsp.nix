@@ -4,8 +4,9 @@
       extraPackages =
         let
           default        = with pkgs; [
-            clang fish gopls impl jq jdt-language-server lemminx
-            lua-language-server marksman nil pandoc shfmt yaml-language-server
+            actionlint clang fish gopls impl jq jdt-language-server lemminx
+            lua-language-server marksman nil pandoc shellcheck shfmt
+            yaml-language-server
           ];
           nodePackages   = with pkgs.nodePackages; [
             bash-language-server dockerfile-language-server-nodejs eslint
