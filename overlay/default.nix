@@ -1,4 +1,5 @@
 self: super: with super; {
+  fortune               = fortune.override({ withOffensive = true; });
   git-tidy              = callPackage ./git-tidy.nix {
     inherit (rustPlatform) buildRustPackage;
   };
