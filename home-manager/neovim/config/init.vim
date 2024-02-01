@@ -2,7 +2,7 @@ set clipboard+=unnamedplus
 set cmdheight=0
 set colorcolumn=80
 set cursorline
-set foldlevel=3
+set foldlevel=5
 set ignorecase
 set laststatus=0
 set list

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   home.packages = with pkgs;
     [ iosevka (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
 
@@ -29,10 +29,6 @@
         "workbench.colorTheme"            = "Gruvbox Light Hard";
         "workbench.editor.showTabs"       = "none";
         "workbench.statusBar.visible"     = false;
-
-        # Nix IDE
-        "nix.enableLanguageServer" = true;
-        "nix.serverPath"           = "${pkgs.nixd}/bin/nixd";
 
         # vim
         "vim.scroll"             = 16;
