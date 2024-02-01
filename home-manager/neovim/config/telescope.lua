@@ -15,6 +15,14 @@ telescope.setup({
         path_display = { "truncate" },
         wrap_results = true,
     },
+    extensions = {
+        undo = {
+            layout_strategy = "vertical",
+            mappings = {
+                i = { ["<CR>"] = require("telescope-undo.actions").restore, },
+            },
+        },
+    },
     pickers = {
         find_files = {
             previewer = false,
@@ -37,3 +45,4 @@ telescope.load_extension('live_grep_args')
 telescope.load_extension('lsp_handlers')
 telescope.load_extension('neoclip')
 telescope.load_extension('ui-select')
+telescope.load_extension('undo')

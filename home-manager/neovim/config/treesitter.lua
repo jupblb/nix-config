@@ -1,5 +1,3 @@
-local parser_install_dir = vim.fn.expand('$XDG_CACHE_HOME/nvim/parsers')
-
 require('ts_context_commentstring').setup({
     languages = {
         cpp = '// %s',
@@ -18,8 +16,18 @@ require('nvim-treesitter.configs').setup({
         }
     },
     matchup = { enable = true },
-    parser_install_dir = parser_install_dir,
 })
 
-vim.opt.runtimepath:append(parser_install_dir)
 vim.g.skip_ts_context_commentstring_module = true
+
+-- https://github.com/dhruvinsh/nvim/blob/bcd7cfb8a29886b2c90b1182629ce73dbf88f2d6/after/plugin/treesitter.lua#L115-L134
+vim.api.nvim_create_autocmd("BufReadPre", {
+    callback = function(ev)
+        local size = vim.fn.getfsize(vim.api.nvim_buf_get_name(ev.buf))
+        if 0 < size and size < 1024 * 1024 then
+            vim.opt.foldmethod = "expr"
+            vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            -- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+        end
+    end,
+})

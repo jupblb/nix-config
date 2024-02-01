@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, pkgs, ... }: {
   home.sessionVariables = {
     NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";
   };
@@ -63,6 +63,7 @@
             dependencies = old.dependencies ++ [
               nvim-neoclip-lua telescope-live-grep-args-nvim
               telescope-lsp-handlers-nvim telescope-ui-select-nvim
+              telescope-undo-nvim
             ];
           });
         } {
