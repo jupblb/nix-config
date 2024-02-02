@@ -10,7 +10,7 @@ if test -z "$nvim_id"
 end
 
 # https://github.com/neovim/neovim/issues/18519
-for i in (seq 1 (count $argv))
+for i in (seq 1 1 (count $argv) 2>/dev/null)
     if test -e $argv[$i]
         set argv[$i] (realpath $argv[$i])
     end
