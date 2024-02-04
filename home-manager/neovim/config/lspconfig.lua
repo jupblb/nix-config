@@ -101,22 +101,29 @@ lspconfig.gopls.setup({
 })
 
 lspconfig.lua_ls.setup({
-    settings = {
-        Lua = {
-            runtime = {
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                globals = { 'vim' },
-            },
-            workspace = {
-                -- https://github.com/LunarVim/LunarVim/issues/4049#issuecomment-1634539474
-                checkThirdParty = false,
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
-            },
-        },
-    },
+    on_init = function(client)
+        local path = client.workspace_folders[1].name
+        if vim.loop.fs_stat(path .. '/.luarc.json') or
+            vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+            return true
+        end
+
+        client.config.settings =
+            vim.tbl_deep_extend('force', client.config.settings, {
+                Lua = {
+                    runtime = { version = 'LuaJIT' },
+                    workspace = {
+                        checkThirdParty = false,
+                        library = vim.api.nvim_get_runtime_file("", true)
+                    }
+                }
+            })
+        client.notify("workspace/didChangeConfiguration", {
+            settings = client.config.settings
+        })
+
+        return true
+    end
 })
 
 lspconfig.metals.setup({ single_file_support = true })
