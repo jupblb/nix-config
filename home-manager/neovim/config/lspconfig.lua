@@ -81,7 +81,8 @@ end
 -- neodev.nvim
 require('neodev').setup({
     override = function(root_dir, library)
-        if string.find(root_dir, 'nix%-config') then
+        if string.find(root_dir, 'nix%-config') or
+            string.find(root_dir, 'nvim/site/plugin') then
             library.enabled = true
             library.plugins = true
         end
