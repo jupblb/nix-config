@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   environment = {
     gnome.excludePackages = with pkgs.gnome; [
       baobab cheese epiphany gedit gnome-calculator gnome-calendar gnome-clocks

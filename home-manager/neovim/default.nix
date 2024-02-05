@@ -5,7 +5,21 @@
 
   programs = {
     fish = {
-      functions.vim = builtins.readFile ./singleton.fish;
+      functions = {
+        fish_prompt = ''
+          set -l file "/tmp/nvim.$USER/term-$KITTY_WINDOW_ID$WEZTERM_PANE.json"
+
+          if test -e $file
+              for value in \
+                (${pkgs.jq}/bin/jq -r 'keys[] as $k | "\($k) \(.[$k])"' $file)
+                  set -l value (echo "$value" | ${pkgs.gnused}/bin/sed 's/\",\"/\"\ \"/g')
+                  set -l value (echo "$value" | ${pkgs.coreutils}/bin/tr -d '[]')
+                  eval (echo "set -gx $value")
+              end
+          end
+        '';
+        vim         = builtins.readFile ./singleton.fish;
+      };
     };
 
     kitty = {
@@ -19,6 +33,7 @@
       extraConfig   = ''
         source ${toString ./config/init.vim}
         luafile ${toString ./config/init.lua}
+        luafile ${toString ./config/vim-env.lua}
       '';
       extraPackages = with pkgs; [ fd ripgrep zig ];
       plugins       = with pkgs.vimPlugins; [ {

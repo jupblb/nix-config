@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   boot = {
     enableContainers                 = false;
     initrd.kernelModules             = [ "amdgpu" ];
