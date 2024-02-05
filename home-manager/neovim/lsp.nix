@@ -4,7 +4,7 @@
       extraPackages =
         let
           default        = with pkgs; [
-            actionlint clang fish gopls impl jq jdt-language-server lemminx
+            actionlint clang fish impl jq jdt-language-server lemminx
             lua-language-server marksman nil pandoc shellcheck shfmt
             yaml-language-server
           ];

@@ -97,10 +97,6 @@ local default_servers = {
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 
-lspconfig.gopls.setup({
-    settings = { gopls = { gofumpt = true, staticcheck = true } }
-})
-
 lspconfig.lua_ls.setup({
     on_init = function(client)
         local path = client.workspace_folders[1].name

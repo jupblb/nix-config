@@ -8,8 +8,8 @@
     } ];
 
     neovim = {
-      extraConfig   = "lua lspconfig.dartls.setup({})";
-      extraPackages = with pkgs; [ dart ];
+      extraLuaConfig = "require('lspconfig').dartls.setup({})";
+      extraPackages  = with pkgs; [ dart ];
     };
 
     vscode.userSettings = {
