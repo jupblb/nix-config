@@ -3,11 +3,10 @@
 
 set bin (which lf)
 set tmp (mktemp)
-set buf "/tmp/nvim-$KITTY_WINDOW_ID$WEZTERM_PANE.buffer"
 
-if test -e $buf && not count $argv >/dev/null
+if test -e $FILE && not count $argv >/dev/null
     # https://github.com/gokcehan/lf/issues/939
-    $bin -selection-path=$tmp (cat $buf)
+    $bin -selection-path=$tmp $FILE
 else
     $bin -selection-path=$tmp $argv
 end

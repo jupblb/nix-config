@@ -30,11 +30,6 @@
       settings    = { hidden = true; icons = true; tabstop = 4; };
     };
 
-    neovim.extraConfig = ''
-      autocmd BufEnter * call writefile(
-        \ [expand("%:p")], "/tmp/nvim-" . $KITTY_WINDOW_ID . $WEZTERM_PANE . ".buffer")
-    '';
-
     pistol = {
       associations = [ {
         command = "${pkgs.glow}/bin/glow -s light -- %pistol-filename%";
