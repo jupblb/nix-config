@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
   home.sessionVariables = {
+    NVIM_ENV_JSON       = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.json";
     NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";
   };
 
@@ -7,11 +8,9 @@
     fish = {
       functions = {
         fish_prompt = ''
-          set -l file "/tmp/nvim.$USER/term-$KITTY_WINDOW_ID$WEZTERM_PANE.json"
-
-          if test -e $file
+          if test -e $NVIM_ENV_JSON
               for value in \
-                (${pkgs.jq}/bin/jq -r 'keys[] as $k | "\($k) \(.[$k])"' $file)
+                (${pkgs.jq}/bin/jq -r 'keys[] as $k | "\($k) \(.[$k])"' $NVIM_ENV_JSON)
                   set -l value (echo "$value" | ${pkgs.gnused}/bin/sed 's/\",\"/\"\ \"/g')
                   set -l value (echo "$value" | ${pkgs.coreutils}/bin/tr -d '[]')
                   eval (echo "set -gx $value")

@@ -1,6 +1,11 @@
 -- https://stackoverflow.com/a/57598640
 local metaTable
 do
+  local path = os.getenv("NVIM_ENV_JSON") or
+      string.format("/tmp/nvim-%s%s.json",
+        os.getenv("USER") or "unknown",
+        os.getenv("KITTY_WINDOW_ID") or "",
+        os.getenv("WEZTERM_PANE") or "")
   local protectedTable = {}
   metaTable = {
     __index = function(_, k)
@@ -8,11 +13,6 @@ do
     end,
     __newindex = function(_, k, v)
       protectedTable[k] = v
-
-      local path = string.format("/tmp/nvim.%s/term-%s%s.json",
-        os.getenv("USER") or "unknown",
-        os.getenv("KITTY_WINDOW_ID") or "",
-        os.getenv("WEZTERM_PANE") or "")
       vim.fn.writefile({ vim.fn.json_encode(protectedTable) }, path)
     end
   }
@@ -46,4 +46,3 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     end
   end,
 })
-
