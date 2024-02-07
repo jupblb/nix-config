@@ -33,39 +33,49 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup
+local lspAttachAuGroup = vim.api.nvim_create_augroup("LspFormatting", {})
 _G.lsp_attach = function(client, bufnr)
     if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-            buffer = bufnr,
+            buffer   = bufnr,
             callback = vim.lsp.buf.document_highlight,
+            group    = lspAttachAuGroup,
         })
         vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-            buffer = bufnr,
+            buffer   = bufnr,
             callback = vim.lsp.buf.clear_references,
         })
     end
 
     vim.api.nvim_create_autocmd("CursorHold", {
-        buffer = bufnr,
+        buffer   = bufnr,
         callback = function()
-            local opts = {
+            vim.diagnostic.open_float(nil, {
                 focusable = false,
                 close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
                 border = 'rounded',
                 source = 'always',
                 prefix = ' ',
                 scope = 'cursor',
-            }
-            vim.diagnostic.open_float(nil, opts)
-        end
+            })
+        end,
+        group    = lspAttachAuGroup,
     })
 
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer   = bufnr,
+        callback = function() vim.lsp.buf.format({ bufnr = bufnr }) end,
+        group    = lspAttachAuGroup,
+    })
     vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
+    vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc()')
 end
 
 local default_config = {
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
-    on_attach = lsp_attach
+    capabilities = require('cmp_nvim_lsp').default_capabilities({
+        snippetSupport = false,
+    }),
+    on_attach    = lsp_attach
 }
 lspconfig.util.default_config = vim.tbl_extend(
     'force', lspconfig.util.default_config, default_config)
