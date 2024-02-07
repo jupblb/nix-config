@@ -49,9 +49,8 @@
             set completeopt=menu,menuone,noselect
             luafile ${toString ./config/cmp.lua}
           '';
-          plugin = cmp-nvim-lsp-signature-help.overrideAttrs(old: {
-            dependencies = old.dependencies ++
-              [ cmp-fish cmp-latex-symbols cmp-nvim-lsp cmp-async-path ];
+          plugin = nvim-cmp.overrideAttrs(_: {
+            dependencies = [ cmp-fish cmp-latex-symbols cmp-async-path ];
           });
         } {
           config = "luafile ${toString ./config/colorizer.lua}";

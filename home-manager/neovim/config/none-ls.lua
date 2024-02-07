@@ -1,8 +1,8 @@
-local null_ls = require("null-ls")
-
 if vim.fn.getcwd():find('/google/src/') ~= nil then
     return
 end
+
+local null_ls = require('null-ls')
 
 null_ls.setup({
     sources = {
@@ -28,8 +28,8 @@ null_ls.register({
                 '--columns=80', '-s', '-f', 'markdown', '-t', commonmark, '-'
             }
 
-            if string.find(params.bufname, "jupblb/Documents") then
-                table.insert(args, "--reference-links")
+            if string.find(params.bufname, 'jupblb/Documents') then
+                table.insert(args, '--reference-links')
             end
 
             return args

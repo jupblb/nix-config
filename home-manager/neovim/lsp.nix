@@ -30,7 +30,10 @@
             luafile ${toString ./config/lspconfig.lua}
           '';
           plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [ inc-rename-nvim neodev-nvim ];
+            dependencies = [
+              cmp-nvim-lsp cmp-nvim-lsp-signature-help inc-rename-nvim
+              neodev-nvim
+            ];
           });
         }
       ];

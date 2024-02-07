@@ -1,4 +1,5 @@
 local lspconfig = require('lspconfig')
+local cmp = require('cmp')
 
 -- Incremental rename
 require('inc_rename').setup({
@@ -64,15 +65,18 @@ local lsp_attach = function(client, bufnr)
     })
 
     if client.server_capabilities.documentFormattingProvider then
-        vim.api.nvim_create_autocmd('BufWritePre', {
-            buffer   = bufnr,
-            callback = function() vim.lsp.buf.format({ bufnr = bufnr }) end,
-            group    = lspAttachAuGroup,
-        })
         vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
     end
 
     vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
+
+    cmp.setup.buffer({
+        sources = cmp.config.sources({
+            { name = 'nvim_lsp' }, { name = 'nvim_lsp_signature_help' },
+            { name = 'async_path' }, { name = 'latex_symbols' },
+            { name = 'fish' },
+        }),
+    })
 end
 
 local default_config = {
