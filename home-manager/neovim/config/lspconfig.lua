@@ -93,9 +93,17 @@ require('neodev').setup({
 local default_servers = {
     'bashls', 'clangd', 'cssls', 'dockerls', 'eslint', 'graphql', 'hls', 'html',
     'jdtls', 'jsonls', 'lemminx', 'lua_ls', 'marksman', 'nil_ls', 'prismals',
-    'ruff_lsp', 'rust_analyzer', 'tailwindcss', 'tsserver', 'vimls', 'yamlls',
+    'pyright', 'rust_analyzer', 'tailwindcss', 'tsserver', 'vimls', 'yamlls',
 }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
+
+-- https://github.com/astral-sh/ruff-lsp?tab=readme-ov-file#example-neovim
+lspconfig.ruff_lsp.setup({
+    on_attach = function(client, bufnr)
+        client.server_capabilities.hoverProvider = false
+        _G.lsp_attach(client, bufnr)
+    end,
+})
 
 lspconfig.lua_ls.setup({
     on_init = function(client)

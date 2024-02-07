@@ -5,8 +5,8 @@
         let
           default        = with pkgs; [
             actionlint clang fish impl jq jdt-language-server lemminx
-            lua-language-server marksman nil pandoc shellcheck shfmt
-            yaml-language-server
+            lua-language-server marksman nil pandoc pyright ruff-lsp shellcheck
+            shfmt yaml-language-server
           ];
           nodePackages   = with pkgs.nodePackages; [
             bash-language-server dockerfile-language-server-nodejs eslint
@@ -18,8 +18,7 @@
             pkgs.nodePackages."@prisma/language-server"
             pkgs.nodePackages."@tailwindcss/language-server"
           ];
-          pythonPackages = with pkgs.python3Packages; [ ruff-lsp ];
-        in default ++ nodePackages ++ nodeAtPackages ++ pythonPackages;
+        in default ++ nodePackages ++ nodeAtPackages;
       plugins       = with pkgs.vimPlugins; [ {
           config = "luafile ${toString ./config/none-ls.lua}";
           plugin = none-ls-nvim.overrideAttrs(_: {
