@@ -50,9 +50,8 @@
             luafile ${toString ./config/cmp.lua}
           '';
           plugin = cmp-nvim-lsp-signature-help.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [
-              cmp-latex-symbols cmp-nvim-lsp cmp-path cmp_luasnip luasnip
-            ];
+            dependencies = old.dependencies ++
+              [ cmp-latex-symbols cmp-nvim-lsp cmp-path ];
           });
         } {
           config = "luafile ${toString ./config/colorizer.lua}";
@@ -101,6 +100,5 @@
       sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
       url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
     };
-    "nvim/snippets".source           = toString ./snippets;
   };
 }
