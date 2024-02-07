@@ -70,6 +70,10 @@ local lsp_attach = function(client, bufnr)
 
     vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
 
+    if vim.fn.getcwd():find('/google/src/') ~= nil then
+        return
+    end
+
     cmp.setup.buffer({
         sources = cmp.config.sources({
             { name = 'nvim_lsp' }, { name = 'nvim_lsp_signature_help' },
