@@ -37,15 +37,11 @@ _G.lsp_attach = function(client, bufnr)
     if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
             buffer = bufnr,
-            callback = function()
-                vim.lsp.buf.document_highlight()
-            end
+            callback = vim.lsp.buf.document_highlight,
         })
-        vim.api.nvim_create_autocmd("CursorMoved", {
+        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
             buffer = bufnr,
-            callback = function()
-                vim.lsp.buf.clear_references()
-            end
+            callback = vim.lsp.buf.clear_references,
         })
     end
 
@@ -100,8 +96,8 @@ for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 -- https://github.com/astral-sh/ruff-lsp?tab=readme-ov-file#example-neovim
 lspconfig.ruff_lsp.setup({
     on_attach = function(client, bufnr)
-        client.server_capabilities.hoverProvider = false
         _G.lsp_attach(client, bufnr)
+        client.server_capabilities.hoverProvider = false
     end,
 })
 

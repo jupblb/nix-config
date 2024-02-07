@@ -51,7 +51,7 @@
           '';
           plugin = cmp-nvim-lsp-signature-help.overrideAttrs(old: {
             dependencies = old.dependencies ++
-              [ cmp-latex-symbols cmp-nvim-lsp cmp-path ];
+              [ cmp-fish cmp-latex-symbols cmp-nvim-lsp cmp-async-path ];
           });
         } {
           config = "luafile ${toString ./config/colorizer.lua}";

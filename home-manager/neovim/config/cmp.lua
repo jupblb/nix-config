@@ -24,7 +24,7 @@ cmp.setup({
     preselect = cmp.PreselectMode.None,
     sources = cmp.config.sources({
         { name = 'nvim_lsp' }, { name = 'nvim_lsp_signature_help' },
-        { name = 'path' }, { name = 'latex_symbols' },
+        { name = 'async_path' }, { name = 'latex_symbols' }, { name = 'fish' },
     }),
     window = { documentation = cmp.config.window.bordered() }
 })
