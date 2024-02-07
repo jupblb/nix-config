@@ -1,13 +1,13 @@
 local lspconfig = require('lspconfig')
 
 -- Incremental rename
-require("inc_rename").setup({
+require('inc_rename').setup({
     preview_empty_name = true,
     show_message = false,
 })
 
-vim.keymap.set("n", "<leader>lr", function()
-    return ":IncRename " .. vim.fn.expand("<cword>")
+vim.keymap.set('n', '<leader>lr', function()
+    return ':IncRename ' .. vim.fn.expand('<cword>')
 end, { expr = true })
 
 -- Disable virtual text for errors
@@ -33,42 +33,46 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup
-local lspAttachAuGroup = vim.api.nvim_create_augroup("LspFormatting", {})
-_G.lsp_attach = function(client, bufnr)
+local lspAttachAuGroup = vim.api.nvim_create_augroup('LspFormatting', {})
+local lsp_attach = function(client, bufnr)
     if client.server_capabilities.documentHighlightProvider then
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer   = bufnr,
             callback = vim.lsp.buf.document_highlight,
             group    = lspAttachAuGroup,
         })
-        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
             buffer   = bufnr,
             callback = vim.lsp.buf.clear_references,
+            group    = lspAttachAuGroup,
         })
     end
 
-    vim.api.nvim_create_autocmd("CursorHold", {
+    vim.api.nvim_create_autocmd('CursorHold', {
         buffer   = bufnr,
         callback = function()
             vim.diagnostic.open_float(nil, {
-                focusable = false,
-                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                border = 'rounded',
-                source = 'always',
-                prefix = ' ',
-                scope = 'cursor',
+                focusable    = false,
+                close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+                border       = 'rounded',
+                source       = 'always',
+                prefix       = ' ',
+                scope        = 'cursor',
             })
         end,
         group    = lspAttachAuGroup,
     })
 
-    vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer   = bufnr,
-        callback = function() vim.lsp.buf.format({ bufnr = bufnr }) end,
-        group    = lspAttachAuGroup,
-    })
-    vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
-    vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc()')
+    if client.server_capabilities.documentFormattingProvider then
+        vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer   = bufnr,
+            callback = function() vim.lsp.buf.format({ bufnr = bufnr }) end,
+            group    = lspAttachAuGroup,
+        })
+        vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
+    end
+
+    vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
 end
 
 local default_config = {
@@ -106,7 +110,7 @@ for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 -- https://github.com/astral-sh/ruff-lsp?tab=readme-ov-file#example-neovim
 lspconfig.ruff_lsp.setup({
     on_attach = function(client, bufnr)
-        _G.lsp_attach(client, bufnr)
+        lspconfig.util.default_config.on_attach(client, bufnr)
         client.server_capabilities.hoverProvider = false
     end,
 })
@@ -125,11 +129,11 @@ lspconfig.lua_ls.setup({
                     runtime = { version = 'LuaJIT' },
                     workspace = {
                         checkThirdParty = false,
-                        library = vim.api.nvim_get_runtime_file("", true)
+                        library = vim.api.nvim_get_runtime_file('', true)
                     }
                 }
             })
-        client.notify("workspace/didChangeConfiguration", {
+        client.notify('workspace/didChangeConfiguration', {
             settings = client.config.settings
         })
 
