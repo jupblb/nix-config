@@ -90,9 +90,12 @@
       ["ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="];
   };
 
-  # https://github.com/NixOS/nixpkgs/issues/273611
-  nixpkgs.config.permittedInsecurePackages =
-    lib.optional (pkgs.obsidian.version == "1.4.16") "electron-25.9.0";
+  nixpkgs.config = {
+    cudaSupport               = true;
+    # https://github.com/NixOS/nixpkgs/issues/273611
+    permittedInsecurePackages =
+      lib.optional (pkgs.obsidian.version == "1.4.16") "electron-25.9.0";
+  };
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
