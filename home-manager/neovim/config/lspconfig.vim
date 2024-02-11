@@ -1,4 +1,5 @@
 nmap gD         <Cmd>lua vim.lsp.buf.declaration()<CR>
+nmap <C-]>      <Cmd>lua vim.lsp.buf.definition()<CR>
 nmap gd         <Cmd>lua vim.lsp.buf.definition()<CR>
 nmap <Leader>la <Cmd>lua vim.lsp.buf.code_action()<CR>
 nmap g0         <Cmd>lua vim.lsp.buf.document_symbol()<CR>
