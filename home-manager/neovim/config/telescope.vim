@@ -8,10 +8,10 @@ nmap <Leader>ld      <Cmd>Telescope diagnostics bufnr=0<CR>
 nmap <Leader>lD      <Cmd>Telescope diagnostics<CR>
 nmap <Leader>f       <Cmd>Telescope find_files<CR>
 nmap <Leader>j       <Cmd>Telescope jumplist<CR>
-nmap <Leader>?       <Cmd>Telescope live_grep_args<CR>
+nmap <Leader>?       <Cmd>Telescope live_grep<CR>
 nmap <Leader>`       <Cmd>Telescope marks<CR>
 nmap <Leader>'       <Cmd>Telescope neoclip<CR>
-nmap <Leader>o       <Cmd>Telescope oldfiles<CR>
+nmap <Leader>o       <Cmd>Telescope oldfiles cwd_only=true<CR>
 nmap <Leader><Space> <Cmd>Telescope pickers<CR>
 nmap <Leader>"       <Cmd>Telescope registers<CR>
 nmap <Leader>u       <Cmd>Telescope undo<CR>

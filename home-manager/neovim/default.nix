@@ -73,9 +73,8 @@
           '';
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
             dependencies = old.dependencies ++ [
-              nvim-neoclip-lua telescope-live-grep-args-nvim
-              telescope-lsp-handlers-nvim telescope-ui-select-nvim
-              telescope-undo-nvim
+              nvim-neoclip-lua telescope-lsp-handlers-nvim
+              telescope-ui-select-nvim telescope-undo-nvim
             ];
           });
         } {
