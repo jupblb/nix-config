@@ -9,6 +9,7 @@ null_ls.setup({
         null_ls.builtins.diagnostics.actionlint,
         null_ls.builtins.diagnostics.fish,
         null_ls.builtins.diagnostics.markdownlint,
+        null_ls.builtins.formatting.cabal_fmt,
         null_ls.builtins.formatting.fish_indent,
         null_ls.builtins.formatting.jq,
         null_ls.builtins.formatting.shfmt.with({ extra_args = { '-i=4' } }),

@@ -54,7 +54,9 @@ local lsp_attach = function(client, bufnr)
         callback = function()
             vim.diagnostic.open_float(nil, {
                 focusable    = false,
-                close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+                close_events = {
+                    'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost'
+                },
                 border       = 'rounded',
                 source       = 'always',
                 prefix       = ' ',

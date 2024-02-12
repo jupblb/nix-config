@@ -3,22 +3,24 @@
     neovim = {
       extraPackages =
         let
-          default        = with pkgs; [
+          packages        = with pkgs; [
             actionlint clang fish impl jq jdt-language-server lemminx
             lua-language-server marksman nil pandoc pyright ruff-lsp shellcheck
             shfmt yaml-language-server
           ];
-          nodePackages   = with pkgs.nodePackages; [
+          haskellPackages = with pkgs.haskellPackages;
+            [ cabal-fmt haskell-language-server ];
+          nodePackages    = with pkgs.nodePackages; [
             bash-language-server dockerfile-language-server-nodejs eslint
             graphql-language-service-cli markdownlint-cli
             typescript-language-server vim-language-server
             vscode-langservers-extracted
           ];
-          nodeAtPackages = [
+          nodeAtPackages  = [
             pkgs.nodePackages."@prisma/language-server"
             pkgs.nodePackages."@tailwindcss/language-server"
           ];
-        in default ++ nodePackages ++ nodeAtPackages;
+        in packages ++ haskellPackages ++ nodePackages ++ nodeAtPackages;
       plugins       = with pkgs.vimPlugins; [ {
           config = "luafile ${toString ./config/none-ls.lua}";
           plugin = none-ls-nvim.overrideAttrs(_: {
