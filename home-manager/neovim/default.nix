@@ -8,14 +8,10 @@
     fish = {
       functions = {
         fish_prompt = ''
-          if test -e $NVIM_ENV_JSON
-              for value in \
-                (${pkgs.jq}/bin/jq -r 'keys[] as $k | "\($k) \(.[$k])"' $NVIM_ENV_JSON)
-                  set -l value (echo "$value" | ${pkgs.gnused}/bin/sed 's/\",\"/\"\ \"/g')
-                  set -l value (echo "$value" | ${pkgs.coreutils}/bin/tr -d '[]')
-                  eval (echo "set -gx $value")
-              end
-          end
+          set -l jq  "${pkgs.jq}/bin/jq"
+          set -l sed "${pkgs.gnused}/bin/sed"
+          set -l tr  "${pkgs.coreutils}/bin/tr"
+          ${builtins.readFile ./variables.fish}
         '';
         vim         = builtins.readFile ./singleton.fish;
       };
@@ -84,7 +80,7 @@
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        commentary mkdir-nvim surround vim-cool vim-gh-line vim-sleuth
+        commentary mkdir-nvim vim-cool vim-gh-line vim-sleuth
       ];
       vimdiffAlias  = true;
       withNodeJs    = true;
