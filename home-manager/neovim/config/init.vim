@@ -40,6 +40,7 @@ nmap yp <Cmd>let @+ = expand("%")<CR>
 nnoremap <S-CR> -
 nnoremap <C-f> 5<C-e>
 nnoremap <C-b> 5<C-y>
+vnoremap p "_dP
 
 autocmd VimResized * wincmd =
 
