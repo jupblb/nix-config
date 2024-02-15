@@ -24,7 +24,7 @@ vim.g.skip_ts_context_commentstring_module = true
 vim.api.nvim_create_autocmd("BufReadPre", {
     callback = function(ev)
         local size = vim.fn.getfsize(vim.api.nvim_buf_get_name(ev.buf))
-        if 0 < size and size < 1024 * 1024 then
+        if 0 < size and size < 1024 * 16 then
             vim.opt_local.foldmethod = "expr"
             vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
             -- vim.opt_local.foldtext = "v:lua.vim.treesitter.foldtext()"
