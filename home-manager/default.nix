@@ -40,16 +40,18 @@
       };
       enable      = true;
       extraConfig = {
-        color.ui                      = true;
-        core.mergeoptions             = "--no-edit";
-        credential.helper             = lib.mkBefore
+        color.ui            = true;
+        commit.verbose      = true;
+        core.mergeoptions   = "--no-edit";
+        credential.helper   = lib.mkBefore
           [ "cache --timeout ${toString(60 * 60 * 10)}" ];
-        fetch.prune                   = true;
-        init.defaultBranch            = "main";
-        merge.conflictStyle           = "diff3";
-        pull.rebase                   = true;
-        push.default                  = "upstream";
-        submodule.recurse             = true;
+        diff.algorithm      = "histogram";
+        fetch.prune         = true;
+        init.defaultBranch  = "main";
+        merge.conflictStyle = "zdiff3";
+        pull.rebase         = true;
+        push.default        = "current";
+        submodule.recurse   = true;
       };
       package     = pkgs.buildEnv {
         name  = "git-custom";
