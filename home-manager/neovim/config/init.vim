@@ -25,6 +25,7 @@ set wrap
 
 map q: <Nop>
 nnoremap Q <Nop>
+nnoremap <ESC> <Nop>
 nnoremap <Space> <Nop>
 map <Space> <Leader>
 
