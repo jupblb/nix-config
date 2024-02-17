@@ -12,8 +12,7 @@
   };
 
   environment = {
-    systemPackages   = with pkgs;
-      [ discord obsidian nvidia-offload protontricks solaar ];
+    systemPackages   = with pkgs; [ discord obsidian nvidia-offload solaar ];
     variables        = { CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv"; };
   };
 
