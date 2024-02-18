@@ -12,15 +12,10 @@
             [ cabal-fmt haskell-language-server ];
           nodePackages    = with pkgs.nodePackages; [
             bash-language-server dockerfile-language-server-nodejs eslint
-            graphql-language-service-cli markdownlint-cli
-            typescript-language-server vim-language-server
+            markdownlint-cli typescript-language-server vim-language-server
             vscode-langservers-extracted
           ];
-          nodeAtPackages  = [
-            pkgs.nodePackages."@prisma/language-server"
-            pkgs.nodePackages."@tailwindcss/language-server"
-          ];
-        in packages ++ haskellPackages ++ nodePackages ++ nodeAtPackages;
+        in packages ++ haskellPackages ++ nodePackages;
       plugins       = with pkgs.vimPlugins; [ {
           config = "luafile ${toString ./config/none-ls.lua}";
           plugin = none-ls-nvim.overrideAttrs(_: {
