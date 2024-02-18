@@ -46,7 +46,9 @@
             luafile ${toString ./config/cmp.lua}
           '';
           plugin = nvim-cmp.overrideAttrs(_: {
-            dependencies = [ cmp-fish cmp-latex-symbols cmp-async-path ];
+            dependencies = [
+              cmp-fish cmp-latex-symbols cmp-async-path copilot-cmp copilot-lua
+            ];
           });
         } {
           config = "luafile ${toString ./config/colorizer.lua}";

@@ -78,9 +78,9 @@ local lsp_attach = function(client, bufnr)
 
     cmp.setup.buffer({
         sources = cmp.config.sources({
-            { name = 'nvim_lsp' }, { name = 'nvim_lsp_signature_help' },
-            { name = 'async_path' }, { name = 'latex_symbols' },
-            { name = 'fish' },
+            { name = 'copilot' }, { name = 'nvim_lsp' },
+            { name = 'nvim_lsp_signature_help' }, { name = 'async_path' },
+            { name = 'latex_symbols' }, { name = 'fish' },
         }),
     })
 end
