@@ -5,8 +5,8 @@
         let
           packages        = with pkgs; [
             actionlint clang fish impl jq jdt-language-server lemminx
-            lua-language-server marksman nil pandoc pyright ruff-lsp shellcheck
-            shfmt yaml-language-server
+            lua-language-server marksman nil pandoc pyright ruff-lsp
+            rust-analyzer shellcheck shfmt yaml-language-server
           ];
           haskellPackages = with pkgs.haskellPackages;
             [ cabal-fmt haskell-language-server ];
