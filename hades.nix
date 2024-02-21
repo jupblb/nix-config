@@ -64,7 +64,6 @@
       ./home-manager/direnv.nix
       ./home-manager/go.nix
       ./home-manager/kitty.nix
-      ./home-manager/neovim/lsp.nix
     ];
 
     services.gpg-agent.enable = true;

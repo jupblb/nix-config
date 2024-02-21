@@ -30,7 +30,16 @@
         luafile ${toString ./config/init.lua}
         luafile ${toString ./config/vim-env.lua}
       '';
-      extraPackages = with pkgs; [ fd ripgrep zig ];
+      extraPackages =
+        let
+          packages     = with pkgs; [
+            fd fish jq marksman pandoc ripgrep shellcheck shfmt
+            yaml-language-server
+          ];
+          nodePackages = with pkgs.nodePackages; [
+            bash-language-server markdownlint-cli vscode-json-languageserver
+          ];
+        in packages ++ nodePackages;
       plugins       = with pkgs.vimPlugins; [ {
           config = "lua require('fidget').setup({})";
           plugin = fidget-nvim;
@@ -40,6 +49,11 @@
         } {
           config = "luafile ${toString ./config/no-neck-pain.lua}";
           plugin = no-neck-pain-nvim;
+        } {
+          config = "luafile ${toString ./config/none-ls.lua}";
+          plugin = none-ls-nvim.overrideAttrs(_: {
+            dependencies = [ plenary-nvim ];
+          });
         } {
           config = ''
             set completeopt=menu,menuone,noselect
@@ -53,6 +67,17 @@
         } {
           config = "luafile ${toString ./config/colorizer.lua}";
           plugin = nvim-colorizer-lua;
+        } {
+          config = ''
+            source ${toString ./config/lspconfig.vim}
+            luafile ${toString ./config/lspconfig.lua}
+          '';
+          plugin = nvim-lspconfig.overrideAttrs(_: {
+            dependencies = [
+              cmp-nvim-lsp cmp-nvim-lsp-signature-help inc-rename-nvim
+              neodev-nvim
+            ];
+          });
         } {
           config = "luafile ${toString ./config/pqf.lua}";
           plugin = nvim-pqf;
@@ -92,6 +117,9 @@
   };
 
   xdg.configFile = {
+    # https://github.com/igorshubovych/markdownlint-cli#configuration
+    # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+    "markdownlint".source = toString ./config/markdownlint.json;
     "nvim/spell/pl.utf-8.spl".source = pkgs.fetchurl {
       sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
       url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";

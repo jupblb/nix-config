@@ -2,6 +2,7 @@ set clipboard+=unnamedplus
 set cmdheight=0
 set colorcolumn=80
 set cursorline
+set exrc
 set foldlevel=99
 set ignorecase
 set laststatus=0
