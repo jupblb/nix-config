@@ -94,6 +94,9 @@ local default_config = {
 lspconfig.util.default_config = vim.tbl_extend(
     'force', lspconfig.util.default_config, default_config)
 
--- other LSPs
-local default_servers = { 'bashls', 'jsonls', 'marksman', 'yamlls', }
+local default_servers = { 'bashls', 'marksman', 'yamlls', }
 for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
+
+lspconfig.jsonls.setup({
+    cmd = { "vscode-json-languageserver", "--stdio", },
+})
