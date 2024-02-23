@@ -18,6 +18,5 @@ self: super: with super; {
     inherit (darwin) apple_sdk;
     inherit (rustPlatform) buildRustPackage;
   };
-  nvidia-offload        = callPackage ./nvidia-offload {};
   vtclean               = callPackage ./vtclean.nix {};
 }
