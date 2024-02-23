@@ -100,3 +100,41 @@ for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
 lspconfig.jsonls.setup({
     cmd = { "vscode-json-languageserver", "--stdio", },
 })
+
+require('neodev').setup({
+    override = function(root_dir, library)
+        if vim.loop.fs_stat(root_dir .. '/.luarc.json') or
+            vim.loop.fs_stat(root_dir .. '/.luarc.jsonc') then
+            return
+        end
+
+        library.enabled = true
+        library.plugins = true
+    end,
+})
+
+lspconfig.lua_ls.setup({
+    on_init = function(client)
+        local path = client.workspace_folders[1].name
+        if vim.loop.fs_stat(path .. '/.luarc.json') or
+            vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+            return true
+        end
+
+        client.config.settings =
+            vim.tbl_deep_extend('force', client.config.settings, {
+                Lua = {
+                    runtime = { version = 'LuaJIT' },
+                    workspace = {
+                        checkThirdParty = false,
+                        library = vim.api.nvim_get_runtime_file('', true)
+                    }
+                }
+            })
+        client.notify('workspace/didChangeConfiguration', {
+            settings = client.config.settings
+        })
+
+        return true
+    end
+})
