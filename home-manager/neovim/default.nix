@@ -33,8 +33,8 @@
       extraPackages =
         let
           packages     = with pkgs; [
-            fd fish jq lua-language-server marksman pandoc ripgrep shellcheck
-            shfmt yaml-language-server
+            fd fish jq lua-language-server marksman nil pandoc ripgrep
+            shellcheck shfmt yaml-language-server
           ];
           nodePackages = with pkgs.nodePackages; [
             bash-language-server markdownlint-cli vscode-json-languageserver
