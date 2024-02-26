@@ -12,7 +12,7 @@
   };
 
   environment = {
-    systemPackages   = with pkgs; [ discord obsidian solaar ];
+    systemPackages   = with pkgs; [ discord gtasks-md obsidian solaar ];
     variables        = { CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv"; };
   };
 

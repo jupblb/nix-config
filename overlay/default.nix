@@ -9,6 +9,9 @@ self: super: with super; {
       "--enable-features=UseOzonePlatform" "--ozone-platform=wayland"
     ];
   };
+  gtasks-md             = callPackage ./gtasks-md.nix {
+    inherit (haskellPackages) pandoc-types;
+  };
   jdt-language-server   = jdt-language-server.overrideAttrs(old: {
     installPhase = old.installPhase + ''
       ln -sfn $out/bin/jdt-language-server $out/bin/jdtls
