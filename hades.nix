@@ -62,7 +62,6 @@
 
     imports = [
       ./home-manager/direnv.nix
-      ./home-manager/go.nix
       ./home-manager/kitty.nix
     ];
 
