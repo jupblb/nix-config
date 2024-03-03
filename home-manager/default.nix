@@ -1,8 +1,32 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   home = {
     packages         = with pkgs; [ fswatch ];
     username         = "jupblb";
-    sessionVariables = { PAGER = "${pkgs.less}/bin/less -R"; };
+    sessionVariables = {
+      PAGER = "${pkgs.less}/bin/less -R";
+
+      # XDG setup:
+      # - run xdg-ninja to find out messed up directories
+      # - consult https://wiki.archlinux.org/title/XDG_Base_Directory#Support
+      ANDROID_HOME          = "${config.xdg.cacheHome}/android";
+      AZURE_CONFIG_DIR      = "${config.xdg.dataHome}/azure";
+      GTK2_RC_FILES         = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+      CARGO_HOME            = "${config.xdg.cacheHome}/cargo";
+      GRADLE_USER_HOME      = "${config.xdg.cacheHome}/gradle";
+      LESSHISTFILE          = "${config.xdg.cacheHome}/less/history";
+      NODE_REPL_HISTORY     = "${config.xdg.dataHome}/node/history";
+      NPM_CONFIG_USERCONFIG =
+        let npmrc = pkgs.writeText "npmrc" ''
+          cache=${config.xdg.cacheHome}/npm
+          init-module=${config.xdg.configHome}/npm/npm-init.js
+          prefix=${config.xdg.dataHome}/npm
+          userconfig=${config.xdg.configHome}/npm/npmrc
+        '';
+        in "${npmrc}";
+      PSQL_HISTORY          = "${config.xdg.cacheHome}/psql/history";
+      PYTHON_HISTORY        = "${config.xdg.dataHome}/python/history";
+      SQLITE_HISTORY        = "${config.xdg.cacheHome}/sqlite/history";
+    };
   };
 
   nixpkgs.overlays = [ (import ../overlay) ];
