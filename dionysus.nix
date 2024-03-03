@@ -468,7 +468,8 @@
       script        = ''
         sh ${./config/script/stignore.sh}
 
-        inotifywait --format "%f" -e 'modify,create,delete' -m -r /backup/jupblb/Workspace |\
+        inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
+          -m -r /backup/jupblb/Workspace |
         while read line; do
           if [[ "$line" == ".gitignore" ]]; then
             >&2 echo ".gitignore update"
