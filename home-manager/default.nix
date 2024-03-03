@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }: {
+{ config, pkgs, ... }: {
   home = {
-    packages         = with pkgs; [ fswatch ];
+    packages         = with pkgs; [ fswatch gh ];
     username         = "jupblb";
     sessionVariables = {
       PAGER = "${pkgs.less}/bin/less -R";
