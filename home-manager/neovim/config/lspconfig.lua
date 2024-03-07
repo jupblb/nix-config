@@ -86,9 +86,7 @@ local lsp_attach = function(client, bufnr)
 end
 
 local default_config = {
-    capabilities = require('cmp_nvim_lsp').default_capabilities({
-        snippetSupport = false,
-    }),
+    capabilities = require('cmp_nvim_lsp').default_capabilities({}),
     on_attach    = lsp_attach
 }
 lspconfig.util.default_config = vim.tbl_extend(

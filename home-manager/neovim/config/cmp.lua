@@ -1,7 +1,9 @@
 local cmp = require('cmp')
+local luasnip = require('luasnip')
 
 local sources = cmp.config.sources({
-    { name = 'async_path' }, { name = 'latex_symbols' }, { name = 'fish' },
+    { name = 'treesitter' }, { name = 'async_path' },
+    { name = 'latex_symbols' }, { name = 'fish' },
 })
 
 if vim.fn.getcwd():find('/google/src/') == nil then
@@ -11,7 +13,7 @@ if vim.fn.getcwd():find('/google/src/') == nil then
     })
     require('copilot_cmp').setup({})
     sources = cmp.config.sources({
-        { name = 'copilot', }, { name = 'async_path' },
+        { name = 'treesitter' }, { name = 'copilot', }, { name = 'async_path' },
         { name = 'latex_symbols' }, { name = 'fish' },
     })
 end
@@ -35,6 +37,10 @@ cmp.setup({
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() and has_words_before() then
                 cmp.select_next_item()
+            elseif luasnip.expand_or_locally_jumpable() then
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
             else
                 fallback()
             end
@@ -42,12 +48,17 @@ cmp.setup({
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
             else
                 fallback()
             end
         end, { 'i', 's' }),
     },
     preselect = cmp.PreselectMode.None,
+    snippet = {
+        expand = function(args) luasnip.lsp_expand(args.body) end,
+    },
     sources = sources,
     window = { documentation = cmp.config.window.bordered() }
 })

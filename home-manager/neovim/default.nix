@@ -61,7 +61,8 @@
           '';
           plugin = nvim-cmp.overrideAttrs(_: {
             dependencies = [
-              cmp-fish cmp-latex-symbols cmp-async-path copilot-cmp copilot-lua
+              cmp-fish cmp-latex-symbols cmp-async-path cmp-treesitter
+              copilot-cmp copilot-lua luasnip
             ];
           });
         } {
