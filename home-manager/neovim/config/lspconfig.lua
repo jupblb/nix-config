@@ -76,13 +76,14 @@ local lsp_attach = function(client, bufnr)
         return
     end
 
-    cmp.setup.buffer({
-        sources = cmp.config.sources({
-            { name = 'copilot' }, { name = 'nvim_lsp' },
-            { name = 'nvim_lsp_signature_help' }, { name = 'async_path' },
-            { name = 'latex_symbols' }, { name = 'fish' },
-        }),
-    })
+    if client.server_capabilities.completionProvider then
+        cmp.setup.buffer({
+            sources = cmp.config.sources({
+                { name = 'copilot' }, { name = 'nvim_lsp' },
+                { name = 'nvim_lsp_signature_help' }, { name = 'async_path' },
+            }),
+        })
+    end
 end
 
 local default_config = {

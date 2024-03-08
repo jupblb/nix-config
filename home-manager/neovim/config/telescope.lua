@@ -1,8 +1,6 @@
 local telescope = require('telescope')
 local builtin   = require('telescope.builtin')
 
-require('neoclip').setup({ default_register = '*' })
-
 telescope.setup({
     defaults = {
         cache_picker          = { num_pickers = -1, limit_entries = 0 },
@@ -45,22 +43,4 @@ telescope.setup({
 
 telescope.load_extension('fzf')
 telescope.load_extension('lsp_handlers')
-telescope.load_extension('neoclip')
 telescope.load_extension('ui-select')
-telescope.load_extension('undo')
-
--- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#falling-back-to-find_files-if-git_files-cant-find-a-git-directory
-local is_inside_work_tree = nil
-vim.keymap.set('n', '<Leader>f', function()
-    if is_inside_work_tree == nil then
-        vim.fn.system("git rev-parse --is-inside-work-tree")
-        is_inside_work_tree = vim.v.shell_error == 0
-    end
-
-    if is_inside_work_tree then
-        builtin.git_files({})
-    else
-        builtin.find_files({})
-    end
-end, {})
-vim.keymap.set('n', '<Leader>F', builtin.find_files, {})

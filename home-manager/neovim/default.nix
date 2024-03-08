@@ -60,10 +60,8 @@
             luafile ${toString ./config/cmp.lua}
           '';
           plugin = nvim-cmp.overrideAttrs(_: {
-            dependencies = [
-              cmp-fish cmp-latex-symbols cmp-async-path cmp-treesitter
-              copilot-cmp copilot-lua luasnip
-            ];
+            dependencies =
+              [ cmp-async-path cmp-treesitter copilot-cmp copilot-lua luasnip ];
           });
         } {
           config = "luafile ${toString ./config/colorizer.lua}";
@@ -96,10 +94,8 @@
             luafile ${toString ./config/telescope.lua}
           '';
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
-            dependencies = old.dependencies ++ [
-              nvim-neoclip-lua telescope-lsp-handlers-nvim
-              telescope-ui-select-nvim telescope-undo-nvim
-            ];
+            dependencies = old.dependencies ++
+              [ telescope-lsp-handlers-nvim telescope-ui-select-nvim ];
           });
         } {
           config = "luafile ${toString ./config/osc52.lua}";

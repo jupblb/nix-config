@@ -2,19 +2,20 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 
 local sources = cmp.config.sources({
-    { name = 'treesitter' }, { name = 'async_path' },
-    { name = 'latex_symbols' }, { name = 'fish' },
+    { name = 'treesitter' },
+    { name = 'async_path' },
 })
 
 if vim.fn.getcwd():find('/google/src/') == nil then
     require('copilot').setup({
-        panel = { enabled = false, },
+        panel      = { enabled = false, },
         suggestion = { enabled = false, },
     })
     require('copilot_cmp').setup({})
     sources = cmp.config.sources({
-        { name = 'treesitter' }, { name = 'copilot', }, { name = 'async_path' },
-        { name = 'latex_symbols' }, { name = 'fish' },
+        { name = 'treesitter' },
+        { name = 'copilot', },
+        { name = 'async_path' },
     })
 end
 
@@ -29,12 +30,12 @@ local has_words_before = function()
 end
 
 cmp.setup({
-    mapping = {
-        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    mapping   = {
+        ['<C-u>']     = cmp.mapping.scroll_docs(-4),
+        ['<C-d>']     = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
-        ['<Tab>'] = cmp.mapping(function(fallback)
+        ['<CR>']      = cmp.mapping.confirm({ select = false }),
+        ['<Tab>']     = cmp.mapping(function(fallback)
             if cmp.visible() and has_words_before() then
                 cmp.select_next_item()
             elseif luasnip.expand_or_locally_jumpable() then
@@ -45,7 +46,7 @@ cmp.setup({
                 fallback()
             end
         end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
+        ['<S-Tab>']   = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then
@@ -56,9 +57,9 @@ cmp.setup({
         end, { 'i', 's' }),
     },
     preselect = cmp.PreselectMode.None,
-    snippet = {
+    snippet   = {
         expand = function(args) luasnip.lsp_expand(args.body) end,
     },
-    sources = sources,
-    window = { documentation = cmp.config.window.bordered() }
+    sources   = sources,
+    window    = { documentation = cmp.config.window.bordered() }
 })
