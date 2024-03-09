@@ -16,14 +16,6 @@ telescope.setup({
         path_display          = { 'truncate' },
         wrap_results          = true,
     },
-    extensions = {
-        undo = {
-            layout_strategy = 'vertical',
-            mappings        = {
-                i = { ['<CR>'] = require('telescope-undo.actions').restore, },
-            },
-        },
-    },
     pickers = {
         find_files = {
             previewer     = false,
