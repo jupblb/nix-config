@@ -37,7 +37,7 @@ nnoremap <C-I> <C-I>
 map <silent> gf <Cmd>execute('edit ' . fnamemodify(expand('%:p:h') . '/' . expand('<cfile>'), ':p'))<CR>
 
 " Copy path to clipboard
-nmap yp <Cmd>let @+ = expand("%")<CR>
+nnoremap <C-g> <Cmd>let @+ = expand("%")<CR><C-g>
 
 nnoremap <S-CR> -
 nnoremap <C-f> 5<C-e>
