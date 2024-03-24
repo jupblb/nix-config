@@ -49,15 +49,16 @@ autocmd VimResized * wincmd =
 autocmd InsertEnter * setlocal norelativenumber
 autocmd InsertLeave * setlocal relativenumber
 
-autocmd BufRead,BufNewFile *.arb set filetype=json
+autocmd BufRead,BufNewFile *.arb  set filetype=json
 autocmd BufRead,BufNewFile *.fish set filetype=fish
-autocmd BufRead,BufNewFile *.log set filetype=text
-autocmd BufRead,BufNewFile *.nix set filetype=nix
-autocmd BufRead,BufNewFile *.sc set filetype=scala
+autocmd BufRead,BufNewFile *.log  set filetype=text
+autocmd BufRead,BufNewFile *.nix  set filetype=nix
+autocmd BufRead,BufNewFile *.sc   set filetype=scala
 autocmd BufRead,BufNewFile .envrc set filetype=sh
 
 autocmd FileType gitcommit,hgcommit setlocal colorcolumn=72
-autocmd FileType java,sql setlocal colorcolumn=100
-autocmd FileType markdown setlocal expandtab shiftwidth=4
+autocmd FileType java,sql           setlocal colorcolumn=100
+autocmd FileType markdown           setlocal expandtab shiftwidth=4
+autocmd FileType qf                 setlocal colorcolumn=0
 
 command W :write
