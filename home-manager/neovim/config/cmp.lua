@@ -30,7 +30,8 @@ local has_words_before = function()
 end
 
 cmp.setup({
-    mapping   = {
+    experimental = { ghost_text = true },
+    mapping      = {
         ['<C-u>']     = cmp.mapping.scroll_docs(-4),
         ['<C-d>']     = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
@@ -56,10 +57,10 @@ cmp.setup({
             end
         end, { 'i', 's' }),
     },
-    preselect = cmp.PreselectMode.None,
-    snippet   = {
+    preselect    = cmp.PreselectMode.None,
+    snippet      = {
         expand = function(args) luasnip.lsp_expand(args.body) end,
     },
-    sources   = sources,
-    window    = { documentation = cmp.config.window.bordered() }
+    sources      = sources,
+    window       = { documentation = cmp.config.window.bordered() }
 })
