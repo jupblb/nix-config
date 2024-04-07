@@ -8,6 +8,7 @@ set fish_trace 1
 sudo systemctl restart calibre-web.service
 sudo systemctl restart photoprism.service
 sudo systemctl restart podman-filebrowser.service
+sudo systemctl restart podman-simply-shorten.service
 sudo systemctl restart postgresqlBackup.service
 sudo systemctl restart restic-backups-gcs.service
 sudo systemctl restart restic-backups-local.service

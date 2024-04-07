@@ -188,6 +188,9 @@
           "jackett.kielbowi.cz"      = {
             extraConfig = auth + "reverse_proxy http://localhost:9117";
           };
+          "komga.kielbowi.cz"        = {
+            extraConfig = "reverse_proxy http://localhost:6428";
+          };
           "linkding.kielbowi.cz"     = {
             extraConfig = auth + "reverse_proxy http://localhost:9090";
           };
@@ -258,6 +261,12 @@
     jellyfin = {
       enable = true;
       group  = "users";
+    };
+
+    komga = {
+      enable = true;
+      group  = "users";
+      port   = 6428;
     };
 
     lidarr = {
@@ -435,8 +444,8 @@
 
   system.stateVersion = "20.09";
 
-  systemd.services = {
-    calibre-web           = { requires = [ "zfs-import-backup.service" ]; };
+  systemd.services = let disableAtBoot = { wantedBy = lib.mkForce []; }; in {
+    calibre-web           = disableAtBoot;
     ip-updater            = {
       after         = [ "network.target" ];
       description   = "Public IP updater";
@@ -452,14 +461,13 @@
     jellyfin              = {
       serviceConfig.PrivateDevices = lib.mkForce false;
     };
-    photoprism            = { requires = [ "zfs-import-backup.service" ]; };
-    podman-simply-shorten = { requires = [ "zfs-import-backup.service" ]; };
-    podman-filebrowser    = { requires = [ "zfs-import-backup.service" ]; };
-    postgresqlBackup      = { requires = [ "zfs-import-backup.service" ]; };
-    restic-backups-gcs    = { requires = [ "zfs-import-backup.service" ]; };
-    restic-backups-local  = { requires = [ "zfs-import-backup.service" ]; };
-    stignore              = {
-      requires         = [ "zfs-import-backup.service" ];
+    photoprism            = disableAtBoot;
+    podman-filebrowser    = disableAtBoot;
+    podman-simply-shorten = disableAtBoot;
+    postgresqlBackup      = disableAtBoot;
+    restic-backups-gcs    = disableAtBoot;
+    restic-backups-local  = disableAtBoot;
+    stignore              = disableAtBoot // {
       description   = "Update jupblb/Workspace stignore";
       path          = with pkgs; [
         bash diffutils inotify-tools
@@ -484,8 +492,8 @@
       };
       wantedBy      = [ "multi-user.target" ];
     };
-    syncthing             = { requires = [ "zfs-import-backup.service" ]; };
-    syncthing-init        = { requires = [ "zfs-import-backup.service" ]; };
+    syncthing             = disableAtBoot;
+    syncthing-init        = disableAtBoot;
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
