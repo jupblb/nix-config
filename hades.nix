@@ -126,21 +126,23 @@
       dataDir   = "/home/jupblb/.local/share/syncthing";
       cert      = toString ./config/syncthing/hades/cert.pem;
       key       = toString ./config/syncthing/hades/key.pem;
-      folders   = {
-        "domci/Documents"  = { path = "/ignore"; };
-        "domci/Pictures"   = { path = "/ignore"; };
-        "domci/Videos"     = { path = "/ignore"; };
-        "jupblb/Documents" = {
-          enable = true;
-          path   = "/home/jupblb/Documents";
-        };
-        "jupblb/Pictures"  = {
-          enable = true;
-          path   = "/home/jupblb/Pictures";
-        };
-        "jupblb/Workspace" = {
-          enable = true;
-          path   = "/home/jupblb/Workspace";
+      settings  = {
+        folders = {
+          "domci/Documents"  = { path = "/ignore"; };
+          "domci/Pictures"   = { path = "/ignore"; };
+          "domci/Videos"     = { path = "/ignore"; };
+          "jupblb/Documents" = {
+            enable = true;
+            path   = "/home/jupblb/Documents";
+          };
+          "jupblb/Pictures"  = {
+            enable = true;
+            path   = "/home/jupblb/Pictures";
+          };
+          "jupblb/Workspace" = {
+            enable = true;
+            path   = "/home/jupblb/Workspace";
+          };
         };
       };
       user      = "jupblb";
