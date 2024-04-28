@@ -22,5 +22,11 @@ self: super: with super; {
     inherit (rustPlatform) buildRustPackage;
   };
   nvidia-offload        = callPackage ./nvidia-offload {};
+  ripgrep               = symlinkJoin {
+    buildInputs = [ makeWrapper ];
+    name        = "ripgrep";
+    paths       = [ super.ripgrep ];
+    postBuild   = ''wrapProgram $out/bin/rg --add-flags "--ignore"'';
+  };
   vtclean               = callPackage ./vtclean.nix {};
 }
