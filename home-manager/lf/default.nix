@@ -43,6 +43,9 @@
       } {
         command = "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
         mime    = "text/*";
+      } {
+        command = "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
+        mime    = "application/javascript";
       } ];
       enable       = true;
     };
