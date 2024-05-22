@@ -507,29 +507,6 @@
     oci-containers = {
       backend    = "podman";
       containers = {
-        chatpad        = {
-          image   = "ghcr.io/deiucanta/chatpad";
-          ports   = [ "8972:80" ];
-          volumes =
-            let cfg = pkgs.writeText "chatpad-config.json" (builtins.toJSON {
-              "defaultModel"        = "gpt-4-turbo-preview";
-              "defaultType"         = "openai";
-              "defaultAuth"         = "api-key";
-              "defaultVersion"      = "";
-              "defaultKey"          = (import ./config/secret.nix).openai;
-              "availableModels"     = [];
-              "writingCharacters"   = [];
-              "writingTones"        = [];
-              "writingStyles"       = [];
-              "writingFormats"      = [];
-              "showDownloadLink"    = false;
-              "allowDarkModeToggle" = true;
-              "allowSettingsModal"  = false;
-              "showTwitterLink"     = false;
-              "showFeedbackLink"    = false;
-            });
-            in [ "${cfg}:/usr/share/nginx/html/config.json" ];
-        };
         filebrowser    = {
           cmd     = [ "--noauth" ];
           image   = "filebrowser/filebrowser";
