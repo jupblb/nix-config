@@ -3,7 +3,7 @@
     enableContainers                 = false;
     initrd.kernelModules             = [ "amdgpu" ];
     kernel.sysctl                    = {
-      "fs.inotify.max_user_watches" = "204800";
+      "fs.inotify.max_user_watches" = "409600";
     };
     kernelModules                    = [ "kvm-amd" ];
     supportedFilesystems             = [ "zfs" ];
