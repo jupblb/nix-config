@@ -52,7 +52,7 @@
       };
     };
 
-    services.gpg-agent.pinentryFlavor = lib.mkForce "curses";
+    services.gpg-agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
   };
 
   imports = [ ./nixos ];
@@ -81,8 +81,8 @@
     adb.enable = true;
 
     gnupg.agent = {
-      enable         = true;
-      pinentryFlavor = "curses";
+      enable          = true;
+      pinentryPackage = pkgs.pinentry-curses;
     };
 
     msmtp = {

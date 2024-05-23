@@ -53,7 +53,7 @@
   imports =
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
-      tar = "release-23.11.tar.gz";
+      tar = "release-24.05.tar.gz";
     in [
       "${fetchTarball url}/nixos" ./gnome.nix ./plymouth.nix ./syncthing.nix
     ];

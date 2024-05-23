@@ -1,10 +1,10 @@
 { lib, pkgs, ... }: {
   environment = {
     gnome.excludePackages = with pkgs.gnome; [
-      baobab cheese epiphany gedit gnome-calculator gnome-calendar gnome-clocks
+      baobab cheese epiphany gnome-calculator gnome-calendar gnome-clocks
       gnome-contacts gnome-logs gnome-maps gnome-music gnome-shell-extensions
-      pkgs.gnome-tour gnome-weather pkgs.gnome-connections simple-scan totem
-      yelp
+      pkgs.gnome-tour gnome-weather pkgs.gedit pkgs.gnome-connections
+      simple-scan totem yelp
     ];
 #   sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages        =
@@ -30,7 +30,7 @@
       };
     };
     programs = { kitty.settings.linux_display_server = "wayland"; };
-    services = { gpg-agent.pinentryFlavor = "gnome3"; };
+    services = { gpg-agent.pinentryPackage = pkgs.pinentry-gnome3; };
   };
 
   programs = {
