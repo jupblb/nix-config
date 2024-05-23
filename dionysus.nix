@@ -495,7 +495,6 @@
       wantedBy      = [ "multi-user.target" ];
     };
     syncthing             = disableAtBoot;
-    syncthing-init        = disableAtBoot;
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];

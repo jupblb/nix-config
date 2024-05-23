@@ -4,6 +4,6 @@ require("no-neck-pain").setup({
         enableOnTabEnter = true,
     },
     buffers = {
-        colors = { blend = -0.01, },
+        colors = { background = "#fbf1c7" },
     },
 })

@@ -13,5 +13,6 @@ sudo systemctl restart postgresqlBackup.service
 sudo systemctl restart restic-backups-gcs.service
 sudo systemctl restart restic-backups-local.service
 sudo systemctl restart stignore.service
-sudo systemctl restart syncthing-init.service
 sudo systemctl restart syncthing.service
+# syncthing-init must start after syncthing
+sudo systemctl restart syncthing-init.service

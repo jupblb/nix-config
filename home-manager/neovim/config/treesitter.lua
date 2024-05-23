@@ -27,7 +27,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
         if 0 < size and size < 1024 * 16 then
             vim.opt_local.foldmethod = "expr"
             vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-            -- vim.opt_local.foldtext = "v:lua.vim.treesitter.foldtext()"
+            vim.opt_local.foldtext = "v:lua.vim.treesitter.foldtext()"
         end
     end,
 })
