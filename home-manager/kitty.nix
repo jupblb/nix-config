@@ -20,18 +20,19 @@
         size = 10;
       };
       keybindings = {
-        "ctrl+shift+'" = "launch --location=hsplit";
-        "ctrl+shift+;" = "launch --location=vsplit";
-        "ctrl+shift+`" = "show_scrollback";
-        "ctrl+shift+0" = "change_font_size all 0";
-        "ctrl+shift+h" = "move_window left";
-        "ctrl+shift+j" = "move_window bottom";
-        "ctrl+shift+k" = "move_window top";
-        "ctrl+shift+l" = "move_window right";
-        "ctrl+h"       = "neighboring_window left";
-        "ctrl+j"       = "neighboring_window bottom";
-        "ctrl+k"       = "neighboring_window top";
-        "ctrl+l"       = "neighboring_window right";
+        "ctrl+shift+0"     = "change_font_size all 0";
+        "ctrl+shift+'"     = "launch --location=hsplit";
+        "ctrl+shift+j"     = "move_window bottom";
+        "ctrl+shift+h"     = "move_window left";
+        "ctrl+shift+l"     = "move_window right";
+        "ctrl+shift+k"     = "move_window top";
+        "ctrl+shift+t"     = "new_tab_with_cwd";
+        "ctrl+shift+enter" = "new_window_with_cwd";
+        "ctrl+h"           = "neighboring_window left";
+        "ctrl+j"           = "neighboring_window bottom";
+        "ctrl+k"           = "neighboring_window top";
+        "ctrl+l"           = "neighboring_window right";
+        "ctrl+shift+`"     = "show_scrollback";
       };
       settings    = {
         clipboard_control             =
