@@ -4,7 +4,10 @@
   };
 
   programs = {
-    eza.enable = true;
+    eza = {
+      enable                = true;
+      enableFishIntegration = false;
+    };
 
     fish = {
       enable               = true;
