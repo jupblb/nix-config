@@ -69,15 +69,16 @@
   nixpkgs.overlays           = [ (import ../overlay) ];
 
   programs = {
-    adb   = { enable = true; };
-    bash  = {
+    adb    = { enable = true; };
+    bash   = {
       enableCompletion = true;
       enableLsColors   = true;
       promptInit       = builtins.readFile ../config/bashrc.bash;
     };
-    gnupg = { agent.enable = true; };
-    ssh   = { startAgent = true; };
-    vim   = { defaultEditor = true; };
+    gnupg  = { agent.enable = true; };
+    screen = { enable = true; };
+    ssh    = { startAgent = true; };
+    vim    = { defaultEditor = true; };
   };
 
   security = { rtkit.enable = true; };
