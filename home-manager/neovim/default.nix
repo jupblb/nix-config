@@ -104,7 +104,7 @@
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        commentary mkdir-nvim vim-cool vim-gh-line vim-sleuth
+        commentary mkdir-nvim neorepl-nvim vim-cool vim-gh-line vim-sleuth
       ];
       vimdiffAlias  = true;
       withNodeJs    = true;
