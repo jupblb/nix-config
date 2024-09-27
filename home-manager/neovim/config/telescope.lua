@@ -16,22 +16,27 @@ telescope.setup({
         wrap_results          = true,
     },
     pickers = {
-        find_files = {
+        file_browser = {
+            git_status = false,
+            hijack_netrw = true,
+        },
+        find_files   = {
             previewer     = false,
             layout_config = { horizontal = { width = 0.5 } }
         },
-        oldfiles   = {
+        oldfiles     = {
             cwd_only      = true,
             previewer     = false,
             layout_config = { horizontal = { width = 0.5 } }
         },
-        pickers    = {
+        pickers      = {
             previewer     = false,
             layout_config = { horizontal = { width = 0.5 } }
         },
     },
 })
 
+telescope.load_extension('file_browser')
 telescope.load_extension('fzf')
 telescope.load_extension('lsp_handlers')
 telescope.load_extension('ui-select')

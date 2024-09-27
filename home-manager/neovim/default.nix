@@ -94,8 +94,10 @@
             luafile ${toString ./config/telescope.lua}
           '';
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
-            dependencies = old.dependencies ++
-              [ telescope-lsp-handlers-nvim telescope-ui-select-nvim ];
+            dependencies = old.dependencies ++ [
+              telescope-file-browser-nvim telescope-lsp-handlers-nvim
+              telescope-ui-select-nvim
+            ];
           });
         } {
           config = "luafile ${toString ./config/osc52.lua}";
