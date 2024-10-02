@@ -23,17 +23,25 @@
   };
 
   home-manager.users.jupblb = { config, lib, pkgs, ... }: {
-    dconf    = {
-      settings = {
-        "org/gnome/gnome-screenshot".auto-save-directory =
-          "${config.home.homeDirectory}/Pictures/screenshots";
-      };
-    };
     programs = { kitty.settings.linux_display_server = "wayland"; };
     services = { gpg-agent.pinentryPackage = pkgs.pinentry-gnome3; };
   };
 
   programs = {
+    dconf = {
+      enable                  = true;
+      profiles.user.databases = [
+        {
+          lockAll = true;
+          settings = {
+            "org/gnome/gnome-screenshot" = {
+              auto-save-directory = "$HOME/Pictures/screenshots";
+            };
+          };
+        }
+      ];
+    };
+
     geary.enable          = false;
     gnome-disks.enable    = false;
     gnome-terminal.enable = false;
