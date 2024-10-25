@@ -12,7 +12,7 @@
   };
 
   environment = {
-    systemPackages   = with pkgs; [ discord gtasks-md obsidian nvidia-offload solaar ];
+    systemPackages   = with pkgs; [ discord gtasks-md obsidian solaar ];
     variables        = { CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv"; };
   };
 
@@ -32,33 +32,19 @@
     i2c      = { enable = true; };
     keyboard = { uhk.enable = true; };
     opengl   = {
-      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiIntel vaapiVdpau ];
+      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
     nvidia   = {
       nvidiaSettings  = false;
-      powerManagement = {
-        enable      = true;
-        finegrained = true;
-      };
-      prime           = {
-        offload.enable = true;
-        intelBusId     = "PCI:0:2:0";
-        nvidiaBusId    = "PCI:1:0:0";
-      };
+      open            = true;
+      modesetting     = { enable = true; };
+      powerManagement = { enable = true; };
     };
   };
 
   home-manager.users.jupblb = { config, lib, pkgs, ... }: {
-    home = {
-      activation.steam = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD sed 's/^Exec=/&nvidia-offload /' \
-          ${pkgs.steam}/share/applications/steam.desktop \
-          > ${config.xdg.dataHome}/applications/steam.desktop
-        $DRY_RUN_CMD chmod +x ${config.xdg.dataHome}/applications/steam.desktop
-      '';
-      stateVersion     = "22.11";
-    };
+    home = { stateVersion = "22.11"; };
 
     imports = [
       ./home-manager/direnv.nix
