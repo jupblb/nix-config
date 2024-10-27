@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   boot = {
     initrd = {
       kernelModules  = [ "e1000e" "i915" "kvm-intel" ];
@@ -8,11 +8,13 @@
       systemd.enable = true;
     };
 
-    kernelParams = [ "mitigations=off" ];
+    # https://github.com/NixOS/nixpkgs/issues/305891#issuecomment-2308910128
+    kernelModules = [ "nvidia_uvm" ];
+    kernelParams  = [ "mitigations=off" ];
   };
 
   environment = {
-    systemPackages   = with pkgs; [ discord gtasks-md obsidian solaar ];
+    systemPackages   = with pkgs; [ gnome-randr gtasks-md obsidian solaar ];
     variables        = { CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv"; };
   };
 
@@ -86,8 +88,13 @@
     nix-ld.enable = true; # https://unix.stackexchange.com/a/522823
 
     steam = {
-      enable     = true;
-      remotePlay = { openFirewall = true; };
+      enable                    = true;
+      extest                    = { enable = true; };
+      localNetworkGameTransfers = { openFirewall = true; };
+      package                   = pkgs.steam.override({
+        # extraArgs = "-pipewire";
+      });
+      remotePlay                = { openFirewall = true; };
     };
   };
 
@@ -105,6 +112,19 @@
     psd = {
       enable      = true;
       resyncTimer = "30m";
+    };
+
+    sunshine = {
+      applications = let steam = config.programs.steam.package; in {
+        apps = [ {
+          detached   = [ "steam-run-url steam://open/bigpicture" ];
+          image-path = "${steam}/share/icons/hicolor/256x256/apps/steam.png";
+          name       = "Steam Big Picture";
+        } ];
+      };
+      capSysAdmin  = true;
+      enable       = true;
+      openFirewall = true;
     };
 
     syncthing = {
@@ -146,12 +166,28 @@
 
   system.stateVersion = "22.11";
 
+  systemd.user.services = {
+    steam-run-url-service = rec {
+      enable        = true;
+      description   = "Listen and starts Steam games by id";
+      wantedBy      = [ "graphical-session.target" ];
+      partOf        = wantedBy;
+      wants         = wantedBy;
+      after         = wantedBy;
+      serviceConfig = { Restart = "on-failure"; };
+      script        = toString(pkgs.writers.writePython3
+        "steam-run-url-service" {}
+        (builtins.readFile ./config/script/steam-run-url.py));
+      path = [ config.programs.steam.package ];
+    };
+    sunshine = { path = [ pkgs.steam-run-url ]; };
+  };
+
   users.users.jupblb.extraGroups = [ "docker" "input" "lp" ];
 
   virtualisation.docker = {
     autoPrune    = { enable = true; };
     enable       = true;
-    enableNvidia = true;
     enableOnBoot = true;
   };
 }

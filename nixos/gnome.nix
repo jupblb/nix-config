@@ -48,6 +48,8 @@
   };
 
   services = {
+    displayManager = { autoLogin = { enable = true; user = "jupblb"; }; };
+
     dleyna-renderer.enable = false;
 
     dleyna-server.enable = false;
@@ -67,10 +69,7 @@
     xserver = {
       enable               = true;
       desktopManager.gnome = { enable = true; };
-      displayManager       = {
-        autoLogin  = { enable = true; user = "jupblb"; };
-        gdm.enable = true;
-      };
+      displayManager       = { gdm.enable = true; };
     };
   };
 

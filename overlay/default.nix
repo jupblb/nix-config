@@ -27,5 +27,12 @@ self: super: with super; {
     paths       = [ super.ripgrep ];
     postBuild   = ''wrapProgram $out/bin/rg --add-flags "--ignore"'';
   };
+  steam-run-url         = pkgs.writeShellApplication {
+    name = "steam-run-url";
+    text = ''
+      ${coreutils}/bin/echo "$1" \
+        > "/run/user/$(${coreutils}/bin/id --user)/steam-run-url.fifo"
+    '';
+  };
   vtclean               = callPackage ./vtclean.nix {};
 }
