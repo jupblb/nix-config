@@ -43,6 +43,7 @@
       modesetting     = { enable = true; };
       powerManagement = { enable = true; };
     };
+    xpadneo  = { enable = true; };
   };
 
   home-manager.users.jupblb = { config, lib, pkgs, ... }: {

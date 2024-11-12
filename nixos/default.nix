@@ -33,7 +33,6 @@
       enable          = true;
     };
     pulseaudio                    = { enable = false; };
-    xpadneo                       = { enable = true; };
   };
 
   home-manager.users.jupblb = {
