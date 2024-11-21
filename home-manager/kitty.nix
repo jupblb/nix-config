@@ -57,13 +57,6 @@
       };
       themeFile   = "gruvbox-light-hard";
     };
-
-    vscode.userSettings = {
-      "terminal.external.linuxExec" =
-        "${config.programs.kitty.package}/bin/kitty";
-      "terminal.external.osxExec"   =
-        "${config.programs.kitty.package}/Applications/kitty.app";
-    };
   };
 }
 
