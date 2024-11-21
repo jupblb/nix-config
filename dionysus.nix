@@ -1,14 +1,15 @@
 { lib, pkgs, ... }: {
   boot = {
     enableContainers                 = false;
-    initrd.kernelModules             = [ "amdgpu" ];
     kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "409600";
     };
-    kernelModules                    = [ "kvm-amd" ];
+    kernelModules                    = [ "e1000e" "i915" "kvm-intel" ];
     supportedFilesystems             = [ "zfs" ];
     zfs.requestEncryptionCredentials = false;
   };
+
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
   fileSystems = {
     "/"              = {
@@ -34,7 +35,16 @@
     };
   };
 
-  hardware.cpu.amd = { updateMicrocode = true; };
+  hardware = {
+    cpu.intel = { updateMicrocode = true; };
+    opengl   = {
+      extraPackages   = with pkgs; [
+        intel-compute-runtime intel-media-sdk intel-media-driver
+        libvdpau-va-gl vaapiVdpau
+      ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+    };
+  };
 
   home-manager.users.jupblb = {
     home.stateVersion = "21.11";
@@ -58,8 +68,8 @@
   imports = [ ./nixos ];
 
   networking = {
-    domain            = "kielbowi.cz";
-    firewall          =
+    domain     = "kielbowi.cz";
+    firewall   =
       let
         caddy     = [ 80 443 ];
         syncthing = [ 22067 22070  ];
@@ -68,17 +78,14 @@
         allowedTCPPorts  = caddy ++ syncthing ++ [ 3000 8080 ];
         allowedUDPPorts  = caddy ++ syncthing ++ [ 3000 8080 ];
       };
-    interfaces.enp8s0 = {
-      useDHCP   = true;
-      wakeOnLan = { enable = true; };
-    };
-    hostId            = "ce5e3a09";
-    hostName          = "dionysus";
-    wireless          = { enable = false; };
+    interfaces = { enp8s0 = { useDHCP = true; }; };
+    hostId     = "ce5e3a09";
+    hostName   = "dionysus";
+    wireless   = { enable = false; };
   };
 
   programs = {
-    adb.enable = true;
+    adb = { enable = true; };
 
     gnupg.agent = {
       enable          = true;
@@ -102,7 +109,7 @@
   };
 
   services = {
-    acpid.enable = true;
+    acpid = { enable = true; };
 
     authelia.instances.default = {
       enable   = true;
@@ -175,9 +182,6 @@
           };
           "bazarr.kielbowi.cz"       = {
             extraConfig = auth + "reverse_proxy http://localhost:6767";
-          };
-          "chat.kielbowi.cz"         = {
-            extraConfig = auth + "reverse_proxy http://localhost:8972";
           };
           "files.kielbowi.cz"        = {
             extraConfig = auth + "reverse_proxy http://localhost:8085";
@@ -436,7 +440,7 @@
       };
     };
 
-    xserver.videoDrivers = [ "amdgpu" ];
+    xserver.videoDrivers = [ "modesetting" ];
 
     zfs.autoScrub = {
       enable   = true;
