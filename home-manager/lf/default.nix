@@ -1,15 +1,11 @@
 { pkgs, ... }: {
   home = {
     packages         = with pkgs; [ fd ];
-    sessionVariables = {
-      ZO_METHOD = "lf";
-    };
+    sessionVariables = { ZO_METHOD = "lf"; };
   };
 
   programs = {
-    fish.functions = {
-      lf = builtins.readFile ./lf-vim.fish;
-    };
+    fish.functions = { lf = builtins.readFile ./lf-vim.fish; };
 
     lf = {
       enable      = true;
