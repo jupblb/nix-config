@@ -1,10 +1,23 @@
+vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    },
+}
+
+
 -- Toggle diagnostics with <Leader>d
 local diagnostics_active = true
 local diagnostics_toggle = function()
     if diagnostics_active then
-        vim.diagnostic.disable()
+        vim.diagnostic.enable(false)
     else
-        vim.diagnostic.enable()
+        vim.diagnostic.enable(true)
     end
     diagnostics_active = not diagnostics_active
 end

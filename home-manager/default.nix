@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   home = {
-    packages         = with pkgs; [ fswatch gh ];
+    packages         = with pkgs; [ fswatch ];
     username         = "jupblb";
     sessionVariables = {
       PAGER = "${pkgs.less}/bin/less -R";
@@ -38,11 +38,15 @@
     };
 
     bash = {
-      enable         = true;
-      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
-      shellAliases   = { "ls" = "ls --color=auto"; };
-      shellOptions   = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
-      initExtra      = "source ${toString ../config/bashrc.bash}";
+      enable           = true;
+      historyControl   = [ "erasedups" "ignoredups" "ignorespace" ];
+      historyFile      = "${config.xdg.cacheHome}/bash/history";
+      sessionVariables = {
+        PS1 = "\[\e[0;32m\]\u@\h \[\e[0;37m\]\w\[\e[0;34m\] $ \[\e[0m\]";
+      };
+      shellAliases     = { "ls" = "ls --color=auto"; };
+      shellOptions     = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
+      initExtra        = "source ${toString ../config/bashrc.bash}";
     };
 
     git = {
@@ -88,11 +92,6 @@
     htop = {
       enable   = true;
       settings = { hide_threads = true; hide_userland_threads = true; };
-    };
-
-    ripgrep = {
-      arguments = [ "--glob=!.git/*" "--hidden" "--no-ignore" ];
-      enable    = true;
     };
   };
 

@@ -12,20 +12,9 @@ self: super: with super; {
   gtasks-md             = callPackage ./gtasks-md.nix {
     inherit (haskellPackages) pandoc-types;
   };
-  jdt-language-server   = jdt-language-server.overrideAttrs(old: {
-    installPhase = old.installPhase + ''
-      ln -sfn $out/bin/jdt-language-server $out/bin/jdtls
-    '';
-  });
   mkalias               = callPackage ./mkalias.nix {
     inherit (darwin) apple_sdk;
     inherit (rustPlatform) buildRustPackage;
-  };
-  ripgrep               = symlinkJoin {
-    buildInputs = [ makeWrapper ];
-    name        = "ripgrep";
-    paths       = [ super.ripgrep ];
-    postBuild   = ''wrapProgram $out/bin/rg --add-flags "--ignore"'';
   };
   steam-run-url         = pkgs.writeShellApplication {
     name = "steam-run-url";

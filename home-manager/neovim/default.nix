@@ -82,9 +82,7 @@
           plugin = nvim-pqf;
         } {
           config = "luafile ${toString ./config/treesitter.lua}";
-          plugin = nvim-ts-context-commentstring.overrideAttrs(_: {
-            dependencies = [ (nvim-treesitter.withAllGrammars) vim-matchup ];
-          });
+          plugin = nvim-treesitter.withAllGrammars;
         } {
           config = "luafile ${toString ./config/devicons.lua}";
           plugin = nvim-web-devicons;
@@ -100,13 +98,11 @@
             ];
           });
         } {
-          config = "luafile ${toString ./config/osc52.lua}";
-          plugin = nvim-osc52;
-        } {
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        commentary mkdir-nvim neorepl-nvim vim-cool vim-gh-line vim-sleuth
+        image-nvim mkdir-nvim neorepl-nvim vim-cool vim-gh-line vim-matchup
+        vim-sleuth
       ];
       vimdiffAlias  = true;
       withNodeJs    = true;

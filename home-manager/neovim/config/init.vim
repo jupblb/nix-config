@@ -19,7 +19,6 @@ set showbreak=↪
 set splitright
 set smartcase
 set tabstop=2
-set termguicolors
 set updatetime=500
 set virtualedit=all
 set wrap

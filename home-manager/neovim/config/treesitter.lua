@@ -1,10 +1,3 @@
-require('ts_context_commentstring').setup({
-    languages = {
-        cpp = '// %s',
-        dart = '// %s',
-    },
-})
-
 require('nvim-treesitter.configs').setup({
     highlight = { enable = true, disable = { 'yaml' } },
     incremental_selection = {
@@ -17,8 +10,6 @@ require('nvim-treesitter.configs').setup({
     },
     matchup = { enable = true },
 })
-
-vim.g.skip_ts_context_commentstring_module = true
 
 -- https://github.com/dhruvinsh/nvim/blob/bcd7cfb8a29886b2c90b1182629ce73dbf88f2d6/after/plugin/treesitter.lua#L115-L134
 vim.api.nvim_create_autocmd("BufReadPre", {
