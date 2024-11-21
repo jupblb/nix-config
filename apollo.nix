@@ -21,29 +21,9 @@
     ./home-manager/neovim
   ];
 
-  nixpkgs.config.packageOverrides = _: {
-    nixGl =
-      let t = fetchTarball
-        "https://github.com/guibou/nixGL/archive/master.tar.gz";
-      in import "${t}/default.nix" { enable32bits = false; };
-  };
+  nixGl.packages = with pkgs; [ kitty ];
 
-  programs = {
-    kitty = {
-      package = pkgs.symlinkJoin {
-        name        = "kitty-glx";
-        paths       = with pkgs; [ kitty ];
-        postBuild   =
-          let app = pkgs.writeShellScript "kitty-glx-sh" ''
-            ${lib.meta.getExe pkgs.nixGl.nixGLMesa} \
-              ${lib.meta.getExe pkgs.kitty} --start-as fullscreen
-          '';
-          in "ln -sfn ${app} $out/bin/kitty";
-      };
-    };
-
-    home-manager.enable = true;
-  };
+  programs.home-manager.enable = true;
 
   targets.genericLinux.enable = true;
 }
