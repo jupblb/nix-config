@@ -55,7 +55,7 @@
           in (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font";
         tab_bar_min_tabs              = 5;
       };
-      theme       = "Gruvbox Light Hard";
+      themeFile   = "gruvbox-light-hard";
     };
 
     vscode.userSettings = {

@@ -44,12 +44,8 @@
         zfs-backup-unlock =
           builtins.readFile ./config/script/zfs-backup-unlock.fish;
       };
-      git.extraConfig = {
-        credential.helper = lib.mkForce [
-          "cache --timeout 36000"
-          "${pkgs.git-credential-oauth}/bin/git-credential-oauth -device"
-        ];
-      };
+
+      git-credential-oauth = { extraFlags = [ "-device" ]; };
     };
 
     services.gpg-agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
