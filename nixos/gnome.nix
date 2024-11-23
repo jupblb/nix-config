@@ -1,23 +1,22 @@
 { lib, pkgs, ... }: {
   environment = {
-    gnome.excludePackages = with pkgs.gnome; [
+    gnome.excludePackages = with pkgs; [
       baobab cheese epiphany gnome-calculator gnome-calendar gnome-clocks
       gnome-contacts gnome-logs gnome-maps gnome-music gnome-shell-extensions
-      pkgs.gnome-tour gnome-weather pkgs.gedit pkgs.gnome-connections
-      simple-scan totem yelp
+      gnome-tour gnome-weather gedit gnome-connections simple-scan totem yelp
     ];
-#   sessionVariables = { NIXOS_OZONE_WL = "1"; };
+    sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages        =
       let
         extensions = with pkgs.gnomeExtensions; [
           compiz-windows-effect just-perfection removable-drive-menu
         ];
         packages   = with pkgs; [
-          ddcutil google-chrome-wayland gnome-firmware jellyfin-media-player vlc
+          ddcutil google-chrome gnome-firmware jellyfin-media-player vlc
         ];
       in extensions ++ packages;
     variables             = {
-      CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome-wayland;
+      CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome;
     };
   };
 

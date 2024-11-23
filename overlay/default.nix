@@ -3,12 +3,6 @@ self: super: with super; {
   git-tidy              = callPackage ./git-tidy.nix {
     inherit (rustPlatform) buildRustPackage;
   };
-  google-chrome-wayland = google-chrome.override {
-    commandLineArgs = lib.concatStringsSep " " [
-      "--disable-features=WaylandFractionalScaleV1"
-      "--enable-features=UseOzonePlatform" "--ozone-platform=wayland"
-    ];
-  };
   gtasks-md             = callPackage ./gtasks-md.nix {
     inherit (haskellPackages) pandoc-types;
   };

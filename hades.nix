@@ -62,13 +62,7 @@
   networking = {
     firewall   = { allowedTCPPorts = [ 3000 ]; };
     hostName   = "hades";
-    interfaces = {
-      eno2 = {
-        macAddress       = "00:d8:61:50:ae:85";
-        useDHCP          = true;
-        wakeOnLan.enable = true;
-      };
-    };
+    interfaces = { enp8s0 = { useDHCP = true; }; };
   };
 
   nixpkgs.config = { cudaSupport = true; };
