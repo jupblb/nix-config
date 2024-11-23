@@ -1,21 +1,21 @@
 { config, lib, pkgs, ... }: {
   boot = {
     initrd = {
-      kernelModules  = [ "e1000e" "i915" "kvm-intel" ];
-      luks.devices   = {
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" ];
+      luks.devices           = {
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
-      systemd.enable = true;
+      systemd.enable         = true;
     };
 
     # https://github.com/NixOS/nixpkgs/issues/305891#issuecomment-2308910128
-    kernelModules = [ "nvidia_uvm" ];
+    kernelModules = [ "kvm-amd" "nvidia_uvm" ];
     kernelParams  = [ "mitigations=off" ];
   };
 
   environment = {
     systemPackages   = with pkgs; [ gnome-randr gtasks-md obsidian solaar ];
-    variables        = { CUDA_CACHE_PATH   = "\${XDG_CACHE_HOME}/nv"; };
+    variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
 
   fileSystems = {
@@ -30,7 +30,7 @@
   fonts.packages = with pkgs; [ iosevka ];
 
   hardware = {
-    cpu      = { intel.updateMicrocode = true; };
+    cpu      = { amd.updateMicrocode = true; };
     i2c      = { enable = true; };
     keyboard = { uhk.enable = true; };
     opengl   = {
@@ -60,28 +60,18 @@
   imports = [ ./nixos ];
 
   networking = {
-    firewall        = { allowedTCPPorts = [ 3000 ]; };
-    hostName        = "hades";
-    interfaces.eno2 = {
-      macAddress       = "00:d8:61:50:ae:85";
-      useDHCP          = true;
-      wakeOnLan.enable = true;
+    firewall   = { allowedTCPPorts = [ 3000 ]; };
+    hostName   = "hades";
+    interfaces = {
+      eno2 = {
+        macAddress       = "00:d8:61:50:ae:85";
+        useDHCP          = true;
+        wakeOnLan.enable = true;
+      };
     };
   };
 
-  # https://github.com/nixified-ai/flake#enable-binary-cache
-  nix.settings = {
-    trusted-substituters = ["https://ai.cachix.org"];
-    trusted-public-keys  =
-      ["ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="];
-  };
-
-  nixpkgs.config = {
-    cudaSupport               = true;
-    # https://github.com/NixOS/nixpkgs/issues/273611
-    permittedInsecurePackages =
-      lib.optional (pkgs.obsidian.version == "1.4.16") "electron-25.9.0";
-  };
+  nixpkgs.config = { cudaSupport = true; };
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
@@ -92,9 +82,6 @@
       enable                    = true;
       extest                    = { enable = true; };
       localNetworkGameTransfers = { openFirewall = true; };
-      package                   = pkgs.steam.override({
-        # extraArgs = "-pipewire";
-      });
       remotePlay                = { openFirewall = true; };
     };
   };

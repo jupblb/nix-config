@@ -10,8 +10,7 @@
     systemPackages        =
       let
         extensions = with pkgs.gnomeExtensions; [
-          adjust-display-brightness compiz-windows-effect just-perfection
-          removable-drive-menu
+          compiz-windows-effect just-perfection removable-drive-menu
         ];
         packages   = with pkgs; [
           ddcutil google-chrome-wayland gnome-firmware jellyfin-media-player vlc

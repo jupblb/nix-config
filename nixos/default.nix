@@ -27,10 +27,9 @@
   hardware = {
     bluetooth                     = { enable = true; };
     enableRedistributableFirmware = true;
-    opengl                        = {
-      driSupport      = true;
-      driSupport32Bit = true;
-      enable          = true;
+    graphics = {
+      enable      = true;
+      enable32Bit = true;
     };
     pulseaudio                    = { enable = false; };
   };
@@ -52,7 +51,7 @@
   imports =
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
-      tar = "release-24.05.tar.gz";
+      tar = "release-24.11.tar.gz";
     in [
       "${fetchTarball url}/nixos" ./gnome.nix ./plymouth.nix ./syncthing.nix
     ];
