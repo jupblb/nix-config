@@ -33,7 +33,7 @@
     cpu      = { amd.updateMicrocode = true; };
     i2c      = { enable = true; };
     keyboard = { uhk.enable = true; };
-    opengl   = {
+    graphics = {
       extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
@@ -60,9 +60,9 @@
   imports = [ ./nixos ];
 
   networking = {
-    firewall   = { allowedTCPPorts = [ 3000 ]; };
-    hostName   = "hades";
-    interfaces = { enp8s0 = { useDHCP = true; }; };
+    firewall = { allowedTCPPorts = [ 3000 ]; };
+    hostName = "hades";
+    useDHCP  = lib.mkForce true;
   };
 
   nixpkgs.config = { cudaSupport = true; };

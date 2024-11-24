@@ -76,7 +76,6 @@
     gnupg  = { agent.enable = true; };
     screen = { enable = true; };
     ssh    = { startAgent = true; };
-    vim    = { defaultEditor = true; };
   };
 
   security = { rtkit.enable = true; };
