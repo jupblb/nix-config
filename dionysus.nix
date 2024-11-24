@@ -1,14 +1,15 @@
 { lib, pkgs, ... }: {
   boot = {
     enableContainers                 = false;
-    initrd.kernelModules             = [ "amdgpu" ];
     kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "409600";
     };
-    kernelModules                    = [ "kvm-amd" ];
+    kernelModules                    = [ "e1000e" "i915" "kvm-intel" ];
     supportedFilesystems             = [ "zfs" ];
     zfs.requestEncryptionCredentials = false;
   };
+
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
   fileSystems = {
     "/"              = {
@@ -34,7 +35,15 @@
     };
   };
 
-  hardware.cpu.amd = { updateMicrocode = true; };
+  hardware = {
+    cpu.intel = { updateMicrocode = true; };
+    graphics  = {
+      extraPackages = with pkgs; [
+        intel-compute-runtime intel-media-sdk intel-media-driver
+        libvdpau-va-gl vaapiVdpau
+      ];
+    };
+  };
 
   home-manager.users.jupblb = {
     home.stateVersion = "21.11";
@@ -64,18 +73,13 @@
         allowedTCPPorts  = caddy ++ syncthing ++ [ 3000 8080 ];
         allowedUDPPorts  = caddy ++ syncthing ++ [ 3000 8080 ];
       };
-    interfaces.enp8s0 = {
-      useDHCP   = true;
-      wakeOnLan = { enable = true; };
-    };
     hostId            = "ce5e3a09";
     hostName          = "dionysus";
+    useDHCP           = lib.mkForce true;
     wireless          = { enable = false; };
   };
 
   programs = {
-    adb.enable = true;
-
     gnupg.agent = {
       enable          = true;
       pinentryPackage = pkgs.pinentry-curses;
@@ -172,9 +176,6 @@
           "bazarr.kielbowi.cz"       = {
             extraConfig = auth + "reverse_proxy http://localhost:6767";
           };
-          "chat.kielbowi.cz"         = {
-            extraConfig = auth + "reverse_proxy http://localhost:8972";
-          };
           "files.kielbowi.cz"        = {
             extraConfig = auth + "reverse_proxy http://localhost:8085";
           };
@@ -211,7 +212,7 @@
     };
 
     calibre-web = {
-      enable  = true;
+      # enable  = true;
       group   = "users";
       options = {
         calibreLibrary       = "/backup/calibre";
@@ -432,7 +433,7 @@
       };
     };
 
-    xserver.videoDrivers = [ "amdgpu" ];
+    xserver.videoDrivers = [ "modesetting" ];
 
     zfs.autoScrub = {
       enable   = true;
