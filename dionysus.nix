@@ -1,10 +1,11 @@
 { lib, pkgs, ... }: {
   boot = {
     enableContainers                 = false;
+    initrd.availableKernelModules    = [ "xhci_pci" "ahci" "nvme" "sd_mod" ];
     kernel.sysctl                    = {
       "fs.inotify.max_user_watches" = "409600";
     };
-    kernelModules                    = [ "e1000e" "i915" "kvm-intel" ];
+    kernelModules                    = [ "kvm-intel" ];
     supportedFilesystems             = [ "zfs" ];
     zfs.requestEncryptionCredentials = false;
   };
@@ -145,7 +146,7 @@
             username = cfg.login;
           };
         };
-        server                        = { port = 9092; };
+        server                        = { address = "tcp://:9092/"; };
         session                       = { domain = "kielbowi.cz"; };
         storage                       = {
           local.path = "/var/lib/authelia-default/authelia.sqlite";
@@ -212,7 +213,7 @@
     };
 
     calibre-web = {
-      # enable  = true;
+      enable  = true;
       group   = "users";
       options = {
         calibreLibrary       = "/backup/calibre";
@@ -302,7 +303,7 @@
           host  all      all  samehost     trust
       '';
       enable          = true;
-      package         = pkgs.postgresql_15;
+      package         = pkgs.postgresql_16;
     };
 
     postgresqlBackup = {
@@ -477,7 +478,7 @@
 
         inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
           -m -r /backup/jupblb/Workspace |
-        while read line; do
+        while read -r line; do
           if [[ "$line" == ".gitignore" ]]; then
             >&2 echo ".gitignore update"
             sh ${./config/script/stignore.sh}
@@ -516,7 +517,7 @@
         };
         linkding       = {
           environment = {
-            LD_ENABLE_AUTH_PROXY = "True";
+            LD_ENABLE_AUTH_PROXY          = "True";
             LD_AUTH_PROXY_USERNAME_HEADER = "HTTP_REMOTE_USER";
             LD_AUTH_PROXY_LOGOUT_URL      = "authelia.kielbowi.cz/logout";
           };

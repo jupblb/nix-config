@@ -69,9 +69,9 @@
   programs = {
     adb    = { enable = true; };
     bash   = {
-      enableCompletion = true;
-      enableLsColors   = true;
-      promptInit       = builtins.readFile ../config/bashrc.bash;
+      completion     = { enable = true; };
+      enableLsColors = true;
+      promptInit     = builtins.readFile ../config/bashrc.bash;
     };
     gnupg  = { agent.enable = true; };
     screen = { enable = true; };
@@ -106,6 +106,8 @@
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
     ln -sfn ${pkgs.bashInteractive}/bin/bash /bin/bash
   '';
+
+  systemd.enableStrictShellChecks = true;
 
   time.timeZone = "Europe/Warsaw";
 
