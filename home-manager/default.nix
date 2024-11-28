@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   home = {
     packages         = with pkgs; [ fswatch ];
     username         = "jupblb";
@@ -30,7 +30,7 @@
   };
 
   nix = {
-    package  = pkgs.nix;
+    package  = lib.mkDefault pkgs.nix;
     settings = { experimental-features = [ "nix-command" "flakes" ]; };
   };
 

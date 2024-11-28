@@ -1,16 +1,19 @@
 { config, lib, pkgs, ... }: {
   boot = {
-    initrd = {
+    consoleLogLevel = 0;
+    initrd          = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" ];
+      kernelModules          =
+        [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
       luks.devices           = {
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
       systemd.enable         = true;
     };
 
-    # https://github.com/NixOS/nixpkgs/issues/305891#issuecomment-2308910128
-    kernelModules = [ "kvm-amd" "nvidia_uvm" ];
-    kernelParams  = [ "mitigations=off" ];
+    kernelModules   = [ "kvm-amd" ];
+    kernelParams    = [ "mitigations=off" "quiet" "udev.log_level=3" ];
+    plymouth        = { enable = true; extraConfig = "DeviceScale=2"; };
   };
 
   environment = {

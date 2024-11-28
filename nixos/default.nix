@@ -52,9 +52,7 @@
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
       tar = "release-24.11.tar.gz";
-    in [
-      "${fetchTarball url}/nixos" ./gnome.nix ./plymouth.nix ./syncthing.nix
-    ];
+    in [ "${fetchTarball url}/nixos" ./gnome.nix ./syncthing.nix ];
 
   networking = {
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
@@ -106,8 +104,6 @@
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
     ln -sfn ${pkgs.bashInteractive}/bin/bash /bin/bash
   '';
-
-  systemd.enableStrictShellChecks = true;
 
   time.timeZone = "Europe/Warsaw";
 
