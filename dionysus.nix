@@ -237,7 +237,6 @@
             "calibre.kielbowi.cz"  = "http://localhost:8083";
             "jellyfin.kielbowi.cz" = "http://localhost:8096";
             "photos.kielbowi.cz"   = "http://localhost:2342";
-            "rss.kielbowi.cz"      = "http://localhost:9283";
 
             "dionysus.kielbowi.cz" = "ssh://localhost:22";
           };
@@ -276,17 +275,6 @@
       group  = "users";
     };
 
-    miniflux = {
-      adminCredentialsFile = pkgs.writeText "miniflux-credentials"
-        (import ./config/secret.nix).miniflux;
-      config               = {
-        BASE_URL                 = "https://rss.kielbowi.cz/";
-        FETCH_YOUTUBE_WATCH_TIME = "1";
-        LISTEN_ADDR              = "127.0.0.1:9283";
-      };
-      enable               = true;
-    };
-
     photoprism = {
       enable        = true;
       originalsPath = "/backup/jupblb/Pictures/album";
@@ -298,22 +286,6 @@
         PHOTOPRISM_SITE_URL         = "https://photos.kielbowi.cz";
         PHOTOPRISM_UPLOAD_NSFW      = "false";
       } // (import ./config/secret.nix).photoprism;
-    };
-
-    postgresql = {
-      authentication  = ''
-        # TYPE  DATABASE USER CIDR-ADDRESS METHOD
-          local all      all               trust
-          host  all      all  samehost     trust
-      '';
-      enable          = true;
-      package         = pkgs.postgresql_16;
-    };
-
-    postgresqlBackup = {
-      backupAll = true;
-      enable    = true;
-      location  = "/backup/postgresql";
     };
 
     radarr = {
@@ -468,7 +440,6 @@
     photoprism            = disableAtBoot;
     podman-filebrowser    = disableAtBoot;
     podman-simply-shorten = disableAtBoot;
-    postgresqlBackup      = disableAtBoot;
     restic-backups-gcs    = disableAtBoot;
     restic-backups-local  = disableAtBoot;
     stignore              = disableAtBoot // {
