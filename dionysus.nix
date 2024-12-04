@@ -98,8 +98,6 @@
         user         = cfg.login;
       };
     };
-
-    steam = { enable = true; };
   };
 
   services = {
@@ -497,7 +495,7 @@
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
-  users.users.jupblb.extraGroups = [ "adbusers" "docker" "podman" ];
+  users.users.jupblb.extraGroups = [ "docker" "podman" ];
 
   virtualisation = {
     docker         = { enable = true; };

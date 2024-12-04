@@ -33,20 +33,22 @@
   fonts.packages = with pkgs; [ iosevka ];
 
   hardware = {
-    cpu      = { amd.updateMicrocode = true; };
-    i2c      = { enable = true; };
-    keyboard = { uhk.enable = true; };
-    graphics = {
+    bluetooth = { enable = true; };
+    cpu       = { amd.updateMicrocode = true; };
+    i2c       = { enable = true; };
+    keyboard  = { uhk.enable = true; };
+    graphics  = {
+      enable32Bit     = true;
       extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
-    nvidia   = {
+    nvidia    = {
       nvidiaSettings  = false;
       open            = true;
       modesetting     = { enable = true; };
       powerManagement = { enable = true; };
     };
-    xpadneo  = { enable = true; };
+    xpadneo   = { enable = true; };
   };
 
   home-manager.users.jupblb = { config, lib, pkgs, ... }: {
@@ -60,7 +62,7 @@
     services.gpg-agent.enable = true;
   };
 
-  imports = [ ./nixos ];
+  imports = [ ./nixos ./nixos/gnome.nix ];
 
   networking = {
     firewall = { allowedTCPPorts = [ 3000 ]; };
@@ -73,9 +75,9 @@
   powerManagement.cpuFreqGovernor = "ondemand";
 
   programs = {
-    nix-ld.enable = true; # https://unix.stackexchange.com/a/522823
-
-    steam = {
+    adb    = { enable = true; };
+    nix-ld = { enable = true; }; # https://unix.stackexchange.com/a/522823
+    steam  = {
       enable                    = true;
       extest                    = { enable = true; };
       localNetworkGameTransfers = { openFirewall = true; };
@@ -92,7 +94,16 @@
   } ];
 
   services = {
-    printing.enable = true;
+    pipewire  = {
+      enable = true;
+      alsa   = {
+        enable       = true;
+        support32Bit = true;
+      };
+      pulse  = { enable = true; };
+    };
+
+    printing = { enable = true; };
 
     psd = {
       enable      = true;

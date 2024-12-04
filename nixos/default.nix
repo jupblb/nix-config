@@ -18,19 +18,14 @@
   environment = {
     sessionVariables = { NIXPKGS_ALLOW_UNFREE = "1"; };
     shellAliases     = { fhs = "${pkgs.steam-run}/bin/steam-run \$SHELL"; };
-    systemPackages   = with pkgs;
-      [ file unzip wl-clipboard pciutils usbutils wol ];
+    systemPackages   = with pkgs; [ file unzip pciutils usbutils ];
   };
 
   fonts.enableDefaultPackages = true;
 
   hardware = {
-    bluetooth                     = { enable = true; };
     enableRedistributableFirmware = true;
-    graphics = {
-      enable      = true;
-      enable32Bit = true;
-    };
+    graphics                      = { enable = true; };
     pulseaudio                    = { enable = false; };
   };
 
@@ -52,7 +47,7 @@
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
       tar = "release-24.11.tar.gz";
-    in [ "${fetchTarball url}/nixos" ./gnome.nix ./syncthing.nix ];
+    in [ "${fetchTarball url}/nixos" ./syncthing.nix ];
 
   networking = {
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
@@ -65,7 +60,6 @@
   nixpkgs.overlays           = [ (import ../overlay) ];
 
   programs = {
-    adb    = { enable = true; };
     bash   = {
       completion     = { enable = true; };
       enableLsColors = true;
@@ -88,14 +82,6 @@
         PasswordAuthentication = false;
         PermitRootLogin        = "no";
       };
-    };
-    pipewire  = {
-      enable = true;
-      alsa   = {
-        enable       = true;
-        support32Bit = true;
-      };
-      pulse  = { enable = true; };
     };
     sshguard  = { enable = true; };
     tailscale = { enable = true; };

@@ -5,7 +5,7 @@
       gnome-contacts gnome-logs gnome-maps gnome-music gnome-shell-extensions
       gnome-tour gnome-weather gedit gnome-connections simple-scan totem yelp
     ];
-    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+    sessionVariables      = { NIXOS_OZONE_WL = "1"; };
     systemPackages        =
       let
         extensions = with pkgs.gnomeExtensions; [
@@ -13,6 +13,7 @@
         ];
         packages   = with pkgs; [
           ddcutil google-chrome gnome-firmware jellyfin-media-player vlc
+          wl-clipboard
         ];
       in extensions ++ packages;
     variables             = {
@@ -26,23 +27,10 @@
   };
 
   programs = {
-    dconf = {
-      enable                  = true;
-      profiles.user.databases = [
-        {
-          lockAll = true;
-          settings = {
-            "org/gnome/gnome-screenshot" = {
-              auto-save-directory = "$HOME/Pictures/screenshots";
-            };
-          };
-        }
-      ];
-    };
-
-    geary.enable          = false;
-    gnome-disks.enable    = false;
-    gnome-terminal.enable = false;
+    dconf          = { enable = true; };
+    geary          = { enable = false; };
+    gnome-disks    = { enable = false; };
+    gnome-terminal = { enable = false; };
   };
 
   services = {
