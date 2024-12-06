@@ -364,21 +364,6 @@
             type   = "staggered";
           };
           in {
-            "domci/Documents"  = {
-              enable     = true;
-              path       = "/backup/domci/Documents";
-              versioning = simpleVersioning;
-            };
-            "domci/Pictures"   = {
-              enable     = true;
-              path       = "/backup/domci/Pictures";
-              versioning = simpleVersioning;
-            };
-            "domci/Videos"     = {
-              enable     = true;
-              path       = "/backup/domci/Videos";
-              versioning = simpleVersioning;
-            };
             "jupblb/Documents" = {
               enable     = true;
               path       = "/backup/jupblb/Documents";

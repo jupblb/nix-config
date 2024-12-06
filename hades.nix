@@ -118,9 +118,6 @@
       key       = toString ./config/syncthing/hades/key.pem;
       settings  = {
         folders = {
-          "domci/Documents"  = { path = "/ignore"; };
-          "domci/Pictures"   = { path = "/ignore"; };
-          "domci/Videos"     = { path = "/ignore"; };
           "jupblb/Documents" = {
             enable = true;
             path   = "/home/jupblb/Documents";
