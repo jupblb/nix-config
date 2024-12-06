@@ -81,6 +81,7 @@
       enable                    = true;
       extest                    = { enable = true; };
       localNetworkGameTransfers = { openFirewall = true; };
+      protontricks              = { enable = true; };
       remotePlay                = { openFirewall = true; };
     };
   };
@@ -108,19 +109,6 @@
     psd = {
       enable      = true;
       resyncTimer = "30m";
-    };
-
-    sunshine = {
-      applications = let steam = config.programs.steam.package; in {
-        apps = [ {
-          detached   = [ "steam-run-url steam://open/bigpicture" ];
-          image-path = "${steam}/share/icons/hicolor/256x256/apps/steam.png";
-          name       = "Steam Big Picture";
-        } ];
-      };
-      capSysAdmin  = true;
-      enable       = true;
-      openFirewall = true;
     };
 
     syncthing = {
@@ -161,23 +149,6 @@
   swapDevices = [ { device = "/dev/disk/by-label/nixos-swap"; } ];
 
   system.stateVersion = "22.11";
-
-  systemd.user.services = {
-    steam-run-url-service = rec {
-      enable        = true;
-      description   = "Listen and starts Steam games by id";
-      wantedBy      = [ "graphical-session.target" ];
-      partOf        = wantedBy;
-      wants         = wantedBy;
-      after         = wantedBy;
-      serviceConfig = { Restart = "on-failure"; };
-      script        = toString(pkgs.writers.writePython3
-        "steam-run-url-service" {}
-        (builtins.readFile ./config/script/steam-run-url.py));
-      path = [ config.programs.steam.package ];
-    };
-    sunshine = { path = [ pkgs.steam-run-url ]; };
-  };
 
   users.users.jupblb.extraGroups = [ "docker" "input" "lp" ];
 
