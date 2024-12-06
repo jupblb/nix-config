@@ -67,10 +67,29 @@
   nixpkgs.config = { cudaSupport = true; };
 
   programs = {
-    nix-ld = { enable = true; }; # https://unix.stackexchange.com/a/522823
-    steam  = {
+    gamescope = {
+      args       = [
+        "--output-width 3840" "--output-height 2160"
+        # "--nested-refresh 144" "--nested-unfocused-refresh 30" "--adaptive-sync"
+        # "--hdr-enabled" "--hdr-itm-enable"
+        # "--expose-wayland" "--rt" "--steam"
+      ];
+      capSysNice = true;
+      enable     = true;
+    };
+    nix-ld    = { enable = true; }; # https://unix.stackexchange.com/a/522823
+    steam     = {
       enable                    = true;
       extest                    = { enable = true; };
+      gamescopeSession          = {
+        args   = [
+          "--output-width 3840" "--output-height 2160" "--fullscreen"
+          "--nested-refresh 144" "--nested-unfocused-refresh 30" "--adaptive-sync"
+          "--hdr-enabled" "--hdr-itm-enable"
+          "--expose-wayland" "--rt" "--steam"
+        ];
+        enable = true;
+      };
       localNetworkGameTransfers = { openFirewall = true; };
       protontricks              = { enable = true; };
       remotePlay                = { openFirewall = true; };

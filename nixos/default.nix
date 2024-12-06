@@ -50,7 +50,7 @@
 
   networking = {
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
-    useDHCP     = true;
+    # useDHCP     = true;
   };
 
   nix.settings.trusted-users = [ "root" "jupblb" ];

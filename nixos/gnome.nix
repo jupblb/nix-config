@@ -40,7 +40,7 @@
 
     gnome = {
       core-utilities          = { enable = false; };
-      core-os-services        = { enable = lib.mkForce false; };
+      # core-os-services        = { enable = lib.mkForce false; };
       gnome-browser-connector = { enable = false; };
       gnome-initial-setup     = { enable = false; };
       gnome-remote-desktop    = { enable = false; };
