@@ -1,13 +1,11 @@
 { lib, pkgs, ... }: {
   boot = {
-    enableContainers                 = false;
-    initrd.availableKernelModules    = [ "xhci_pci" "ahci" "nvme" "sd_mod" ];
-    kernel.sysctl                    = {
-      "fs.inotify.max_user_watches" = "409600";
-    };
-    kernelModules                    = [ "kvm-intel" ];
-    supportedFilesystems             = [ "zfs" ];
-    zfs.requestEncryptionCredentials = false;
+    # enableContainers     = false;
+    kernel               =
+      { sysctl = { "fs.inotify.max_user_watches" = "409600"; }; };
+    kernelModules        = [ "kvm-intel" ];
+    supportedFilesystems = [ "zfs" ];
+    zfs                  = { requestEncryptionCredentials = false; };
   };
 
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
@@ -64,20 +62,19 @@
   imports = [ ./nixos ];
 
   networking = {
-    domain            = "kielbowi.cz";
-    firewall          =
+    domain   = "kielbowi.cz";
+    firewall =
       let
         caddy     = [ 80 443 ];
         syncthing = [ 22067 22070  ];
       in {
         checkReversePath = "loose";
-        allowedTCPPorts  = caddy ++ syncthing ++ [ 3000 8080 ];
-        allowedUDPPorts  = caddy ++ syncthing ++ [ 3000 8080 ];
+        allowedTCPPorts  = caddy ++ syncthing;
+        allowedUDPPorts  = caddy ++ syncthing;
       };
-    hostId            = "ce5e3a09";
-    hostName          = "dionysus";
-    useDHCP           = lib.mkForce true;
-    wireless          = { enable = false; };
+    hostId   = "ce5e3a09";
+    hostName = "dionysus";
+    wireless = { enable = false; };
   };
 
   # https://github.com/NixOS/nixpkgs/issues/360592

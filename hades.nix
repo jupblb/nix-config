@@ -67,7 +67,6 @@
   networking = {
     firewall = { allowedTCPPorts = [ 3000 ]; };
     hostName = "hades";
-    useDHCP  = lib.mkForce true;
   };
 
   nixpkgs.config = { cudaSupport = true; };

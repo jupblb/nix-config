@@ -21,7 +21,7 @@
     systemPackages   = with pkgs; [ file unzip pciutils usbutils ];
   };
 
-  fonts.enableDefaultPackages = true;
+  fonts = { enableDefaultPackages = true; };
 
   hardware = {
     enableRedistributableFirmware = true;
@@ -30,7 +30,6 @@
   };
 
   home-manager.users.jupblb = {
-    home     = { enableNixpkgsReleaseCheck = false; };
     imports  = [
       ../home-manager
       ../home-manager/fish
@@ -51,7 +50,7 @@
 
   networking = {
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
-    useDHCP     = false;
+    useDHCP     = true;
   };
 
   nix.settings.trusted-users = [ "root" "jupblb" ];
