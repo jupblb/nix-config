@@ -31,11 +31,11 @@
 
   home-manager.users.jupblb = {
     imports  = [
-      ../home-manager
-      ../home-manager/fish
-      ../home-manager/gpg-and-ssh.nix
-      ../home-manager/lf
-      ../home-manager/neovim
+      ./home-manager
+      ./home-manager/fish
+      ./home-manager/gpg-and-ssh.nix
+      ./home-manager/lf
+      ./home-manager/neovim
     ];
     services = { gpg-agent.enable = true; };
   };
@@ -53,13 +53,13 @@
   nix.settings.trusted-users = [ "root" "jupblb" ];
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays           = [ (import ../overlay) ];
+  nixpkgs.overlays           = [ (import ./overlay) ];
 
   programs = {
     bash   = {
       completion     = { enable = true; };
       enableLsColors = true;
-      promptInit     = builtins.readFile ../config/bashrc.bash;
+      promptInit     = builtins.readFile ./config/bashrc.bash;
     };
     gnupg  = { agent.enable = true; };
     screen = { enable = true; };
@@ -132,7 +132,7 @@
     initialPassword = "changeme";
     isNormalUser    = true;
     openssh         = {
-      authorizedKeys.keyFiles = [ ../config/ssh/id_ed25519.pub ];
+      authorizedKeys.keyFiles = [ ./config/ssh/id_ed25519.pub ];
     };
     shell           = pkgs.bashInteractive;
   };

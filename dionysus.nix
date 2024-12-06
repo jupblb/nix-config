@@ -1,6 +1,5 @@
 { lib, pkgs, ... }: {
   boot = {
-    # enableContainers     = false;
     kernel               =
       { sysctl = { "fs.inotify.max_user_watches" = "409600"; }; };
     kernelModules        = [ "kvm-intel" ];
@@ -59,7 +58,7 @@
     services.gpg-agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
   };
 
-  imports = [ ./nixos ];
+  imports = [ ./default.nix ];
 
   networking = {
     domain   = "kielbowi.cz";

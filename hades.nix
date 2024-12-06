@@ -1,20 +1,35 @@
 { pkgs, ... }: {
   boot = {
-    initrd        = {
+    consoleLogLevel = 0;
+    initrd          = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" ];
       kernelModules          =
         [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
       luks.devices           = {
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
+      systemd                = { enable = true; };
     };
-
-    kernelModules = [ "kvm-amd" ];
+    kernelModules   = [ "kvm-amd" ];
+    kernelParams    = [ "quiet" "udev.log_level=3" ];
+    plymouth        = { enable = true; extraConfig = "DeviceScale=2"; };
   };
 
   environment = {
-    systemPackages   = with pkgs; [ gtasks-md solaar ];
-    variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
+    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+    systemPackages   =
+      let
+        extensions = with pkgs.gnomeExtensions;
+          [ compiz-windows-effect hide-top-bar removable-drive-menu ];
+        packages   = with pkgs; [
+          google-chrome gnome-firmware gtasks-md obsidian solaar vlc
+          wl-clipboard
+        ];
+      in extensions ++ packages;
+    variables        = {
+      CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome;
+      CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
+    };
   };
 
   fileSystems = {
@@ -54,10 +69,17 @@
       ./home-manager/kitty.nix
     ];
 
-    services.gpg-agent.enable = true;
+    programs = { kitty.settings.linux_display_server = "wayland"; };
+
+    services = {
+      gpg-agent = {
+        enable          = true;
+        pinentryPackage = pkgs.pinentry-gnome3;
+      };
+    };
   };
 
-  imports = [ ./nixos ./nixos/gnome.nix ];
+  imports = [ ./default.nix ];
 
   networking = {
     firewall = { allowedTCPPorts = [ 3000 ]; };
@@ -86,6 +108,10 @@
   } ];
 
   services = {
+    displayManager = { autoLogin = { enable = true; user = "jupblb"; }; };
+
+    gnome = { core-utilities = { enable = false; }; };
+
     pipewire  = {
       enable = true;
       alsa   = { enable = true; support32Bit = true; };
@@ -128,12 +154,23 @@
         ATTR{authorized}="0"
     '';
 
-    xserver.videoDrivers = [ "nvidia" ];
+    xserver = {
+      enable         = true;
+      desktopManager = { gnome = { enable = true; }; };
+      displayManager = { gdm = { enable = true; }; };
+      videoDrivers   = [ "nvidia" ];
+    };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/nixos-swap"; } ];
 
   system.stateVersion = "22.11";
+
+  systemd.services = {
+    # https://github.com/NixOS/nixpkgs/issues/103746
+    "getty@tty1".enable  = false;
+    "autovt@tty1".enable = false;
+  };
 
   users.users.jupblb.extraGroups = [ "docker" "input" "lp" ];
 
