@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
   boot = {
     consoleLogLevel = 0;
     initrd          = { systemd = { enable = true; }; };
@@ -7,19 +7,13 @@
   };
 
   environment = {
-    gnome            = {
-      excludePackages = with pkgs; [ cheese gnome-tour orca ];
-    };
     sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages   =
       let
         extensions = with pkgs.gnomeExtensions;
-          [ compiz-windows-effect just-perfection removable-drive-menu
-        ];
-        packages   = with pkgs; [
-          google-chrome gnome-firmware gnome-randr gnome-shell-extensions
-          obsidian vlc wl-clipboard
-        ];
+          [ compiz-windows-effect hide-top-bar removable-drive-menu ];
+        packages   = with pkgs;
+          [ google-chrome gnome-firmware obsidian vlc wl-clipboard ];
       in extensions ++ packages;
     variables        = {
       CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome;
@@ -31,21 +25,10 @@
     services = { gpg-agent.pinentryPackage = pkgs.pinentry-gnome3; };
   };
 
-  programs = {
-    dconf = { enable = true; };
-  };
-
   services = {
     displayManager = { autoLogin = { enable = true; user = "jupblb"; }; };
 
-    gnome = {
-      core-utilities          = { enable = false; };
-      core-os-services        = { enable = lib.mkForce false; };
-      gnome-browser-connector = { enable = false; };
-      gnome-initial-setup     = { enable = false; };
-      gnome-remote-desktop    = { enable = false; };
-      rygel                   = { enable = false; };
-    };
+    gnome = { core-utilities = { enable = false; }; };
 
     xserver = {
       enable         = true;

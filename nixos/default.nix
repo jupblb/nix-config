@@ -48,10 +48,7 @@
       tar = "release-24.11.tar.gz";
     in [ "${fetchTarball url}/nixos" ];
 
-  networking = {
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
-    useDHCP     = true;
-  };
+  networking = { nameservers = [ "1.1.1.1" "8.8.8.8" ]; };
 
   nix.settings.trusted-users = [ "root" "jupblb" ];
 

@@ -74,6 +74,7 @@
       };
     hostId   = "ce5e3a09";
     hostName = "dionysus";
+    useDHCP  = true;
     wireless = { enable = false; };
   };
 
