@@ -272,6 +272,15 @@
       group  = "users";
     };
 
+    openssh = {
+      openFirewall = true;
+      enable       = true;
+      settings     = {
+        PasswordAuthentication = false;
+        PermitRootLogin        = "no";
+      };
+    };
+
     photoprism = {
       enable        = true;
       originalsPath = "/backup/jupblb/Pictures/album";
@@ -342,6 +351,8 @@
       enable = true;
       group  = "users";
     };
+
+    sshguard = { enable = true; };
 
     syncthing = {
       cert     = toString ./config/syncthing/dionysus/cert.pem;

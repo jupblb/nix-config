@@ -1,23 +1,19 @@
-{ config, lib, pkgs, ... }: {
+{ pkgs, ... }: {
   boot = {
-    consoleLogLevel = 0;
-    initrd          = {
+    initrd        = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" ];
       kernelModules          =
         [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
       luks.devices           = {
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
-      systemd.enable         = true;
     };
 
-    kernelModules   = [ "kvm-amd" ];
-    kernelParams    = [ "mitigations=off" "quiet" "udev.log_level=3" ];
-    plymouth        = { enable = true; extraConfig = "DeviceScale=2"; };
+    kernelModules = [ "kvm-amd" ];
   };
 
   environment = {
-    systemPackages   = with pkgs; [ gnome-randr gtasks-md obsidian solaar ];
+    systemPackages   = with pkgs; [ gtasks-md solaar ];
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
 
@@ -45,13 +41,12 @@
     nvidia    = {
       nvidiaSettings  = false;
       open            = true;
-      modesetting     = { enable = true; };
       powerManagement = { enable = true; };
     };
     xpadneo   = { enable = true; };
   };
 
-  home-manager.users.jupblb = { config, lib, pkgs, ... }: {
+  home-manager.users.jupblb = { ... }: {
     home = { stateVersion = "22.11"; };
 
     imports = [
@@ -71,10 +66,7 @@
 
   nixpkgs.config = { cudaSupport = true; };
 
-  powerManagement.cpuFreqGovernor = "ondemand";
-
   programs = {
-    adb    = { enable = true; };
     nix-ld = { enable = true; }; # https://unix.stackexchange.com/a/522823
     steam  = {
       enable                    = true;
@@ -96,10 +88,7 @@
   services = {
     pipewire  = {
       enable = true;
-      alsa   = {
-        enable       = true;
-        support32Bit = true;
-      };
+      alsa   = { enable = true; support32Bit = true; };
       pulse  = { enable = true; };
     };
 
