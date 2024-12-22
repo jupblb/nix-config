@@ -97,7 +97,8 @@
       gamescopeSession          = {
         args   = [
           "--adaptive-sync" "--hdr-enabled" "--hdr-itm-enable" "--rt" "--steam"
-          "--prefer-output" "HDMI-A-1"
+          "--prefer-output" "HDMI-A-1" "--nested-refresh" "120"
+          "--output-width" "3840" "--output-height" "2160"
         ];
         enable = true;
         env    = {
