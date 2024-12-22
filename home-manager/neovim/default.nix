@@ -102,7 +102,7 @@
           plugin = vim-signify;
         }
         image-nvim mkdir-nvim neorepl-nvim vim-cool vim-gh-line vim-matchup
-        vim-sleuth
+        vim-sleuth vim-surround
       ];
       vimdiffAlias  = true;
       withNodeJs    = true;

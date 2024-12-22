@@ -16,7 +16,7 @@
   };
 
   environment = {
-    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+    # sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages   =
       let
         extensions = with pkgs.gnomeExtensions;
