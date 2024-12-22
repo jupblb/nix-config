@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   boot = {
     consoleLogLevel = 0;
     initrd          = {
@@ -22,7 +22,7 @@
         extensions = with pkgs.gnomeExtensions;
           [ compiz-windows-effect hide-top-bar removable-drive-menu ];
         packages   = with pkgs; [
-          google-chrome gnome-firmware gtasks-md obsidian solaar vlc
+          google-chrome gnome-firmware gtasks-md mangohud obsidian solaar vlc
           wl-clipboard
         ];
       in extensions ++ packages;
@@ -89,23 +89,44 @@
   nixpkgs.config = { cudaSupport = true; };
 
   programs = {
-    nix-ld = { enable = true; }; # https://unix.stackexchange.com/a/522823
-    steam  = {
+    gamescope = { capSysNice = true; enable = true; };
+    nix-ld    = { enable = true; }; # https://unix.stackexchange.com/a/522823
+    steam     = {
       enable                    = true;
       extest                    = { enable = true; };
+      gamescopeSession          = {
+        args   = [
+          "--adaptive-sync" "--hdr-enabled" "--hdr-itm-enable" "--rt" "--steam"
+          "--prefer-output" "HDMI-A-1"
+        ];
+        enable = true;
+        env    = {
+          MANGOHUD        = "1";
+          MANGOHUD_CONFIG = "cpu_temp,gpu_temp,ram,vram";
+        };
+      };
       localNetworkGameTransfers = { openFirewall = true; };
       protontricks              = { enable = true; };
       remotePlay                = { openFirewall = true; };
     };
   };
 
-  security.sudo.extraRules = [ {
-    commands = [ {
-      command = "/run/current-system/sw/bin/poweroff";
-      options = [ "SETENV" "NOPASSWD" ];
+  security = {
+    pam.services = {
+      # https://wiki.archlinux.org/title/GDM#Passwordless_login
+      gdm-password.text = lib.mkBefore ''
+        auth sufficient pam_succeed_if.so user ingroup nopasswdlogin
+      '';
+    };
+
+    sudo.extraRules = [ {
+      commands = [ {
+        command = "/run/current-system/sw/bin/poweroff";
+        options = [ "SETENV" "NOPASSWD" ];
+      } ];
+      users    = [ "jupblb" ];
     } ];
-    users    = [ "jupblb" ];
-  } ];
+  };
 
   services = {
     displayManager = { autoLogin = { enable = true; user = "jupblb"; }; };
@@ -157,7 +178,7 @@
     xserver = {
       enable         = true;
       desktopManager = { gnome = { enable = true; }; };
-      displayManager = { gdm = { enable = true; }; };
+      displayManager = { gdm = { autoLogin.delay = 5; enable = true; }; };
       videoDrivers   = [ "nvidia" ];
     };
   };
@@ -172,7 +193,7 @@
     "autovt@tty1".enable = false;
   };
 
-  users.users.jupblb.extraGroups = [ "docker" "input" "lp" ];
+  users.users.jupblb.extraGroups = [ "docker" "input" "lp" "nopasswdlogin" ];
 
   virtualisation.docker = {
     autoPrune    = { enable = true; };
