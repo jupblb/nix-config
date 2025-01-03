@@ -101,8 +101,8 @@
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        image-nvim mkdir-nvim neorepl-nvim vim-cool vim-gh-line vim-matchup
-        vim-sleuth vim-surround
+        image-nvim mkdir-nvim neorepl-nvim parinfer-rust vim-cool vim-gh-line
+        vim-matchup vim-sleuth vim-surround
       ];
       vimdiffAlias  = true;
       withNodeJs    = true;

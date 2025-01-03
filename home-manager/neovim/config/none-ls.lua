@@ -9,7 +9,6 @@ null_ls.setup({
         null_ls.builtins.diagnostics.fish,
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.formatting.fish_indent,
-        null_ls.builtins.formatting.jq,
         null_ls.builtins.formatting.shfmt.with({ extra_args = { '-i=4' } }),
         null_ls.builtins.hover.printenv,
     }
@@ -22,7 +21,7 @@ local commonmark_features = {
     'tex_math_dollars',
     'yaml_metadata_block',
 }
-local commonmark = 'commonmark' .. table.concat(commonmark_features, '+')
+local commonmark = 'commonmark+' .. table.concat(commonmark_features, '+')
 
 null_ls.register({
     method = null_ls.methods.FORMATTING,
