@@ -33,7 +33,8 @@ null_ls.register({
                 '--columns=80', '-s', '-f', 'markdown', '-t', commonmark, '-'
             }
 
-            if string.find(params.bufname, 'jupblb/Documents') then
+            if string.find(params.bufname, 'jupblb/Documents') or
+                os.getenv("REFERENCE_LINKS") then
                 table.insert(args, '--reference-links')
             end
 
