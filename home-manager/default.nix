@@ -98,6 +98,18 @@
       enable   = true;
       settings = { hide_threads = true; hide_userland_threads = true; };
     };
+
+    jujutsu = {
+      enable   = true;
+      settings = {
+        ui        = { pager =  "delta"; };
+        "ui.diff" = { format = "git"; };
+        user      = {
+          email = "git@kielbowi.cz";
+          name  = "jupblb";
+        };
+      };
+    };
   };
 
   xdg.enable = true;
