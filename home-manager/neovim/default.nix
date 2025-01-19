@@ -23,17 +23,18 @@
     };
 
     neovim = {
-      defaultEditor = true;
-      enable        = true;
-      extraConfig   = ''
+      defaultEditor    = true;
+      enable           = true;
+      extraConfig      = ''
         source ${toString ./config/init.vim}
         luafile ${toString ./config/init.lua}
         luafile ${toString ./config/vim-env.lua}
       '';
-      extraPackages =
+      extraLuaPackages = pkgs: [ pkgs.magick ];
+      extraPackages    =
         let
           packages     = with pkgs; [
-            fish jq lua-language-server marksman nil pandoc ripgrep shellcheck
+            fish jq lua-language-server marksman mermaid-cli nil pandoc ripgrep shellcheck
             shfmt yaml-language-server
           ];
           nodePackages = with pkgs.nodePackages; [
@@ -41,6 +42,9 @@
           ];
         in packages ++ nodePackages;
       plugins       = with pkgs.vimPlugins; [ {
+          config = "luafile ${toString ./config/diagram.lua}";
+          plugin = diagram-nvim;
+        } {
           config = "lua require('fidget').setup({})";
           plugin = fidget-nvim;
         } {
@@ -104,10 +108,10 @@
         image-nvim mkdir-nvim neorepl-nvim parinfer-rust vim-cool vim-gh-line
         vim-matchup vim-sleuth vim-surround
       ];
-      vimdiffAlias  = true;
-      withNodeJs    = true;
-      withPython3   = true;
-      withRuby      = false;
+      vimdiffAlias     = true;
+      withNodeJs       = true;
+      withPython3      = true;
+      withRuby         = false;
     };
   };
 
