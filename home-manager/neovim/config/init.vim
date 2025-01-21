@@ -58,6 +58,7 @@ autocmd BufRead,BufNewFile .envrc set filetype=sh
 autocmd FileType gitcommit,hgcommit setlocal colorcolumn=72
 autocmd FileType java,sql           setlocal colorcolumn=100
 autocmd FileType markdown           setlocal expandtab shiftwidth=4
+autocmd FileType mermaid            setlocal commentstring=%%\ %s
 autocmd FileType qf                 setlocal colorcolumn=0
 
 command W :write
