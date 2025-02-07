@@ -84,10 +84,6 @@
         push.default        = "current";
         submodule.recurse   = true;
       };
-      package     = pkgs.buildEnv {
-        name  = "git-custom";
-        paths = with pkgs; [ git git-tidy ];
-      };
       userEmail   = "git@kielbowi.cz";
       userName    = "jupblb";
     };
