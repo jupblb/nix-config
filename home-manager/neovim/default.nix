@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
   home.sessionVariables = {
+    GEMINI_API_KEY      = (import ../../config/secret.nix).gemini;
     NVIM_ENV_JSON       = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.json";
     NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";
   };
@@ -34,14 +35,17 @@
       extraPackages    =
         let
           packages     = with pkgs; [
-            fish jq lua-language-server marksman mermaid-cli nil pandoc ripgrep shellcheck
-            shfmt yaml-language-server
+            curl fish jq lua-language-server marksman mermaid-cli nil pandoc
+            ripgrep shellcheck shfmt yaml-language-server
           ];
           nodePackages = with pkgs.nodePackages; [
             bash-language-server markdownlint-cli vscode-json-languageserver
           ];
         in packages ++ nodePackages;
       plugins       = with pkgs.vimPlugins; [ {
+          config = "luafile ${toString ./config/codecompanion.lua}";
+          plugin = codecompanion-nvim;
+        } {
           config = "luafile ${toString ./config/diagram.lua}";
           plugin = diagram-nvim;
         } {
