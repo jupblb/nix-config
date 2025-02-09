@@ -3,6 +3,8 @@ self: super: with super; {
   gtasks-md  = callPackage ./gtasks-md.nix {
     inherit (haskellPackages) pandoc-types;
   };
+  # https://github.com/NixOS/nixpkgs/issues/371837
+  jackett    = super.jackett.overrideAttrs { doCheck = false; };
   mkalias    = callPackage ./mkalias.nix {
     inherit (darwin) apple_sdk;
     inherit (rustPlatform) buildRustPackage;
