@@ -102,11 +102,11 @@
         };
         folders = {
           "jupblb/Documents" = {
-            devices = [ "artemis" "dionysus" "hades" ];
+            devices = [ "artemis" "dionysus" "hades" "iphone" ];
             enable  = lib.mkDefault false;
           };
           "jupblb/Pictures"  = {
-            devices = [ "artemis" "dionysus" "hades" ];
+            devices = [ "artemis" "dionysus" "hades" "iphone" ];
             enable  = lib.mkDefault false;
           };
           "jupblb/Workspace" = {
