@@ -79,20 +79,25 @@
       openDefaultPorts = true;
       settings         = {
         devices = {
-          artemis   = {
+          artemis  = {
             autoAcceptFolders = true;
             id                =
               "6SIVI3F-YGGPC5T-KFUH3QG-RVCA5U5-SJ2QFGC-STA6KJ3-ITWXE53-3OA6UQW";
           };
-          dionysus  = {
+          dionysus = {
             autoAcceptFolders = true;
             id                =
               "AUAEQVM-GLWFEY7-ISXW5C6-5FSTG6O-J4D7FI2-LZC7NVM-7AQP4GT-TUBMYA6";
           };
-          hades     = {
+          hades    = {
             autoAcceptFolders = true;
             id                =
               "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
+          };
+          iphone   = {
+            autoAcceptFolders = true;
+            id                =
+              "VUEOA2A-3CZEBCZ-7KD4HWC-2PQYSVE-NKM4MIC-72N2UWQ-4WZGMDC-6TVHQA3";
           };
         };
         folders = {
