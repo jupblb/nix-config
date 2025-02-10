@@ -43,7 +43,11 @@
           ];
         in packages ++ nodePackages;
       plugins       = with pkgs.vimPlugins; [ {
-          config = "luafile ${toString ./config/codecompanion.lua}";
+          config = ''
+            luafile ${toString ./config/codecompanion.lua}
+            nmap <Leader>c <Cmd>CodeCompanionChat<CR>
+            nmap <Leader>C <Cmd>CodeCompanionActions<CR>
+          '';
           plugin = codecompanion-nvim;
         } {
           config = "luafile ${toString ./config/diagram.lua}";
