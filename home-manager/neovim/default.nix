@@ -36,7 +36,7 @@
         let
           packages     = with pkgs; [
             curl fish jq lua-language-server marksman mermaid-cli nil pandoc
-            ripgrep shellcheck shfmt yaml-language-server
+            ripgrep shellcheck shfmt
           ];
           nodePackages = with pkgs.nodePackages; [
             bash-language-server markdownlint-cli vscode-json-languageserver

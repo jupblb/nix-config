@@ -7,7 +7,7 @@ require("codecompanion").setup({
         gemini = function()
             return require("codecompanion.adapters").extend("gemini", {
                 schema = {
-                    model = { default = "gemini-2.0-flash-exp" },
+                    model = { default = "gemini-2.0-pro-exp" },
                 },
             })
         end,
