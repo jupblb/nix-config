@@ -23,7 +23,7 @@
           [ compiz-windows-effect hide-top-bar removable-drive-menu ];
         packages   = with pkgs; [
           google-chrome gnome-firmware gtasks-md mangohud nautilus obsidian
-          solaar vlc wl-clipboard
+          solaar vcmi vlc wl-clipboard
         ];
       in extensions ++ packages;
     variables        = {
