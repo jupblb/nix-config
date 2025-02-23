@@ -76,6 +76,7 @@
         color.ui            = true;
         commit.verbose      = true;
         core.mergeoptions   = "--no-edit";
+        credential.helper   = [ "cache --timeout 43200" ]; # 12 hours
         diff.algorithm      = "histogram";
         fetch.prune         = true;
         init.defaultBranch  = "main";
