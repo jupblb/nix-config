@@ -72,17 +72,23 @@
         };
       };
       enable      = true;
+      # https://blog.gitbutler.com/how-git-core-devs-configure-git/
       extraConfig = {
+        branch.sort         = "-committerdate";
         color.ui            = true;
+        column.ui           = "auto";
         commit.verbose      = true;
         core.mergeoptions   = "--no-edit";
         credential.helper   = [ "cache --timeout 43200" ]; # 12 hours
         diff.algorithm      = "histogram";
-        fetch.prune         = true;
+        fetch               = { all = true; prune = true; };
+        help.autocorrect    = true;
         init.defaultBranch  = "main";
         merge.conflictStyle = "zdiff3";
         pull.rebase         = true;
-        push.default        = "current";
+        push                = { autoSetupRemote = true; default = "current"; };
+        rebase.updateRefs   = true;
+        rerere              = { autoupdate = true; enabled = true; };
         submodule.recurse   = true;
       };
       userEmail   = "git@kielbowi.cz";
