@@ -32,6 +32,7 @@
   home-manager.users.jupblb = {
     imports  = [
       ./home-manager
+      ./home-manager/direnv.nix
       ./home-manager/fish
       ./home-manager/gpg-and-ssh.nix
       ./home-manager/lf

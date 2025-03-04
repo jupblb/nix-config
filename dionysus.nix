@@ -65,11 +65,12 @@
     firewall =
       let
         caddy     = [ 80 443 ];
+        jellyfin  = [ 8096 ];
         syncthing = [ 22067 22070  ];
       in {
         checkReversePath = "loose";
-        allowedTCPPorts  = caddy ++ syncthing;
-        allowedUDPPorts  = caddy ++ syncthing;
+        allowedTCPPorts  = caddy ++ jellyfin ++ syncthing;
+        allowedUDPPorts  = caddy ++ jellyfin ++ syncthing;
       };
     hostId   = "ce5e3a09";
     hostName = "dionysus";
