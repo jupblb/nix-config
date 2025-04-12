@@ -73,12 +73,17 @@
       };
       enable      = true;
       # https://blog.gitbutler.com/how-git-core-devs-configure-git/
+      # https://github.blog/engineering/improve-git-monorepo-performance-with-a-file-system-monitor/
       extraConfig = {
         branch.sort         = "-committerdate";
         color.ui            = true;
         column.ui           = "auto";
         commit.verbose      = true;
-        core.mergeoptions   = "--no-edit";
+        core                = {
+          fsmonitor      = true;
+          mergeoptions   = "--no-edit";
+          untrackedCache = true;
+        };
         credential.helper   = [ "cache --timeout 43200" ]; # 12 hours
         diff.algorithm      = "histogram";
         fetch               = { all = true; prune = true; };
