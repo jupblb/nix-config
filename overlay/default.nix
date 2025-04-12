@@ -12,12 +12,12 @@ self: super: with super; {
   vimPlugins = super.vimPlugins // {
     codecompanion-nvim = super.vimUtils.buildVimPlugin({
       pname   = "codecompanion.nvim";
-      version = "2025-02-07";
+      version = "2025-04-12";
       src     = super.fetchFromGitHub {
         owner  = "olimorris";
         repo   = "codecompanion.nvim";
-        rev    = "29c8c9142169c447ad1374bbb6885c611506fda3";
-        sha256 = "sha256-Al72q0c+uch62e6TW+IS3A6i2x4gCqT0P0bAEJ9Him0=";
+        rev    = "35b11dc4b292519a5c09fb2c0c0e8a8832e9e821";
+        sha256 = "sha256-c/xK+hjZVxGQYu6lImUt3U0WJ2bcMz4uGMv+BBZP1Mk=";
       };
     });
   };

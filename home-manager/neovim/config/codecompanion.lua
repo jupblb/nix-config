@@ -58,13 +58,13 @@ require("codecompanion").setup({
         gemini = function()
             return require("codecompanion.adapters").extend("gemini", {
                 schema = {
-                    model = { default = "gemini-2.0-pro-exp" },
+                    model = { default = "gemini-2.5-pro-exp" },
                 },
             })
         end,
     },
     opts       = {
-        system_prompt = function(opts)
+        system_prompt = function(_)
             return prompt
         end,
     },
