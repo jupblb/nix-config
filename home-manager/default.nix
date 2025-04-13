@@ -108,7 +108,7 @@
     };
 
     jujutsu = {
-      enable   = true;
+      enable   = false; # Revisit after 25.05
       settings = {
         ui        = { pager =  "delta"; };
         "ui.diff" = { format = "git"; };
