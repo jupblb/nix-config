@@ -1,7 +1,11 @@
 local fidget = require('fidget')
 local progress = require('fidget.progress')
 
-fidget.setup({})
+fidget.setup({
+    notification = {
+        override_vim_notify = true,
+    },
+})
 
 -- https://codecompanion.olimorris.dev/usage/ui.html#fidget-nvim-progress-by-jessevdp
 
