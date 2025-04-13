@@ -122,8 +122,6 @@
         };
       };
     };
-
-    tailscale = { enable = true; };
   };
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''
