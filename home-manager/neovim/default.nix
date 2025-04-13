@@ -53,7 +53,7 @@
           config = "luafile ${toString ./config/diagram.lua}";
           plugin = diagram-nvim;
         } {
-          config = "lua require('fidget').setup({})";
+          config = "luafile ${toString ./config/fidget.lua}";
           plugin = fidget-nvim;
         } {
           config = "source ${toString ./config/gruvbox-material.vim}";
