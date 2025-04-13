@@ -8,6 +8,10 @@ end
 
 require("codecompanion").setup({
     adapters   = {
+        opts = {
+            show_defaults = false,
+        },
+
         gemini = function()
             return require("codecompanion.adapters").extend("gemini", {
                 schema = {
@@ -18,6 +22,7 @@ require("codecompanion").setup({
     },
     strategies = {
         chat   = { adapter = "gemini" },
+        cmd    = { adapter = "gemini" },
         inline = { adapter = "gemini" },
     },
 })
