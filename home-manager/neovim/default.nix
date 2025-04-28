@@ -50,9 +50,6 @@
           '';
           plugin = codecompanion-nvim;
         } {
-          config = "luafile ${toString ./config/diagram.lua}";
-          plugin = diagram-nvim;
-        } {
           config = "luafile ${toString ./config/fidget.lua}";
           plugin = fidget-nvim;
         } {
@@ -113,8 +110,8 @@
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        image-nvim mkdir-nvim neorepl-nvim parinfer-rust vim-cool vim-gh-line
-        vim-matchup vim-sleuth vim-surround
+        mkdir-nvim neorepl-nvim parinfer-rust vim-cool vim-gh-line vim-matchup
+        vim-sleuth vim-surround
       ];
       vimdiffAlias     = true;
       withNodeJs       = true;
