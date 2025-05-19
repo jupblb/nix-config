@@ -1,7 +1,3 @@
-if vim.fn.getcwd():find('/google/src/') ~= nil then
-    return
-end
-
 if os.getenv('GEMINI_API_KEY') == nil then
     return
 end
@@ -15,7 +11,7 @@ require("codecompanion").setup({
         gemini = function()
             return require("codecompanion.adapters").extend("gemini", {
                 schema = {
-                    model = { default = "gemini-2.5-pro-exp-03-25" },
+                    model = { default = "gemini-2.5-pro-preview-05-06" },
                 },
             })
         end,
