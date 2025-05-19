@@ -1,6 +1,6 @@
 { apple_sdk, buildRustPackage, fetchFromGitHub }: buildRustPackage rec {
   buildInputs = with apple_sdk.frameworks; [ CoreFoundation ];
-  cargoHash   = "sha256-RfKVmiFfFzIp//fbIcFce4T1cQPIFuEAw7Zmnl1Ic84=";
+  cargoHash   = "sha256-oOYH+aH5GfsCAWNoOfA+NwguswIN2KjPmyY1L5E8VOw=";
   pname       = "mkalias";
   src         = fetchFromGitHub {
     owner = "reckenrode";

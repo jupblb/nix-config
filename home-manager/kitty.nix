@@ -1,10 +1,10 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   fonts.fontconfig.enable = true;
 
   home = {
     packages = with pkgs; [
       (iosevka-bin.override { variant = "SGr-IosevkaTerm"; })
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      nerd-fonts.symbols-only
     ];
     shellAliases = {
       icat = "kitty +kitten icat";
