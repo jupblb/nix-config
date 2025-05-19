@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }: {
-  home.sessionVariables = {
-    Z_OWNER = config.home.username;
+  home = {
+    file = {
+      ".fish-ai".source = pkgs.callPackage ./fish-ai.nix {};
+    };
+    sessionVariables = { Z_OWNER = config.home.username; };
   };
 
   programs = {
@@ -26,6 +29,9 @@
       };
       interactiveShellInit = builtins.readFile ./init.fish;
       plugins              = [ {
+        name = "fish-ai";
+        src  = pkgs.callPackage ./plugin/fish-ai.nix {};
+      } {
         name = "fish-async-prompt";
         src  = pkgs.callPackage ./plugin/fish-async-prompt.nix {};
       } {
@@ -57,5 +63,17 @@
       "set shell=${lib.meta.getExe config.programs.fish.package}";
 
     nix-your-shell = { enable = true; };
+  };
+
+  xdg.configFile = {
+    "fish-ai.ini".text = ''
+      [fish-ai]
+      configuration = google
+
+      [google]
+      provider = google
+      api_key = ${(import ../../config/secret.nix).gemini}
+      model = gemini-2.5-flash-preview-04-17
+    '';
   };
 }
