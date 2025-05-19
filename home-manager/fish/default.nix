@@ -23,8 +23,6 @@
         fish_mode_prompt  = "";
         fish_right_prompt = builtins.readFile ./rprompt.fish;
         ls                = builtins.readFile ./eza.fish;
-        nix-shell         =
-          "${pkgs.nix}/bin/nix-shell --run \"env SHLVL=\\$((\\$SHLVL-1)) fish\" $argv";
       };
       interactiveShellInit = builtins.readFile ./init.fish;
       plugins              = [ {
@@ -57,5 +55,7 @@
 
     neovim.extraConfig =
       "set shell=${lib.meta.getExe config.programs.fish.package}";
+
+    nix-your-shell = { enable = true; };
   };
 }
