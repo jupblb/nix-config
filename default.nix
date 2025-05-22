@@ -46,7 +46,7 @@
   imports =
     let
       url = "https://github.com/nix-community/home-manager/archive/${tar}";
-      tar = "release-24.11.tar.gz";
+      tar = "release-25.05.tar.gz";
     in [ "${fetchTarball url}/nixos" ];
 
   networking = { nameservers = [ "1.1.1.1" "8.8.8.8" ]; };
