@@ -7,7 +7,11 @@ require('inc_rename').setup({
     show_message = false,
 })
 
-vim.keymap.set('n', '<leader>lr', function()
+-- Default keybind: grn
+-- vim.keymap.set('n', '<leader>lr', function()
+--     return ':IncRename ' .. vim.fn.expand('<cword>')
+-- end, { expr = true })
+vim.keymap.set('n', 'grn', function()
     return ':IncRename ' .. vim.fn.expand('<cword>')
 end, { expr = true })
 
