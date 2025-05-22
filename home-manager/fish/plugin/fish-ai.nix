@@ -3,7 +3,7 @@
 fetchFromGitHub {
   owner  = "Realiserad";
   repo   = "fish-ai";
-  rev    = "main";
-  sha256 = "sha256-YY7vUzstzD+sxQMIofhmeaAlzyvU5eFrn0D1JDuqH0s=";
+  rev    = "v1.8.0";
+  sha256 = "sha256-SywATcha9xvxr6dwMZqXWfFTydriHAGU3sjkBQYmSg4=";
 }
 
