@@ -72,8 +72,8 @@
 
     services = {
       gpg-agent = {
-        enable          = true;
-        pinentryPackage = pkgs.pinentry-gnome3;
+        enable   = true;
+        pinentry = { package = pkgs.pinentry-gnome3; };
       };
     };
   };

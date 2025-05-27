@@ -26,7 +26,6 @@
   hardware = {
     enableRedistributableFirmware = true;
     graphics                      = { enable = true; };
-    pulseaudio                    = { enable = false; };
   };
 
   home-manager.users.jupblb = {
@@ -73,6 +72,8 @@
     fstrim = { enable = true; };
 
     fwupd = { enable = true; };
+
+    pulseaudio = { enable = false; };
 
     syncthing = {
       enable           = true;

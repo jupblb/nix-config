@@ -55,7 +55,7 @@
       git-credential-oauth = { extraFlags = [ "-device" ]; };
     };
 
-    services.gpg-agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
+    services.gpg-agent.pinentry.package = lib.mkForce pkgs.pinentry-curses;
   };
 
   imports = [ ./default.nix ];
@@ -66,9 +66,8 @@
       let
         caddy     = [ 80 443 ];
         jellyfin  = [ 8096 ];
-        syncthing = [ 22067 22070  ];
+        syncthing = [ 22067 22070 ];
       in {
-        checkReversePath = "loose";
         allowedTCPPorts  = caddy ++ jellyfin ++ syncthing;
         allowedUDPPorts  = caddy ++ jellyfin ++ syncthing;
       };
@@ -83,19 +82,6 @@
       enable          = true;
       pinentryPackage = pkgs.pinentry-curses;
     };
-
-    msmtp = {
-      enable           = true;
-      accounts.default = let cfg = (import ./config/secret.nix).mailgun; in {
-        inherit (cfg) password;
-        auth         = true;
-        host         = "smtp.eu.mailgun.org";
-        port         = 587;
-        tls          = true;
-        tls_starttls = true;
-        user         = cfg.login;
-      };
-    };
   };
 
   services = {
@@ -109,7 +95,7 @@
           pkgs.writeText "authelia-storage" secrets.storage;
       };
       settings = {
-        access_control                = {
+        access_control         = {
           default_policy = "one_factor";
           rules          = [ {
             domain   = "*.kielbowi.cz";
@@ -129,22 +115,16 @@
             policy    = "bypass";
           } ];
         };
-        authentication_backend        = {
+        authentication_backend = {
           file.path              = "/var/lib/authelia-default/authelia.yaml";
           password_reset.disable = true;
         };
-        notifier                      = {
-          smtp = let cfg = (import ./config/secret.nix).mailgun; in {
-            host     = "smtp.eu.mailgun.org";
-            password = cfg.password;
-            port     = 587;
-            sender   = "mailgun@kielbowi.cz";
-            username = cfg.login;
-          };
+        notifier               = {
+          filesystem = { filename = "/var/lib/authelia-default/authelia.log"; };
         };
-        server                        = { address = "tcp://:9092/"; };
-        session                       = { domain = "kielbowi.cz"; };
-        storage                       = {
+        server                 = { address = "tcp://:9092/"; };
+        session                = { domain = "kielbowi.cz"; };
+        storage                = {
           local.path = "/var/lib/authelia-default/authelia.sqlite";
         };
       };
@@ -161,43 +141,43 @@
       enable       = true;
       virtualHosts =
         let auth = ''
-          forward_auth http://localhost:9092 {
+          forward_auth http://127.0.0.1:9092 {
               uri /api/verify?rd=https://auth.kielbowi.cz/
               copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
           }
         '';
         in {
           "auth.kielbowi.cz"         = {
-            extraConfig = "reverse_proxy http://localhost:9092";
+            extraConfig = "reverse_proxy http://127.0.0.1:9092";
           };
           "bazarr.kielbowi.cz"       = {
-            extraConfig = auth + "reverse_proxy http://localhost:6767";
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:6767";
           };
           "files.kielbowi.cz"        = {
-            extraConfig = auth + "reverse_proxy http://localhost:8085";
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:8085";
           };
           "go.kielbowi.cz"           = {
-            extraConfig = auth + "reverse_proxy http://localhost:4567";
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:4567";
           };
           "jackett.kielbowi.cz"      = {
-            extraConfig = auth + "reverse_proxy http://localhost:9117";
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:9117";
           };
           "komga.kielbowi.cz"        = {
-            extraConfig = "reverse_proxy http://localhost:6428";
+            extraConfig = "reverse_proxy http://127.0.0.1:6428";
           };
           "linkding.kielbowi.cz"     = {
-            extraConfig = auth + "reverse_proxy http://localhost:9090";
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:9090";
           };
           "radarr.kielbowi.cz"       = {
-            extraConfig = auth + "reverse_proxy http://localhost:7878";
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:7878";
           };
           "sonarr.kielbowi.cz"       = {
-            extraConfig = auth + "reverse_proxy http://localhost:8989";
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:8989";
           };
           "syncthing.kielbowi.cz"    = {
             extraConfig = auth + ''
-              reverse_proxy http://localhost:8384 {
-                header_up Host localhost
+              reverse_proxy http://127.0.0.1:8384 {
+                header_up Host 127.0.0.1
                 header_up X-Forwarded-Host syncthing.kielbowi.cz
               }
             '';
@@ -257,9 +237,9 @@
     };
 
     komga = {
-      enable = true;
-      group  = "users";
-      port   = 6428;
+      enable   = true;
+      group    = "users";
+      settings = { server.port = 6428; };
     };
 
     lidarr = {
