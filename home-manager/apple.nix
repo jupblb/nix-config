@@ -6,13 +6,19 @@
       mac-app-util-hm  = (import mac-app-util-src {}).homeManagerModules;
     in [ mac-app-util-hm.default ];
 
-  programs.kitty = {
-    font        = { size = lib.mkForce 14; };
-    keybindings = { "cmd+t" = "new_tab_with_cwd"; };
-    settings    = {
-      hide_window_decorations            = lib.mkForce "no";
-      macos_option_as_alt                = "left";
-      macos_quit_when_last_window_closed = "yes";
+  programs = {
+    git = {
+      extraConfig = { core.fsmonitor = true; };
+    };
+
+    kitty = {
+      font        = { size = lib.mkForce 14; };
+      keybindings = { "cmd+t" = "new_tab_with_cwd"; };
+      settings    = {
+        hide_window_decorations            = lib.mkForce "no";
+        macos_option_as_alt                = "left";
+        macos_quit_when_last_window_closed = "yes";
+      };
     };
   };
 
