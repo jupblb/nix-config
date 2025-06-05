@@ -24,15 +24,14 @@
     };
 
     neovim = {
-      defaultEditor    = true;
-      enable           = true;
-      extraConfig      = ''
+      defaultEditor = true;
+      enable        = true;
+      extraConfig   = ''
         source ${toString ./config/init.vim}
         luafile ${toString ./config/init.lua}
         luafile ${toString ./config/vim-env.lua}
       '';
-      extraLuaPackages = pkgs: [ pkgs.magick ];
-      extraPackages    =
+      extraPackages =
         let
           packages     = with pkgs;
             [ curl fish jq marksman nil pandoc ripgrep shellcheck shfmt ];
@@ -104,13 +103,12 @@
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        mkdir-nvim parinfer-rust vim-cool vim-gh-line vim-matchup
-        vim-sleuth vim-surround
+        mkdir-nvim vim-cool vim-gh-line vim-matchup vim-sleuth vim-surround
       ];
-      vimdiffAlias     = true;
-      withNodeJs       = true;
-      withPython3      = true;
-      withRuby         = false;
+      vimdiffAlias  = true;
+      withNodeJs    = true;
+      withPython3   = true;
+      withRuby      = false;
     };
   };
 

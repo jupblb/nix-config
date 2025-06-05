@@ -65,12 +65,6 @@ local lsp_attach = function(client, bufnr)
         group    = lspAttachAuGroup,
     })
 
-    if client.server_capabilities.documentFormattingProvider then
-        vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
-    end
-
-    vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
-
     if vim.fn.getcwd():find('/google/src/') ~= nil then
         return
     end
