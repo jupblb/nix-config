@@ -13,8 +13,8 @@ if vim.fn.getcwd():find('/google/src/') == nil then
     })
     require('copilot_cmp').setup({})
     sources = cmp.config.sources({
-        { name = 'treesitter' },
         { name = 'copilot', },
+        { name = 'treesitter' },
         { name = 'async_path' },
     })
 end
@@ -63,4 +63,20 @@ cmp.setup({
     },
     sources      = sources,
     window       = { documentation = cmp.config.window.bordered() }
+})
+
+vim.lsp.config('*', {
+    on_attach    = {
+        function(client, _)
+            if client.server_capabilities.completionProvider then
+                cmp.setup.buffer({
+                    sources = cmp.config.sources({
+                        { name = 'copilot' }, { name = 'nvim_lsp' },
+                        { name = 'nvim_lsp_signature_help' }, { name = 'async_path' },
+                    }),
+                })
+            end
+        end
+    },
+    capabilities = require('cmp_nvim_lsp').default_capabilities({}),
 })

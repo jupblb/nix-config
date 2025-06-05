@@ -27,6 +27,72 @@ end
 
 vim.keymap.set('n', '<Leader>d', diagnostics_toggle, {})
 
+-- Disable virtual text for errors
+vim.diagnostic.config({ virtual_text = false })
+
+-- Replace default signs
+local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
+for type, icon in pairs(signs) do
+    local hl = 'DiagnosticSign' .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+-- Add border to the floating windows
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or 'rounded'
+    return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
+
+-- LSP Setup
+local lspAttachAuGroup = vim.api.nvim_create_augroup('LspFormatting', {})
+local lsp_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd('CursorHold', {
+        buffer   = bufnr,
+        callback = function()
+            vim.diagnostic.open_float(nil, {
+                focusable    = false,
+                close_events = {
+                    'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost'
+                },
+                border       = 'rounded',
+                source       = 'always',
+                prefix       = ' ',
+                scope        = 'cursor',
+            })
+        end,
+        group    = lspAttachAuGroup,
+    })
+
+    if client.server_capabilities.documentFormattingProvider then
+        vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
+    end
+
+    vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
+
+    if vim.fn.getcwd():find('/google/src/') ~= nil then
+        return
+    end
+
+    if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+            buffer   = bufnr,
+            callback = vim.lsp.buf.document_highlight,
+            group    = lspAttachAuGroup,
+        })
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+            buffer   = bufnr,
+            callback = vim.lsp.buf.clear_references,
+            group    = lspAttachAuGroup,
+        })
+    end
+end
+
+vim.lsp.config('*', {
+    on_attach = { lsp_attach },
+})
+
 -- Format markdown with :MarkdownFormat
 local commonmark = 'commonmark+footnotes+pipe_tables+task_lists+tex_math_dollars+yaml_metadata_block'
 

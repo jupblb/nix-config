@@ -34,10 +34,8 @@
       extraLuaPackages = pkgs: [ pkgs.magick ];
       extraPackages    =
         let
-          packages     = with pkgs; [
-            curl fish jq lua-language-server marksman mermaid-cli nil pandoc
-            ripgrep shellcheck shfmt
-          ];
+          packages     = with pkgs;
+            [ curl fish jq marksman nil pandoc ripgrep shellcheck shfmt ];
           nodePackages = with pkgs.nodePackages;
             [ bash-language-server markdownlint-cli ];
         in packages ++ nodePackages;
@@ -55,6 +53,9 @@
           config = "source ${toString ./config/gruvbox-material.vim}";
           plugin = gruvbox-material;
         } {
+          config = "luafile ${toString ./config/inc-rename.lua}";
+          plugin = inc-rename-nvim;
+        } {
           config = "luafile ${toString ./config/no-neck-pain.lua}";
           plugin = no-neck-pain-nvim;
         } {
@@ -68,23 +69,17 @@
             luafile ${toString ./config/cmp.lua}
           '';
           plugin = nvim-cmp.overrideAttrs(_: {
-            dependencies =
-              [ cmp-async-path cmp-treesitter copilot-cmp copilot-lua luasnip ];
+            dependencies = [
+              cmp-async-path cmp-nvim-lsp cmp-nvim-lsp-signature-help
+              cmp-treesitter copilot-cmp copilot-lua luasnip
+            ];
           });
         } {
           config = "luafile ${toString ./config/colorizer.lua}";
           plugin = nvim-colorizer-lua;
         } {
-          config = ''
-            source ${toString ./config/lspconfig.vim}
-            luafile ${toString ./config/lspconfig.lua}
-          '';
-          plugin = nvim-lspconfig.overrideAttrs(_: {
-            dependencies = [
-              cmp-nvim-lsp cmp-nvim-lsp-signature-help inc-rename-nvim
-              neodev-nvim
-            ];
-          });
+          config = "luafile ${toString ./config/lspconfig.lua}";
+          plugin = nvim-lspconfig;
         } {
           config = "luafile ${toString ./config/pqf.lua}";
           plugin = nvim-pqf;
@@ -109,7 +104,7 @@
           config = "source ${toString ./config/signify.vim}";
           plugin = vim-signify;
         }
-        mkdir-nvim neorepl-nvim parinfer-rust vim-cool vim-gh-line vim-matchup
+        mkdir-nvim parinfer-rust vim-cool vim-gh-line vim-matchup
         vim-sleuth vim-surround
       ];
       vimdiffAlias     = true;
@@ -122,7 +117,7 @@
   xdg.configFile = {
     # https://github.com/igorshubovych/markdownlint-cli#configuration
     # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
-    "markdownlint".source = toString ./config/markdownlint.json;
+    "markdownlint".source            = toString ./config/markdownlint.json;
     "nvim/spell/pl.utf-8.spl".source = pkgs.fetchurl {
       sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
       url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
