@@ -98,11 +98,7 @@ lspconfig.util.default_config = vim.tbl_extend(
     'force', lspconfig.util.default_config, default_config)
 
 local default_servers = { 'bashls', 'marksman', 'nil_ls' }
-for _, lsp in ipairs(default_servers) do lspconfig[lsp].setup({}) end
-
-lspconfig.jsonls.setup({
-    cmd = { "vscode-json-languageserver", "--stdio", },
-})
+for _, lsp in ipairs(default_servers) do vim.lsp.enable(lsp) end
 
 require('neodev').setup({
     override = function(root_dir, library)
