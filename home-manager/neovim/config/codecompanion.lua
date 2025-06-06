@@ -2,7 +2,9 @@ if os.getenv('GEMINI_API_KEY') == nil then
     return
 end
 
-require("codecompanion").setup({
+local codecompanion = require("codecompanion")
+
+codecompanion.setup({
     adapters   = {
         opts = {
             show_defaults = false,
@@ -22,3 +24,6 @@ require("codecompanion").setup({
         inline = { adapter = "gemini" },
     },
 })
+
+vim.keymap.set('n', '<Leader>c', codecompanion.chat, { expr = true })
+vim.keymap.set('n', '<Leader>C', codecompanion.actions, { expr = true })

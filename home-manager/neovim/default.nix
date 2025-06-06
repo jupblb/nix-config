@@ -34,16 +34,12 @@
       extraPackages =
         let
           packages     = with pkgs;
-            [ curl fish jq marksman nil pandoc ripgrep shellcheck shfmt ];
+            [ curl fish-lsp marksman nil pandoc ripgrep shfmt ];
           nodePackages = with pkgs.nodePackages;
             [ bash-language-server markdownlint-cli ];
         in packages ++ nodePackages;
       plugins       = with pkgs.vimPlugins; [ {
-          config = ''
-            luafile ${toString ./config/codecompanion.lua}
-            nmap <Leader>c <Cmd>CodeCompanionChat<CR>
-            nmap <Leader>C <Cmd>CodeCompanionActions<CR>
-          '';
+          config = "luafile ${toString ./config/codecompanion.lua}";
           plugin = codecompanion-nvim;
         } {
           config = "luafile ${toString ./config/fidget.lua}";
