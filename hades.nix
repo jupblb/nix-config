@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
   boot = {
     consoleLogLevel = 0;
     initrd          = {
@@ -9,6 +9,7 @@
         "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
       };
       systemd                = { enable = true; };
+      verbose                = false;
     };
     kernelModules   = [ "kvm-amd" ];
     kernelParams    = [ "quiet" "udev.log_level=3" ];
@@ -22,14 +23,11 @@
         extensions = with pkgs.gnomeExtensions;
           [ compiz-windows-effect hide-top-bar removable-drive-menu ];
         packages   = with pkgs; [
-          google-chrome gnome-firmware gtasks-md mangohud nautilus obsidian
-          solaar vcmi vlc wl-clipboard
+          google-chrome gnome-firmware gtasks-md nautilus solaar vcmi vlc
+          wl-clipboard
         ];
       in extensions ++ packages;
-    variables        = {
-      CHROME_EXECUTABLE = pkgs.lib.meta.getExe pkgs.google-chrome;
-      CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
-    };
+    variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
 
   fileSystems = {
@@ -68,7 +66,19 @@
       ./home-manager/kitty.nix
     ];
 
-    programs = { kitty.settings.linux_display_server = "wayland"; };
+    programs = {
+      kitty = { settings.linux_display_server = "wayland"; };
+
+      mangohud = {
+        enable   = true;
+        settings = {
+          cpu_temp = true;
+          gpu_temp = true;
+          ram      = true;
+          vram     = true;
+        };
+      };
+    };
 
     services = {
       gpg-agent = {
@@ -80,10 +90,7 @@
 
   imports = [ ./default.nix ];
 
-  networking = {
-    firewall = { allowedTCPPorts = [ 3000 ]; };
-    hostName = "hades";
-  };
+  networking = { hostName = "hades"; };
 
   nixpkgs.config = { cudaSupport = true; };
 
@@ -93,18 +100,6 @@
     steam     = {
       enable                    = true;
       extest                    = { enable = true; };
-      gamescopeSession          = {
-        args   = [
-          "--adaptive-sync" "--hdr-enabled" "--hdr-itm-enable" "--rt" "--steam"
-          "--prefer-output" "HDMI-A-1" "--nested-refresh" "120"
-          "--output-width" "3840" "--output-height" "2160"
-        ];
-        enable = true;
-        env    = {
-          MANGOHUD        = "1";
-          MANGOHUD_CONFIG = "cpu_temp,gpu_temp,ram,vram";
-        };
-      };
       localNetworkGameTransfers = { openFirewall = true; };
       protontricks              = { enable = true; };
       remotePlay                = { openFirewall = true; };
@@ -112,13 +107,6 @@
   };
 
   security = {
-    pam.services = {
-      # https://wiki.archlinux.org/title/GDM#Passwordless_login
-      gdm-password.text = lib.mkBefore ''
-        auth sufficient pam_succeed_if.so user ingroup nopasswdlogin
-      '';
-    };
-
     sudo.extraRules = [ {
       commands = [ {
         command = "/run/current-system/sw/bin/poweroff";
@@ -140,11 +128,6 @@
     };
 
     printing = { enable = true; };
-
-    psd = {
-      enable      = true;
-      resyncTimer = "30m";
-    };
 
     syncthing = {
       configDir = "/home/jupblb/.config/syncthing";
@@ -170,15 +153,10 @@
       user      = "jupblb";
     };
 
-    udev.extraRules = ''
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="8087", ATTRS{idProduct}=="0aaa",\
-        ATTR{authorized}="0"
-    '';
-
     xserver = {
       enable         = true;
       desktopManager = { gnome = { enable = true; }; };
-      displayManager = { gdm = { autoLogin.delay = 5; enable = true; }; };
+      displayManager = { gdm = { enable = true; }; };
       videoDrivers   = [ "nvidia" ];
     };
   };
@@ -193,11 +171,5 @@
     "autovt@tty1".enable = false;
   };
 
-  users.users.jupblb.extraGroups = [ "docker" "input" "lp" "nopasswdlogin" ];
-
-  virtualisation.docker = {
-    autoPrune    = { enable = true; };
-    enable       = true;
-    enableOnBoot = true;
-  };
+  users.users.jupblb.extraGroups = [ "input" "lp" "nopasswdlogin" ];
 }
