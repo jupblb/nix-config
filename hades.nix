@@ -17,7 +17,6 @@
   };
 
   environment = {
-    # sessionVariables = { NIXOS_OZONE_WL = "1"; };
     systemPackages   =
       let
         extensions = with pkgs.gnomeExtensions;
@@ -119,7 +118,7 @@
   services = {
     displayManager = { autoLogin = { enable = true; user = "jupblb"; }; };
 
-    gnome = { core-utilities = { enable = false; }; };
+    gnome = { core-apps = { enable = false; }; };
 
     pipewire  = {
       enable = true;
