@@ -1,8 +1,11 @@
 { config, pkgs, ... }: {
-  home.sessionVariables = {
-    GEMINI_API_KEY      = (import ../../config/secret.nix).gemini;
-    NVIM_ENV_JSON       = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.json";
-    NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";
+  home = {
+    packages         = with pkgs; [ amp-cli ];
+    sessionVariables = {
+      GEMINI_API_KEY      = (import ../../config/secret.nix).gemini;
+      NVIM_ENV_JSON       = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.json";
+      NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";
+    };
   };
 
   programs = {
