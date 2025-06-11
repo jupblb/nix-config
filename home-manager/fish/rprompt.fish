@@ -21,22 +21,19 @@ end
 
 if git rev-parse --is-inside-work-tree &>/dev/null
     set -g __fish_git_prompt_char_cleanstate ""
-    set -g __fish_git_prompt_char_dirtystate " "
-    set -g __fish_git_prompt_char_invalidstate " "
-    set -g __fish_git_prompt_char_stagedstate " "
-    set -g __fish_git_prompt_char_stashstate " "
-    set -g __fish_git_prompt_char_upstream_ahead "󰧝 "
-    set -g __fish_git_prompt_char_upstream_behind "󰧗 "
-    set -g __fish_git_prompt_char_upstream_diverged " "
+    set -g __fish_git_prompt_char_stateseparator " "
     set -g __fish_git_prompt_char_upstream_equal ""
-    set -g __fish_git_prompt_char_untrackedfiles " "
-    set -g __fish_git_prompt_color af3a03
-    set -g __fish_git_prompt_color_dirtystate b57614
-    set -g __fish_git_prompt_color_merging af3a03
-    set -g __fish_git_prompt_color_stagedstate 79740e
-    set -g __fish_git_prompt_color_untrackedfiles 427b58
     set -g __fish_git_prompt_showstashstate
-    set -g __fish_git_prompt_showupstream "informative"
+    set -g __fish_git_prompt_showupstream informative
+    set -g __fish_git_prompt_use_informative_chars 1
+
+    if test "$TERM" = xterm-kitty; or test "$TERM" = wezterm # gruvbox
+        set -g __fish_git_prompt_color af3a03
+        set -g __fish_git_prompt_color_dirtystate b57614
+        set -g __fish_git_prompt_color_merging af3a03
+        set -g __fish_git_prompt_color_stagedstate 79740e
+        set -g __fish_git_prompt_color_untrackedfiles 427b58
+    end
 
     set -l git_root_dir (basename (git rev-parse --show-toplevel))
 

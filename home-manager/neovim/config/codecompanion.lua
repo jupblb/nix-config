@@ -13,7 +13,7 @@ codecompanion.setup({
         gemini = function()
             return require("codecompanion.adapters").extend("gemini", {
                 schema = {
-                    model = { default = "gemini-2.5-pro-preview-05-06" },
+                    model = { default = "gemini-2.5-pro-preview-06-05" },
                 },
             })
         end,
