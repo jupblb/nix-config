@@ -27,15 +27,17 @@ end
 
 vim.keymap.set('n', '<Leader>d', diagnostics_toggle, {})
 
--- Disable virtual text for errors
-vim.diagnostic.config({ virtual_text = false })
-
--- Replace default signs
-local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
-for type, icon in pairs(signs) do
-    local hl = 'DiagnosticSign' .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
+vim.diagnostic.config({
+    virtual_text = false,
+    signs        = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN] = '',
+            [vim.diagnostic.severity.HINT] = '',
+            [vim.diagnostic.severity.INFO] = '',
+        },
+    },
+})
 
 -- Add border to the floating windows
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
