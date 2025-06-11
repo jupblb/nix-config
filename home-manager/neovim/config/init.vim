@@ -14,6 +14,7 @@ set nowrap
 set number
 set relativenumber
 set shell=bash
+set showtabline=0
 set shortmess+=c
 set showbreak=↪
 set splitright

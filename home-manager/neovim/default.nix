@@ -57,11 +57,6 @@
           config = "luafile ${toString ./config/no-neck-pain.lua}";
           plugin = no-neck-pain-nvim;
         } {
-          config = "luafile ${toString ./config/none-ls.lua}";
-          plugin = none-ls-nvim.overrideAttrs(_: {
-            dependencies = [ plenary-nvim ];
-          });
-        } {
           config = ''
             set completeopt=menu,menuone,noselect
             luafile ${toString ./config/cmp.lua}
@@ -112,9 +107,6 @@
   };
 
   xdg.configFile = {
-    # https://github.com/igorshubovych/markdownlint-cli#configuration
-    # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
-    "markdownlint".source            = toString ./config/markdownlint.json;
     "nvim/spell/pl.utf-8.spl".source = pkgs.fetchurl {
       sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
       url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";

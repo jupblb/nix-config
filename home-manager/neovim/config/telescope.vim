@@ -1,5 +1,3 @@
-set showtabline=0
-
 nnoremap z= <Cmd>Telescope spell_suggest<CR>
 
 nmap <Leader><Tab>   <Cmd>Telescope buffers sort_mru=true<CR>
