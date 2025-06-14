@@ -78,6 +78,10 @@
           vram     = true;
         };
       };
+
+      qutebrowser = {
+        settings = { qt = { force_software_rendering = "chromium"; }; };
+      };
     };
 
     services = {
