@@ -2,7 +2,8 @@
   # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1466965161
   imports =
     let
-      mac-app-util-src = builtins.fetchTarball "https://github.com/hraban/mac-app-util/archive/master.tar.gz";
+      mac-app-util-src = builtins.fetchTarball
+        "https://github.com/hraban/mac-app-util/archive/master.tar.gz";
       mac-app-util-hm  = (import mac-app-util-src {}).homeManagerModules;
     in [ mac-app-util-hm.default ];
 

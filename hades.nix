@@ -63,6 +63,7 @@
 
     imports = [
       ./home-manager/kitty.nix
+      ./home-manager/qutebrowser.nix
     ];
 
     programs = {
