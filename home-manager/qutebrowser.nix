@@ -1,6 +1,11 @@
-{ ... }: {
+{ pkgs, ... }: {
   programs.qutebrowser = {
     enable        = true;
+    extraConfig   = builtins.readFile(pkgs.fetchurl({
+      sha256 = "sha256-OFwPRBZ/8ZrDhVsRacAqRRaMnr+kaznWgUmCkfHhK1I=";
+      url    =
+        "https://github.com/tinted-theming/base16-qutebrowser/raw/main/themes/default/base16-gruvbox-light-hard.config.py";
+    }));
     quickmarks    = {
       home-manager =
         "https://nix-community.github.io/home-manager/options.xhtml";
