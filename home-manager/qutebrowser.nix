@@ -1,7 +1,6 @@
-{ pkgs, ... }: {
+{ ... }: {
   programs.qutebrowser = {
     enable        = true;
-    package       = pkgs.qutebrowser.override({ enableWideVine = true; });
     quickmarks    = {
       home-manager =
         "https://nix-community.github.io/home-manager/options.xhtml";

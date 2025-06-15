@@ -5,12 +5,12 @@ let
   });
   nixpkgs-unstable = import unstable-tarball { config = super.config; };
 in with super; {
-  amp-cli    = nixpkgs-unstable.amp-cli;
-  fortune    = fortune.override({ withOffensive = true; });
-  gtasks-md  = callPackage ./gtasks-md.nix {
+  amp-cli     = nixpkgs-unstable.amp-cli;
+  fortune     = fortune.override({ withOffensive = true; });
+  gtasks-md   = callPackage ./gtasks-md.nix {
     inherit (haskellPackages) pandoc-types;
   };
-  python312  = super.python312.override {
+  python312   = super.python312.override {
     packageOverrides = pythonSelf: pythonSuper: {
       # https://github.com/NixOS/nixpkgs/issues/336593
       iterfzf = pythonSuper.iterfzf.overridePythonAttrs(_: {
@@ -18,8 +18,14 @@ in with super; {
       });
     };
   };
-  vimPlugins = super.vimPlugins // {
+  vimPlugins  = super.vimPlugins // {
     no-neck-pain-nvim = nixpkgs-unstable.vimPlugins.no-neck-pain-nvim;
   };
-  vtclean    = callPackage ./vtclean.nix {};
+  vtclean     = callPackage ./vtclean.nix {};
+  qutebrowser =
+    if super.stdenv.isDarwin then
+      # https://github.com/NixOS/nixpkgs/pull/411408
+      nixpkgs-unstable.qutebrowser
+    else
+      super.qutebrowser;
 }
