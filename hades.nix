@@ -21,10 +21,8 @@
       let
         extensions = with pkgs.gnomeExtensions;
           [ compiz-windows-effect hide-top-bar removable-drive-menu ];
-        packages   = with pkgs; [
-          google-chrome gnome-firmware gtasks-md nautilus solaar vcmi vlc
-          wl-clipboard
-        ];
+        packages   = with pkgs;
+          [ gnome-firmware gtasks-md nautilus solaar vcmi vlc wl-clipboard ];
       in extensions ++ packages;
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
@@ -99,6 +97,7 @@
   nixpkgs.config = { cudaSupport = true; };
 
   programs = {
+    firefox   = { enable = true; languagePacks = [ "pl" "en-US" ]; };
     gamescope = { capSysNice = true; enable = true; };
     nix-ld    = { enable = true; }; # https://unix.stackexchange.com/a/522823
     steam     = {
