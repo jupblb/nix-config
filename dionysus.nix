@@ -229,7 +229,7 @@
       zone         = "kielbowi.cz";
     };
 
-    jackett.enable = true;
+    jackett = { enable = true; };
 
     jellyfin = {
       enable = true;
@@ -315,11 +315,6 @@
       ];
       enable        = true;
       extraOptions  = [ "--interval=7200" "-A /var/log/smartd/" ];
-      notifications = {
-        mail.enable    = true;
-        mail.recipient = "dionysus@kielbowi.cz";
-        wall.enable    = false;
-      };
     };
 
     sonarr = {
