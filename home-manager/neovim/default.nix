@@ -37,9 +37,8 @@
       extraPackages =
         let
           packages     = with pkgs;
-            [ curl fish-lsp marksman nil pandoc ripgrep shfmt ];
-          nodePackages = with pkgs.nodePackages;
-            [ bash-language-server markdownlint-cli ];
+            [ curl fish-lsp harper marksman nil pandoc ripgrep shfmt ];
+          nodePackages = with pkgs.nodePackages; [ bash-language-server ];
         in packages ++ nodePackages;
       plugins       = with pkgs.vimPlugins; [ {
           config = "luafile ${toString ./config/codecompanion.lua}";
