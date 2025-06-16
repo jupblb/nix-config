@@ -99,7 +99,7 @@
           default_policy = "one_factor";
           rules          = [ {
             domain   = "*.kielbowi.cz";
-            networks = [ "192.168.1.0/18" ];
+            networks = [ "192.168.1.0/24" ];
             policy   = "bypass";
           } {
             domain    = "files.kielbowi.cz";
