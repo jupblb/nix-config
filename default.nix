@@ -137,7 +137,7 @@
     initialPassword = "changeme";
     isNormalUser    = true;
     openssh         = {
-      authorizedKeys.keyFiles = [ ./config/ssh/id_ed25519.pub ];
+      authorizedKeys.keyFiles = [ ./config/id_ed25519.pub ];
     };
     shell           = pkgs.bashInteractive;
   };

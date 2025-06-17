@@ -94,6 +94,20 @@
         };
       };
     };
+
+    ssh = {
+      controlMaster  = "auto";
+      controlPersist = "yes";
+      enable         = true;
+      matchBlocks    = {
+        dionysus     = {
+          hostname     = "dionysus.kielbowi.cz";
+          proxyCommand =
+            "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
+          user         = "jupblb";
+        };
+      };
+    };
   };
 
   xdg.enable = true;
