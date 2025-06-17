@@ -11,20 +11,16 @@
       controlMaster  = "auto";
       controlPersist = "yes";
       enable         = true;
-      matchBlocks    =
-        let common = {
+      matchBlocks    = {
+        dionysus     = {
           identitiesOnly = true;
           identityFile   = [ (toString ../config/ssh/id_ed25519) ];
+          hostname       = "dionysus.kielbowi.cz";
+          proxyCommand   =
+            "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
           user           = "jupblb";
         };
-        in {
-          dionysus     = common // {
-            hostname     = "dionysus.kielbowi.cz";
-            proxyCommand =
-              "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
-          };
-          "prose.sh"   = common // { hostname = "prose.sh"; };
-        };
+      };
     };
   };
 }
