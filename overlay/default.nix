@@ -22,10 +22,4 @@ in with super; {
     no-neck-pain-nvim = nixpkgs-unstable.vimPlugins.no-neck-pain-nvim;
   };
   vtclean     = callPackage ./vtclean.nix {};
-  qutebrowser =
-    if super.stdenv.isDarwin then
-      # https://github.com/NixOS/nixpkgs/pull/411408
-      nixpkgs-unstable.qutebrowser
-    else
-      super.qutebrowser;
 }
