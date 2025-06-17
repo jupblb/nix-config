@@ -13,12 +13,10 @@
       enable         = true;
       matchBlocks    = {
         dionysus     = {
-          identitiesOnly = true;
-          identityFile   = [ (toString ../config/ssh/id_ed25519) ];
-          hostname       = "dionysus.kielbowi.cz";
-          proxyCommand   =
+          hostname     = "dionysus.kielbowi.cz";
+          proxyCommand =
             "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
-          user           = "jupblb";
+          user         = "jupblb";
         };
       };
     };
