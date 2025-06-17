@@ -72,6 +72,11 @@
         rerere              = { autoupdate = true; enabled = true; };
         submodule.recurse   = true;
       };
+      signing     = {
+        format        = "ssh";
+        key           = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+        signByDefault = true;
+      };
       userEmail   = "git@kielbowi.cz";
       userName    = "jupblb";
     };
