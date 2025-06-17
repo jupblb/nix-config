@@ -2,7 +2,6 @@
   home = {
     packages         = with pkgs; [ amp-cli ];
     sessionVariables = {
-      GEMINI_API_KEY      = (import ../../config/secret.nix).gemini;
       NVIM_ENV_JSON       = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.json";
       NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";
     };
@@ -33,6 +32,7 @@
         source ${toString ./config/init.vim}
         luafile ${toString ./config/init.lua}
         luafile ${toString ./config/vim-env.lua}
+        let $GEMINI_API_KEY = "${(import ../../config/secret.nix).gemini}"
       '';
       extraPackages =
         let
