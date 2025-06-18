@@ -32,7 +32,6 @@
         source ${toString ./config/init.vim}
         luafile ${toString ./config/init.lua}
         luafile ${toString ./config/vim-env.lua}
-        let $GEMINI_API_KEY = "${(import ../../config/secret.nix).gemini}"
       '';
       extraPackages =
         let
