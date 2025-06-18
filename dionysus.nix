@@ -100,6 +100,9 @@
         access_control         = {
           default_policy = "one_factor";
           rules          = [ {
+            domain   = "linkding.kielbowi.cz";
+            policy   = "one_factor"; # Config bug, can't be bypassed at home.
+          } {
             domain   = "*.kielbowi.cz";
             networks = [ "192.168.1.0/24" ];
             policy   = "bypass";
