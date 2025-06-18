@@ -1,2 +1,1 @@
 config/secret.nix filter=git-crypt diff=git-crypt
-config/syncthing/** filter=git-crypt diff=git-crypt

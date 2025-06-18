@@ -358,8 +358,6 @@
     sshguard = { enable = true; };
 
     syncthing = {
-      cert     = toString ./config/syncthing/dionysus/cert.pem;
-      key      = toString ./config/syncthing/dionysus/key.pem;
       relay    = {
         enable        = true;
         listenAddress = "0.0.0.0";

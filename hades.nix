@@ -135,8 +135,6 @@
     syncthing = {
       configDir = "/home/jupblb/.config/syncthing";
       dataDir   = "/home/jupblb/.local/share/syncthing";
-      cert      = toString ./config/syncthing/hades/cert.pem;
-      key       = toString ./config/syncthing/hades/key.pem;
       settings  = {
         folders = {
           "jupblb/Documents" = {
