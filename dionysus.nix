@@ -77,7 +77,7 @@
     programs = {
       fish.functions = {
         zfs-backup-unlock =
-          builtins.readFile ./config/script/zfs-backup-unlock.fish;
+          builtins.readFile ./config/zfs-backup-unlock.fish;
       };
 
       git-credential-oauth = { extraFlags = [ "-device" ]; };
@@ -418,7 +418,7 @@
       after         = [ "network.target" ];
       description   = "Public IP updater";
       path          = with pkgs; [ curl gawk ];
-      script        = builtins.readFile ./config/script/ip-updater.sh;
+      script        = builtins.readFile ./config/ip-updater.sh;
       serviceConfig = {
         ProtectSystem = "full";
         User          = "jupblb";
@@ -441,14 +441,14 @@
         (python3.withPackages(p: with p; [ gitignore-parser ]))
       ];
       script        = ''
-        sh ${./config/script/stignore.sh}
+        sh ${./config/stignore.sh}
 
         inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
           -m -r /backup/jupblb/Workspace |
         while read -r line; do
           if [[ "$line" == ".gitignore" ]]; then
             >&2 echo ".gitignore update"
-            sh ${./config/script/stignore.sh}
+            sh ${./config/stignore.sh}
           fi
         done
       '';
