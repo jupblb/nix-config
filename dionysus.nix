@@ -84,8 +84,6 @@
 
       ssh = { enable = lib.mkForce false; };
     };
-
-    services.gpg-agent.pinentry.package = lib.mkForce pkgs.pinentry-curses;
   };
 
   imports =

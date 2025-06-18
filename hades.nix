@@ -81,13 +81,6 @@
         settings = { qt = { force_software_rendering = "chromium"; }; };
       };
     };
-
-    services = {
-      gpg-agent = {
-        enable   = true;
-        pinentry = { package = pkgs.pinentry-gnome3; };
-      };
-    };
   };
 
   imports = [ ./default.nix ];

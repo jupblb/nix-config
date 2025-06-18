@@ -39,11 +39,9 @@
       ./home-manager
       ./home-manager/direnv.nix
       ./home-manager/fish
-      ./home-manager/gpg-and-ssh.nix
       ./home-manager/lf
       ./home-manager/neovim
     ];
-    services = { gpg-agent.enable = true; };
   };
 
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
