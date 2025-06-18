@@ -29,6 +29,12 @@
   };
 
   home-manager.users.jupblb = {
+    home     = {
+      file = {
+        ".ssh/id_ed25519".source     = "/etc/ssh/ssh_host_ed25519_key";
+        ".ssh/id_ed25519.pub".source = "/etc/ssh/ssh_host_ed25519_key.pub";
+      };
+    };
     imports  = [
       ./home-manager
       ./home-manager/direnv.nix
@@ -137,7 +143,7 @@
     initialPassword = "changeme";
     isNormalUser    = true;
     openssh         = {
-      authorizedKeys.keyFiles = [ ./config/id_ed25519.pub ];
+      authorizedKeys.keyFiles = [ ./secret/id_ed25519.pub ];
     };
     shell           = pkgs.bashInteractive;
   };

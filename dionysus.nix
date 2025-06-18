@@ -1,4 +1,32 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
+  age = {
+    secrets = {
+      authelia_jwt_secret             = {
+        file  = ./secret/authelia_jwt_secret.age;
+        owner = config.services.authelia.instances.default.user;
+      };
+      authelia_storage_encryption_key = {
+        file  = ./secret/authelia_storage_encryption_key.age;
+        owner = config.services.authelia.instances.default.user;
+      };
+      cloudflare_password             = {
+        file = ./secret/cloudflare_password.age;
+      };
+      cloudflared_credentials         = {
+        file = ./secret/cloudflared_credentials.age;
+      };
+      photoprism_password             = {
+        file = ./secret/photoprism_password.age;
+      };
+      restic_gcs_credentials          = {
+        file = ./secret/restic_gcs_credentials.age;
+      };
+      restic_password                 = {
+        file = ./secret/restic_password.age;
+      };
+    };
+  };
+
   boot = {
     kernel               =
       { sysctl = { "fs.inotify.max_user_watches" = "409600"; }; };
@@ -60,7 +88,9 @@
     services.gpg-agent.pinentry.package = lib.mkForce pkgs.pinentry-curses;
   };
 
-  imports = [ ./default.nix ];
+  imports =
+    let agenix = "https://github.com/ryantm/agenix/archive/main.tar.gz";
+    in [ ./default.nix "${builtins.fetchTarball(agenix)}/modules/age.nix" ];
 
   networking = {
     domain   = "kielbowi.cz";
@@ -91,10 +121,10 @@
 
     authelia.instances.default = {
       enable   = true;
-      secrets  = let secrets = (import ./config/secret.nix).authelia; in {
-        jwtSecretFile            = pkgs.writeText "authelia-jwt" secrets.jwt;
+      secrets  = {
+        jwtSecretFile            = config.age.secrets.authelia_jwt_secret.path;
         storageEncryptionKeyFile =
-          pkgs.writeText "authelia-storage" secrets.storage;
+          config.age.secrets.authelia_storage_encryption_key.path;
       };
       settings = {
         access_control         = {
@@ -207,8 +237,8 @@
       enable  = true;
       tunnels = {
         "1aa88ef4-665b-41f7-bb26-81a09be0a462" = {
-          credentialsFile = builtins.toString
-            (pkgs.copyPathToStore ./config/cloudflared.json);
+          credentialsFile =
+            config.age.secrets.cloudflared_credentials.path;
           default         = "http_status:404";
           ingress         = {
             "calibre.kielbowi.cz"  = "http://localhost:8083";
@@ -225,8 +255,7 @@
     ddclient = {
       enable       = true;
       domains      = [ "*.kielbowi.cz" ];
-      passwordFile = toString(pkgs.writeText "ddclient"
-        ((import ./config/secret.nix).cloudflare));
+      passwordFile = config.age.secrets.cloudflare_password.path;
       protocol     = "cloudflare";
       ssl          = true;
       use          = "web,web=ifconfig.me/ip";
@@ -264,14 +293,16 @@
     photoprism = {
       enable        = true;
       originalsPath = "/backup/jupblb/Pictures/album";
+      passwordFile  = config.age.secrets.photoprism_password.path;
       settings      = {
+        PHOTOPRISM_ADMIN_USER       = "jupblb";
         PHOTOPRISM_DETECT_NSFW      = "true";
         PHOTOPRISM_DISABLE_SETTINGS = "true";
         PHOTOPRISM_DISABLE_WEBDAV   = "true";
         PHOTOPRISM_READONLY         = "true";
         PHOTOPRISM_SITE_URL         = "https://photos.kielbowi.cz";
         PHOTOPRISM_UPLOAD_NSFW      = "false";
-      } // (import ./config/secret.nix).photoprism;
+      };
     };
 
     radarr = {
@@ -279,35 +310,32 @@
       group  = "users";
     };
 
-    restic.backups =
-      let passwordFile = pkgs.writeText "restic"
-        ((import ./config/secret.nix).restic);
-      in {
-        gcs   = {
-          environmentFile = toString(
-            pkgs.writeText "restic-gcs-env" ''
-              GOOGLE_PROJECT_ID=restic-backup-342620
-              GOOGLE_APPLICATION_CREDENTIALS=${./config/restic-gcs.json}
-            ''
-          );
-          exclude         = [ "**/.stversions" "jupblb/Workspace" ];
-          extraBackupArgs = [ "--tag syncthing-gcs" ];
-          initialize      = true;
-          passwordFile    = toString passwordFile;
-          paths           = [ "/backup" ];
-          pruneOpts       = [ "--keep-weekly 4" "--keep-monthly 3" ];
-          repository      = "gs:dionysus-backup:/";
-          timerConfig     = { OnCalendar = "weekly"; };
-        };
-        local = {
-          exclude         = [ "**/.stversions" ];
-          extraBackupArgs = [ "--tag syncthing-local" ];
-          initialize      = true;
-          passwordFile    = toString passwordFile;
-          paths           = [ "/backup" ];
-          pruneOpts       = [ "--keep-daily 14" ];
-          repository      = "/data/backup";
-        };
+    restic.backups = {
+      gcs   = {
+        environmentFile = toString(
+          pkgs.writeText "restic-gcs-env" ''
+            GOOGLE_PROJECT_ID=restic-backup-342620
+            GOOGLE_APPLICATION_CREDENTIALS=${config.age.secrets.restic_gcs_credentials.path}
+          ''
+        );
+        exclude         = [ "**/.stversions" "jupblb/Workspace" ];
+        extraBackupArgs = [ "--tag syncthing-gcs" ];
+        initialize      = true;
+        passwordFile    = config.age.secrets.restic_password.path;
+        paths           = [ "/backup" ];
+        pruneOpts       = [ "--keep-weekly 4" "--keep-monthly 3" ];
+        repository      = "gs:dionysus-backup:/";
+        timerConfig     = { OnCalendar = "weekly"; };
+      };
+      local = {
+        exclude         = [ "**/.stversions" ];
+        extraBackupArgs = [ "--tag syncthing-local" ];
+        initialize      = true;
+        passwordFile    = config.age.secrets.restic_password.path;
+        paths           = [ "/backup" ];
+        pruneOpts       = [ "--keep-daily 14" ];
+        repository      = "/data/backup";
+      };
     };
 
     smartd = {
