@@ -41,6 +41,14 @@
   hardware = {
     bluetooth = { enable = true; };
     cpu       = { amd.updateMicrocode = true; };
+    display   = {
+      edid    = {
+        linuxhw."Lenovo_Y32p-30_2023" = [ "Lenovo" "Y32p-30" "2023" ];
+      };
+      outputs = {
+        "DP-1".edid = "Lenovo_Y32p-30_2023.bin";
+      };
+    };
     i2c       = { enable = true; };
     keyboard  = { uhk.enable = true; };
     graphics  = {
