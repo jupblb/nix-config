@@ -1,19 +1,15 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   boot = {
-    consoleLogLevel = 0;
-    initrd          = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" ];
-      kernelModules          =
-        [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-      luks.devices           = {
-        "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
+    initrd        = {
+      kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+      luks          = {
+        devices  = {
+          "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
+        };
       };
-      systemd                = { enable = true; };
-      verbose                = false;
     };
-    kernelModules   = [ "kvm-amd" ];
-    kernelParams    = [ "quiet" "udev.log_level=3" ];
-    plymouth        = { enable = true; extraConfig = "DeviceScale=2"; };
+    kernelModules = [ "kvm-amd" ];
+    plymouth      = { enable = true; extraConfig = "DeviceScale=2"; };
   };
 
   environment = {
@@ -41,14 +37,6 @@
   hardware = {
     bluetooth = { enable = true; };
     cpu       = { amd.updateMicrocode = true; };
-    display   = {
-      edid    = {
-        linuxhw."Lenovo_Y32p-30_2023" = [ "Lenovo" "Y32p-30" "2023" ];
-      };
-      outputs = {
-        "DP-1".edid = "Lenovo_Y32p-30_2023.bin";
-      };
-    };
     i2c       = { enable = true; };
     keyboard  = { uhk.enable = true; };
     graphics  = {
@@ -64,8 +52,8 @@
     xpadneo   = { enable = true; };
   };
 
-  home-manager.users.jupblb = { ... }: {
-    home = { stateVersion = "22.11"; };
+  home-manager.users.jupblb = {
+    home = { stateVersion = config.system.stateVersion; };
 
     imports = [
       ./home-manager/kitty.nix
@@ -123,7 +111,7 @@
   services = {
     displayManager = { autoLogin = { enable = true; user = "jupblb"; }; };
 
-    gnome = { core-apps = { enable = false; }; };
+    gnome = { core-apps.enable = false; };
 
     pipewire  = {
       enable = true;
@@ -165,7 +153,7 @@
 
   swapDevices = [ { device = "/dev/disk/by-label/nixos-swap"; } ];
 
-  system.stateVersion = "22.11";
+  system = { stateVersion = "22.11"; };
 
   systemd.services = {
     # https://github.com/NixOS/nixpkgs/issues/103746
@@ -173,5 +161,5 @@
     "autovt@tty1".enable = false;
   };
 
-  users.users.jupblb.extraGroups = [ "input" "lp" "nopasswdlogin" ];
+  users.users.jupblb.extraGroups = [ "input" "lp" ];
 }
