@@ -399,18 +399,6 @@
 
   systemd.services = let disableAtBoot = { wantedBy = lib.mkForce []; }; in {
     calibre-web           = disableAtBoot;
-    ip-updater            = {
-      after         = [ "network.target" ];
-      description   = "Public IP updater";
-      path          = with pkgs; [ curl gawk ];
-      script        = builtins.readFile ./config/ip-updater.sh;
-      serviceConfig = {
-        ProtectSystem = "full";
-        User          = "jupblb";
-        Type          = "oneshot";
-      };
-      startAt       = "*:0";
-    };
     jellyfin              = {
       serviceConfig.PrivateDevices = lib.mkForce false;
     };
