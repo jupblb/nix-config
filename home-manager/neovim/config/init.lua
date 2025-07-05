@@ -39,13 +39,9 @@ vim.diagnostic.config({
     },
 })
 
--- Add border to the floating windows
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = opts.border or 'rounded'
-    return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
+-- https://github.com/nvim-telescope/telescope.nvim/issues/3436#issuecomment-2888940156
+vim.keymap.set(
+    'n', 'K', function() vim.lsp.buf.hover({ border = "rounded" }) end)
 
 -- LSP Setup
 local lspAttachAuGroup = vim.api.nvim_create_augroup('LspFormatting', {})

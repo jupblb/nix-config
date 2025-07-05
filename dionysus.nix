@@ -9,9 +9,6 @@
         file  = ./secret/authelia_storage_encryption_key.age;
         owner = config.services.authelia.instances.default.user;
       };
-      cloudflare_password             = {
-        file = ./secret/cloudflare_password.age;
-      };
       cloudflared_credentials         = {
         file = ./secret/cloudflared_credentials.age;
       };
@@ -247,18 +244,6 @@
           };
         };
       };
-    };
-
-    # https://github.com/ddclient/ddclient/blob/afa127525380d8c3e19b2046bca6843346b1ab0d/ddclient.conf.in#L186-L194
-    ddclient = {
-      enable       = true;
-      domains      = [ "*.kielbowi.cz" ];
-      passwordFile = config.age.secrets.cloudflare_password.path;
-      protocol     = "cloudflare";
-      ssl          = true;
-      use          = "web,web=ifconfig.me/ip";
-      username     = "token";
-      zone         = "kielbowi.cz";
     };
 
     jackett = { enable = true; };
