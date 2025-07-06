@@ -7,6 +7,7 @@ let
 in with super; {
   amp-cli     = nixpkgs-unstable.amp-cli;
   fortune     = fortune.override({ withOffensive = true; });
+  gemini-cli  = nixpkgs-unstable.gemini-cli;
   gtasks-md   = callPackage ./gtasks-md.nix {
     inherit (haskellPackages) pandoc-types;
   };

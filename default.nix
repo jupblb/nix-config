@@ -37,6 +37,7 @@
     };
     imports  = [
       ./home-manager
+      ./home-manager/ai.nix
       ./home-manager/direnv.nix
       ./home-manager/fish
       ./home-manager/lf

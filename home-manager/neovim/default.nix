@@ -1,6 +1,5 @@
 { config, pkgs, ... }: {
   home = {
-    packages         = with pkgs; [ amp-cli ];
     sessionVariables = {
       NVIM_ENV_JSON       = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.json";
       NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID\$WEZTERM_PANE.socket";
