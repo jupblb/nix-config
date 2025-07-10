@@ -27,7 +27,7 @@ if git rev-parse --is-inside-work-tree &>/dev/null
     set -g __fish_git_prompt_showupstream informative
     set -g __fish_git_prompt_use_informative_chars 1
 
-    if test "$TERM" = xterm-kitty; or test "$TERM" = wezterm # gruvbox
+    if test "$TERM" = xterm-kitty # gruvbox
         set -g __fish_git_prompt_color af3a03
         set -g __fish_git_prompt_color_dirtystate b57614
         set -g __fish_git_prompt_color_merging af3a03

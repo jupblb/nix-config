@@ -4,8 +4,7 @@ do
   local path = os.getenv('NVIM_ENV_JSON') or
       string.format('/tmp/nvim-%s%s.json',
         os.getenv('USER') or 'unknown',
-        os.getenv('KITTY_WINDOW_ID') or '',
-        os.getenv('WEZTERM_PANE') or '')
+        os.getenv('KITTY_WINDOW_ID') or '')
   local protectedTable = {}
   metaTable = {
     __index = function(_, k)
