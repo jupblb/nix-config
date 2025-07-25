@@ -1,3 +1,6 @@
+# Additional config
+# - https://apple.stackexchange.com/a/214349
+
 { lib, ... }: {
   # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1466965161
   imports =
