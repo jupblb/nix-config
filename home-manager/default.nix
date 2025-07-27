@@ -19,15 +19,12 @@
     };
 
     bash = {
-      enable           = true;
-      historyControl   = [ "erasedups" "ignoredups" "ignorespace" ];
-      historyFile      = "${config.xdg.cacheHome}/bash/history";
-      sessionVariables = {
-        PS1 = "\[\e[0;32m\]\u@\h \[\e[0;37m\]\w\[\e[0;34m\] $ \[\e[0m\]";
-      };
-      shellAliases     = { "ls" = "ls --color=auto"; };
-      shellOptions     = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
-      initExtra        = "source ${toString ../config/bashrc.bash}";
+      enable         = true;
+      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
+      historyFile    = "${config.xdg.cacheHome}/bash/history";
+      shellAliases   = { "ls" = "ls --color=auto"; };
+      shellOptions   = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
+      initExtra      = "source ${toString ../config/bashrc.bash}";
     };
 
     git = {
@@ -81,7 +78,7 @@
       userName    = "jupblb";
     };
 
-    git-credential-oauth.enable = true;
+    git-credential-oauth = { enable = true; };
 
     htop = {
       enable   = true;
@@ -115,5 +112,5 @@
     };
   };
 
-  xdg.enable = true;
+  xdg = { enable = true; };
 }

@@ -5,18 +5,7 @@ let
   });
   nixpkgs-unstable = import unstable-tarball { config = super.config; };
 in with super; {
-  # https://github.com/NixOS/nixpkgs/pull/422339
-  amp-cli     = super.writeShellApplication({
-    name          = "amp";
-    runtimeInputs = with super; [ nodejs ];
-    text          = ''exec npx --yes @sourcegraph/amp "$@"'';
-  });
   fortune     = fortune.override({ withOffensive = true; });
-  gemini-cli  = super.writeShellApplication({
-    name          = "gemini-cli";
-    runtimeInputs = with super; [ nodejs ];
-    text          = ''exec npx --yes @google/gemini-cli "$@"'';
-  });
   gtasks-md   = callPackage ./gtasks-md.nix {
     inherit (haskellPackages) pandoc-types;
   };

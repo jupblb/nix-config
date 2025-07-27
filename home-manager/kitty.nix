@@ -50,7 +50,8 @@
             "U+e700-U+e8ef" "U+ed00-U+efc1" "U+f000-U+f2ff" "U+f000-U+f2e0"
             "U+f300-U+f381" "U+f400-U+f533" "U+f0001-U+f1af0"
           ];
-          in (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font Mono";
+          in (builtins.concatStringsSep "," mappings) +
+            " Symbols Nerd Font Mono";
         tab_bar_min_tabs              = 5;
       };
       themeFile   = "gruvbox-light-hard";
