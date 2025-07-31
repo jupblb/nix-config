@@ -341,37 +341,30 @@
     sshguard = { enable = true; };
 
     syncthing = {
-      relay    = {
-        enable        = true;
-        listenAddress = "0.0.0.0";
-        pools         = [ "" ];
-      };
-      settings = {
-        folders =
-          let simpleVersioning = {
-            params = {
-              cleanInterval = "3600";
-              maxAge        = toString(3600 * 24 * 30 * 3); # 3 months
-            };
-            type   = "staggered";
+      settings.folders =
+        let simpleVersioning = {
+          params = {
+            cleanInterval = "3600";
+            maxAge        = toString(3600 * 24 * 30 * 3); # 3 months
           };
-          in {
-            "jupblb/Documents" = {
-              enable     = true;
-              path       = "/backup/jupblb/Documents";
-              versioning = simpleVersioning;
-            };
-            "jupblb/Pictures"  = {
-              enable     = true;
-              path       = "/backup/jupblb/Pictures";
-              versioning = simpleVersioning;
-            };
-            "jupblb/Workspace" = {
-              enable = true;
-              path   = "/backup/jupblb/Workspace";
-            };
+          type   = "staggered";
+        };
+        in {
+          "jupblb/Documents" = {
+            enable     = true;
+            path       = "/backup/jupblb/Documents";
+            versioning = simpleVersioning;
           };
-      };
+          "jupblb/Pictures"  = {
+            enable     = true;
+            path       = "/backup/jupblb/Pictures";
+            versioning = simpleVersioning;
+          };
+          "jupblb/Workspace" = {
+            enable = true;
+            path   = "/backup/jupblb/Workspace";
+          };
+        };
     };
 
     transmission = {

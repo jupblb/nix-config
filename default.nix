@@ -118,8 +118,8 @@
           };
         };
         options = {
-          urAccepted           = 1;
           localAnnounceEnabled = true;
+          urAccepted           = 1;
         };
       };
     };
