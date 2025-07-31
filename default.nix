@@ -101,19 +101,14 @@
             id                =
               "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
           };
-          iphone   = {
-            autoAcceptFolders = true;
-            id                =
-              "VUEOA2A-3CZEBCZ-7KD4HWC-2PQYSVE-NKM4MIC-72N2UWQ-4WZGMDC-6TVHQA3";
-          };
         };
         folders = {
           "jupblb/Documents" = {
-            devices = [ "selene" "dionysus" "hades" "iphone" ];
+            devices = [ "selene" "dionysus" "hades" ];
             enable  = lib.mkDefault false;
           };
           "jupblb/Pictures"  = {
-            devices = [ "dionysus" "hades" "iphone" ];
+            devices = [ "dionysus" "hades" ];
             enable  = lib.mkDefault false;
           };
           "jupblb/Workspace" = {
