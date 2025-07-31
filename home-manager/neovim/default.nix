@@ -102,11 +102,4 @@
       withRuby      = false;
     };
   };
-
-  xdg.configFile = {
-    "nvim/spell/pl.utf-8.spl".source = pkgs.fetchurl {
-      sha256 = "1sg7hnjkvhilvh0sidjw5ciih0vdia9vas8vfrd9vxnk9ij51khl";
-      url    = "http://ftp.vim.org/vim/runtime/spell/pl.utf-8.spl";
-    };
-  };
 }

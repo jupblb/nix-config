@@ -1,10 +1,4 @@
-self: super:
-let
-  unstable-tarball = builtins.fetchTarball({
-    url = "https://nixos.org/channels/nixpkgs-unstable/nixexprs.tar.xz";
-  });
-  nixpkgs-unstable = import unstable-tarball { config = super.config; };
-in with super; {
+self: super: with super; {
   fortune     = fortune.override({ withOffensive = true; });
   gtasks-md   = callPackage ./gtasks-md.nix {
     inherit (haskellPackages) pandoc-types;
@@ -18,7 +12,16 @@ in with super; {
     };
   };
   vimPlugins  = super.vimPlugins // {
-    no-neck-pain-nvim = nixpkgs-unstable.vimPlugins.no-neck-pain-nvim;
+    no-neck-pain-nvim = super.vimUtils.buildVimPlugin {
+      pname   = "no-neck-pain.nvim";
+      src     = super.fetchFromGitHub {
+        owner  = "shortcuts";
+        repo   = "no-neck-pain.nvim";
+        rev    = "7bf83d3cfc8f6a120734f4254bbb87928756bea0";
+        sha256 = "14bp8ksw3v3dw28nakxkhmzxvbwrn7kwnzpwx2zxxf1vn45az0cm";
+      };
+      version = "2025-07-20";
+    };
   };
   vtclean     = callPackage ./vtclean.nix {};
 }
