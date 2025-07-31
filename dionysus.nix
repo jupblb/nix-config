@@ -93,10 +93,9 @@
       let
         caddy     = [ 80 443 ];
         jellyfin  = [ 8096 ];
-        syncthing = [ 22067 22070 ];
       in {
-        allowedTCPPorts  = caddy ++ jellyfin ++ syncthing;
-        allowedUDPPorts  = caddy ++ jellyfin ++ syncthing;
+        allowedTCPPorts  = caddy ++ jellyfin;
+        allowedUDPPorts  = caddy ++ jellyfin;
       };
     hostId   = "ce5e3a09";
     hostName = "dionysus";
