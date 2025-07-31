@@ -34,6 +34,8 @@
               username      = "jupblb";
             };
 
+            nix = { settings.lazy-trees = true; };
+
             programs = {
               git          = {
                 # Not supported by Apple default git binary
