@@ -86,10 +86,10 @@
       openDefaultPorts = true;
       settings         = {
         devices = {
-          artemis  = {
+          selene  = {
             autoAcceptFolders = true;
             id                =
-              "6SIVI3F-YGGPC5T-KFUH3QG-RVCA5U5-SJ2QFGC-STA6KJ3-ITWXE53-3OA6UQW";
+              "A3QRON2-ZAWC2XG-ZGT4JX4-JVX3DUQ-GVY7KUO-34WFQLG-UWMV2RJ-VL2KEQV";
           };
           dionysus = {
             autoAcceptFolders = true;
@@ -109,15 +109,15 @@
         };
         folders = {
           "jupblb/Documents" = {
-            devices = [ "artemis" "dionysus" "hades" "iphone" ];
+            devices = [ "selene" "dionysus" "hades" "iphone" ];
             enable  = lib.mkDefault false;
           };
           "jupblb/Pictures"  = {
-            devices = [ "artemis" "dionysus" "hades" "iphone" ];
+            devices = [ "dionysus" "hades" "iphone" ];
             enable  = lib.mkDefault false;
           };
           "jupblb/Workspace" = {
-            devices     = [ "artemis" "dionysus" "hades" ];
+            devices     = [ "selene" "dionysus" "hades" ];
             enable      = lib.mkDefault false;
             ignorePerms = false;
           };
