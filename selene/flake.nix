@@ -11,7 +11,7 @@
     nixpkgs      = { url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin"; };
   };
 
-  outputs = { nixpkgs, home-manager, mac-app-util, ... }:
+  outputs = { home-manager, mac-app-util, nixpkgs, ... }:
     let
       system = "aarch64-darwin";
       pkgs   = nixpkgs.legacyPackages.${system};
@@ -23,6 +23,8 @@
           mac-app-util.homeManagerModules.default
 
           ../home-manager
+          ../home-manager/ai.nix
+          ../home-manager/direnv.nix
           ../home-manager/fish
           ../home-manager/kitty.nix
           ../home-manager/neovim
@@ -33,8 +35,6 @@
               stateVersion  = "25.05";
               username      = "jupblb";
             };
-
-            nix = { settings.lazy-trees = true; };
 
             programs = {
               git          = {
@@ -84,6 +84,8 @@
                 };
               };
             };
+
+            services = { syncthing.enable = true; };
           })
         ];
       };
