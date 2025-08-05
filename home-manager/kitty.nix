@@ -1,22 +1,18 @@
 { pkgs, ... }: {
   fonts.fontconfig.enable = true;
 
-  home = {
-    packages = with pkgs; [
-      (iosevka-bin.override { variant = "SGr-IosevkaTerm"; })
-    ];
-    shellAliases = {
-      icat = "kitty +kitten icat";
-      ssh  = "kitty +kitten ssh";
-    };
+  home.shellAliases = {
+    icat = "kitty +kitten icat";
+    ssh  = "kitty +kitten ssh";
   };
 
   programs = {
     kitty = {
       enable      = true;
       font        = {
-        name = "Iosevka Term";
-        size = 10;
+        name    = "Iosevka Term";
+        package = pkgs.iosevka-bin.override { variant = "SGr-IosevkaTerm"; };
+        size    = 10;
       };
       keybindings = {
         "ctrl+shift+0"     = "change_font_size all 0";

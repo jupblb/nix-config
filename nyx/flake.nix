@@ -33,9 +33,14 @@
           ../home-manager/neovim
 
           ({ config, lib, ... }: {
+            fonts.fontconfig = { enable = true; };
+
             home = {
               homeDirectory    = "/Users/jupblb";
-              packages         = with pkgs; [ jetbrains.goland ];
+              packages         = with pkgs; [
+                (iosevka-bin.override { variant = "SGr-Iosevka"; })
+                jetbrains.goland
+              ];
               sessionPath      = [ "${config.home.homeDirectory}/.sg" ];
               sessionVariables = {
                 CARGOHOME = "${config.xdg.dataHome}/cargo";
