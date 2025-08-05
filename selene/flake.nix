@@ -14,7 +14,10 @@
   outputs = { home-manager, mac-app-util, nixpkgs, ... }:
     let
       system = "aarch64-darwin";
-      pkgs   = nixpkgs.legacyPackages.${system};
+      pkgs   = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in {
       homeConfigurations."jupblb" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -29,11 +32,17 @@
           ../home-manager/kitty.nix
           ../home-manager/neovim
 
-          ({ lib, ... }: {
+          ({ config, lib, ... }: {
             home = {
-              homeDirectory = "/Users/jupblb";
-              stateVersion  = "25.05";
-              username      = "jupblb";
+              homeDirectory    = "/Users/jupblb";
+              packages         = with pkgs; [ jetbrains.goland ];
+              sessionPath      = [ "${config.home.homeDirectory}/.sg" ];
+              sessionVariables = {
+                CARGOHOME = "${config.xdg.dataHome}/cargo";
+                GOPATH    = "${config.xdg.dataHome}/go";
+              };
+              stateVersion     = "25.05";
+              username         = "jupblb";
             };
 
             programs = {
@@ -51,6 +60,7 @@
                   macos_quit_when_last_window_closed = "yes";
                 };
               };
+              mise         = { enable = true; };
             };
 
             targets.darwin.defaults = {
