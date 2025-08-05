@@ -86,15 +86,15 @@
       openDefaultPorts = true;
       settings         = {
         devices = {
-          selene  = {
-            autoAcceptFolders = true;
-            id                =
-              "A3QRON2-ZAWC2XG-ZGT4JX4-JVX3DUQ-GVY7KUO-34WFQLG-UWMV2RJ-VL2KEQV";
-          };
           dionysus = {
             autoAcceptFolders = true;
             id                =
               "AUAEQVM-GLWFEY7-ISXW5C6-5FSTG6O-J4D7FI2-LZC7NVM-7AQP4GT-TUBMYA6";
+          };
+          nyx      = {
+            autoAcceptFolders = true;
+            id                =
+              "7KI5OIJ-UR5RPQP-M4RUSTO-6FBSCNT-SVB42MG-STHQYN5-RPOGFXJ-T4KNVQ3";
           };
           hades    = {
             autoAcceptFolders = true;
@@ -104,7 +104,7 @@
         };
         folders = {
           "jupblb/Documents" = {
-            devices = [ "selene" "dionysus" "hades" ];
+            devices = [ "nyx" "dionysus" "hades" ];
             enable  = lib.mkDefault false;
           };
           "jupblb/Pictures"  = {
@@ -112,7 +112,7 @@
             enable  = lib.mkDefault false;
           };
           "jupblb/Workspace" = {
-            devices     = [ "selene" "dionysus" "hades" ];
+            devices     = [ "nyx" "dionysus" "hades" ];
             enable      = lib.mkDefault false;
             ignorePerms = false;
           };
