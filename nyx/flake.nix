@@ -30,6 +30,7 @@
           ../home-manager/direnv.nix
           ../home-manager/fish
           ../home-manager/kitty.nix
+          ../home-manager/lf
           ../home-manager/neovim
 
           ({ config, lib, ... }: {
@@ -37,15 +38,22 @@
 
             home = {
               homeDirectory    = "/Users/jupblb";
-              packages         = with pkgs; [
-                (iosevka-bin.override { variant = "SGr-Iosevka"; })
-                jetbrains.goland
+              packages         =
+                let iosevka =
+                  pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
+                in with pkgs; [ google-cloud-sdk iosevka ];
+              sessionPath      = [
+                "${config.home.homeDirectory}/.sg" "${config.xdg.dataHome}/bin"
+                "/opt/homebrew/bin" "/opt/homebrew/sbin" "/opt/podman/bin"
               ];
-              sessionPath      = [ "${config.home.homeDirectory}/.sg" ];
               sessionVariables = {
-                CARGOHOME = "${config.xdg.dataHome}/cargo";
-                GOPATH    = "${config.xdg.dataHome}/go";
+                CARGOHOME           = "${config.xdg.dataHome}/cargo";
+                GOPATH              = "${config.xdg.dataHome}/go";
+                HOMEBREW_PREFIX     = "/opt/homebre";
+                HOMEBREW_CELLAR     = "/opt/homebrew/Cellar";
+                HOMEBREW_REPOSITORY = "/opt/homebrew";
               };
+              shellAliases     = { "blaze" = "bazel"; };
               stateVersion     = "25.05";
               username         = "jupblb";
             };

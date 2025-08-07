@@ -49,7 +49,7 @@
 
   xdg.configFile = {
     "lf/icons".source = pkgs.fetchurl {
-      sha256 = "sha256-QbWr5FxJZ5cJqS4zg+qyNK8JUG6SdLmaFoBuFXi0q0M=";
+      sha256 = "sha256-c0orDQO4hedh+xaNrovC0geh5iq2K+e+PZIL5abxnIk=";
       url    = "https://github.com/gokcehan/lf/raw/master/etc/icons.example";
     };
   };

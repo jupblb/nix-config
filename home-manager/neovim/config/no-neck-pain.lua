@@ -22,6 +22,11 @@ no_neck_pain.setup({
 -- Resize for filetypes with longer variable names
 _G.resize_for_longer_filetype = false
 
+_G.no_neck_pain_resize = function(add)
+    width = width + add
+    no_neck_pain.resize(width)
+end
+
 vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern  = { "java", "kotlin", "sql" },
     callback = function(_)
@@ -34,8 +39,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
         end
         _G.resize_for_longer_filetype = true
 
-        width = width + 20
-        no_neck_pain.resize(width)
+        _G.no_neck_pain_resize(20)
     end,
     group    = "NoNeckPainAutocmd",
 })

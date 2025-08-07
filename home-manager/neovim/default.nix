@@ -30,7 +30,6 @@
       extraConfig   = ''
         source ${toString ./config/init.vim}
         luafile ${toString ./config/init.lua}
-        luafile ${toString ./config/vim-env.lua}
       '';
       extraPackages =
         let
