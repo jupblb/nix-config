@@ -37,7 +37,6 @@
     };
     imports  = [
       ./home-manager
-      ./home-manager/ai.nix
       ./home-manager/direnv.nix
       ./home-manager/fish
       ./home-manager/lf
@@ -64,8 +63,8 @@
     bash   = {
       completion     = { enable = true; };
       enableLsColors = true;
-      promptInit     = builtins.readFile ./config/bashrc.bash;
     };
+    fish   = { enable = true; };
     gnupg  = { agent.enable = true; };
     screen = { enable = true; };
     ssh    = { startAgent = true; };
@@ -139,6 +138,6 @@
     openssh         = {
       authorizedKeys.keyFiles = [ ./secret/id_ed25519.pub ];
     };
-    shell           = pkgs.bashInteractive;
+    shell           = pkgs.fish;
   };
 }

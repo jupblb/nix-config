@@ -57,6 +57,7 @@
     home = { stateVersion = config.system.stateVersion; };
 
     imports = [
+      ./home-manager/ai.nix
       ./home-manager/kitty.nix
       ./home-manager/qutebrowser.nix
     ];

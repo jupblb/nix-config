@@ -24,7 +24,6 @@
       historyFile    = "${config.xdg.cacheHome}/bash/history";
       shellAliases   = { "ls" = "ls --color=auto"; };
       shellOptions   = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
-      initExtra      = "source ${toString ../config/bashrc.bash}";
     };
 
     git = {
