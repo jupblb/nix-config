@@ -56,11 +56,7 @@
   home-manager.users.jupblb = {
     home = { stateVersion = config.system.stateVersion; };
 
-    imports = [
-      ./home-manager/ai.nix
-      ./home-manager/kitty.nix
-      ./home-manager/qutebrowser.nix
-    ];
+    imports = [ ./home-manager/ai.nix ./home-manager/kitty.nix ];
 
     programs = {
       kitty = { settings.linux_display_server = "wayland"; };
@@ -73,10 +69,6 @@
           ram      = true;
           vram     = true;
         };
-      };
-
-      qutebrowser = {
-        settings = { qt = { force_software_rendering = "chromium"; }; };
       };
     };
   };
