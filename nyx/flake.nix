@@ -32,6 +32,7 @@
           ../home-manager/kitty.nix
           ../home-manager/lf
           ../home-manager/neovim
+          ../home-manager/qutebrowser.nix
 
           ({ config, lib, ... }: {
             fonts.fontconfig = { enable = true; };
@@ -74,6 +75,9 @@
                 };
               };
               mise         = { enable = true; };
+              qutebrowser  = {
+                package = pkgs.hello;
+              };
             };
 
             targets.darwin.defaults = {

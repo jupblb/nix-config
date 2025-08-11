@@ -64,8 +64,6 @@
         merge.conflictStyle = "zdiff3";
         pull.rebase         = true;
         push                = { autoSetupRemote = true; default = "current"; };
-        rebase.updateRefs   = true;
-        rerere              = { autoupdate = true; enabled = true; };
         submodule.recurse   = true;
       };
       signing     = {
