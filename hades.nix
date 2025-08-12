@@ -56,9 +56,22 @@
   home-manager.users.jupblb = {
     home = { stateVersion = config.system.stateVersion; };
 
-    imports = [ ./home-manager/ai.nix ./home-manager/kitty.nix ];
+    imports = [
+      ./home-manager/ai.nix
+      ./home-manager/firefox.nix
+      ./home-manager/kitty.nix
+    ];
 
     programs = {
+      firefox.profiles.default = {
+        bookmarks.settings = [
+          {
+            name = "home-manager";
+            url  = "https://nix-community.github.io/home-manager/options.xhtml";
+          }
+        ];
+      };
+
       kitty = { settings.linux_display_server = "wayland"; };
 
       mangohud = {
@@ -80,7 +93,6 @@
   nixpkgs.config = { cudaSupport = true; };
 
   programs = {
-    firefox   = { enable = true; languagePacks = [ "pl" "en-US" ]; };
     gamescope = { capSysNice = true; enable = true; };
     nix-ld    = { enable = true; }; # https://unix.stackexchange.com/a/522823
     steam     = {

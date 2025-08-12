@@ -31,6 +31,7 @@
           ../home-manager
           ../home-manager/ai.nix
           ../home-manager/direnv.nix
+          ../home-manager/firefox.nix
           ../home-manager/fish
           ../home-manager/kitty.nix
           ../home-manager/lf
