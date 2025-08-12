@@ -71,7 +71,6 @@ autocmd BufRead,BufNewFile .envrc* set filetype=sh
 
 autocmd FileType cpp                setlocal commentstring=//\ %s
 autocmd FileType gitcommit,hgcommit setlocal colorcolumn=72
-autocmd FileType go                 setlocal tabstop=2
 autocmd FileType java,kotlin,sql    setlocal colorcolumn=100
 autocmd FileType markdown           setlocal expandtab shiftwidth=4
 autocmd FileType mermaid            setlocal commentstring=%%\ %s

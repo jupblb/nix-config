@@ -46,8 +46,8 @@
                   pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
                 in with pkgs; [ google-cloud-sdk iosevka ];
               sessionPath      = [
-                "${config.home.homeDirectory}/.sg" "${config.xdg.dataHome}/bin"
-                "/opt/homebrew/bin" "/opt/homebrew/sbin" "/opt/podman/bin"
+                "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
+                "/opt/homebrew/sbin" "/opt/podman/bin"
               ];
               sessionVariables = {
                 CARGOHOME           = "${config.xdg.dataHome}/cargo";
