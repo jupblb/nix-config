@@ -63,21 +63,7 @@
         "permissions.default.desktop-notification"            = 2;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
-      userContent = ''
-        @-moz-document domain(github.com) {
-          .blob-code, .blob-code-inner, .pl-mi {
-            font-family: "Iosevka" !important;
-            font-weight: normal !important;
-            font-style: normal !important;
-          }
-        }
-
-        code {
-          font-family: "Iosevka" !important;
-          font-weight: normal !important;
-          font-style: normal !important;
-        }
-      '';
+      userContent = builtins.readFile(./userContent.css);
     };
   };
 }

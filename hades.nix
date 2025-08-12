@@ -58,7 +58,7 @@
 
     imports = [
       ./home-manager/ai.nix
-      ./home-manager/firefox.nix
+      ./home-manager/firefox
       ./home-manager/kitty.nix
     ];
 
