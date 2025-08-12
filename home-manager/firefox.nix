@@ -12,8 +12,8 @@
     profiles.default     = {
       search      = {
         engines = {
-          google     = { metaData.alias = "@g"; };
-          kagi       = {
+          google = { metaData.alias = "@g"; };
+          kagi   = {
             definedAliases  = [ "@k" ];
             iconMapObj."16" = "https://kagi.com/favicon.ico";
             urls        = [
@@ -25,14 +25,31 @@
               }
             ];
           };
-          nixos-wiki = {
-            definedAliases  = [ "@nw" ];
+          maps   = {
+            definedAliases  = [ "@m" ];
+            iconMapObj."16" = "https://www.google.com/favicon.ico";
+            urls            = [
+              { template = "https://www.google.com/maps/search/{searchTerms}"; }
+            ];
+          };
+          nix    = {
+            definedAliases  = [ "@nix" ];
             iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
-            name            = "NixOS Wiki";
             urls            = [
               {
                 template =
                   "https://wiki.nixos.org/w/index.php?search={searchTerms}";
+              }
+            ];
+          };
+          nixos  = {
+            definedAliases  = [ "@nixos" ];
+            iconMapObj."16" = "https://nixos.org/favicon.ico";
+            name            = "NixOS Options";
+            urls            = [
+              {
+                template =
+                  "https://search.nixos.org/options?query={searchTerms}";
               }
             ];
           };
