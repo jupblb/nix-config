@@ -7,7 +7,10 @@
       inputs = { nixpkgs.follows = "nixpkgs"; };
     };
     # https://github.com/nix-community/home-manager/issues/1341#issuecomment-1466965161
-    mac-app-util = { url = "github:hraban/mac-app-util"; };
+    mac-app-util = {
+      url    = "github:hraban/mac-app-util";
+      inputs = { nixpkgs.follows = "nixpkgs"; };
+    };
     nixpkgs      = { url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin"; };
   };
 
