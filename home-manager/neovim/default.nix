@@ -1,23 +1,12 @@
 { config, pkgs, ... }: {
   home = {
     sessionVariables = {
-      NVIM_ENV_JSON       = "/tmp/nvim-\$KITTY_WINDOW_ID.json";
       NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
     };
   };
 
   programs = {
-    fish = {
-      functions = {
-        fish_prompt = ''
-          set -l jq  "${pkgs.jq}/bin/jq"
-          set -l sed "${pkgs.gnused}/bin/sed"
-          set -l tr  "${pkgs.coreutils}/bin/tr"
-          ${builtins.readFile ./variables.fish}
-        '';
-        vim         = builtins.readFile ./singleton.fish;
-      };
-    };
+    fish = { functions.vim = builtins.readFile(./singleton.fish); };
 
     kitty = {
       settings.scrollback_pager =
@@ -25,59 +14,60 @@
     };
 
     neovim = {
-      defaultEditor = true;
-      enable        = true;
-      extraConfig   = ''
-        source ${toString ./config/init.vim}
-        luafile ${toString ./config/init.lua}
-      '';
-      extraPackages =
+      defaultEditor  = true;
+      enable         = true;
+      extraConfig    = builtins.readFile(./config/init.vim);
+      extraLuaConfig = builtins.readFile(./config/init.lua);
+      extraPackages  =
         let
           packages     = with pkgs;
-            [ curl fish-lsp harper marksman nil pandoc ripgrep shfmt ];
+            [ curl fish-lsp marksman nil pandoc ripgrep shfmt ];
           nodePackages = with pkgs.nodePackages; [ bash-language-server ];
         in packages ++ nodePackages;
-      plugins       = with pkgs.vimPlugins; [ {
-          config = "luafile ${toString ./config/codecompanion.lua}";
-          plugin = codecompanion-nvim;
-        } {
-          config = "luafile ${toString ./config/fidget.lua}";
+      plugins        = with pkgs.vimPlugins; [ {
+          config = builtins.readFile(./config/fidget.lua);
           plugin = fidget-nvim;
+          type   = "lua";
         } {
-          config = "source ${toString ./config/gruvbox-material.vim}";
+          config = builtins.readFile(./config/gruvbox-material.vim);
           plugin = gruvbox-material;
         } {
-          config = "luafile ${toString ./config/inc-rename.lua}";
+          config = builtins.readFile(./config/inc-rename.lua);
           plugin = inc-rename-nvim;
+          type   = "lua";
         } {
-          config = "luafile ${toString ./config/no-neck-pain.lua}";
+          config = builtins.readFile(./config/no-neck-pain.lua);
           plugin = no-neck-pain-nvim;
+          type   = "lua";
         } {
-          config = ''
-            set completeopt=menu,menuone,noselect
-            luafile ${toString ./config/cmp.lua}
-          '';
+          config = builtins.readFile(./config/cmp.lua);
           plugin = nvim-cmp.overrideAttrs(_: {
             dependencies = [
               cmp-async-path cmp-nvim-lsp cmp-nvim-lsp-signature-help
               cmp-treesitter copilot-cmp copilot-lua luasnip
             ];
           });
+          type   = "lua";
         } {
-          config = "luafile ${toString ./config/colorizer.lua}";
+          config = builtins.readFile(./config/colorizer.lua);
           plugin = nvim-colorizer-lua;
+          type   = "lua";
         } {
-          config = "luafile ${toString ./config/lspconfig.lua}";
+          config = builtins.readFile(./config/lspconfig.lua);
           plugin = nvim-lspconfig;
+          type   = "lua";
         } {
-          config = "luafile ${toString ./config/pqf.lua}";
+          config = builtins.readFile(./config/pqf.lua);
           plugin = nvim-pqf;
+          type   = "lua";
         } {
-          config = "luafile ${toString ./config/treesitter.lua}";
+          config = builtins.readFile(./config/treesitter.lua);
           plugin = nvim-treesitter.withAllGrammars;
+          type   = "lua";
         } {
-          config = "luafile ${toString ./config/devicons.lua}";
+          config = builtins.readFile(./config/devicons.lua);
           plugin = nvim-web-devicons;
+          type   = "lua";
         } {
           config = ''
             source ${toString ./config/telescope.vim}
@@ -90,15 +80,15 @@
             ];
           });
         } {
-          config = "source ${toString ./config/signify.vim}";
+          config = builtins.readFile(./config/signify.vim);
           plugin = vim-signify;
         }
         mkdir-nvim vim-cool vim-gh-line vim-matchup vim-sleuth vim-surround
       ];
-      vimdiffAlias  = true;
-      withNodeJs    = true;
-      withPython3   = true;
-      withRuby      = false;
+      vimdiffAlias   = true;
+      withNodeJs     = true;
+      withPython3    = false;
+      withRuby       = false;
     };
   };
 }

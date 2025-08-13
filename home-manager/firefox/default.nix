@@ -10,8 +10,23 @@
     languagePacks        = [ "pl" "en-US" ];
     nativeMessagingHosts = with pkgs; [ tridactyl-native ];
     profiles.default     = {
+      bookmarks   = {
+        force    = true;
+        settings = [
+          {
+            name    = "home-manager options";
+            keyword = "hm";
+            url     =
+              "https://nix-community.github.io/home-manager/options.xhtml";
+          }
+        ];
+      };
       search      = {
+        default = "kagi";
         engines = {
+          bing   = { metaData.hidden = true; };
+          ddg    = { metaData.hidden = true; };
+          ebay   = { metaData.hidden = true; };
           google = { metaData.alias = "@g"; };
           kagi   = {
             definedAliases  = [ "@k" ];

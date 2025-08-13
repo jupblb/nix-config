@@ -1,6 +1,8 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+
 local sources = cmp.config.sources({
     { name = 'treesitter' },
     { name = 'async_path' },
