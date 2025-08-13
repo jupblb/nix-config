@@ -63,6 +63,34 @@
             };
 
             programs = {
+              firefox      = {
+                profiles.default = {
+                  bookmarks = {
+                    settings = [
+                      {
+                        name    = "Notion";
+                        keyword = "notion";
+                        url     = "https://www.notion.so/sourcegraph";
+                      }
+                      {
+                        name    = "Okta";
+                        keyword = "okta";
+                        url     = "https://sourcegraph.okta.com";
+                      }
+                      {
+                        name    = "Sourcegraph";
+                        keyword = "dotcom";
+                        url     = "https://sourcegraph.com/";
+                      }
+                      {
+                        name    = "Sourcegraph2";
+                        keyword = "s2";
+                        url     = "https://sourcegraph.sourcegraph.com/";
+                      }
+                    ];
+                  };
+                };
+              };
               git          = {
                 # Not supported by Apple default git binary
                 extraConfig = { core.fsmonitor = lib.mkForce false; };

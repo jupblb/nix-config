@@ -1,4 +1,5 @@
 local telescope = require('telescope')
+local builtin   = require('telescope.builtin')
 
 telescope.setup({
     defaults = {
@@ -40,3 +41,32 @@ telescope.load_extension('file_browser')
 telescope.load_extension('fzf')
 telescope.load_extension('lsp_handlers')
 telescope.load_extension('ui-select')
+
+-- Keymaps
+vim.keymap.set('n', 'z=', builtin.spell_suggest)
+vim.keymap.set('n', '<Leader><Tab>',
+    function() builtin.buffers({ sort_mru = true }) end)
+vim.keymap.set('n', '<Leader>/', builtin.current_buffer_fuzzy_find)
+vim.keymap.set('n', '<Leader>ld',
+    function() builtin.diagnostics({ bufnr = 0 }) end)
+vim.keymap.set('n', '<Leader>lD', builtin.diagnostics)
+vim.keymap.set('n', '<Leader>e',
+    function()
+        telescope.extensions.file_browser.file_browser({
+            path = '%:p:h',
+            select_buffer = true
+        })
+    end)
+vim.keymap.set('n', '<Leader>f', builtin.find_files)
+vim.keymap.set('n', '<Leader>j', builtin.jumplist)
+vim.keymap.set('n', '<Leader>?', builtin.live_grep)
+vim.keymap.set('n', '<Leader>`', builtin.marks)
+vim.keymap.set('n', '<Leader>o',
+    function() builtin.oldfiles({ cwd_only = true }) end)
+vim.keymap.set('n', '<Leader><Space>', builtin.pickers)
+vim.keymap.set('n', '<Leader>"', builtin.registers)
+
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'TelescopePreviewerLoaded',
+    callback = function() vim.opt_local.wrap = true end
+})

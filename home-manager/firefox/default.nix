@@ -9,6 +9,29 @@
     enable               = true;
     languagePacks        = [ "pl" "en-US" ];
     nativeMessagingHosts = with pkgs; [ tridactyl-native ];
+    policies             = {
+      DisableFirefoxScreenshots = true;
+      # https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265/17
+      ExtensionSettings         =
+        let extension = shortId: uuid: {
+          name  = uuid;
+          value = {
+            install_url       =
+              "https://addons.mozilla.org/en-US/firefox/downloads/latest" +
+                "/${shortId}/latest.xpi";
+            installation_mode = "normal_installed";
+          };
+        };
+        # nix run github:tupakkatapa/mozid -- <url>
+        in builtins.listToAttrs([
+          (extension "clearurls"       "{74145f27-f039-47ce-a470-a662b129930a}")
+          (extension "consent-o-matic" "gdpr@cavi.au.dk")
+          (extension "sponsorblock"    "sponsorBlocker@ajay.app")
+          (extension "tree-style-tab"  "treestyletab@piro.sakura.ne.jp")
+          (extension "tridactyl-vim"   "tridactyl.vim@cmcaine.co.uk")
+          (extension "ublock-origin"   "uBlock0@raymondhill.net")
+        ]);
+    };
     profiles.default     = {
       bookmarks   = {
         force    = true;
@@ -75,7 +98,11 @@
       settings    = {
         "full-screen-api.warning.timeout"                     = 0;
         "general.warnOnAboutConfig"                           = false;
+        # Disable desktop notifications for websites
         "permissions.default.desktop-notification"            = 2;
+        # Disable containers
+        "privacy.userContext.enabled"                         = false;
+        # Enable userChrome and userContent (?)
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
       userContent = builtins.readFile(./userContent.css);

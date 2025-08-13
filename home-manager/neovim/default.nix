@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   home = {
     sessionVariables = {
       NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
@@ -7,11 +7,6 @@
 
   programs = {
     fish = { functions.vim = builtins.readFile(./singleton.fish); };
-
-    kitty = {
-      settings.scrollback_pager =
-        "${pkgs.fish}/bin/fish -c '${pkgs.vtclean}/bin/vtclean | ${config.programs.neovim.finalPackage}/bin/nvim -R -c \"normal G{}\"'";
-    };
 
     neovim = {
       defaultEditor  = true;
@@ -69,16 +64,14 @@
           plugin = nvim-web-devicons;
           type   = "lua";
         } {
-          config = ''
-            source ${toString ./config/telescope.vim}
-            luafile ${toString ./config/telescope.lua}
-          '';
+          config = builtins.readFile(./config/telescope.lua);
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
             dependencies = old.dependencies ++ [
               telescope-file-browser-nvim telescope-lsp-handlers-nvim
               telescope-ui-select-nvim
             ];
           });
+          type   = "lua";
         } {
           config = builtins.readFile(./config/signify.vim);
           plugin = vim-signify;
