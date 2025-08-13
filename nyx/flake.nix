@@ -64,6 +64,16 @@
 
             programs = {
               firefox      = {
+                policies         = {
+                  ExtensionSettings = {
+                    "plugin@okta.com" = {
+                      install_url       =
+                        "https://addons.mozilla.org/en-US/firefox/downloads" +
+                          "/latest/okta-browser-plugin/latest.xpi";
+                      installation_mode = "normal_installed";
+                    };
+                  };
+                };
                 profiles.default = {
                   bookmarks = {
                     settings = [

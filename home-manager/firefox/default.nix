@@ -11,9 +11,10 @@
     nativeMessagingHosts = with pkgs; [ tridactyl-native ];
     policies             = {
       DisableFirefoxScreenshots = true;
-      # https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265/17
       ExtensionSettings         =
-        let extension = shortId: uuid: {
+        # https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265/17
+        # nix run github:tupakkatapa/mozid -- <url>
+        let ext = shortId: uuid: {
           name  = uuid;
           value = {
             install_url       =
@@ -22,14 +23,13 @@
             installation_mode = "normal_installed";
           };
         };
-        # nix run github:tupakkatapa/mozid -- <url>
         in builtins.listToAttrs([
-          (extension "clearurls"       "{74145f27-f039-47ce-a470-a662b129930a}")
-          (extension "consent-o-matic" "gdpr@cavi.au.dk")
-          (extension "sponsorblock"    "sponsorBlocker@ajay.app")
-          (extension "tree-style-tab"  "treestyletab@piro.sakura.ne.jp")
-          (extension "tridactyl-vim"   "tridactyl.vim@cmcaine.co.uk")
-          (extension "ublock-origin"   "uBlock0@raymondhill.net")
+          (ext "clearurls"       "{74145f27-f039-47ce-a470-a662b129930a}")
+          (ext "consent-o-matic" "gdpr@cavi.au.dk")
+          (ext "sponsorblock"    "sponsorBlocker@ajay.app")
+          (ext "tree-style-tab"  "treestyletab@piro.sakura.ne.jp")
+          (ext "tridactyl-vim"   "tridactyl.vim@cmcaine.co.uk")
+          (ext "ublock-origin"   "uBlock0@raymondhill.net")
         ]);
     };
     profiles.default     = {
