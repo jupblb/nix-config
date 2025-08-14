@@ -104,6 +104,7 @@
               git          = {
                 # Not supported by Apple default git binary
                 extraConfig = { core.fsmonitor = lib.mkForce false; };
+                userEmail   = lib.mkForce("michal.kielbowicz@sourcegraph.com");
               };
               home-manager = { enable = true; };
               kitty        = {
