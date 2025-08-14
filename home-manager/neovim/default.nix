@@ -19,7 +19,8 @@
             [ curl fish-lsp marksman nil pandoc ripgrep shfmt ];
           nodePackages = with pkgs.nodePackages; [ bash-language-server ];
         in packages ++ nodePackages;
-      plugins        = with pkgs.vimPlugins; [ {
+      plugins        = with pkgs.vimPlugins; [
+        {
           config = builtins.readFile(./config/fidget.lua);
           plugin = fidget-nvim;
           type   = "lua";
@@ -76,8 +77,8 @@
           config = builtins.readFile(./config/signify.vim);
           plugin = vim-signify;
         }
-        mkdir-nvim vim-cool vim-gh-line vim-matchup vim-sleuth vim-surround
-      ];
+      ] ++
+        [ mkdir-nvim vim-cool vim-gh-line vim-matchup vim-sleuth vim-surround ];
       vimdiffAlias   = true;
       withNodeJs     = true;
       withPython3    = false;

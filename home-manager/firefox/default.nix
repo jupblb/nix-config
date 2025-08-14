@@ -42,6 +42,11 @@
             url     =
               "https://nix-community.github.io/home-manager/options.xhtml";
           }
+          {
+            name    = "nixpkgs";
+            keyword = "nixpkgs";
+            url     = "https://github.com/NixOS/nixpkgs";
+          }
         ];
       };
       search      = {
@@ -81,9 +86,17 @@
             ];
           };
           nixos  = {
+            definedAliases  = [ "@nixpr" ];
+            iconMapObj."16" = "https://nixos.org/favicon.ico";
+            urls            = [
+              {
+                template = "https://nixpk.gs/pr-tracker.html?pr={searchTerms}";
+              }
+            ];
+          };
+          nixpr  = {
             definedAliases  = [ "@nixos" ];
             iconMapObj."16" = "https://nixos.org/favicon.ico";
-            name            = "NixOS Options";
             urls            = [
               {
                 template =
@@ -96,14 +109,15 @@
         order   = [ "kagi" "google" ];
       };
       settings    = {
-        "full-screen-api.warning.timeout"                     = 0;
-        "general.warnOnAboutConfig"                           = false;
+        "full-screen-api.warning.timeout"          = 0;
+        "browser.aboutConfig.showWarning"          = false;
+        "browser.ml.chat.provider"                 =
+          "https://gemini.google.com";
+        "general.warnOnAboutConfig"                = false;
         # Disable desktop notifications for websites
-        "permissions.default.desktop-notification"            = 2;
+        "permissions.default.desktop-notification" = 2;
         # Disable containers
-        "privacy.userContext.enabled"                         = false;
-        # Enable userChrome and userContent (?)
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "privacy.userContext.enabled"              = false;
       };
       userContent = builtins.readFile(./userContent.css);
     };
