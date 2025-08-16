@@ -69,6 +69,7 @@
         push                = { autoSetupRemote = true; default = "current"; };
         submodule.recurse   = true;
       };
+      ignores     = [ ".direnv" ".envrc" ".nvim.lua" ];
       signing     = {
         format        = "ssh";
         key           = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
