@@ -5,6 +5,12 @@
     (iosevka-bin.override({ variant = "SGr-Iosevka"; }))
   ];
 
+  programs.kitty = {
+    settings = {
+      open_url_with = "launch firefox";
+    };
+  };
+
   programs.firefox = {
     enable               = true;
     languagePacks        = [ "pl" "en-US" ];
