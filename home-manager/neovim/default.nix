@@ -53,10 +53,6 @@
           plugin = nvim-lspconfig;
           type   = "lua";
         } {
-          config = builtins.readFile(./config/pqf.lua);
-          plugin = nvim-pqf;
-          type   = "lua";
-        } {
           config = builtins.readFile(./config/treesitter.lua);
           plugin = nvim-treesitter.withAllGrammars;
           type   = "lua";
@@ -76,6 +72,10 @@
         } {
           config = builtins.readFile(./config/signify.vim);
           plugin = vim-signify;
+        } {
+          config = "require('zoekt').setup({})";
+          plugin = zoekt-nvim;
+          type   = "lua";
         }
       ] ++
         [ mkdir-nvim vim-cool vim-gh-line vim-matchup vim-sleuth vim-surround ];
