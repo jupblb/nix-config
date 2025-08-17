@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   home = {
     sessionVariables = {
+      CTAGS_COMMAND       = "${pkgs.universal-ctags}/bin/ctags";
       NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
     };
   };
@@ -16,7 +17,7 @@
       extraPackages  =
         let
           packages     = with pkgs;
-            [ curl fish-lsp marksman nil pandoc ripgrep shfmt ];
+            [ curl fish-lsp marksman nil pandoc ripgrep shfmt zoekt ];
           nodePackages = with pkgs.nodePackages; [ bash-language-server ];
         in packages ++ nodePackages;
       plugins        = with pkgs.vimPlugins; [
@@ -73,7 +74,10 @@
           config = builtins.readFile(./config/signify.vim);
           plugin = vim-signify;
         } {
-          config = "require('zoekt').setup({})";
+          config = ''
+            require('zoekt').setup({})
+            vim.keymap.set('n', '<Leader>q', telescope.extensions.zoekt.zoekt)
+          '';
           plugin = zoekt-nvim;
           type   = "lua";
         }

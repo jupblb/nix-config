@@ -27,8 +27,8 @@ self: super: with super; {
       src     = super.fetchFromGitHub({
         owner  = "jupblb";
         repo   = pname;
-        rev    = "27c029ba1487c26e55d42741eefad1bce5fdfbf0";
-        sha256 = "sha256-vzOgq789djlTg0NGnywkJAlwCnHkpz1UA9uTiYmRqHw=";
+        rev    = "0894e02618b1890362face316f52e93bfb3c4c98";
+        sha256 = "sha256-F9WS4mjUIA1T8Gjj4BaGi8NZREaAJlQQHoENYT9VA40=";
       });
       version = "2025-08-17";
     });
