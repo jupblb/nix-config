@@ -63,10 +63,6 @@ local lsp_attach = function(client, bufnr)
         group    = lspAttachAuGroup,
     })
 
-    if vim.fn.getcwd():find('/google/src/') ~= nil then
-        return
-    end
-
     if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer   = bufnr,

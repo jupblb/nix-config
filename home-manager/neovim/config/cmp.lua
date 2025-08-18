@@ -3,23 +3,11 @@ local luasnip = require('luasnip')
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
-local sources = cmp.config.sources({
-    { name = 'treesitter' },
-    { name = 'async_path' },
+require('copilot').setup({
+    panel      = { enabled = false, },
+    suggestion = { enabled = false, },
 })
-
-if vim.fn.getcwd():find('/google/src/') == nil then
-    require('copilot').setup({
-        panel      = { enabled = false, },
-        suggestion = { enabled = false, },
-    })
-    require('copilot_cmp').setup({})
-    sources = cmp.config.sources({
-        { name = 'copilot', },
-        { name = 'treesitter' },
-        { name = 'async_path' },
-    })
-end
+require('copilot_cmp').setup({})
 
 -- https://github.com/zbirenbaum/copilot-cmp?tab=readme-ov-file#tab-completion-configuration-highly-recommended
 local has_words_before = function()
@@ -63,7 +51,11 @@ cmp.setup({
     snippet      = {
         expand = function(args) luasnip.lsp_expand(args.body) end,
     },
-    sources      = sources,
+    sources      = cmp.config.sources({
+        { name = 'copilot', },
+        { name = 'treesitter' },
+        { name = 'async_path' },
+    }),
     window       = { documentation = cmp.config.window.bordered() }
 })
 
@@ -74,7 +66,8 @@ vim.lsp.config('*', {
                 cmp.setup.buffer({
                     sources = cmp.config.sources({
                         { name = 'copilot' }, { name = 'nvim_lsp' },
-                        { name = 'nvim_lsp_signature_help' }, { name = 'async_path' },
+                        { name = 'nvim_lsp_signature_help' },
+                        { name = 'async_path' },
                     }),
                 })
             end
