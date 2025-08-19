@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   home = {
+    packages         = with pkgs; [ zoekt ];
     sessionVariables = {
       CTAGS_COMMAND       = "${pkgs.universal-ctags}/bin/ctags";
       NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
@@ -17,7 +18,7 @@
       extraPackages  =
         let
           packages     = with pkgs;
-            [ curl fish-lsp marksman nil pandoc ripgrep shfmt zoekt ];
+            [ curl fish-lsp marksman nil pandoc ripgrep shfmt ];
           nodePackages = with pkgs.nodePackages; [ bash-language-server ];
         in packages ++ nodePackages;
       plugins        = with pkgs.vimPlugins; [
