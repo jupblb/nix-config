@@ -49,6 +49,11 @@
               "https://nix-community.github.io/home-manager/options.xhtml";
           }
           {
+            name    = "Nix package versions";
+            keyword = "nix-versions";
+            url     = "https://lazamar.co.uk/nix-versions/";
+          }
+          {
             name    = "nixpkgs";
             keyword = "nixpkgs";
             url     = "https://github.com/NixOS/nixpkgs";

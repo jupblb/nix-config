@@ -1,5 +1,5 @@
 require('nvim-treesitter.configs').setup({
-    highlight             = { enable = true, disable = { 'yaml' } },
+    highlight             = { enable = true },
     incremental_selection = {
         enable  = true,
         keymaps = {
@@ -11,5 +11,5 @@ require('nvim-treesitter.configs').setup({
     matchup               = { enable = true },
 })
 
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr   = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr   = 'v:lua.vim.treesitter.foldexpr()'
