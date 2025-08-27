@@ -90,7 +90,7 @@
                       {
                         name    = "Sourcegraph";
                         keyword = "dotcom";
-                        url     = "https://sourcegraph.com/";
+                        url     = "https://sourcegraph.com/search";
                       }
                       {
                         name    = "Sourcegraph2";
@@ -100,6 +100,10 @@
                     ];
                   };
                 };
+              };
+              fish         = {
+                interactiveShellInit =
+                  "source ${config.xdg.configHome}/fish/config.local.fish";
               };
               git          = {
                 # Not supported by Apple default git binary
