@@ -1,9 +1,9 @@
-self: super: with super; {
-  fortune     = fortune.override({ withOffensive = true; });
-  gtasks-md   = callPackage ./gtasks-md.nix {
-    inherit (haskellPackages) pandoc-types;
+final: prev: {
+  fortune     = prev.fortune.override({ withOffensive = true; });
+  gtasks-md   = final.callPackage ./gtasks-md.nix {
+    inherit (final.haskellPackages) pandoc-types;
   };
-  python312   = super.python312.override {
+  python312   = prev.python312.override {
     packageOverrides = pythonSelf: pythonSuper: {
       # https://github.com/NixOS/nixpkgs/issues/336593
       iterfzf = pythonSuper.iterfzf.overridePythonAttrs(_: {
@@ -11,10 +11,10 @@ self: super: with super; {
       });
     };
   };
-  vimPlugins  = super.vimPlugins // {
-    no-neck-pain-nvim = super.vimUtils.buildVimPlugin(rec {
+  vimPlugins  = prev.vimPlugins // {
+    no-neck-pain-nvim = final.vimUtils.buildVimPlugin(rec {
       pname   = "no-neck-pain.nvim";
-      src     = super.fetchFromGitHub({
+      src     = final.fetchFromGitHub({
         owner  = "shortcuts";
         repo   = pname;
         rev    = "7bf83d3cfc8f6a120734f4254bbb87928756bea0";
@@ -22,9 +22,9 @@ self: super: with super; {
       });
       version = "2025-07-20";
     });
-    zoekt-nvim        = super.vimUtils.buildVimPlugin(rec {
+    zoekt-nvim        = final.vimUtils.buildVimPlugin(rec {
       pname   = "zoekt.nvim";
-      src     = super.fetchFromGitHub({
+      src     = final.fetchFromGitHub({
         owner  = "jupblb";
         repo   = pname;
         rev    = "0894e02618b1890362face316f52e93bfb3c4c98";
@@ -33,5 +33,5 @@ self: super: with super; {
       version = "2025-08-17";
     });
   };
-  vtclean     = callPackage ./vtclean.nix {};
+  vtclean     = final.callPackage ./vtclean.nix {};
 }
