@@ -11,10 +11,14 @@
       url    = "github:hraban/mac-app-util";
       inputs = { nixpkgs.follows = "nixpkgs"; };
     };
+    nix-ai-tools = {
+      # inputs = { nixpkgs.follows = "nixpkgs"; };
+      url    = "github:numtide/nix-ai-tools";
+    };
     nixpkgs      = { url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin"; };
   };
 
-  outputs = { home-manager, mac-app-util, nixpkgs, ... }:
+  outputs = { home-manager, mac-app-util, nix-ai-tools, nixpkgs, ... }:
     let
       system = "aarch64-darwin";
       pkgs   = import nixpkgs {
@@ -29,7 +33,6 @@
           mac-app-util.homeManagerModules.default
 
           ../home-manager
-          ../home-manager/ai.nix
           ../home-manager/direnv.nix
           ../home-manager/firefox
           ../home-manager/fish
@@ -43,9 +46,12 @@
             home = {
               homeDirectory    = "/Users/jupblb";
               packages         =
-                let iosevka =
-                  pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
-                in with pkgs; [ google-cloud-sdk iosevka ];
+                let
+                  iosevka  =
+                    pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
+                  ai-tools = with nix-ai-tools.packages.${system};
+                    [ amp crush gemini-cli ];
+                in ai-tools ++ (with pkgs; [ google-cloud-sdk iosevka ]);
               sessionPath      = [
                 "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
                 "/opt/homebrew/sbin" "/opt/podman/bin"

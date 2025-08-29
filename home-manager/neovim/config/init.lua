@@ -105,6 +105,7 @@ local markdown_format = function()
 
     local bufnr = vim.api.nvim_get_current_buf()
     local format = function(formatter)
+        if formatter == nil then return end
         local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, true)
         local cmd = table.concat(_G.markdown_formatters[formatter], ' ')
         local output = vim.fn.systemlist(cmd, lines)
