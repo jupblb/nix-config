@@ -11,10 +11,19 @@
       url    = "github:nix-community/home-manager/release-25.05";
       inputs = { nixpkgs.follows = "nixpkgs"; };
     };
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs = { nixpkgs.follows = "nixpkgs"; };
+    };
+    nix-ai-tools = { url = "github:numtide/nix-ai-tools"; };
+    nix-darwin   = {
+      url = "github:LnL7/nix-darwin";
+      inputs = { nixpkgs.follows = "nixpkgs"; };
+    };
     nixpkgs      = { url = "github:NixOS/nixpkgs/nixos-25.05"; };
   };
 
-  outputs = { self, nixpkgs, flake-utils, home-manager, agenix, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, home-manager, agenix, nix-darwin, mac-app-util, nix-ai-tools, ... }@inputs:
     let common = { ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
     };
@@ -49,6 +58,25 @@
             home-manager.nixosModules.home-manager
             agenix.nixosModules.default
             common
+          ];
+          specialArgs = { inherit inputs; };
+        };
+      };
+
+      darwinConfigurations = {
+        nyx = nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            home-manager.darwinModules.home-manager
+            mac-app-util.darwinModules.default
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.jupblb = ./nyx.nix;
+                extraSpecialArgs = { inherit inputs nix-ai-tools; };
+              };
+            }
           ];
           specialArgs = { inherit inputs; };
         };
