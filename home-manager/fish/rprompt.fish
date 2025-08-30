@@ -35,7 +35,19 @@ if git rev-parse --is-inside-work-tree &>/dev/null
         set -g __fish_git_prompt_color_untrackedfiles 427b58
     end
 
-    set -l git_root_dir (basename (git rev-parse --show-toplevel))
+    set -l git_common_dir (git rev-parse --git-common-dir 2>/dev/null)
+    set -l git_toplevel (git rev-parse --show-toplevel 2>/dev/null)
 
-    echo -n " $(set_color af3a03) $git_root_dir$(set_color normal)$(fish_git_prompt)"
+    if test -n "$git_common_dir" -a -n "$git_toplevel"
+        set -l repo_name "(unknown)"
+        # Check if we're in a worktree
+        if string match -q ".git" "$git_common_dir"
+            set repo_name (basename "$git_toplevel")
+        else
+            set -l main_repo_dir (dirname "$git_common_dir")
+            set repo_name (basename "$main_repo_dir")
+        end
+
+        echo -n " $(set_color af3a03) $repo_name$(set_color normal)$(fish_git_prompt)"
+    end
 end
