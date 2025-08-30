@@ -47,7 +47,7 @@
       nixosConfigurations = {
         hades    = nixpkgs-nixos.lib.nixosSystem({
           modules     = [
-            ./hades.nix
+            ./hosts/hades.nix
             home-manager-nixos.nixosModules.home-manager
           ];
           specialArgs = { inherit inputs; };
@@ -55,7 +55,7 @@
         });
         dionysus = nixpkgs-nixos.lib.nixosSystem({
           modules     = [
-            ./dionysus.nix
+            ./hosts/dionysus.nix
             home-manager-nixos.nixosModules.home-manager
             agenix.nixosModules.default
           ];
@@ -67,7 +67,7 @@
       homeConfigurations = {
         "jupblb@nyx" = home-manager-darwin.lib.homeManagerConfiguration({
           modules          = [
-            ./nyx.nix
+            ./hosts/nyx.nix
             mac-app-util.homeManagerModules.default
           ];
           extraSpecialArgs = { inherit inputs nix-ai-tools; };
