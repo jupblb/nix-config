@@ -83,9 +83,7 @@
     };
   };
 
-  imports =
-    let agenix = "https://github.com/ryantm/agenix/archive/main.tar.gz";
-    in [ ./default.nix "${builtins.fetchTarball(agenix)}/modules/age.nix" ];
+  imports = [ ./default.nix ];
 
   networking = {
     domain   = "kielbowi.cz";

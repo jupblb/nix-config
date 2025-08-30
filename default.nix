@@ -46,12 +46,6 @@
 
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
 
-  imports =
-    let
-      url = "https://github.com/nix-community/home-manager/archive/${tar}";
-      tar = "release-25.05.tar.gz";
-    in [ "${fetchTarball url}/nixos" ];
-
   networking = { nameservers = [ "1.1.1.1" "8.8.8.8" ]; };
 
   nix.settings.trusted-users = [ "root" "jupblb" ];
