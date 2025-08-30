@@ -70,3 +70,6 @@ vim.api.nvim_create_autocmd('User', {
     pattern = 'TelescopePreviewerLoaded',
     callback = function() vim.opt_local.wrap = true end
 })
+
+require('zoekt').setup({})
+vim.keymap.set('n', '<Leader>q', telescope.extensions.zoekt.zoekt)

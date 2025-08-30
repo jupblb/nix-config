@@ -68,19 +68,13 @@
             dependencies = old.dependencies ++ [
               telescope-file-browser-nvim telescope-live-grep-args-nvim
               telescope-lsp-handlers-nvim telescope-ui-select-nvim
+              zoekt-nvim
             ];
           });
           type   = "lua";
         } {
           config = builtins.readFile(./config/signify.vim);
           plugin = vim-signify;
-        } {
-          config = ''
-            require('zoekt').setup({})
-            vim.keymap.set('n', '<Leader>q', telescope.extensions.zoekt.zoekt)
-          '';
-          plugin = zoekt-nvim;
-          type   = "lua";
         }
       ] ++
         [ mkdir-nvim vim-cool vim-gh-line vim-matchup vim-sleuth vim-surround ];
