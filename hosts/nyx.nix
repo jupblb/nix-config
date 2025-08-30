@@ -26,13 +26,13 @@
   };
 
   imports = [
-    ./home-manager
-    ./home-manager/direnv.nix
-    ./home-manager/firefox
-    ./home-manager/fish
-    ./home-manager/kitty.nix
-    ./home-manager/lf
-    ./home-manager/neovim
+    ../home-manager
+    ../home-manager/direnv.nix
+    ../home-manager/firefox
+    ../home-manager/fish
+    ../home-manager/kitty.nix
+    ../home-manager/lf
+    ../home-manager/neovim
   ];
 
   programs = {
@@ -81,6 +81,7 @@
     git          = {
       # Not supported by Apple default git binary
       extraConfig = { core.fsmonitor = lib.mkForce false; };
+      ignores     = [ "index.scip" ];
       userEmail   = lib.mkForce("michal.kielbowicz@sourcegraph.com");
     };
     home-manager = { enable = true; };

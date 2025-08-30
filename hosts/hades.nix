@@ -57,8 +57,8 @@
     home = { stateVersion = config.system.stateVersion; };
 
     imports = [
-      ./home-manager/firefox
-      ./home-manager/kitty.nix
+      ../home-manager/firefox
+      ../home-manager/kitty.nix
     ];
 
     programs = {
