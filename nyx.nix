@@ -1,4 +1,4 @@
-{ config, lib, pkgs, nix-ai-tools, ... }: {
+{ config, lib, nix-ai-tools, pkgs, ... }: {
   fonts.fontconfig = { enable = true; };
 
   home = {

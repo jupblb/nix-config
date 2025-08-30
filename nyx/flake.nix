@@ -1,1 +1,0 @@
-/Users/jupblb/Workspace/nix-config/flake.nix

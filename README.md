@@ -2,12 +2,6 @@
 
 Flake-based NixOS and Darwin configuration for multiple hosts.
 
-## Hosts
-
-- **hades**: Gaming desktop with NVIDIA GPU (NixOS)
-- **dionysus**: Home server with media services (NixOS)  
-- **nyx**: Development machine (macOS, home-manager only)
-
 ## Commands
 
 ```bash
@@ -26,12 +20,3 @@ nix flake check --impure
 nix develop
 # or use direnv: direnv allow
 ```
-
-## Structure
-
-- `flake.nix` - Main flake configuration
-- `default.nix` - Shared configuration for NixOS hosts
-- `hades.nix` - Gaming desktop config  
-- `dionysus.nix` - Server config
-- `nyx.nix` - macOS home-manager config
-- `home-manager/` - User configuration modules

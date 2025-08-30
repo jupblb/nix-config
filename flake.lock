@@ -5,7 +5,7 @@
         "darwin": "darwin",
         "home-manager": "home-manager",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-nixos"
         ],
         "systems": "systems"
       },
@@ -161,10 +161,10 @@
         "type": "github"
       }
     },
-    "home-manager_2": {
+    "home-manager-nixos": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-nixos"
         ]
       },
       "locked": {
@@ -188,7 +188,7 @@
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-darwin"
         ],
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix"
@@ -259,6 +259,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-nixos": {
+      "locked": {
+        "lastModified": 1756469547,
+        "narHash": "sha256-YvtD2E7MYsQ3r7K9K2G7nCslCKMPShoSEAtbjHLtH0k=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "41d292bfc37309790f70f4c120b79280ce40af16",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1756386758,
@@ -275,31 +291,15 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1756346337,
-        "narHash": "sha256-al0UcN5mXrO/p5lcH0MuQaj+t97s3brzCii8GfCBMuA=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "84c26d62ce9e15489c63b83fc44e6eb62705d2c9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "home-manager": "home-manager_2",
         "home-manager-darwin": "home-manager-darwin",
+        "home-manager-nixos": "home-manager-nixos",
         "mac-app-util": "mac-app-util",
         "nix-ai-tools": "nix-ai-tools",
-        "nixpkgs": "nixpkgs_3",
-        "nixpkgs-darwin": "nixpkgs-darwin"
+        "nixpkgs-darwin": "nixpkgs-darwin",
+        "nixpkgs-nixos": "nixpkgs-nixos"
       }
     },
     "systems": {

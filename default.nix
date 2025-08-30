@@ -48,7 +48,12 @@
 
   networking = { nameservers = [ "1.1.1.1" "8.8.8.8" ]; };
 
-  nix.settings.trusted-users = [ "root" "jupblb" ];
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users         = [ "root" "jupblb" ];
+    };
+  };
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays           = [ (import ./overlay) ];
