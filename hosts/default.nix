@@ -56,7 +56,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays           = [ (import ./overlay) ];
+  nixpkgs.overlays           = [ (import ../overlay) ];
 
   programs = {
     bash   = {
