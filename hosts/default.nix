@@ -135,7 +135,7 @@
     initialPassword = "changeme";
     isNormalUser    = true;
     openssh         = {
-      authorizedKeys.keyFiles = [ ./secret/id_ed25519.pub ];
+      authorizedKeys.keyFiles = [ ../secret/id_ed25519.pub ];
     };
     shell           = pkgs.fish;
   };
