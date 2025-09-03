@@ -19,36 +19,18 @@ if test $cmd_duration -gt 3000
     echo -n "$(set_color normal)"
 end
 
-if git rev-parse --is-inside-work-tree &>/dev/null
-    set -g __fish_git_prompt_char_cleanstate ""
-    set -g __fish_git_prompt_char_stateseparator " "
-    set -g __fish_git_prompt_char_upstream_equal ""
-    set -g __fish_git_prompt_showstashstate
-    set -g __fish_git_prompt_showupstream informative
-    set -g __fish_git_prompt_use_informative_chars 1
-
-    if test "$TERM" = xterm-kitty # gruvbox
-        set -g __fish_git_prompt_color af3a03
-        set -g __fish_git_prompt_color_dirtystate b57614
-        set -g __fish_git_prompt_color_merging af3a03
-        set -g __fish_git_prompt_color_stagedstate 79740e
-        set -g __fish_git_prompt_color_untrackedfiles 427b58
+set -l git_common_dir (git rev-parse --git-common-dir 2>/dev/null)
+set -l git_toplevel (git rev-parse --show-toplevel 2>/dev/null)
+if test -n "$git_common_dir" -a -n "$git_toplevel"
+    # Find the real repository root even inside a linked work-tree
+    if not string match -q "/*" -- $git_common_dir
+        set git_common_dir (realpath $git_common_dir)
     end
 
-    set -l git_common_dir (git rev-parse --git-common-dir 2>/dev/null)
-    set -l git_toplevel (git rev-parse --show-toplevel 2>/dev/null)
-
-    if test -n "$git_common_dir" -a -n "$git_toplevel"
-        # Find the real repository root even inside a linked work-tree
-        if not string match -q "/*" -- $git_common_dir
-            set git_common_dir (realpath $git_common_dir)
-        end
-
-        while test (basename $git_common_dir) != ".git"
-            set git_common_dir (dirname $git_common_dir)
-        end
-        set -l repo_name (basename (dirname $git_common_dir))
-
-        echo -n " $(set_color af3a03) $repo_name$(set_color normal)$(fish_git_prompt)"
+    while test (basename $git_common_dir) != ".git"
+        set git_common_dir (dirname $git_common_dir)
     end
+    set -l repo_name (basename (dirname $git_common_dir))
+
+    echo -n " $(set_color af3a03) $repo_name$(set_color normal)$(fish_git_prompt)"
 end

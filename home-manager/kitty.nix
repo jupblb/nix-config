@@ -7,6 +7,16 @@
   };
 
   programs = {
+    fish = {
+      interactiveShellInit = ''
+        set -gx __fish_git_prompt_color af3a03
+        set -gx __fish_git_prompt_color_dirtystate b57614
+        set -gx __fish_git_prompt_color_merging af3a03
+        set -gx __fish_git_prompt_color_stagedstate 79740e
+        set -gx __fish_git_prompt_color_untrackedfiles 427b58
+      '';
+    };
+
     kitty = {
       enable      = true;
       font        = {
