@@ -39,14 +39,15 @@ if git rev-parse --is-inside-work-tree &>/dev/null
     set -l git_toplevel (git rev-parse --show-toplevel 2>/dev/null)
 
     if test -n "$git_common_dir" -a -n "$git_toplevel"
-        set -l repo_name "(unknown)"
-        # Check if we're in a worktree
-        if string match -q ".git" "$git_common_dir"
-            set repo_name (basename "$git_toplevel")
-        else
-            set -l main_repo_dir (dirname "$git_common_dir")
-            set repo_name (basename "$main_repo_dir")
+        # Find the real repository root even inside a linked work-tree
+        if not string match -q "/*" -- $git_common_dir
+            set git_common_dir (realpath $git_common_dir)
         end
+
+        while test (basename $git_common_dir) != ".git"
+            set git_common_dir (dirname $git_common_dir)
+        end
+        set -l repo_name (basename (dirname $git_common_dir))
 
         echo -n " $(set_color af3a03) $repo_name$(set_color normal)$(fish_git_prompt)"
     end
