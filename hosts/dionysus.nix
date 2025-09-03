@@ -74,7 +74,7 @@
     programs = {
       fish.functions = {
         zfs-backup-unlock =
-          builtins.readFile ./config/zfs-backup-unlock.fish;
+          builtins.readFile ../config/zfs-backup-unlock.fish;
       };
 
       git-credential-oauth = { extraFlags = [ "-device" ]; };
