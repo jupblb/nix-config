@@ -33,5 +33,4 @@ final: prev: {
       version = "2025-08-17";
     });
   };
-  vtclean     = final.callPackage ./vtclean.nix {};
 }

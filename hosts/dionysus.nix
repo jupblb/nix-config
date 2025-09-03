@@ -2,24 +2,24 @@
   age = {
     secrets = {
       authelia_jwt_secret             = {
-        file  = ../secret/authelia_jwt_secret.age;
+        file  = ./secret/authelia_jwt_secret.age;
         owner = config.services.authelia.instances.default.user;
       };
       authelia_storage_encryption_key = {
-        file  = ../secret/authelia_storage_encryption_key.age;
+        file  = ./secret/authelia_storage_encryption_key.age;
         owner = config.services.authelia.instances.default.user;
       };
       cloudflared_credentials         = {
-        file = ../secret/cloudflared_credentials.age;
+        file = ./secret/cloudflared_credentials.age;
       };
       photoprism_password             = {
-        file = ../secret/photoprism_password.age;
+        file = ./secret/photoprism_password.age;
       };
       restic_gcs_credentials          = {
-        file = ../secret/restic_gcs_credentials.age;
+        file = ./secret/restic_gcs_credentials.age;
       };
       restic_password                 = {
-        file = ../secret/restic_password.age;
+        file = ./secret/restic_password.age;
       };
     };
   };
@@ -74,7 +74,7 @@
     programs = {
       fish.functions = {
         zfs-backup-unlock =
-          builtins.readFile ../config/zfs-backup-unlock.fish;
+          builtins.readFile ./config/zfs-backup-unlock.fish;
       };
 
       git-credential-oauth = { extraFlags = [ "-device" ]; };
@@ -404,14 +404,14 @@
         (python3.withPackages(p: with p; [ gitignore-parser ]))
       ];
       script        = ''
-        sh ${../config/stignore.sh}
+        sh ${./config/stignore.sh}
 
         inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
           -m -r /backup/jupblb/Workspace |
         while read -r line; do
           if [[ "$line" == ".gitignore" ]]; then
             >&2 echo ".gitignore update"
-            sh ${../config/stignore.sh}
+            sh ${./config/stignore.sh}
           fi
         done
       '';

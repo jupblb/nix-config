@@ -56,7 +56,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays           = [ (import ../overlay) ];
+  nixpkgs.overlays           = [ (import ./overlay) ];
 
   programs = {
     bash   = {
@@ -135,7 +135,7 @@
     initialPassword = "changeme";
     isNormalUser    = true;
     openssh         = {
-      authorizedKeys.keyFiles = [ ../secret/id_ed25519.pub ];
+      authorizedKeys.keyFiles = [ ./secret/id_ed25519.pub ];
     };
     shell           = pkgs.fish;
   };
