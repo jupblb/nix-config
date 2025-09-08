@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   home = {
     packages         = with pkgs; [ fd ];
     sessionVariables = { ZO_METHOD = "lf"; };
@@ -8,22 +8,12 @@
     fish.functions = { lf = builtins.readFile ./lf-vim.fish; };
 
     lf = {
-      enable      = true;
-      extraConfig =
-        let cleaner = pkgs.writeScript "lf-cleaner"
-          (builtins.readFile ./cleaner.bash);
-        in ''
-          set cleaner ${cleaner}
-          map <c-z> $ kill -STOP $PPID
-        '';
-      previewer   = {
+      enable    = true;
+      previewer = {
         keybinding = "`";
-        source     = with pkgs; writeShellScript "lf-preview" ''
-          ${builtins.readFile ./previewer.bash}
-          ${pkgs.pistol}/bin/pistol "$1"
-        '';
+        source     = "${config.programs.pistol.package}/bin/pistol";
       };
-      settings    = { hidden = true; icons = true; tabstop = 4; };
+      settings  = { hidden = true; icons = true; tabstop = 4; };
     };
 
     pistol = {
@@ -34,13 +24,12 @@
         command = "${pkgs.jq}/bin/jq --color-output . %pistol-filename%";
         mime    = "application/json";
       } {
-        command = "${pkgs.poppler_utils}/bin/pdftotext %pistol-filename% -";
-        mime    = "application/pdf";
-      } {
-        command = "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
+        command =
+          "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
         mime    = "text/*";
       } {
-        command = "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
+        command =
+          "${pkgs.bat}/bin/bat --style=numbers --color=always %pistol-filename%";
         mime    = "application/javascript";
       } ];
       enable       = true;
