@@ -3,8 +3,9 @@
 
   programs = {
     eza = {
-      enable                = true;
-      enableFishIntegration = false;
+      enable       = true;
+      extraOptions = [ "--group-directories-first" ];
+      icons        = "never";
     };
 
     fish = {
@@ -20,7 +21,6 @@
         fish_prompt       = builtins.readFile ./prompt.fish;
         fish_mode_prompt  = "";
         fish_right_prompt = builtins.readFile ./rprompt.fish;
-        ls                = builtins.readFile ./eza.fish;
       };
       interactiveShellInit = builtins.readFile ./init.fish;
       plugins              = [ {
@@ -37,6 +37,7 @@
         cat  = "${pkgs.bat}/bin/bat --style=plain --paging=never";
         diff = "${pkgs.difftastic}/bin/difft --background=light --tab-width=2";
         less = "${pkgs.bat}/bin/bat --style=plain --paging=always";
+        ls   = "eza";
       };
     };
 
