@@ -8,7 +8,7 @@ if set -q SSH_TTY
 end
 
 # pwd
-echo -n "$(set_color 79740e)$(prompt_pwd)$(set_color normal) "
+echo -n "$(set_color 79740e)$(prompt_pwd -D 3)$(set_color normal) "
 
 # icons
 set -l icons
