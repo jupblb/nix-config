@@ -19,18 +19,7 @@ if test $cmd_duration -gt 3000
     echo -n "$(set_color normal)"
 end
 
-set -l git_common_dir (git rev-parse --git-common-dir 2>/dev/null)
-set -l git_toplevel (git rev-parse --show-toplevel 2>/dev/null)
-if test -n "$git_common_dir" -a -n "$git_toplevel"
-    # Find the real repository root even inside a linked work-tree
-    if not string match -q "/*" -- $git_common_dir
-        set git_common_dir (realpath $git_common_dir)
-    end
-
-    while test (basename $git_common_dir) != ".git"
-        set git_common_dir (dirname $git_common_dir)
-    end
-    set -l repo_name (basename (dirname $git_common_dir))
-
-    echo -n " $(set_color af3a03) $repo_name$(set_color normal)$(fish_git_prompt)"
+if git rev-parse --is-inside-work-tree &>/dev/null
+    set -l git_root_dir (basename (git rev-parse --show-toplevel))
+    echo -n " $(set_color af3a03) $git_root_dir$(set_color normal)$(fish_git_prompt)"
 end
