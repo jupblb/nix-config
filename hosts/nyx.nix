@@ -45,6 +45,12 @@
                 "/latest/okta-browser-plugin/latest.xpi";
             installation_mode = "normal_installed";
           };
+          "{bf855ead-d7c3-4c7b-9f88-9a7e75c0efdf}" = {
+            install_url       =
+              "https://addons.mozilla.org/en-US/firefox/downloads" +
+                "/latest/zoom_new_scheduler/latest.xpi";
+            installation_mode = "normal_installed";
+          };
         };
       };
       profiles.default = {
