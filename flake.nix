@@ -65,7 +65,7 @@
       };
 
       homeConfigurations = {
-        "jupblb@nyx" = home-manager-darwin.lib.homeManagerConfiguration({
+        jupblb = home-manager-darwin.lib.homeManagerConfiguration({
           modules          = [
             ./hosts/nyx.nix
             mac-app-util.homeManagerModules.default
