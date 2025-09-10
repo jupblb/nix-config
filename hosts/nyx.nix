@@ -8,7 +8,7 @@
         iosevka  = pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
         ai-tools = with nix-ai-tools.packages.aarch64-darwin;
           [ amp crush gemini-cli ];
-      in ai-tools ++ [ iosevka pkgs.google-cloud-sdk pkgs.vhs ];
+      in ai-tools ++ (with pkgs; [ glow iosevka google-cloud-sdk vhs ]);
     sessionPath      = [
       "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
       "/opt/homebrew/sbin" "/opt/podman/bin"
