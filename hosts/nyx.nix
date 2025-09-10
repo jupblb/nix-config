@@ -74,7 +74,12 @@
             {
               name    = "Sourcegraph2";
               keyword = "s2";
-              url     = "https://sourcegraph.sourcegraph.com/";
+              url     = "https://sourcegraph.sourcegraph.com/search";
+            }
+            {
+              name    = "Sourcegraph Test";
+              keyword = "test";
+              url     = "https://sourcegraph.test:3443/search";
             }
           ];
         };
