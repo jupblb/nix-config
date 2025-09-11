@@ -7,8 +7,8 @@
       let
         iosevka  = pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
         ai-tools = with nix-ai-tools.packages.aarch64-darwin;
-          [ amp crush gemini-cli ];
-      in ai-tools ++ (with pkgs; [ glow iosevka google-cloud-sdk vhs ]);
+          [ amp gemini-cli ];
+      in ai-tools ++ (with pkgs; [ glow iosevka ]);
     sessionPath      = [
       "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
       "/opt/homebrew/sbin" "/opt/podman/bin"
@@ -56,6 +56,11 @@
       profiles.default = {
         bookmarks = {
           settings = [
+            {
+              name    = "Cloud Ops";
+              keyword = "ops";
+              url     = "https://cloud-ops.sgdev.org";
+            }
             {
               name    = "Notion";
               keyword = "notion";
