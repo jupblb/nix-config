@@ -6,9 +6,9 @@
     packages         =
       let
         iosevka  = pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
-        ai-tools = with nix-ai-tools.packages.aarch64-darwin;
-          [ amp gemini-cli ];
-      in ai-tools ++ (with pkgs; [ glow iosevka ]);
+        # https://github.com/numtide/nix-ai-tools/issues/269
+        ai-tools = with nix-ai-tools.packages.aarch64-darwin; [ amp ];
+      in ai-tools ++ (with pkgs; [ iosevka ]);
     sessionPath      = [
       "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
       "/opt/homebrew/sbin" "/opt/podman/bin"

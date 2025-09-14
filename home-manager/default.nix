@@ -70,7 +70,7 @@
         submodule.recurse   = true;
       };
       ignores     =
-        [ ".actrc" ".direnv" ".envrc" ".nvim.lua" ".zoekt" "PROMPT.md" ];
+        [ ".actrc" ".direnv" ".envrc" ".nvim.lua" ".zoekt" "PROMPT*.md" ];
       signing     = {
         format        = "ssh";
         key           = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
