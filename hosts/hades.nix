@@ -9,7 +9,6 @@
       };
     };
     kernelModules  = [ "kvm-amd" ];
-    kernelPackages = pkgs.linuxPackages_6_15; # Remove when on NixOS 25.11
     plymouth       = { enable = true; extraConfig = "DeviceScale=2"; };
   };
 
