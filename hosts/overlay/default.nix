@@ -27,10 +27,10 @@ final: prev: {
       src     = final.fetchFromGitHub({
         owner  = "jupblb";
         repo   = pname;
-        rev    = "0894e02618b1890362face316f52e93bfb3c4c98";
-        sha256 = "sha256-F9WS4mjUIA1T8Gjj4BaGi8NZREaAJlQQHoENYT9VA40=";
+        rev    = "5d943d3e6aee297b23020a035a23785f7ec45737";
+        sha256 = "sha256-l6zNoKVmC2hw+YDa4aj28zlFvaxF91QlVOGo/fwIqu0=";
       });
-      version = "2025-08-17";
+      version = "2025-09-22";
     });
   };
 }
