@@ -5,10 +5,10 @@
     homeDirectory    = "/Users/jupblb";
     packages         =
       let
-        iosevka  = pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
-        # https://github.com/numtide/nix-ai-tools/issues/269
-        ai-tools = with nix-ai-tools.packages.aarch64-darwin; [ amp ];
-      in ai-tools ++ (with pkgs; [ iosevka ]);
+        iosevka = pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
+        # https://github.com/numtide/nix-ai-tools/pull/378
+        amp     = nix-ai-tools.packages.aarch64-darwin.amp;
+      in [ amp iosevka ];
     sessionPath      = [
       "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
       "/opt/homebrew/sbin" "/opt/podman/bin"
