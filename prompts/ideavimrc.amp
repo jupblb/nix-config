@@ -10,10 +10,9 @@ guidelines:
 
 1.  **Convert basic vim settings** - Translate vim settings that are supported
     by IdeaVim
-2.  **Keep leader key mappings** - Preserve `<Leader>` mappings where possible
-3.  **Omit plugin-specific config** - Skip lua plugin configurations that don't
+2.  **Omit plugin-specific config** - Skip lua plugin configurations that don't
     apply to IdeaVim
-4.  **Keep simple keymaps** - Preserve navigation and editing keymaps that work
+3.  **Keep simple keymaps** - Preserve navigation and editing keymaps that work
     in IdeaVim
 
 Output the generated ideavimrc to `hosts/config/ideavimrc`.
