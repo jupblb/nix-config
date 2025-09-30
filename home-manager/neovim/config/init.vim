@@ -62,6 +62,7 @@ autocmd VimResized * wincmd =
 autocmd InsertEnter * setlocal norelativenumber
 autocmd InsertLeave * setlocal relativenumber
 
+autocmd BufRead,BufNewFile *.amp   set filetype=markdown
 autocmd BufRead,BufNewFile *.arb   set filetype=json
 autocmd BufRead,BufNewFile *.fish  set filetype=fish
 autocmd BufRead,BufNewFile *.log   set filetype=text

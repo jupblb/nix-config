@@ -82,38 +82,12 @@ vim.lsp.config('*', {
 })
 
 -- Format markdown with :MarkdownFormat
-local commonmark = 'commonmark+footnotes+pipe_tables+task_lists+tex_math_dollars+yaml_metadata_block'
-
-_G.markdown_formatters = {
-    ['Pandoc (with reference-links)'] = {
-        'pandoc', '--columns=80', '--reference-links', '-s', '-f', 'markdown',
-        '-t', commonmark, '-'
-    },
-    ['Pandoc (without reference-links)'] = {
-        'pandoc', '--columns=80', '-s', '-f', 'markdown', '-t', commonmark, '-'
-    },
-    ['Pandoc (gfm)'] = {
-        'pandoc', '--columns=80', '-s', '-f', 'gfm', '-t', 'gfm', '-'
-    },
-}
-
 local markdown_format = function()
-    local available_formatters = {}
-    for formatter, _ in pairs(_G.markdown_formatters) do
-        table.insert(available_formatters, formatter)
-    end
-
     local bufnr = vim.api.nvim_get_current_buf()
-    local format = function(formatter)
-        if formatter == nil then return end
-        local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, true)
-        local cmd = table.concat(_G.markdown_formatters[formatter], ' ')
-        local output = vim.fn.systemlist(cmd, lines)
-        vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, output)
-    end
-
-    vim.ui.select(
-        available_formatters, { prompt = "Select formatter:" }, format)
+    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, true)
+    local cmd = 'pandoc --columns=80 --reference-links -s -f gfm -t gfm -'
+    local output = vim.fn.systemlist(cmd, lines)
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, output)
 end
 
 vim.api.nvim_create_user_command('MarkdownFormat', markdown_format, {})

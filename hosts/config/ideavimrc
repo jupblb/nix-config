@@ -1,0 +1,62 @@
+" Generated from neovim config
+
+" Basic Settings
+set clipboard+=unnamedplus
+set ignorecase
+set smartcase
+set number
+set relativenumber
+set incsearch
+set hlsearch
+
+" Leader key
+let mapleader = " "
+
+" Navigation and editing
+nnoremap Q <Nop>
+map <Space> <Leader>
+
+" Better scrolling
+nnoremap <C-f> 5<C-e>
+nnoremap <C-b> 5<C-y>
+
+" Paste without yanking replaced text
+vnoremap p "_dP
+
+" Copy relative path to clipboard
+nnoremap <C-g> :let @+ = expand("%")<CR><C-g>
+
+" IdeaVim specific plugins
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'vim-matchit'
+
+" IDE Actions
+nmap gD         <Action>(GotoDeclaration)
+nmap <C-]>      <Action>(GotoDeclaration)
+nmap gd         <Action>(GotoDeclaration)
+nmap <C-=>      <Action>(ReformatCode)
+nmap grt        <Action>(GotoTypeDeclaration)
+nmap gW         <Action>(GotoSymbol)
+nmap <C-[>      <Action>(FindUsages)
+nmap grn        <Action>(RenameElement)
+
+" File navigation
+nmap <Leader>f  <Action>(GotoFile)
+nmap <Leader>e  <Action>(SelectInProjectView)
+nmap <Leader>o  <Action>(RecentFiles)
+nmap <Leader><Tab> <Action>(RecentFiles)
+
+" Search
+nmap <Leader>/  <Action>(FindInPath)
+nmap <Leader>?  <Action>(FindInPath)
+
+" Diagnostics/Errors
+nmap <Leader>ld <Action>(ShowErrorDescription)
+nmap <Leader>lD <Action>(ActivateProblemsViewToolWindow)
+nmap K          <Action>(ShowHoverInfo)
+
+" Git/VCS
+nmap <Leader>hd <Action>(Compare.SameVersion)
+nmap <Leader>hu <Action>(Vcs.RollbackChangedLines)

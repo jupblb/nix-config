@@ -1,0 +1,19 @@
+#!/usr/bin/env amp -x
+
+# Generate IdeaVim Configuration
+
+Read the neovim configuration from `home-manager/neovim` and
+`home-manager/neovim/config` (all files including lua and vimscript).
+
+Generate an ideavimrc file based on the neovim config with the following
+guidelines:
+
+1.  **Convert basic vim settings** - Translate vim settings that are supported
+    by IdeaVim
+2.  **Keep leader key mappings** - Preserve `<Leader>` mappings where possible
+3.  **Omit plugin-specific config** - Skip lua plugin configurations that don't
+    apply to IdeaVim
+4.  **Keep simple keymaps** - Preserve navigation and editing keymaps that work
+    in IdeaVim
+
+Output the generated ideavimrc to `hosts/config/ideavimrc`.

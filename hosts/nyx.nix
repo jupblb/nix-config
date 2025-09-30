@@ -115,6 +115,8 @@
 
   services = { syncthing.enable = true; };
 
+  xdg.configFile."ideavim/ideavimrc".source = ./config/ideavimrc;
+
   targets.darwin.defaults = {
     "com.apple.desktopservices" = {
       DSDontWriteNetworkStores = true;
