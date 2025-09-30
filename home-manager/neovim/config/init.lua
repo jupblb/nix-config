@@ -85,8 +85,23 @@ vim.lsp.config('*', {
 local markdown_format = function()
     local bufnr = vim.api.nvim_get_current_buf()
     local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, true)
+
+    local shebang
+    if lines[1] and lines[1]:match('^#!') == '#!' then
+        shebang = table.remove(lines, 1)
+        if lines[1] == '' then
+            table.remove(lines, 1)
+        end
+    end
+
     local cmd = 'pandoc --columns=80 --reference-links -s -f gfm -t gfm -'
     local output = vim.fn.systemlist(cmd, lines)
+
+    if shebang then
+        table.insert(output, 1, '')
+        table.insert(output, 1, shebang)
+    end
+
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, output)
 end
 
