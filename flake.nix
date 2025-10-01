@@ -71,10 +71,9 @@
             config   = { allowUnfree = true; };
             overlays = [(final: prev: {
               amp =
-                let
-                  nix-ai-tools-pkgs = import nix-ai-tools.inputs.nixpkgs({
-                    system = "aarch64-darwin";
-                  });
+                let nix-ai-tools-pkgs = import nix-ai-tools.inputs.nixpkgs({
+                  system = "aarch64-darwin";
+                });
                 in final.symlinkJoin({
                   name        = "amp";
                   paths       = [ nix-ai-tools.packages.aarch64-darwin.amp ];
