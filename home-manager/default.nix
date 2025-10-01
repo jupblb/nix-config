@@ -13,7 +13,7 @@
     settings = { experimental-features = [ "nix-command" "flakes" ]; };
   };
 
-  nixpkgs.overlays = [ (import ../hosts/overlay) ];
+  nixpkgs.overlays = [ (import ./overlay) ];
 
   programs = {
     bat = {
