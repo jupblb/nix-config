@@ -9,9 +9,13 @@ Generate an ideavimrc file based on the neovim config with the following
 guidelines:
 
 1.  **Convert basic vim settings** - Translate vim settings that are supported
-    by IdeaVim
+    by IdeaVim, with the following exceptions:
+
+    - do not set `relativenumber`
+
 2.  **Omit plugin-specific config** - Skip lua plugin configurations that don't
     apply to IdeaVim
+
 3.  **Keep simple keymaps** - Preserve navigation and editing keymaps that work
     in IdeaVim
 

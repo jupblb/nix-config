@@ -5,7 +5,6 @@ set clipboard+=unnamedplus
 set ignorecase
 set smartcase
 set number
-set relativenumber
 set incsearch
 set hlsearch
 

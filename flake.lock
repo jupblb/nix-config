@@ -214,11 +214,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1759202406,
-        "narHash": "sha256-S/MNZpRL7ipUHjIcxm3lUOwHZP8+TyqhV8NhyG0ylZ8=",
+        "lastModified": 1759288553,
+        "narHash": "sha256-NUdAyMzpF2T1uD6l6Irr0EDT76HjBoWDGmmgGMCtZ48=",
         "owner": "numtide",
         "repo": "nix-ai-tools",
-        "rev": "bc955591be58fe04dde01996cf4bbbc4bcc20f6f",
+        "rev": "a1eb942dd1ea711d4470dc06ff8794077b8bb4c1",
         "type": "github"
       },
       "original": {
