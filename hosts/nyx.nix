@@ -1,14 +1,11 @@
-{ config, lib, nix-ai-tools, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   fonts.fontconfig = { enable = true; };
 
   home = {
     homeDirectory    = "/Users/jupblb";
     packages         =
-      let
-        iosevka = pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
-        # https://github.com/numtide/nix-ai-tools/pull/378
-        amp     = nix-ai-tools.packages.aarch64-darwin.amp;
-      in [ amp iosevka ];
+      let iosevka = pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
+      in with pkgs; [ amp iosevka ];
     sessionPath      = [
       "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
       "/opt/homebrew/sbin" "/opt/podman/bin"

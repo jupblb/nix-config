@@ -66,14 +66,30 @@
 
       homeConfigurations = {
         jupblb = home-manager-darwin.lib.homeManagerConfiguration({
-          modules          = [
-            ./hosts/nyx.nix
-            mac-app-util.homeManagerModules.default
-          ];
-          extraSpecialArgs = { inherit inputs nix-ai-tools; };
-          pkgs             = import nixpkgs-darwin({
-            system = "aarch64-darwin";
-            config = { allowUnfree = true; };
+          modules = [ ./hosts/nyx.nix mac-app-util.homeManagerModules.default ];
+          pkgs    = import nixpkgs-darwin({
+            config   = { allowUnfree = true; };
+            overlays = [(final: prev: {
+              amp =
+                let
+                  nix-ai-tools-pkgs = import nix-ai-tools.inputs.nixpkgs({
+                    system = "aarch64-darwin";
+                  });
+                in final.symlinkJoin({
+                  name        = "amp";
+                  paths       = [ nix-ai-tools.packages.aarch64-darwin.amp ];
+                  buildInputs = with final; [ makeWrapper ];
+                  postBuild   =
+                    let path = with nix-ai-tools-pkgs;
+                      [ github-mcp-server gnused playwright-mcp ripgrep ];
+                    in ''
+                      wrapProgram $out/bin/amp \
+                        --prefix PATH : ${final.lib.makeBinPath(path)} \
+                        --set AMP_SKIP_UPDATE_CHECK 1
+                    '';
+                });
+            })];
+            system   = "aarch64-darwin";
           });
         });
       };
