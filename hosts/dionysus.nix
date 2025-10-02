@@ -249,7 +249,7 @@
         enable    = true;
         ephemeral = true;
         url       = "https://github.com/jupblb/awesome-neovim-sorted";
-        tokenFile = config.age.github_awesome_neovim_sorted.path;
+        tokenFile = config.age.secrets.github_awesome_neovim_sorted.path;
       };
     };
 
