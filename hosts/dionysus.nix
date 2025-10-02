@@ -1,26 +1,27 @@
 { config, lib, pkgs, ... }: {
-  age = {
-    secrets = {
-      authelia_jwt_secret             = {
-        file  = ./secret/authelia_jwt_secret.age;
-        owner = config.services.authelia.instances.default.user;
-      };
-      authelia_storage_encryption_key = {
-        file  = ./secret/authelia_storage_encryption_key.age;
-        owner = config.services.authelia.instances.default.user;
-      };
-      cloudflared_credentials         = {
-        file = ./secret/cloudflared_credentials.age;
-      };
-      photoprism_password             = {
-        file = ./secret/photoprism_password.age;
-      };
-      restic_gcs_credentials          = {
-        file = ./secret/restic_gcs_credentials.age;
-      };
-      restic_password                 = {
-        file = ./secret/restic_password.age;
-      };
+  age.secrets = {
+    authelia_jwt_secret             = {
+      file  = ./secret/authelia_jwt_secret.age;
+      owner = config.services.authelia.instances.default.user;
+    };
+    authelia_storage_encryption_key = {
+      file  = ./secret/authelia_storage_encryption_key.age;
+      owner = config.services.authelia.instances.default.user;
+    };
+    cloudflared_credentials         = {
+      file = ./secret/cloudflared_credentials.age;
+    };
+    github_awesome_neovim_sorted    = {
+      file = ./secret/github_awesome_neovim_sorted.age;
+    };
+    photoprism_password             = {
+      file = ./secret/photoprism_password.age;
+    };
+    restic_gcs_credentials          = {
+      file = ./secret/restic_gcs_credentials.age;
+    };
+    restic_password                 = {
+      file = ./secret/restic_password.age;
     };
   };
 
@@ -240,6 +241,15 @@
             "dionysus.kielbowi.cz" = "ssh://localhost:22";
           };
         };
+      };
+    };
+
+    github-runners = {
+      awesome-neovim-sorted = {
+        enable    = true;
+        ephemeral = true;
+        url       = "https://github.com/jupblb/awesome-neovim-sorted";
+        tokenFile = config.age.github_awesome_neovim_sorted.path;
       };
     };
 
