@@ -11,9 +11,7 @@
     cloudflared_credentials         = {
       file = ./secret/cloudflared_credentials.age;
     };
-    github_awesome_neovim_sorted    = {
-      file = ./secret/github_awesome_neovim_sorted.age;
-    };
+    github_runner                   = { file = ./secret/github_runner.age; };
     photoprism_password             = {
       file = ./secret/photoprism_password.age;
     };
@@ -249,7 +247,7 @@
         enable    = true;
         ephemeral = true;
         url       = "https://github.com/jupblb/awesome-neovim-sorted";
-        tokenFile = config.age.secrets.github_awesome_neovim_sorted.path;
+        tokenFile = config.age.secrets.github_runner.path;
       };
     };
 
