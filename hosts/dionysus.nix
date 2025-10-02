@@ -243,6 +243,11 @@
       };
     };
 
+    iperf3 = {
+      enable       = true;
+      openFirewall = true;
+    };
+
     jackett = { enable = true; };
 
     jellyfin = {
