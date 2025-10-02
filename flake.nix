@@ -80,7 +80,7 @@
                   buildInputs = with final; [ makeWrapper ];
                   postBuild   =
                     let path = with nix-ai-tools-pkgs;
-                      [ github-mcp-server gnused playwright-mcp ripgrep ];
+                      [ bun github-mcp-server gnused playwright-mcp ripgrep ];
                     in ''
                       wrapProgram $out/bin/amp \
                         --prefix PATH : ${final.lib.makeBinPath(path)} \
