@@ -242,13 +242,12 @@
       };
     };
 
-    github-runners = {
-      awesome-neovim-sorted = {
-        enable    = true;
-        ephemeral = true;
-        url       = "https://github.com/jupblb/awesome-neovim-sorted";
-        tokenFile = config.age.secrets.github_runner.path;
-      };
+    github-runners.dionysus = {
+      enable      = true;
+      ephemeral   = true;
+      extraLabels = [ config.networking.hostName ];
+      url         = "https://github.com/jupblb/awesome-neovim-sorted";
+      tokenFile   = config.age.secrets.github_runner.path;
     };
 
     iperf3 = {
