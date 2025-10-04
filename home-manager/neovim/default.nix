@@ -23,6 +23,10 @@
         in packages ++ nodePackages;
       plugins        = with pkgs.vimPlugins; [
         {
+          config = "require('amp').setup({ log_level = 'error' })";
+          plugin = amp-nvim;
+          type   = "lua";
+        } {
           config = builtins.readFile(./config/fidget.lua);
           plugin = fidget-nvim;
           type   = "lua";

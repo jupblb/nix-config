@@ -83,6 +83,7 @@
                       [ bun github-mcp-server gnused playwright-mcp ripgrep ];
                     in ''
                       wrapProgram $out/bin/amp \
+                        --add-flags "--ide" \
                         --prefix PATH : ${final.lib.makeBinPath(path)} \
                         --set AMP_SKIP_UPDATE_CHECK 1
                     '';
