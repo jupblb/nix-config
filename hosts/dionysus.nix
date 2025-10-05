@@ -242,20 +242,16 @@
       };
     };
 
-    github-runners = {
-      invoice               = {
-        enable      = true;
-        ephemeral   = true;
-        url         = "https://github.com/jupblb/invoice";
-        tokenFile   = config.age.secrets.github_runner.path;
-      };
-      awesome-neovim-sorted = {
-        enable      = true;
-        ephemeral   = true;
-        url         = "https://github.com/jupblb/awesome-neovim-sorted";
-        tokenFile   = config.age.secrets.github_runner.path;
-      };
-    };
+    github-runners =
+      let
+        repos  = [ "awesome-neovim-sorted" "invoice" "justee" ];
+        runner = name: {
+          enable    = true;
+          ephemeral = true;
+          url       = "https://github.com/jupblb/${name}";
+          tokenFile = config.age.secrets.github_runner.path;
+        };
+      in lib.genAttrs repos runner;
 
     iperf3 = {
       enable       = true;
