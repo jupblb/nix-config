@@ -80,12 +80,11 @@
                   buildInputs = with final; [ makeWrapper ];
                   postBuild   =
                     let path = with nix-ai-tools-pkgs;
-                      [ bun github-mcp-server gnused playwright-mcp ripgrep ];
+                      [ github-mcp-server gnused nodejs playwright-mcp ];
                     in ''
                       wrapProgram $out/bin/amp \
                         --add-flags "--ide" \
-                        --prefix PATH : ${final.lib.makeBinPath(path)} \
-                        --set AMP_SKIP_UPDATE_CHECK 1
+                        --prefix PATH : ${final.lib.makeBinPath(path)}
                     '';
                 });
             })];
