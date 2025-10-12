@@ -80,10 +80,9 @@
                   buildInputs = with final; [ makeWrapper ];
                   postBuild   =
                     let path = with nix-ai-tools-pkgs;
-                      [ github-mcp-server gnused nodejs playwright-mcp ];
+                      [ github-mcp-server gnused nodejs ];
                     in ''
                       wrapProgram $out/bin/amp \
-                        --add-flags "--ide" \
                         --prefix PATH : ${final.lib.makeBinPath(path)}
                     '';
                 });
