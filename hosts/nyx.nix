@@ -5,7 +5,7 @@
     homeDirectory    = "/Users/jupblb";
     packages         =
       let iosevka = pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; };
-      in with pkgs; [ amp iosevka ];
+      in with pkgs; [ iosevka ];
     sessionPath      = [
       "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
       "/opt/homebrew/sbin" "/opt/podman/bin"
@@ -24,6 +24,23 @@
 
   imports = [
     ../home-manager
+    (import ../home-manager/amp {
+      inherit pkgs;
+      mcpSettings = {
+        buildkite       = {
+          command = "${pkgs.nodejs}/bin/npx";
+          args    = [ "mcp-remote" "https://mcp.buildkite.com/mcp/readonly" ];
+        };
+        chrome-devtools = {
+          command = "${pkgs.nodejs}/bin/npx";
+          args    = [ "chrome-devtools-mcp@latest" ];
+        };
+        linear          = {
+          command = "${pkgs.nodejs}/bin/npx";
+          args    = [ "mcp-remote" "https://mcp.linear.app/sse" ];
+        };
+      };
+    })
     ../home-manager/direnv.nix
     ../home-manager/firefox
     ../home-manager/fish
