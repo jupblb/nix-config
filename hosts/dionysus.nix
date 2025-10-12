@@ -70,7 +70,13 @@
   home-manager.users.jupblb = {
     home.stateVersion = "21.11";
 
-    imports = [ ../home-manager/amp ];
+    imports = [
+      (import ../home-manager/amp {
+        inherit pkgs;
+        settings = {};
+        mcpSettings = {};
+      })
+    ];
 
     programs = {
       fish.functions = {
