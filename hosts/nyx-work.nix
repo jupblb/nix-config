@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }: {
   home = {
-    homeDirectory    = "/Users/michal";
     sessionPath      = [
       "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
       "/opt/homebrew/sbin" "/opt/podman/bin"
@@ -12,7 +11,7 @@
     };
     shellAliases     = { "blaze" = "bazel"; };
     stateVersion     = "25.05";
-    username         = "michal";
+    username         = lib.mkForce("michal");
   };
 
   imports = [
@@ -34,7 +33,6 @@
         };
       };
     })
-    ../home-manager/direnv.nix
     ../home-manager/firefox
     ../home-manager/fish
     ../home-manager/kitty.nix
@@ -109,36 +107,4 @@
   };
 
   xdg.configFile."ideavim/ideavimrc".source = ./config/ideavimrc;
-
-  targets.darwin.defaults = {
-    "com.apple.desktopservices" = {
-      DSDontWriteNetworkStores = true;
-      DSDontWriteUSBStores     = true;
-    };
-
-    "com.apple.dock" = { autohide = true; };
-
-    "com.apple.finder" = { FXRemoveOldTrashItems = true; };
-
-    NSGlobalDomain = {
-      AppleLanguages           = [ "en" "pl" ];
-      AppleLocale              = "en_US";
-      AppleMeasurementUnits    = "Centimeters";
-      AppleMetricUnits         = true;
-      ApplePressAndHoldEnabled = false;
-      AppleTemperatureUnit     = "Celsius";
-      KeyRepeat                = 2;
-
-      NSAutomaticCapitalizationEnabled     = false;
-      NSAutomaticDashSubstitutionEnabled   = false;
-      NSAutomaticPeriodSubstitutionEnabled = false;
-      NSAutomaticQuoteSubstitutionEnabled  = false;
-      NSAutomaticSpellingCorrectionEnabled = false;
-
-      com.apple.desktopservices = {
-        DSDontWriteNetworkStores = true;
-        DSDontWriteUSBStores     = true;
-      };
-    };
-  };
 }

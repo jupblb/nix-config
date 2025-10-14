@@ -37,7 +37,6 @@
     };
     imports  = [
       ../home-manager
-      ../home-manager/direnv.nix
       ../home-manager/fish
       ../home-manager/lf
       ../home-manager/neovim

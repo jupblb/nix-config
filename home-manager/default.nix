@@ -29,6 +29,16 @@
       shellOptions   = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
     };
 
+    direnv = {
+      config     = {
+        bash_path     = "${pkgs.bashInteractive}/bin/bash";
+        disable_stdin = true;
+        strict_env    = true;
+      };
+      enable     = true;
+      nix-direnv = { enable = true; };
+    };
+
     git = {
       aliases     = {
         amend     = "commit --amend --no-edit --allow-empty-message";
