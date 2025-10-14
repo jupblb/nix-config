@@ -69,16 +69,20 @@
         });
       };
 
-      homeConfigurations = {
-        jupblb = home-manager-darwin.lib.homeManagerConfiguration({
-          modules = [ ./hosts/nyx.nix mac-app-util.homeManagerModules.default ];
-          pkgs    = import nixpkgs-darwin {
-            overlays = [
-              (_: _: { amp = nix-ai-tools.packages.aarch64-darwin.amp; })
-            ];
-            system   = "aarch64-darwin";
-          };
+      homeConfigurations =
+        let homeCfg = file: home-manager-darwin.lib.homeManagerConfiguration({
+            modules =
+              [ ./hosts/nyx.nix file mac-app-util.homeManagerModules.default ];
+            pkgs    = import nixpkgs-darwin({
+              overlays = [
+                (_: _: { amp = nix-ai-tools.packages.aarch64-darwin.amp; })
+              ];
+              system   = "aarch64-darwin";
+            });
         });
-      };
+        in {
+          jupblb = homeCfg ./hosts/nyx-personal.nix;
+          michal = homeCfg ./hosts/nyx-work.nix;
+        };
     };
 }
