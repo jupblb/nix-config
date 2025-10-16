@@ -100,7 +100,7 @@
         "source ${config.xdg.configHome}/fish/config.local.fish";
     };
     git          = {
-      ignores     = [ "index.scip" ];
+      ignores     = [ ".aiignore" ".junie" "index.scip" ];
       userEmail   = lib.mkForce("michal.kielbowicz@sourcegraph.com");
     };
     mise         = { enable = true; };
