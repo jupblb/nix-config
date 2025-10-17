@@ -54,6 +54,7 @@
           plus-emph-style  = "syntax #d9d87f";
           plus-style       = "syntax #eeebba";
           syntax-theme     = "gruvbox-light";
+          tabs             = 2;
         };
       };
       enable      = true;

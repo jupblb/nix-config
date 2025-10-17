@@ -17,10 +17,10 @@ final: prev: {
       src     = final.fetchFromGitHub({
         owner  = "sourcegraph";
         repo   = pname;
-        rev    = "ceeed031e70966492a01a33774b48652ba3f1043";
-        sha256 = "sha256-ZfMdGt6G8vG0BAIdsxhaH/x0dd0Zwopw9Ob5qZZFzdg=";
+        rev    = "aabe39d682b033a3cd2c1b53648e79b7f53bccfb";
+        sha256 = "sha256-lyRMoxlBw/7UmEYYJLtPgLZuHgf2lDw6zH60Ww6j9eQ=";
       });
-      version = "2025-10-04";
+      version = "2025-10-17";
     });
     no-neck-pain-nvim = final.vimUtils.buildVimPlugin(rec {
       pname   = "no-neck-pain.nvim";
