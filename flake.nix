@@ -49,6 +49,11 @@
           modules     = [
             ./hosts/hades.nix
             home-manager-nixos.nixosModules.home-manager
+            {
+              nixpkgs.overlays = [
+                (_: _: { amp = nix-ai-tools.packages.x86_64-linux.amp; })
+              ];
+            }
           ];
           specialArgs = { inherit inputs; };
           system      = "x86_64-linux";
