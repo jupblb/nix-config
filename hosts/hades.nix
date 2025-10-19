@@ -18,7 +18,7 @@
         extensions = with pkgs.gnomeExtensions;
           [ compiz-windows-effect hide-top-bar removable-drive-menu ];
         packages   = with pkgs;
-          [ gnome-firmware gtasks-md nautilus solaar vcmi vlc wl-clipboard ];
+          [ gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
       in extensions ++ packages;
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
