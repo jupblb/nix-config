@@ -1,4 +1,4 @@
-{ pkgs, settings ? {}, mcpSettings ? {}, ... }: {
+{ pkgs, mcpSettings ? {}, ... }: {
   home.packages =
     let amp = pkgs.symlinkJoin({
       name        = "amp";
@@ -27,6 +27,6 @@
         "amp.mcpServers"                   = mcpSettings;
         "amp.tools.inactivityTimeout"      = 600;
         "amp.tools.stopTimeout"            = 600;
-      } // settings);
+      });
     };
 }

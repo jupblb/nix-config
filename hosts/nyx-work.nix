@@ -19,17 +19,25 @@
     (import ../home-manager/amp {
       inherit pkgs;
       mcpSettings = {
-        buildkite       = {
-          command = "${pkgs.nodejs}/bin/npx";
+        buildkite         = {
           args    = [ "mcp-remote" "https://mcp.buildkite.com/mcp/readonly" ];
-        };
-        chrome-devtools = {
           command = "${pkgs.nodejs}/bin/npx";
+        };
+        chrome-devtools   = {
           args    = [ "chrome-devtools-mcp@latest" ];
-        };
-        linear          = {
           command = "${pkgs.nodejs}/bin/npx";
+        };
+        claude-context    = {
+          args    = [ "@zilliz/claude-context-mcp@latest" ];
+          command = "${pkgs.nodejs}/bin/npx";
+        };
+        github-mcp-server = {
+          args    = [ "stdio" "--read-only" ];
+          command = "${pkgs.github-mcp-server}/bin/github-mcp-server";
+        };
+        linear            = {
           args    = [ "mcp-remote" "https://mcp.linear.app/sse" ];
+          command = "${pkgs.nodejs}/bin/npx";
         };
       };
     })

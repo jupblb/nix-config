@@ -80,14 +80,21 @@
               [ ./hosts/nyx.nix file mac-app-util.homeManagerModules.default ];
             pkgs    = import nixpkgs-darwin({
               overlays = [
-                (_: _: { amp-cli = nix-ai-tools.packages.aarch64-darwin.amp; })
+                (_: _: {
+                  amp-cli           = nix-ai-tools.packages.aarch64-darwin.amp;
+                  github-mcp-server =
+                    let pkgs = import nix-ai-tools.inputs.nixpkgs({
+                      system = "aarch64-darwin";
+                    });
+                    in pkgs.github-mcp-server;
+                })
               ];
               system   = "aarch64-darwin";
             });
         });
         in {
-          jupblb = homeCfg ./hosts/nyx-personal.nix;
-          michal = homeCfg ./hosts/nyx-work.nix;
+          jupblb = homeCfg(./hosts/nyx-personal.nix);
+          michal = homeCfg(./hosts/nyx-work.nix);
         };
     };
 }
