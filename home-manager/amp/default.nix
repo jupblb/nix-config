@@ -2,7 +2,7 @@
   home.packages =
     let amp = pkgs.symlinkJoin({
       name        = "amp";
-      paths       = [ pkgs.amp ];
+      paths       = [ pkgs.amp-cli ];
       buildInputs = with pkgs; [ makeWrapper ];
       postBuild   =
         let path = with pkgs; [ gnused nodejs ];

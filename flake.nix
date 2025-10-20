@@ -51,7 +51,7 @@
             home-manager-nixos.nixosModules.home-manager
             {
               nixpkgs.overlays = [
-                (_: _: { amp = nix-ai-tools.packages.x86_64-linux.amp; })
+                (_: _: { amp-cli = nix-ai-tools.packages.x86_64-linux.amp; })
               ];
             }
           ];
@@ -65,7 +65,7 @@
             agenix.nixosModules.default
             {
               nixpkgs.overlays = [
-                (_: _: { amp = nix-ai-tools.packages.x86_64-linux.amp; })
+                (_: _: { amp-cli = nix-ai-tools.packages.x86_64-linux.amp; })
               ];
             }
           ];
@@ -80,7 +80,7 @@
               [ ./hosts/nyx.nix file mac-app-util.homeManagerModules.default ];
             pkgs    = import nixpkgs-darwin({
               overlays = [
-                (_: _: { amp = nix-ai-tools.packages.aarch64-darwin.amp; })
+                (_: _: { amp-cli = nix-ai-tools.packages.aarch64-darwin.amp; })
               ];
               system   = "aarch64-darwin";
             });
