@@ -66,6 +66,17 @@ vim.keymap.set('n', '<Leader>o',
 vim.keymap.set('n', '<Leader><Space>', builtin.pickers)
 vim.keymap.set('n', '<Leader>"', builtin.registers)
 
+vim.keymap.set('n', '<C-]>', builtin.lsp_definitions)
+vim.keymap.set('n', 'gd', builtin.lsp_definitions)
+vim.keymap.set('n', '<Leader>li', builtin.lsp_incoming_calls)
+vim.keymap.set('n', '<Leader>lo', builtin.lsp_outgoing_calls)
+vim.keymap.set('n', '<C-[>', builtin.lsp_references)
+vim.keymap.set('n', 'grt', builtin.lsp_type_definitions)
+vim.keymap.set('n', 'gW', builtin.lsp_workspace_symbols)
+vim.keymap.set('n', 'grr', builtin.lsp_references)
+vim.keymap.set('n', 'gri', builtin.lsp_implementations)
+vim.keymap.set('n', 'gO', builtin.lsp_document_symbols)
+
 vim.api.nvim_create_autocmd('User', {
     pattern = 'TelescopePreviewerLoaded',
     callback = function() vim.opt_local.wrap = true end
