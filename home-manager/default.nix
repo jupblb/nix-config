@@ -73,6 +73,11 @@
         credential.helper   = [ "cache --timeout 43200" ]; # 12 hours
         diff.algorithm      = "histogram";
         fetch               = { all = true; prune = true; };
+        gpg.ssh             = {
+          allowedSignersFile = toString(pkgs.writeText "allowed_signers" ''
+            ${config.programs.git.userEmail} ${builtins.readFile "${config.home.homeDirectory}/.ssh/id_ed25519.pub"}
+          '');
+        };
         help.autocorrect    = true;
         init.defaultBranch  = "main";
         merge.conflictStyle = "zdiff3";
