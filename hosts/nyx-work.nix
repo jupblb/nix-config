@@ -31,6 +31,9 @@
           args    = [ "@zilliz/claude-context-mcp@latest" ];
           command = "${pkgs.nodejs}/bin/npx";
         };
+        context7          = {
+          url = "https://mcp.context7.com/mcp";
+        };
         github-mcp-server = {
           args    = [ "stdio" "--read-only" ];
           command = "${pkgs.github-mcp-server}/bin/github-mcp-server";
@@ -38,6 +41,12 @@
         linear            = {
           args    = [ "mcp-remote" "https://mcp.linear.app/sse" ];
           command = "${pkgs.nodejs}/bin/npx";
+        };
+        sourcegraph       = {
+          url     = "\${SRC_ENDPOINT}/.api/mcp/v1";
+          headers = {
+            "Authorization" = "token \${SRC_ACCESS_TOKEN}";
+          };
         };
       };
     })
