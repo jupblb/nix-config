@@ -27,13 +27,7 @@
           args    = [ "chrome-devtools-mcp@latest" ];
           command = "${pkgs.nodejs}/bin/npx";
         };
-        claude-context    = {
-          args    = [ "@zilliz/claude-context-mcp@latest" ];
-          command = "${pkgs.nodejs}/bin/npx";
-        };
-        context7          = {
-          url = "https://mcp.context7.com/mcp";
-        };
+        context7          = { url = "https://mcp.context7.com/mcp"; };
         github-mcp-server = {
           args    = [ "stdio" "--read-only" ];
           command = "${pkgs.github-mcp-server}/bin/github-mcp-server";

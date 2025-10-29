@@ -5,16 +5,9 @@
     (iosevka-bin.override({ variant = "SGr-Iosevka"; }))
   ];
 
-  programs.kitty = {
-    settings = {
-      open_url_with = "launch firefox";
-    };
-  };
-
   programs.firefox = {
     enable               = true;
     languagePacks        = [ "pl" "en-US" ];
-    nativeMessagingHosts = with pkgs; [ tridactyl-native ];
     policies             = {
       DisableFirefoxScreenshots = true;
       ExtensionSettings         =
@@ -33,8 +26,6 @@
           (ext "clearurls"       "{74145f27-f039-47ce-a470-a662b129930a}")
           (ext "consent-o-matic" "gdpr@cavi.au.dk")
           (ext "sponsorblock"    "sponsorBlocker@ajay.app")
-          (ext "tree-style-tab"  "treestyletab@piro.sakura.ne.jp")
-          (ext "tridactyl-vim"   "tridactyl.vim@cmcaine.co.uk")
           (ext "ublock-origin"   "uBlock0@raymondhill.net")
         ]);
     };
