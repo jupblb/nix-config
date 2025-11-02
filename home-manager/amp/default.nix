@@ -20,10 +20,8 @@
       source = formatter.generate "amp-settings.json" ({
         "amp.dangerouslyAllowAll"          = true;
         "amp.experimental.agentMode"       = "opus4.1";
-        "amp.experimental.librarian"       = true;
         "amp.git.commit.coauthor.enabled"  = false;
         "amp.git.commit.ampThread.enabled" = true;
-        "amp.internal.oracleModel"         = "gpt-5-codex";
         "amp.mcpServers"                   = mcpSettings;
         "amp.tools.inactivityTimeout"      = 600;
         "amp.tools.stopTimeout"            = 600;
