@@ -7,7 +7,6 @@ in {
   "cloudflare_password.age".publicKeys             = [ common dionysus ];
   "cloudflared_credentials.age".publicKeys         = [ common dionysus ];
   "github_runner.age".publicKeys                   = [ common dionysus ];
-  "photoprism_password.age".publicKeys             = [ common dionysus ];
   "restic_gcs_credentials.age".publicKeys          = [ common dionysus ];
   "restic_password.age".publicKeys                 = [ common dionysus ];
 }

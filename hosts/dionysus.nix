@@ -12,9 +12,6 @@
       file = ./secret/cloudflared_credentials.age;
     };
     github_runner                   = { file = ./secret/github_runner.age; };
-    photoprism_password             = {
-      file = ./secret/photoprism_password.age;
-    };
     restic_gcs_credentials          = {
       file = ./secret/restic_gcs_credentials.age;
     };
@@ -71,11 +68,7 @@
     home.stateVersion = "21.11";
 
     imports = [
-      (import ../home-manager/amp {
-        inherit pkgs;
-        settings = {};
-        mcpSettings = {};
-      })
+      (import ../home-manager/amp { inherit pkgs; })
     ];
 
     programs = {
@@ -242,7 +235,6 @@
           ingress         = {
             "calibre.kielbowi.cz"  = "http://localhost:8083";
             "jellyfin.kielbowi.cz" = "http://localhost:8096";
-            "photos.kielbowi.cz"   = "http://localhost:2342";
 
             "dionysus.kielbowi.cz" = "ssh://localhost:22";
           };
@@ -290,21 +282,6 @@
       settings     = {
         PasswordAuthentication = true;
         PermitRootLogin        = "no";
-      };
-    };
-
-    photoprism = {
-      enable        = true;
-      originalsPath = "/backup/jupblb/Pictures/album";
-      passwordFile  = config.age.secrets.photoprism_password.path;
-      settings      = {
-        PHOTOPRISM_ADMIN_USER       = "jupblb";
-        PHOTOPRISM_DETECT_NSFW      = "true";
-        PHOTOPRISM_DISABLE_SETTINGS = "true";
-        PHOTOPRISM_DISABLE_WEBDAV   = "true";
-        PHOTOPRISM_READONLY         = "true";
-        PHOTOPRISM_SITE_URL         = "https://photos.kielbowi.cz";
-        PHOTOPRISM_UPLOAD_NSFW      = "false";
       };
     };
 
@@ -415,7 +392,6 @@
     jellyfin              = {
       serviceConfig.PrivateDevices = lib.mkForce false;
     };
-    photoprism            = disableAtBoot;
     podman-filebrowser    = disableAtBoot;
     podman-simply-shorten = disableAtBoot;
     restic-backups-gcs    = disableAtBoot;
