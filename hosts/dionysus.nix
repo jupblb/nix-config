@@ -38,7 +38,7 @@
     # zpool create -f -o ashift=12 \
     #   -O encryption=on -O keyformat=passphrase -O xattr=sa
     #   -O acltype=posixacl -m legacy backup mirror \
-    #   ata-Lexar_480GB_SSD_K46106J005198 ata-Lexar_480GB_SSD_K46106J005
+    #   ata-Lexar_480GB_SSD_K46106J005198 ata-Lexar_480GB_SSD_K46106J005201
     "/backup"        = {
       device  = "backup";
       fsType  = "zfs";
@@ -387,16 +387,24 @@
 
   system.stateVersion = "20.09";
 
-  systemd.services = let disableAtBoot = { wantedBy = lib.mkForce []; }; in {
-    calibre-web           = disableAtBoot;
+  systemd.services = let onBackupMount = {
+    unitConfig = {
+      RequiresMountsFor         = [ "/backup" ];
+      ConditionPathIsMountPoint = "/backup";
+      After                     = [ "backup.mount" ];
+      PartOf                    = [ "backup.mount" ];
+    };
+    wantedBy = lib.mkForce [ "backup.mount" ];
+  }; in {
+    calibre-web           = onBackupMount;
     jellyfin              = {
       serviceConfig.PrivateDevices = lib.mkForce false;
     };
-    podman-filebrowser    = disableAtBoot;
-    podman-simply-shorten = disableAtBoot;
-    restic-backups-gcs    = disableAtBoot;
-    restic-backups-local  = disableAtBoot;
-    stignore              = disableAtBoot // {
+    podman-filebrowser    = onBackupMount;
+    podman-simply-shorten = onBackupMount;
+    restic-backups-gcs    = onBackupMount;
+    restic-backups-local  = onBackupMount;
+    stignore              = onBackupMount // {
       description   = "Update jupblb/Workspace stignore";
       path          = with pkgs; [
         bash diffutils inotify-tools
@@ -419,16 +427,18 @@
         User          = "syncthing";
         Type          = "simple";
       };
-      wantedBy      = [ "multi-user.target" ];
     };
-    syncthing             = disableAtBoot;
+    syncthing             = onBackupMount;
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   users.users.jupblb.extraGroups = [ "docker" "podman" ];
 
+  boot.enableContainers = lib.mkForce true;  # Use old-style for stateVersion < 22.05
+
   virtualisation = {
+    containers.enable = lib.mkForce false;  # Disable new-style to avoid conflict
     docker         = { enable = true; };
     oci-containers = {
       backend    = "podman";
