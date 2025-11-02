@@ -374,6 +374,7 @@
         ratio-limit          = 0;
         ratio-limit-enabled  = true;
         rpc-host-whitelist   = "transmission.kielbowi.cz";
+        umask                = 2;  # This sets permissions to 775 for dirs and 664 for files
       };
     };
 
