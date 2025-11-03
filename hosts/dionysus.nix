@@ -394,63 +394,64 @@
 
   system.stateVersion = "22.05";
 
-  systemd = {
-    services =
-      let onBackupMount = {
-        unitConfig = {
-          RequiresMountsFor         = [ "/backup" ];
-          ConditionPathIsMountPoint = "/backup";
-          After                     = [ "backup.mount" ];
-          PartOf                    = [ "backup.mount" ];
-        };
-        wantedBy   = lib.mkForce [ "backup.mount" ];
+  systemd =
+    let onBackupMount = {
+      unitConfig = {
+        RequiresMountsFor         = [ "/backup" ];
+        ConditionPathIsMountPoint = "/backup";
+        After                     = [ "backup.mount" ];
+        PartOf                    = [ "backup.mount" ];
       };
-      in {
+      wantedBy   = lib.mkForce [ "backup.mount" ];
+    };
+    in {
+      services = {
         calibre-web           = onBackupMount;
-        jellyfin              = {
-          serviceConfig.PrivateDevices = lib.mkForce false;
-        };
-        podman-filebrowser    = onBackupMount;
-        podman-simply-shorten = onBackupMount;
-        restic-backups-gcs    = onBackupMount;
-        restic-backups-local  = onBackupMount;
-        stignore              = onBackupMount // {
-          description   = "Update jupblb/Workspace stignore";
-          path          = with pkgs; [
-            bash diffutils inotify-tools
-            (python3.withPackages(p: with p; [ gitignore-parser ]))
-          ];
-          script        = ''
-            sh ${./config/stignore.sh}
+      jellyfin              = {
+        serviceConfig.PrivateDevices = lib.mkForce false;
+      };
+      podman-filebrowser    = onBackupMount;
+      podman-simply-shorten = onBackupMount;
+      restic-backups-gcs    = onBackupMount;
+      restic-backups-local  = onBackupMount;
+      stignore              = onBackupMount // {
+        description   = "Update jupblb/Workspace stignore";
+        path          = with pkgs; [
+          bash diffutils inotify-tools
+          (python3.withPackages(p: with p; [ gitignore-parser ]))
+        ];
+        script        = ''
+          sh ${./config/stignore.sh}
 
-            inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
-              -m -r /backup/jupblb/Workspace |
-            while read -r line; do
-              if [[ "$line" == ".gitignore" ]]; then
-                >&2 echo ".gitignore update"
-                sh ${./config/stignore.sh}
-              fi
-            done
-          '';
-          serviceConfig = {
-            ProtectSystem = "full";
-            User          = "syncthing";
-            Type          = "simple";
-          };
-        };
-        syncthing             = onBackupMount;
-        "tangd@" = {
-          serviceConfig = {
-            StateDirectory   = lib.mkForce [];
-            RuntimeDirectory = lib.mkForce [];
-            DynamicUser      = lib.mkForce false;
-            User             = "root";
-            ExecStart        = lib.mkForce "${pkgs.tang}/libexec/tangd /run/tang";
-          };
+          inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
+            -m -r /backup/jupblb/Workspace |
+          while read -r line; do
+            if [[ "$line" == ".gitignore" ]]; then
+              >&2 echo ".gitignore update"
+              sh ${./config/stignore.sh}
+            fi
+          done
+        '';
+        serviceConfig = {
+          ProtectSystem = "full";
+          User          = "syncthing";
+          Type          = "simple";
         };
       };
-    tmpfiles = { rules = [ "d /run/tang 0700 root root -" ]; };
-  };
+      syncthing             = onBackupMount;
+      "tangd@" = onBackupMount // {
+        serviceConfig = {
+          StateDirectory   = lib.mkForce [];
+          RuntimeDirectory = lib.mkForce [];
+          DynamicUser      = lib.mkForce false;
+          User             = "root";
+          ExecStart        = lib.mkForce "${pkgs.tang}/libexec/tangd /run/tang";
+        };
+      };
+      };
+
+      sockets.tangd = onBackupMount;
+    };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
