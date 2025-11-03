@@ -88,12 +88,10 @@
   networking = {
     domain   = "kielbowi.cz";
     firewall =
-      let
-        caddy     = [ 80 443 ];
-        jellyfin  = [ 8096 ];
+      let caddy = [ 80 443 ];
       in {
-        allowedTCPPorts  = caddy ++ jellyfin;
-        allowedUDPPorts  = caddy ++ jellyfin;
+        allowedTCPPorts  = caddy;
+        allowedUDPPorts  = caddy;
       };
     hostId   = "ce5e3a09";
     hostName = "dionysus";
@@ -262,8 +260,9 @@
     jackett = { enable = true; };
 
     jellyfin = {
-      enable = true;
-      group  = "users";
+      enable       = true;
+      group        = "users";
+      openFirewall = true;
     };
 
     komga = {
