@@ -399,8 +399,7 @@
       wantedBy   = lib.mkForce [ "backup.mount" ];
     };
     in {
-      services = {
-        calibre-web           = onBackupMount;
+      calibre-web           = onBackupMount;
       jellyfin              = {
         serviceConfig.PrivateDevices = lib.mkForce false;
       };
