@@ -32,6 +32,7 @@
     let mkDevShell = pkgs: pkgs.mkShell {
       buildInputs = with pkgs; [
         agenix.packages.${pkgs.system}.default
+        clevis
         lua-language-server
         nodePackages.vim-language-server
       ];

@@ -3,10 +3,22 @@
 ## Build Commands
 
 - `nix flake check --impure` - Validate configurations (requires --impure due to SSH key paths)
-- `sudo nixos-rebuild switch --flake .#hades` - Deploy hades config
+- `sudo nixos-rebuild switch --flake .#hades --impure` - Deploy hades config
 - `sudo nixos-rebuild switch --flake .#dionysus` - Deploy dionysus config
 - `home-manager switch --flake .#jupblb@nyx` - Deploy nyx config (or just `home-manager switch`)
 - `nix develop` - Enter development shell
+
+## Clevis/Tang Setup
+
+To regenerate Clevis JWE file for LUKS network unlocking:
+
+```bash
+# Bind the LUKS device to your Tang server
+sudo clevis luks bind -d /dev/disk/by-label/nixos-home-enc tang '{"url":"http://your-tang-server:port"}'
+
+# Export the JWE token to the expected location
+sudo cryptsetup luksDump /dev/disk/by-label/nixos-home-enc | grep -A1 "clevis" | tail -n1 | sudo tee /etc/nixos/clevis-nixos-home.jwe
+```
 
 ## Project Structure
 
