@@ -57,11 +57,7 @@
     home = { stateVersion = config.system.stateVersion; };
 
     imports = [
-      (import ../home-manager/amp {
-        inherit pkgs;
-        settings = {};
-        mcpSettings = {};
-      })
+      (import ../home-manager/amp { inherit pkgs; })
       ../home-manager/firefox
       ../home-manager/kitty.nix
     ];
