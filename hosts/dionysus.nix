@@ -388,58 +388,57 @@
 
   system.stateVersion = "22.05";
 
-  systemd.services = let onBackupMount = {
-    unitConfig = {
-      RequiresMountsFor         = [ "/backup" ];
-      ConditionPathIsMountPoint = "/backup";
-      After                     = [ "backup.mount" ];
-      PartOf                    = [ "backup.mount" ];
-    };
-    wantedBy = lib.mkForce [ "backup.mount" ];
-  }; in {
-    calibre-web           = onBackupMount;
-    jellyfin              = {
-      serviceConfig.PrivateDevices = lib.mkForce false;
-    };
-    podman-filebrowser    = onBackupMount;
-    podman-simply-shorten = onBackupMount;
-    restic-backups-gcs    = onBackupMount;
-    restic-backups-local  = onBackupMount;
-    stignore              = onBackupMount // {
-      description   = "Update jupblb/Workspace stignore";
-      path          = with pkgs; [
-        bash diffutils inotify-tools
-        (python3.withPackages(p: with p; [ gitignore-parser ]))
-      ];
-      script        = ''
-        sh ${./config/stignore.sh}
-
-        inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
-          -m -r /backup/jupblb/Workspace |
-        while read -r line; do
-          if [[ "$line" == ".gitignore" ]]; then
-            >&2 echo ".gitignore update"
-            sh ${./config/stignore.sh}
-          fi
-        done
-      '';
-      serviceConfig = {
-        ProtectSystem = "full";
-        User          = "syncthing";
-        Type          = "simple";
+  systemd.services =
+    let onBackupMount = {
+      unitConfig = {
+        RequiresMountsFor         = [ "/backup" ];
+        ConditionPathIsMountPoint = "/backup";
+        After                     = [ "backup.mount" ];
+        PartOf                    = [ "backup.mount" ];
       };
+      wantedBy   = lib.mkForce [ "backup.mount" ];
     };
-    syncthing             = onBackupMount;
-  };
+    in {
+      calibre-web           = onBackupMount;
+      jellyfin              = {
+        serviceConfig.PrivateDevices = lib.mkForce false;
+      };
+      podman-filebrowser    = onBackupMount;
+      podman-simply-shorten = onBackupMount;
+      restic-backups-gcs    = onBackupMount;
+      restic-backups-local  = onBackupMount;
+      stignore              = onBackupMount // {
+        description   = "Update jupblb/Workspace stignore";
+        path          = with pkgs; [
+          bash diffutils inotify-tools
+          (python3.withPackages(p: with p; [ gitignore-parser ]))
+        ];
+        script        = ''
+          sh ${./config/stignore.sh}
+
+          inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
+            -m -r /backup/jupblb/Workspace |
+          while read -r line; do
+            if [[ "$line" == ".gitignore" ]]; then
+              >&2 echo ".gitignore update"
+              sh ${./config/stignore.sh}
+            fi
+          done
+        '';
+        serviceConfig = {
+          ProtectSystem = "full";
+          User          = "syncthing";
+          Type          = "simple";
+        };
+      };
+      syncthing             = onBackupMount;
+    };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   users.users.jupblb.extraGroups = [ "docker" "podman" ];
 
-  boot.enableContainers = lib.mkForce true;  # Use old-style for stateVersion < 22.05
-
   virtualisation = {
-    containers.enable = lib.mkForce false;  # Disable new-style to avoid conflict
     docker         = { enable = true; };
     oci-containers = {
       backend    = "podman";
