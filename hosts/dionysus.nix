@@ -248,6 +248,7 @@
         runner = name: {
           enable    = true;
           ephemeral = true;
+          replace   = true;
           url       = "https://github.com/jupblb/${name}";
           tokenFile = config.age.secrets.github_runner.path;
         };
