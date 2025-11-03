@@ -3,13 +3,6 @@
     initrd         = {
       kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
       network       = { enable = true; };
-      clevis        = {
-        enable  = true;
-        useTang = true;
-        devices = {
-          "nixos-home".secretFile = "/etc/nixos/clevis-nixos-home.jwe";
-        };
-      };
       luks          = {
         devices  = {
           "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";

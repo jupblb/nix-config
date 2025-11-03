@@ -88,9 +88,9 @@
   networking = {
     domain   = "kielbowi.cz";
     firewall =
-      let caddy = [ 80 443 ]; tang = [ 7654 ];
+      let caddy = [ 80 443 ];
       in {
-        allowedTCPPorts  = caddy ++ tang;
+        allowedTCPPorts  = caddy;
         allowedUDPPorts  = caddy;
       };
     hostId   = "ce5e3a09";
@@ -364,12 +364,6 @@
         };
     };
 
-    tang = {
-      enable = true;
-      ipAddressAllow = [ "127.0.0.0/8" "::1/128" "192.168.1.0/24" ];
-      listenStream   = [ "7654" ];
-    };
-
     transmission = {
       enable   = true;
       group    = "users";
@@ -439,18 +433,6 @@
         };
       };
       syncthing             = onBackupMount;
-      "tangd@" = onBackupMount // {
-        serviceConfig = {
-          StateDirectory   = lib.mkForce [];
-          RuntimeDirectory = lib.mkForce [];
-          DynamicUser      = lib.mkForce false;
-          User             = "root";
-          ExecStart        = lib.mkForce "${pkgs.tang}/libexec/tangd /run/tang";
-        };
-      };
-      };
-
-      sockets.tangd = onBackupMount;
     };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
