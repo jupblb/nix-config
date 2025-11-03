@@ -88,9 +88,9 @@
   networking = {
     domain   = "kielbowi.cz";
     firewall =
-      let caddy = [ 80 443 ];
+      let caddy = [ 80 443 ]; tang = [ 7654 ];
       in {
-        allowedTCPPorts  = caddy;
+        allowedTCPPorts  = caddy ++ tang;
         allowedUDPPorts  = caddy;
       };
     hostId   = "ce5e3a09";
@@ -364,6 +364,12 @@
         };
     };
 
+    tang = {
+      enable = true;
+      ipAddressAllow = [ "127.0.0.0/8" "::1/128" "192.168.1.0/24" ];
+      listenStream   = [ "7654" ];
+    };
+
     transmission = {
       enable   = true;
       group    = "users";
@@ -374,7 +380,7 @@
         ratio-limit          = 0;
         ratio-limit-enabled  = true;
         rpc-host-whitelist   = "transmission.kielbowi.cz";
-        umask                = 2;  # This sets permissions to 775 for dirs and 664 for files
+        umask                = 2;
       };
     };
 
@@ -432,6 +438,12 @@
         };
       };
       syncthing             = onBackupMount;
+      "tangd@" = {
+        serviceConfig = {
+          StateDirectory = lib.mkForce []; # Run on tmpfs
+          ExecStart      = lib.mkForce "${pkgs.tang}/libexec/tangd %t/tang";
+        };
+      };
     };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];

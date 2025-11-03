@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
 
-zpool import backup
-zfs load-key -a
-mount /backup
+sudo zpool import backup
+sudo zfs load-key -a
+sudo mount /backup
