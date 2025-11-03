@@ -2,6 +2,14 @@
   boot = {
     initrd         = {
       kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+      network       = { enable = true; };
+      clevis        = {
+        enable  = true;
+        useTang = true;
+        devices = {
+          "nixos-home".secretFile = "/etc/nixos/clevis-nixos-home.jwe";
+        };
+      };
       luks          = {
         devices  = {
           "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
@@ -168,6 +176,36 @@
     # https://github.com/NixOS/nixpkgs/issues/103746
     "getty@tty1".enable  = false;
     "autovt@tty1".enable = false;
+
+    clevis-rebind = {
+      description   = "Rebind LUKS to Tang server";
+      wantedBy      = [ "multi-user.target" ];
+      after         = [ "network-online.target" ];
+      wants         = [ "network-online.target" ];
+      path          = with pkgs; [ clevis cryptsetup curl ];
+      script        = ''
+        TANG_URL="http://192.168.1.4:7654"
+        DEVICE="${config.boot.luks.devices.nixos-home.device}"
+        JWE_FILE="${config.boot.clevis.devices.nixos-home.secretFile}"
+
+        if ! curl -sf "$TANG_URL/adv" >/dev/null; then
+          echo "Tang server not reachable, skipping rebind"
+          exit 1
+        fi
+
+        echo "Rebinding to Tang server..."
+        if clevis luks regen -d "$DEVICE" -s 1; then
+          echo "Successfully rebound to Tang server"
+          clevis luks dump -d "$DEVICE" > "$JWE_FILE"
+        else
+          exit 1
+        fi
+      '';
+      serviceConfig = {
+        Type            = "oneshot";
+        RemainAfterExit = true;
+      };
+    };
   };
 
   users.users.jupblb.extraGroups = [ "input" "lp" ];
