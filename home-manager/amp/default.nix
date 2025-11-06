@@ -19,7 +19,6 @@
     in {
       source = formatter.generate "amp-settings.json" ({
         "amp.dangerouslyAllowAll"          = true;
-        "amp.experimental.agentMode"       = "opus4.1";
         "amp.git.commit.coauthor.enabled"  = false;
         "amp.git.commit.ampThread.enabled" = true;
         "amp.mcpServers"                   = mcpSettings;
