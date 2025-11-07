@@ -14,10 +14,6 @@
       url    = "github:nix-community/home-manager/release-25.05";
       inputs = { nixpkgs.follows = "nixpkgs-darwin"; };
     };
-    mac-app-util        = {
-      url    = "github:hraban/mac-app-util";
-      inputs = { nixpkgs.follows = "nixpkgs-darwin"; };
-    };
     nix-ai-tools        = { url = "github:numtide/nix-ai-tools"; };
     nixpkgs-nixos       = { url = "github:NixOS/nixpkgs/nixos-25.05"; };
     nixpkgs-darwin      = {
@@ -27,7 +23,7 @@
 
   outputs = {
     self, nixpkgs-nixos, nixpkgs-darwin, home-manager-nixos,
-    home-manager-darwin, agenix, mac-app-util, nix-ai-tools, ...
+    home-manager-darwin, agenix, nix-ai-tools, ...
   }@inputs:
     let mkDevShell = pkgs: pkgs.mkShell {
       buildInputs = with pkgs; [
@@ -76,8 +72,7 @@
 
       homeConfigurations =
         let homeCfg = file: home-manager-darwin.lib.homeManagerConfiguration({
-            modules =
-              [ ./hosts/nyx.nix file mac-app-util.homeManagerModules.default ];
+            modules = [ ./hosts/nyx.nix file ];
             pkgs    = import nixpkgs-darwin({
               overlays = [
                 (_: _: {

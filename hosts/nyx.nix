@@ -24,6 +24,7 @@
     kitty = {
       font        = { size = lib.mkForce 14; };
       keybindings = { "cmd+t" = "new_tab_with_cwd"; };
+      package     = pkgs.hello;
       settings    = {
         hide_window_decorations            = lib.mkForce "no";
         macos_option_as_alt                = "left";
