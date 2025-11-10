@@ -127,14 +127,8 @@
       dataDir   = "/home/jupblb/.local/share/syncthing";
       settings  = {
         folders = {
-          "jupblb/Documents" = {
-            enable = true;
-            path   = "/home/jupblb/Documents";
-          };
-          "jupblb/Workspace" = {
-            enable = true;
-            path   = "/home/jupblb/Workspace";
-          };
+          "jupblb/Documents" = { enable = true; };
+          "jupblb/Workspace" = { enable = true; };
         };
       };
       user      = "jupblb";

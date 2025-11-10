@@ -102,15 +102,18 @@
           "jupblb/Documents" = {
             devices = [ "nyx" "dionysus" "hades" ];
             enable  = lib.mkDefault false;
+            path    = "~/Documents";
           };
           "jupblb/Pictures"  = {
             devices = [ "dionysus" ];
             enable  = lib.mkDefault false;
+            path    = "~/Pictures";
           };
           "jupblb/Workspace" = {
             devices     = [ "nyx" "dionysus" "hades" ];
             enable      = lib.mkDefault false;
             ignorePerms = false;
+            path        = "~/Workspace";
           };
         };
         options = {
