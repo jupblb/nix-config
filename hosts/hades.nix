@@ -3,11 +3,6 @@
     initrd         = {
       kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
       network       = { enable = true; };
-      luks          = {
-        devices  = {
-          "nixos-home".device = "/dev/disk/by-label/nixos-home-enc";
-        };
-      };
     };
     kernelModules  = [ "kvm-amd" ];
     plymouth       = { enable = true; extraConfig = "DeviceScale=2"; };
@@ -29,7 +24,7 @@
     "/".fsType     = "xfs";
     "/boot".device = "/dev/disk/by-uuid/C301-A009";
     "/boot".fsType = "vfat";
-    "/home".device = "/dev/mapper/nixos-home";
+    "/home".device = "/dev/disk/by-label/nixos-home";
     "/home".fsType = "xfs";
   };
 
@@ -128,6 +123,7 @@
       settings  = {
         folders = {
           "jupblb/Documents" = { enable = true; };
+          "jupblb/Pictures"  = { enable = false; };
           "jupblb/Workspace" = { enable = true; };
         };
       };
