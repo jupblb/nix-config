@@ -13,6 +13,14 @@
     stateVersion     = "25.05";
   };
 
+  imports = [
+    ../home-manager
+    ../home-manager/fish
+    ../home-manager/kitty.nix
+    ../home-manager/lf
+    ../home-manager/neovim
+  ];
+
   programs = {
     home-manager = { enable = true; };
 

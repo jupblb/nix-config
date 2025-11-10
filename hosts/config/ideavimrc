@@ -1,61 +1,87 @@
-" Generated from neovim config
+" IdeaVimrc generated from neovim configuration
+" Basic vim settings that work in IdeaVim
 
-" Basic Settings
+" General settings
 set clipboard+=unnamedplus
+set colorcolumn=80
+set cursorline
+set ignorecase
+set number
+" Skip relativenumber as requested
+set showmode
+set smartcase
+set virtualedit=all
+set wrap
+
+" Tab and indentation settings
+set tabstop=2
+
+" Search settings
 set ignorecase
 set smartcase
-set number
-set incsearch
-set hlsearch
+
+" UI settings  
+set scrolloff=5
 
 " Leader key
-let mapleader = " "
-
-" Navigation and editing
-nnoremap Q <Nop>
+let mapleader=" "
 map <Space> <Leader>
 
-" Better scrolling
+" Basic navigation keymaps
+nnoremap <S-CR> -
 nnoremap <C-f> 5<C-e>
 nnoremap <C-b> 5<C-y>
-
-" Paste without yanking replaced text
 vnoremap p "_dP
 
-" Copy relative path to clipboard
+" Disable Q for Ex mode
+nnoremap Q <Nop>
+nnoremap <Space> <Nop>
+
+" Copy path to clipboard
 nnoremap <C-g> :let @+ = expand("%")<CR><C-g>
 
-" IdeaVim specific plugins
-Plug 'machakann/vim-highlightedyank'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'vim-matchit'
+" IdeaVim specific settings and plugins
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
 
-" IDE Actions
-nmap gD         <Action>(GotoDeclaration)
-nmap <C-]>      <Action>(GotoDeclaration)
-nmap gd         <Action>(GotoDeclaration)
-nmap <C-=>      <Action>(ReformatCode)
-nmap grt        <Action>(GotoTypeDeclaration)
-nmap gW         <Action>(GotoSymbol)
-nmap <C-[>      <Action>(FindUsages)
-nmap grn        <Action>(RenameElement)
+" Enable IdeaVim plugins
+set surround
+set commentary
+set matchit
+set highlightedyank
 
-" File navigation
-nmap <Leader>f  <Action>(GotoFile)
-nmap <Leader>e  <Action>(SelectInProjectView)
-nmap <Leader>o  <Action>(RecentFiles)
-nmap <Leader><Tab> <Action>(RecentFiles)
+" IDE actions (replacing LSP mappings with IntelliJ actions)
+map gD <Action>(GotoDeclaration)
+map gd <Action>(GotoDeclaration)
+map <C-]> <Action>(GotoDeclaration)
+map <C-[> <Action>(FindUsages)
+map grt <Action>(GotoTypeDeclaration)
+map gri <Action>(GotoImplementation)
+map grr <Action>(ShowUsages)
+map grn <Action>(RenameElement)
+map gO <Action>(FileStructurePopup)
+map K <Action>(QuickJavaDoc)
+map <C-=> <Action>(ReformatCode)
 
-" Search
-nmap <Leader>/  <Action>(FindInPath)
-nmap <Leader>?  <Action>(FindInPath)
+" Leader mappings for IDE features
+map <Leader>d <Action>(ActivateProblemsViewToolWindow)
+map <Leader>e <Action>(SelectInProjectView)
+map <Leader>f <Action>(GotoFile)
+map <Leader>/ <Action>(Find)
+map <Leader>? <Action>(FindInPath)
+map <Leader><Tab> <Action>(RecentFiles)
+map <Leader>o <Action>(RecentFiles)
+map <Leader><Space> <Action>(GotoAction)
 
-" Diagnostics/Errors
-nmap <Leader>ld <Action>(ShowErrorDescription)
-nmap <Leader>lD <Action>(ActivateProblemsViewToolWindow)
-nmap K          <Action>(ShowHoverInfo)
+" Window management
+map <Leader>li <Action>(CallHierarchy)
+map <Leader>lo <Action>(CallHierarchy)
+map <Leader>ld <Action>(ShowErrorDescription)
 
-" Git/VCS
-nmap <Leader>hd <Action>(Compare.SameVersion)
-nmap <Leader>hu <Action>(Vcs.RollbackChangedLines)
+" Version control (replacing signify mappings)
+map <Leader>hd <Action>(Compare.SameVersion)
+map <Leader>hu <Action>(ChangesView.Revert)
+
+" Custom command for write
+command W :write

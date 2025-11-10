@@ -15,16 +15,11 @@
   };
 
   imports = [
-    ../home-manager
     (import ../home-manager/amp {
       inherit pkgs;
       mcpSettings = {
         buildkite         = {
           args    = [ "mcp-remote" "https://mcp.buildkite.com/mcp/readonly" ];
-          command = "${pkgs.nodejs}/bin/npx";
-        };
-        chrome-devtools   = {
-          args    = [ "chrome-devtools-mcp@latest" ];
           command = "${pkgs.nodejs}/bin/npx";
         };
         github-mcp-server = {
@@ -33,10 +28,6 @@
         };
       };
     })
-    ../home-manager/fish
-    ../home-manager/kitty.nix
-    ../home-manager/lf
-    ../home-manager/neovim
   ];
 
   programs = {
