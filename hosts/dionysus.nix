@@ -341,17 +341,17 @@
         in {
           "jupblb/Documents" = {
             enable     = true;
-            path       = "/backup/jupblb/Documents";
+            path       = lib.mkForce("/backup/jupblb/Documents");
             versioning = simpleVersioning;
           };
           "jupblb/Pictures"  = {
             enable     = true;
-            path       = "/backup/jupblb/Pictures";
+            path       = lib.mkForce("/backup/jupblb/Pictures");
             versioning = simpleVersioning;
           };
           "jupblb/Workspace" = {
             enable = true;
-            path   = "/backup/jupblb/Workspace";
+            path   = lib.mkForce("/backup/jupblb/Workspace");
           };
         };
     };
@@ -380,7 +380,7 @@
 
   system.stateVersion = "22.05";
 
-  systemd =
+  systemd.services =
     let onBackupMount = {
       unitConfig = {
         RequiresMountsFor         = [ "/backup" ];
