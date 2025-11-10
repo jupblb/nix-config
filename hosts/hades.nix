@@ -58,18 +58,13 @@
 
     imports = [
       (import ../home-manager/amp { inherit pkgs; })
-      ../home-manager/firefox
       ../home-manager/kitty.nix
     ];
 
     programs = {
-      firefox.profiles.default = {
-        bookmarks.settings = [
-          {
-            name = "home-manager";
-            url  = "https://nix-community.github.io/home-manager/options.xhtml";
-          }
-        ];
+      chromium = {
+        enable = true;
+        package = pkgs.google-chrome;
       };
 
       kitty = { settings.linux_display_server = "wayland"; };
