@@ -234,6 +234,7 @@
             "calibre.kielbowi.cz"  = "http://localhost:8083";
             "jellyfin.kielbowi.cz" = "http://localhost:8096";
 
+            "hades.kielbowi.cz"    = "ssh://192.168.1.2:22";
             "dionysus.kielbowi.cz" = "ssh://localhost:22";
           };
         };
@@ -274,15 +275,6 @@
     lidarr = {
       enable = true;
       group  = "users";
-    };
-
-    openssh = {
-      openFirewall = true;
-      enable       = true;
-      settings     = {
-        PasswordAuthentication = true;
-        PermitRootLogin        = "no";
-      };
     };
 
     radarr = {

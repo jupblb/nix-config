@@ -74,6 +74,15 @@
 
     fwupd = { enable = true; };
 
+    openssh = {
+      openFirewall = true;
+      enable       = true;
+      settings     = {
+        PasswordAuthentication = true;
+        PermitRootLogin        = "no";
+      };
+    };
+
     pulseaudio = { enable = false; };
 
     syncthing = {
