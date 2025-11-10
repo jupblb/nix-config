@@ -122,6 +122,12 @@
       controlPersist = "yes";
       enable         = true;
       matchBlocks    = {
+        hades        = {
+          hostname     = "hades.kielbowi.cz";
+          proxyCommand =
+            "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
+          user         = "jupblb";
+        };
         dionysus     = {
           hostname     = "dionysus.kielbowi.cz";
           proxyCommand =
