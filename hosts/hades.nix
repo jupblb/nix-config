@@ -131,10 +131,6 @@
             enable = true;
             path   = "/home/jupblb/Documents";
           };
-          "jupblb/Pictures"  = {
-            enable = true;
-            path   = "/home/jupblb/Pictures";
-          };
           "jupblb/Workspace" = {
             enable = true;
             path   = "/home/jupblb/Workspace";

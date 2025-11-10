@@ -104,7 +104,7 @@
             enable  = lib.mkDefault false;
           };
           "jupblb/Pictures"  = {
-            devices = [ "dionysus" "hades" ];
+            devices = [ "dionysus" ];
             enable  = lib.mkDefault false;
           };
           "jupblb/Workspace" = {
