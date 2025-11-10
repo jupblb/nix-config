@@ -81,7 +81,7 @@
   networking = {
     hostName   = "hades";
     # https://wiki.nixos.org/wiki/Wake_on_LAN
-    interfaces = { enp9s0 = { wakeOnLan.enable = true; }; };
+    interfaces = { enp8s0 = { wakeOnLan.enable = true; }; };
     firewall   = { allowedUDPPorts = [ 9 ]; };
   };
 
