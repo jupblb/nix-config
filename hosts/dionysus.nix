@@ -28,7 +28,10 @@
     zfs                  = { requestEncryptionCredentials = false; };
   };
 
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
+  environment = {
+    sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
+    systemPackages   = with pkgs; [ wakeonlan ];
+  };
 
   fileSystems = {
     "/"              = {
