@@ -154,4 +154,11 @@
   };
 
   users.users.jupblb.extraGroups = [ "input" "lp" ];
+
+  virtualisation = {
+    podman = {
+      dockerCompat = true;
+      dockerSocket = { enable = true; };
+    };
+  };
 }

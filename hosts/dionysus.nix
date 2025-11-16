@@ -467,9 +467,6 @@
         };
       };
     };
-    podman         = {
-      enable        = true;
-      extraPackages = with pkgs; [ zfs ];
-    };
+    podman         = { extraPackages = with pkgs; [ zfs ]; };
   };
 }

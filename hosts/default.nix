@@ -149,4 +149,11 @@
     };
     shell           = pkgs.fish;
   };
+
+  virtualisation = {
+    podman = {
+      autoPrune = { enable = true; };
+      enable    = true;
+    };
+  };
 }
