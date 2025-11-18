@@ -226,6 +226,15 @@
       };
     };
 
+    chhoto-url = {
+      enable = true;
+      settings = {
+        port        = 4567;
+        public_mode = true;
+        site_url    = "https://go.kielbowi.cz";
+      };
+    };
+
     cloudflared = {
       enable  = true;
       tunnels = {
@@ -399,7 +408,6 @@
         serviceConfig.PrivateDevices = lib.mkForce false;
       };
       podman-filebrowser    = onBackupMount;
-      podman-simply-shorten = onBackupMount;
       restic-backups-gcs    = onBackupMount;
       restic-backups-local  = onBackupMount;
       stignore              = onBackupMount // {
@@ -458,15 +466,6 @@
           image       = "sissbruecker/linkding";
           ports       = [ "9090:9090" ];
           volumes     = [ "/data/linkding:/etc/linkding/data" ];
-        };
-        simply-shorten = {
-          environment = {
-            db_url                    = "/urls.sqlite";
-            INSECURE_DISABLE_PASSWORD = "I_KNOW_ITS_BAD";
-          };
-          image       = "draganczukp/simply-shorten";
-          ports       = [ "4567:4567" ];
-          volumes     = [ "/data/simply-shorten.sqlite:/urls.sqlite" ];
         };
       };
     };
