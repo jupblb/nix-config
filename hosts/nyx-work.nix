@@ -18,14 +18,12 @@
     (import ../home-manager/amp {
       inherit pkgs;
       mcpSettings = {
-        buildkite         = {
-          args    = [ "mcp-remote" "https://mcp.buildkite.com/mcp/readonly" ];
-          command = "${pkgs.nodejs}/bin/npx";
-        };
+        buildkite         = { url = "https://mcp.buildkite.com/mcp/readonly"; };
         github-mcp-server = {
           args    = [ "stdio" "--read-only" ];
           command = "${pkgs.github-mcp-server}/bin/github-mcp-server";
         };
+        gopls             = { args = [ "mcp" ]; command = "gopls"; };
       };
     })
   ];
