@@ -19,6 +19,7 @@
     in {
       source = formatter.generate "amp-settings.json" ({
         "amp.dangerouslyAllowAll"          = true;
+        "amp.feed.enabled"                 = false;
         "amp.git.commit.coauthor.enabled"  = false;
         "amp.git.commit.ampThread.enabled" = true;
         "amp.mcpServers"                   = mcpSettings;
