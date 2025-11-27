@@ -251,6 +251,21 @@
       };
     };
 
+    filebrowser = {
+      enable   = true;
+      group    = "users";
+      package  = pkgs.symlinkJoin({
+        name        = pkgs.filebrowser.name;
+        paths       = with pkgs; [ filebrowser ];
+        buildInputs = with pkgs; [ makeWrapper ];
+        postBuild   = "wrapProgram $out/bin/filebrowser --add-flags --noauth";
+      });
+      settings = {
+        port   = 8085;
+        root   = "/data";
+      };
+    };
+
     github-runners =
       let
         repos  = [ "awesome-neovim-sorted" "invoice" "justee" ];
@@ -405,7 +420,6 @@
       jellyfin              = {
         serviceConfig.PrivateDevices = lib.mkForce false;
       };
-      podman-filebrowser    = onBackupMount;
       restic-backups-gcs    = onBackupMount;
       restic-backups-local  = onBackupMount;
       stignore              = onBackupMount // {
@@ -444,17 +458,6 @@
     oci-containers = {
       backend    = "podman";
       containers = {
-        filebrowser    = {
-          cmd     = [ "--noauth" ];
-          image   = "filebrowser/filebrowser";
-          ports   = [ "8085:80" ];
-          volumes = [
-            "/backup/files.db:/database.db"
-            "/backup/domci:/srv/domci"
-            "/backup/jupblb:/srv/jupblb"
-            "/data:/srv/data"
-          ];
-        };
         linkding       = {
           environment = {
             LD_ENABLE_AUTH_PROXY          = "True";
