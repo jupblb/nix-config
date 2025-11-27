@@ -60,10 +60,8 @@
   hardware = {
     cpu.intel = { updateMicrocode = true; };
     graphics  = {
-      extraPackages = with pkgs; [
-        intel-compute-runtime intel-media-sdk intel-media-driver
-        libvdpau-va-gl vaapiVdpau
-      ];
+      extraPackages = with pkgs;
+        [ intel-compute-runtime intel-media-driver vpl-gpu-rt ];
     };
   };
 
