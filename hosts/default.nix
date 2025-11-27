@@ -64,7 +64,6 @@
     fish   = { enable = true; };
     gnupg  = { agent.enable = true; };
     screen = { enable = true; };
-    ssh    = { startAgent = true; };
   };
 
   security = { rtkit.enable = true; };

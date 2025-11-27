@@ -6,6 +6,10 @@
     };
     kernelModules  = [ "kvm-amd" ];
     plymouth       = { enable = true; extraConfig = "DeviceScale=2"; };
+    tmp            = {
+      tmpfsHugeMemoryPages = "always";
+      useTmpfs             = true;
+    };
   };
 
   environment = {
@@ -35,11 +39,7 @@
     cpu       = { amd.updateMicrocode = true; };
     i2c       = { enable = true; };
     keyboard  = { uhk.enable = true; };
-    graphics  = {
-      enable32Bit     = true;
-      extraPackages   = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
-      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-    };
+    graphics  = { enable32Bit = true; };
     nvidia    = {
       nvidiaSettings  = false;
       open            = true;

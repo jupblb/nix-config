@@ -105,6 +105,7 @@
       enable          = true;
       pinentryPackage = pkgs.pinentry-curses;
     };
+    ssh         = { startAgent = true; };
   };
 
   services = {
