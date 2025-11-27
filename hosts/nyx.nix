@@ -26,7 +26,7 @@
 
     git = {
       # Not supported by Apple default git binary
-      extraConfig = { core.fsmonitor = lib.mkForce false; };
+      settings = { core.fsmonitor = lib.mkForce false; };
     };
 
     kitty = {

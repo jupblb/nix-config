@@ -42,10 +42,14 @@
       };
     };
 
-    git.extraConfig.bash = {
-      showDirtyState        = true;
-      showInformativeStatus = true;
-      showUntrackedFiles    = true;
+    git = {
+      settings = {
+        bash = {
+          showDirtyState        = true;
+          showInformativeStatus = true;
+          showUntrackedFiles    = true;
+        };
+      };
     };
 
     kitty.settings = {

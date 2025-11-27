@@ -29,6 +29,20 @@
       shellOptions   = [ "cdspell" "checkwinsize" "cmdhist" "histappend" ];
     };
 
+    delta = {
+      enable               = true;
+      enableGitIntegration = true;
+      options              = {
+        line-numbers     = true;
+        minus-emph-style = "syntax #fa9f86";
+        minus-style      = "syntax #f9d8bc";
+        plus-emph-style  = "syntax #d9d87f";
+        plus-style       = "syntax #eeebba";
+        syntax-theme     = "gruvbox-light";
+        tabs             = 2;
+      };
+    };
+
     direnv = {
       config     = {
         bash_path     = "${pkgs.bashInteractive}/bin/bash";
@@ -40,27 +54,19 @@
     };
 
     git = {
-      aliases     = {
-        amend     = "commit --amend --no-edit --allow-empty-message";
-        fuck      = "reset --hard HEAD";
-        increment = "commit --allow-empty-message -m ''";
-      };
-      delta       = {
-        enable  = true;
-        options = {
-          line-numbers     = true;
-          minus-emph-style = "syntax #fa9f86";
-          minus-style      = "syntax #f9d8bc";
-          plus-emph-style  = "syntax #d9d87f";
-          plus-style       = "syntax #eeebba";
-          syntax-theme     = "gruvbox-light";
-          tabs             = 2;
-        };
-      };
-      enable      = true;
+      enable   = true;
+      ignores  = [
+        ".actrc" ".bazelrc.local" ".direnv" ".envrc" ".nvim.lua" ".zoekt"
+        "PROMPT*.md"
+      ];
       # https://blog.gitbutler.com/how-git-core-devs-configure-git/
       # https://github.blog/engineering/improve-git-monorepo-performance-with-a-file-system-monitor/
-      extraConfig = {
+      settings = {
+        alias               = {
+          amend     = "commit --amend --no-edit --allow-empty-message";
+          fuck      = "reset --hard HEAD";
+          increment = "commit --allow-empty-message -m ''";
+        };
         branch.sort         = "-committerdate";
         color.ui            = true;
         column.ui           = "auto";
@@ -74,9 +80,12 @@
         diff.algorithm      = "histogram";
         fetch               = { all = true; prune = true; };
         gpg.ssh             = {
-          allowedSignersFile = toString(pkgs.writeText "allowed_signers" ''
-            ${config.programs.git.userEmail} ${builtins.readFile "${config.home.homeDirectory}/.ssh/id_ed25519.pub"}
-          '');
+          allowedSignersFile =
+            let pubkey = builtins.readFile(
+              "${config.home.homeDirectory}/.ssh/id_ed25519.pub");
+            in toString(
+              pkgs.writeText "allowed_signers"
+                ''${config.programs.git.settings.user.email} ${pubkey}'');
         };
         help.autocorrect    = true;
         init.defaultBranch  = "main";
@@ -84,18 +93,13 @@
         pull.rebase         = true;
         push                = { autoSetupRemote = true; default = "current"; };
         submodule.recurse   = true;
+        user                = { email = "git@kielbowi.cz"; name = "jupblb"; };
       };
-      ignores     = [
-        ".actrc" ".bazelrc.local" ".direnv" ".envrc" ".nvim.lua" ".zoekt"
-        "PROMPT*.md"
-      ];
-      signing     = {
+      signing  = {
         format        = "ssh";
         key           = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
         signByDefault = true;
       };
-      userEmail   = "git@kielbowi.cz";
-      userName    = "jupblb";
     };
 
     git-credential-oauth = { enable = true; };
@@ -106,10 +110,13 @@
     };
 
     ssh = {
-      controlMaster  = "auto";
-      controlPersist = "yes";
-      enable         = true;
-      matchBlocks    = {
+      enable              = true;
+      enableDefaultConfig = false;
+      matchBlocks         = {
+        "*"          = {
+          controlMaster  = "auto";
+          controlPersist = "yes";
+        };
         hades        = {
           hostname     = "hades.kielbowi.cz";
           proxyCommand =
