@@ -153,12 +153,15 @@
     "autovt@tty1".enable = false;
   };
 
-  users.users.jupblb.extraGroups = [ "input" "lp" ];
+  users.users.jupblb.extraGroups = [ "input" "lp" "vboxusers" ];
 
   virtualisation = {
-    podman = {
+    podman     = {
       dockerCompat = true;
       dockerSocket = { enable = true; };
+    };
+    virtualbox = {
+      host = { enable = true; enableExtensionPack = true; };
     };
   };
 }
