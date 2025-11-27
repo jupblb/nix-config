@@ -2,28 +2,18 @@
   description = "Nix configurations";
 
   inputs = {
-    agenix              = {
-      url    = "github:ryantm/agenix";
-      inputs = { nixpkgs.follows = "nixpkgs-nixos"; };
+    agenix         = { url = "github:ryantm/agenix"; };
+    home-manager   = {
+      url = "github:nix-community/home-manager/release-25.11";
     };
-    home-manager-nixos  = {
-      url    = "github:nix-community/home-manager/release-25.05";
-      inputs = { nixpkgs.follows = "nixpkgs-nixos"; };
-    };
-    home-manager-darwin = {
-      url    = "github:nix-community/home-manager/release-25.05";
-      inputs = { nixpkgs.follows = "nixpkgs-darwin"; };
-    };
-    nix-ai-tools        = { url = "github:numtide/nix-ai-tools"; };
-    nixpkgs-nixos       = { url = "github:NixOS/nixpkgs/nixos-25.05"; };
-    nixpkgs-darwin      = {
-      url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
-    };
+    nix-ai-tools   = { url = "github:numtide/nix-ai-tools"; };
+    nixpkgs-nixos  = { url = "github:NixOS/nixpkgs/nixos-25.11"; };
+    nixpkgs-darwin = { url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin"; };
   };
 
   outputs = {
-    self, nixpkgs-nixos, nixpkgs-darwin, home-manager-nixos,
-    home-manager-darwin, agenix, nix-ai-tools, ...
+    self, nixpkgs-nixos, nixpkgs-darwin, home-manager, agenix, nix-ai-tools,
+    ...
   }@inputs:
     let mkDevShell = pkgs: pkgs.mkShell {
       buildInputs = with pkgs; [
@@ -44,7 +34,7 @@
         hades    = nixpkgs-nixos.lib.nixosSystem({
           modules     = [
             ./hosts/hades.nix
-            home-manager-nixos.nixosModules.home-manager
+            home-manager.nixosModules.home-manager
             {
               nixpkgs.overlays = [
                 (_: _: { amp-cli = nix-ai-tools.packages.x86_64-linux.amp; })
@@ -57,7 +47,7 @@
         dionysus = nixpkgs-nixos.lib.nixosSystem({
           modules     = [
             ./hosts/dionysus.nix
-            home-manager-nixos.nixosModules.home-manager
+            home-manager.nixosModules.home-manager
             agenix.nixosModules.default
             {
               nixpkgs.overlays = [
@@ -71,7 +61,7 @@
       };
 
       homeConfigurations =
-        let homeCfg = file: home-manager-darwin.lib.homeManagerConfiguration({
+        let homeCfg = file: home-manager.lib.homeManagerConfiguration({
             modules = [ ./hosts/nyx.nix file ];
             pkgs    = import nixpkgs-darwin({
               overlays = [

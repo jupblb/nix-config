@@ -23,6 +23,6 @@
 - agenix secrets managed via flake input  
 - Development shell includes: agenix, lua-language-server, vim-language-server
 - NixOS hosts import default.nix for shared configuration
-- nyx uses nixpkgs-25.05-darwin branch for macOS compatibility
+- nyx uses nixpkgs-25.11-darwin branch for macOS compatibility
 - nix-ai-tools uses its own pinned nixpkgs for stability
 - Home-manager config symlinked to ~/.config/home-manager/ for convenience

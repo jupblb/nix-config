@@ -105,18 +105,6 @@
       settings = { hide_threads = true; hide_userland_threads = true; };
     };
 
-    jujutsu = {
-      enable   = false; # Revisit after 25.05
-      settings = {
-        ui        = { pager =  "delta"; };
-        "ui.diff" = { format = "git"; };
-        user      = {
-          email = "git@kielbowi.cz";
-          name  = "jupblb";
-        };
-      };
-    };
-
     ssh = {
       controlMaster  = "auto";
       controlPersist = "yes";
