@@ -41,35 +41,39 @@
     };
   };
 
-  targets.darwin.defaults = {
-    "com.apple.desktopservices" = {
-      DSDontWriteNetworkStores = true;
-      DSDontWriteUSBStores     = true;
-    };
-
-    "com.apple.dock" = { autohide = true; };
-
-    "com.apple.finder" = { FXRemoveOldTrashItems = true; };
-
-    NSGlobalDomain = {
-      AppleLanguages           = [ "en" "pl" ];
-      AppleLocale              = "en_US";
-      AppleMeasurementUnits    = "Centimeters";
-      AppleMetricUnits         = true;
-      ApplePressAndHoldEnabled = false;
-      AppleTemperatureUnit     = "Celsius";
-      KeyRepeat                = 2;
-
-      NSAutomaticCapitalizationEnabled     = false;
-      NSAutomaticDashSubstitutionEnabled   = false;
-      NSAutomaticPeriodSubstitutionEnabled = false;
-      NSAutomaticQuoteSubstitutionEnabled  = false;
-      NSAutomaticSpellingCorrectionEnabled = false;
-
-      com.apple.desktopservices = {
+  targets.darwin = {
+    copyApps = { enable = true; };
+    defaults = {
+      "com.apple.desktopservices" = {
         DSDontWriteNetworkStores = true;
         DSDontWriteUSBStores     = true;
       };
+
+      "com.apple.dock" = { autohide = true; };
+
+      "com.apple.finder" = { FXRemoveOldTrashItems = true; };
+
+      NSGlobalDomain = {
+        AppleLanguages           = [ "en" "pl" ];
+        AppleLocale              = "en_US";
+        AppleMeasurementUnits    = "Centimeters";
+        AppleMetricUnits         = true;
+        ApplePressAndHoldEnabled = false;
+        AppleTemperatureUnit     = "Celsius";
+        KeyRepeat                = 2;
+
+        NSAutomaticCapitalizationEnabled     = false;
+        NSAutomaticDashSubstitutionEnabled   = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled  = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+
+        com.apple.desktopservices = {
+          DSDontWriteNetworkStores = true;
+          DSDontWriteUSBStores     = true;
+        };
+      };
     };
+    linkApps = { enable = false; };
   };
 }

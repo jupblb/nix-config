@@ -24,6 +24,7 @@
         "amp.mcpServers"                   = mcpSettings;
         "amp.tools.inactivityTimeout"      = 600;
         "amp.tools.stopTimeout"            = 600;
+        "amp.tryOpus"                      = true;
       });
     };
 }
