@@ -140,7 +140,7 @@
 
   users.users.jupblb = {
     description     = "Michal Kielbowicz";
-    extraGroups     = [ "wheel" ];
+    extraGroups     = [ "podman" "wheel" ];
     initialPassword = "changeme";
     isNormalUser    = true;
     openssh         = {
