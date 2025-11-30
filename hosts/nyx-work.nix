@@ -39,7 +39,6 @@
         user.email = lib.mkForce("michal.kielbowicz@sourcegraph.com");
       };
     };
-    mise         = { enable = true; };
   };
 
   xdg.configFile."ideavim/ideavimrc".source = ./config/ideavimrc;
