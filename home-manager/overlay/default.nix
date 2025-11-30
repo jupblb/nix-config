@@ -17,20 +17,10 @@ final: prev: {
       src     = final.fetchFromGitHub({
         owner  = "sourcegraph";
         repo   = pname;
-        rev    = "aabe39d682b033a3cd2c1b53648e79b7f53bccfb";
-        sha256 = "sha256-lyRMoxlBw/7UmEYYJLtPgLZuHgf2lDw6zH60Ww6j9eQ=";
+        rev    = "621f1ca375fc2887d30a4ac32a8b6c582d28f9c0";
+        sha256 = "sha256-/ynaY2MGLKfoljy18jnfU+KDxm3tJOTgZqxMOEerwyU=";
       });
-      version = "2025-10-17";
-    });
-    no-neck-pain-nvim = final.vimUtils.buildVimPlugin(rec {
-      pname   = "no-neck-pain.nvim";
-      src     = final.fetchFromGitHub({
-        owner  = "shortcuts";
-        repo   = pname;
-        rev    = "7bf83d3cfc8f6a120734f4254bbb87928756bea0";
-        sha256 = "14bp8ksw3v3dw28nakxkhmzxvbwrn7kwnzpwx2zxxf1vn45az0cm";
-      });
-      version = "2025-07-20";
+      version = "2025-11-30";
     });
     zoekt-nvim        = final.vimUtils.buildVimPlugin(rec {
       pname   = "zoekt.nvim";
