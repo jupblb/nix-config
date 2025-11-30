@@ -22,8 +22,7 @@ set smartcase
 set tabstop=2
 set updatetime=500
 set virtualedit=all
-" https://github.com/nvim-telescope/telescope.nvim/issues/3436
-"set winborder=rounded
+set winborder=rounded
 set wrap
 
 map q: <Nop>

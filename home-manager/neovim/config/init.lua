@@ -46,23 +46,6 @@ vim.keymap.set(
 -- LSP Setup
 local lspAttachAuGroup = vim.api.nvim_create_augroup('LspFormatting', {})
 local lsp_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd('CursorHold', {
-        buffer   = bufnr,
-        callback = function()
-            vim.diagnostic.open_float(nil, {
-                focusable    = false,
-                close_events = {
-                    'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost'
-                },
-                border       = 'rounded',
-                source       = 'always',
-                prefix       = ' ',
-                scope        = 'cursor',
-            })
-        end,
-        group    = lspAttachAuGroup,
-    })
-
     if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer   = bufnr,
