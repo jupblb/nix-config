@@ -1,8 +1,9 @@
 { config, lib, pkgs, ... }: {
   home = {
     sessionPath      = [
-      "${config.xdg.dataHome}/bin" "/opt/homebrew/bin"
-      "/opt/homebrew/sbin" "/opt/podman/bin"
+      "${config.xdg.dataHome}/bin"
+      "${config.home.homeDirectory}/.orbstack/bin"
+      "/opt/homebrew/bin" "/opt/homebrew/sbin"
     ];
     sessionVariables = {
       HOMEBREW_PREFIX     = "/opt/homebre";
