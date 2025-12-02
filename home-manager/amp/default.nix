@@ -13,7 +13,6 @@
     });
     in [ amp ];
 
-
   xdg.configFile."amp/settings.json" =
     let formatter = pkgs.formats.json {};
     in {

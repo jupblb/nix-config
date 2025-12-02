@@ -32,6 +32,20 @@
   ];
 
   programs = {
+    claude-code  = {
+      enable   = true;
+      settings = {
+        permissions = {
+          deny        = [ "Read(~/**)" ];
+          allow       = [ "Read(~/Workspace/**)" "Bash(*)" ];
+          defaultMode = "acceptEdits";
+        };
+        sandbox = {
+          enabled                  = true;
+          autoAllowBashIfSandboxed = true;
+        };
+      };
+    };
     fish         = {
       interactiveShellInit =
         "source ${config.xdg.configHome}/fish/config.local.fish";

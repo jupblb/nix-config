@@ -64,14 +64,10 @@
         let homeCfg = file: home-manager.lib.homeManagerConfiguration({
             modules = [ ./hosts/nyx.nix file ];
             pkgs    = import nixpkgs-darwin({
-              overlays = [
+              overlays = with nix-ai-tools.packages.aarch64-darwin; [
                 (_: _: {
-                  amp-cli           = nix-ai-tools.packages.aarch64-darwin.amp;
-                  github-mcp-server =
-                    let pkgs = import nix-ai-tools.inputs.nixpkgs({
-                      system = "aarch64-darwin";
-                    });
-                    in pkgs.github-mcp-server;
+                  amp-cli     = amp;
+                  claude-code = claude-code;
                 })
               ];
               system   = "aarch64-darwin";
