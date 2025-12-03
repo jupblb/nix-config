@@ -19,13 +19,22 @@
     (import ../home-manager/amp {
       inherit pkgs;
       mcpSettings = {
-        buildkite         = {
-          args    = [ "mcp-remote" "https://mcp.buildkite.com/mcp/readonly" ];
+        buildkite           = {
+          args    =
+            [ "mcp-remote@latest" "https://mcp.buildkite.com/mcp/readonly" ];
           command = "npx";
         };
-        github-mcp-server = {
+        chrome-devtools-mcp = {
+          args    = [ "chrome-devtools-mcp@latest" ];
+          command = "npx";
+        };
+        github-mcp-server   = {
           args    = [ "stdio" "--read-only" ];
           command = "${pkgs.github-mcp-server}/bin/github-mcp-server";
+        };
+        sentry              = {
+          args    = [ "-y" "mcp-remote@latest" "https://mcp.sentry.dev/mcp" ];
+          command = "npx";
         };
       };
     })
