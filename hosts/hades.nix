@@ -110,7 +110,11 @@
   };
 
   services = {
-    displayManager = { autoLogin = { enable = true; user = "jupblb"; }; };
+    desktopManager = { gnome = { enable = true; }; };
+    displayManager = {
+      autoLogin = { enable = true; user = "jupblb"; };
+      gdm       = { enable = true; };
+    };
 
     gnome = { core-apps.enable = false; };
 
@@ -135,12 +139,7 @@
       user      = "jupblb";
     };
 
-    xserver = {
-      enable         = true;
-      desktopManager = { gnome = { enable = true; }; };
-      displayManager = { gdm = { enable = true; }; };
-      videoDrivers   = [ "nvidia" ];
-    };
+    xserver = { enable = true; videoDrivers = [ "nvidia" ]; };
   };
 
   swapDevices = [ { device = "/dev/disk/by-label/nixos-swap"; } ];
