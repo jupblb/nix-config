@@ -20,18 +20,19 @@
       inherit pkgs;
       mcpSettings = {
         buildkite           = {
-          args    =
-            [ "mcp-remote@latest" "https://mcp.buildkite.com/mcp/readonly" ];
+          args    = [
+            "-y" "mcp-remote@latest" "https://mcp.buildkite.com/mcp/readonly"
+          ];
           command = "npx";
         };
         chrome-devtools-mcp = {
           args    = [ "chrome-devtools-mcp@latest" ];
           command = "npx";
         };
-        github-mcp-server   = {
-          args    = [ "stdio" "--read-only" ];
-          command = "${pkgs.github-mcp-server}/bin/github-mcp-server";
-        };
+        # github-mcp-server   = {
+        #   args    = [ "stdio" "--read-only" ];
+        #   command = "${pkgs.github-mcp-server}/bin/github-mcp-server";
+        # };
         sentry              = {
           args    = [ "-y" "mcp-remote@latest" "https://mcp.sentry.dev/mcp" ];
           command = "npx";
