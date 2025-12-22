@@ -1,9 +1,5 @@
 { config, pkgs, ... }: {
   boot = {
-    initrd         = {
-      kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-      network       = { enable = true; };
-    };
     kernelModules  = [ "kvm-amd" ];
     plymouth       = { enable = true; extraConfig = "DeviceScale=2"; };
     tmp            = {
@@ -41,9 +37,11 @@
     keyboard  = { uhk.enable = true; };
     graphics  = { enable32Bit = true; };
     nvidia    = {
-      nvidiaSettings  = false;
-      open            = true;
-      powerManagement = { enable = true; };
+      gsp               = { enable = true; };
+      modesetting       = { enable = true; };
+      nvidiaSettings    = false;
+      open              = true;
+      powerManagement   = { enable = true; };
     };
     xpadneo   = { enable = true; };
   };
