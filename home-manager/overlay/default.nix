@@ -3,24 +3,16 @@ final: prev: {
   gtasks-md   = final.callPackage ./gtasks-md.nix {
     inherit (final.haskellPackages) pandoc-types;
   };
-  python312   = prev.python312.override {
-    packageOverrides = pythonSelf: pythonSuper: {
-      # https://github.com/NixOS/nixpkgs/issues/336593
-      iterfzf = pythonSuper.iterfzf.overridePythonAttrs(_: {
-        doCheck = false;
-      });
-    };
-  };
   vimPlugins  = prev.vimPlugins // {
     amp-nvim          = final.vimUtils.buildVimPlugin(rec {
       pname   = "amp.nvim";
       src     = final.fetchFromGitHub({
         owner  = "sourcegraph";
         repo   = pname;
-        rev    = "621f1ca375fc2887d30a4ac32a8b6c582d28f9c0";
-        sha256 = "sha256-/ynaY2MGLKfoljy18jnfU+KDxm3tJOTgZqxMOEerwyU=";
+        rev    = "3b9ad5ef0328de1b35cc9bfa723a37db5daf9434";
+        sha256 = "sha256-f/li32jpVigbZANnnbgSArnOH4nusj0DUz7952K+Znw=";
       });
-      version = "2025-11-30";
+      version = "2025-12-17";
     });
     zoekt-nvim        = final.vimUtils.buildVimPlugin(rec {
       pname   = "zoekt.nvim";
