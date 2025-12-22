@@ -11,8 +11,10 @@
   environment = {
     systemPackages   =
       let
-        extensions = with pkgs.gnomeExtensions;
-          [ compiz-windows-effect hide-top-bar removable-drive-menu ];
+        extensions = with pkgs.gnomeExtensions; [
+          compiz-windows-effect hide-top-bar no-overview
+          removable-drive-menu
+        ];
         packages   = with pkgs;
           [ gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
       in extensions ++ packages;
