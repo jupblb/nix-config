@@ -263,7 +263,7 @@
       });
       settings = {
         port   = 8085;
-        root   = "/data";
+        root   = "/var/lib/filebrowser-root";
       };
     };
 
@@ -404,7 +404,16 @@
     };
   };
 
-  system.stateVersion = "22.05";
+  system = {
+    activationScripts = {
+      filebrowser-root = ''
+        mkdir -p /var/lib/filebrowser-root
+        ln -sfn /data/movies /var/lib/filebrowser-root/movies
+        ln -sfn /data/shows /var/lib/filebrowser-root/shows
+      '';
+    };
+    stateVersion      = "22.05";
+  };
 
   systemd.services =
     let onBackupMount = {
