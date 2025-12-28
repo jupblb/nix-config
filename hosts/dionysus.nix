@@ -270,6 +270,8 @@
       };
     };
 
+    flaresolverr = { enable = true; };
+
     github-runners =
       let
         repos  = [ "awesome-neovim-sorted" "invoice" "justee" ];
