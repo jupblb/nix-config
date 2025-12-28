@@ -319,6 +319,7 @@
     radarr = {
       enable = true;
       group  = "users";
+      user   = "sonarr";
     };
 
     restic.backups = {
