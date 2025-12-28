@@ -129,6 +129,9 @@
             networks = [ "192.168.1.0/24" ];
             policy   = "bypass";
           } {
+            domain   = "prowlarr.kielbowi.cz";
+            policy   = "bypass";
+          } {
             domain    = "files.kielbowi.cz";
             # https://github.com/filebrowser/filebrowser/issues/1827#issuecomment-1047777732
             resources = [
@@ -186,14 +189,14 @@
           "go.kielbowi.cz"           = {
             extraConfig = auth + "reverse_proxy http://127.0.0.1:4567";
           };
-          "jackett.kielbowi.cz"      = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:9117";
-          };
           "komga.kielbowi.cz"        = {
             extraConfig = "reverse_proxy http://127.0.0.1:6428";
           };
           "linkding.kielbowi.cz"     = {
             extraConfig = auth + "reverse_proxy http://127.0.0.1:9090";
+          };
+          "prowlarr.kielbowi.cz"     = {
+            extraConfig = auth + "reverse_proxy http://127.0.0.1:9696";
           };
           "radarr.kielbowi.cz"       = {
             extraConfig = auth + "reverse_proxy http://127.0.0.1:7878";
@@ -284,8 +287,6 @@
       openFirewall = true;
     };
 
-    jackett = { enable = true; };
-
     jellyfin = {
       enable       = true;
       group        = "users";
@@ -301,6 +302,16 @@
     lidarr = {
       enable = true;
       group  = "users";
+    };
+
+    prowlarr = {
+      enable   = true;
+      settings = {
+        auth   = {
+          method   = "External";
+          required = "DisabledForLocalAddresses";
+        };
+      };
     };
 
     radarr = {
