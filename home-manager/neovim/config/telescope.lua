@@ -39,8 +39,6 @@ telescope.setup({
 
 telescope.load_extension('file_browser')
 telescope.load_extension('fzf')
-telescope.load_extension('live_grep_args')
-telescope.load_extension('lsp_handlers')
 telescope.load_extension('ui-select')
 
 vim.keymap.set('n', '<Leader><Tab>',
@@ -58,8 +56,7 @@ vim.keymap.set('n', '<Leader>e',
     end)
 vim.keymap.set('n', '<Leader>f', builtin.find_files)
 vim.keymap.set('n', '<Leader>j', builtin.jumplist)
-vim.keymap.set('n', '<Leader>?',
-    telescope.extensions.live_grep_args.live_grep_args)
+vim.keymap.set('n', '<Leader>?', builtin.live_grep)
 vim.keymap.set('n', '<Leader>`', builtin.marks)
 vim.keymap.set('n', '<Leader>o',
     function() builtin.oldfiles({ cwd_only = true }) end)

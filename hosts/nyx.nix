@@ -15,6 +15,7 @@
 
   imports = [
     ../home-manager
+    ../home-manager/amp
     ../home-manager/fish
     ../home-manager/kitty.nix
     ../home-manager/lf

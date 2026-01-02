@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, ... }: {
   home = {
     sessionPath      = [
       "${config.xdg.dataHome}/bin"
@@ -14,32 +14,6 @@
     stateVersion     = "25.05";
     username         = lib.mkForce("michal");
   };
-
-  imports = [
-    (import ../home-manager/amp {
-      inherit pkgs;
-      mcpSettings = {
-        buildkite           = {
-          args    = [
-            "-y" "mcp-remote@latest" "https://mcp.buildkite.com/mcp/readonly"
-          ];
-          command = "npx";
-        };
-        chrome-devtools-mcp = {
-          args    = [ "chrome-devtools-mcp@latest" ];
-          command = "npx";
-        };
-        # github-mcp-server   = {
-        #   args    = [ "stdio" "--read-only" ];
-        #   command = "${pkgs.github-mcp-server}/bin/github-mcp-server";
-        # };
-        sentry              = {
-          args    = [ "-y" "mcp-remote@latest" "https://mcp.sentry.dev/mcp" ];
-          command = "npx";
-        };
-      };
-    })
-  ];
 
   programs = {
     claude-code  = {

@@ -2,7 +2,6 @@
   home = {
     packages         = with pkgs; [ zoekt ];
     sessionVariables = {
-      CTAGS_COMMAND       = "${pkgs.universal-ctags}/bin/ctags";
       NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
     };
   };
@@ -15,12 +14,9 @@
       enable         = true;
       extraConfig    = builtins.readFile(./config/init.vim);
       extraLuaConfig = builtins.readFile(./config/init.lua);
-      extraPackages  =
-        let
-          packages     = with pkgs;
-            [ curl fish-lsp marksman nil pandoc ripgrep shfmt ];
-          nodePackages = with pkgs.nodePackages; [ bash-language-server ];
-        in packages ++ nodePackages;
+      extraPackages  = with pkgs; [
+        bash-language-server curl fish-lsp marksman nil pandoc ripgrep shfmt
+      ];
       plugins        = with pkgs.vimPlugins; [
         {
           config = "require('amp').setup({ log_level = 'error' })";
@@ -42,15 +38,6 @@
           plugin = no-neck-pain-nvim;
           type   = "lua";
         } {
-          config = builtins.readFile(./config/cmp.lua);
-          plugin = nvim-cmp.overrideAttrs(_: {
-            dependencies = [
-              cmp-async-path cmp-nvim-lsp cmp-nvim-lsp-signature-help
-              cmp-treesitter copilot-cmp copilot-lua luasnip
-            ];
-          });
-          type   = "lua";
-        } {
           config = builtins.readFile(./config/colorizer.lua);
           plugin = nvim-colorizer-lua;
           type   = "lua";
@@ -70,9 +57,7 @@
           config = builtins.readFile(./config/telescope.lua);
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
             dependencies = old.dependencies ++ [
-              telescope-file-browser-nvim telescope-live-grep-args-nvim
-              telescope-lsp-handlers-nvim telescope-ui-select-nvim
-              zoekt-nvim
+              telescope-file-browser-nvim telescope-ui-select-nvim zoekt-nvim
             ];
           });
           type   = "lua";

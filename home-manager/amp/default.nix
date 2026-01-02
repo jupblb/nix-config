@@ -1,4 +1,4 @@
-{ pkgs, mcpSettings ? {}, ... }: {
+{ pkgs, ... }: {
   home.packages =
     let amp = pkgs.symlinkJoin({
       name        = "amp";
@@ -22,7 +22,6 @@
         "amp.feed.enabled"                 = false;
         "amp.git.commit.coauthor.enabled"  = false;
         "amp.git.commit.ampThread.enabled" = true;
-        "amp.mcpServers"                   = mcpSettings;
         "amp.tools.inactivityTimeout"      = 600;
         "amp.tools.stopTimeout"            = 600;
       });

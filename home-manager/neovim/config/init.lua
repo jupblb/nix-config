@@ -58,11 +58,24 @@ local lsp_attach = function(client, bufnr)
             group    = lspAttachAuGroup,
         })
     end
+    if client.server_capabilities.completionProvider then
+        vim.lsp.completion.enable(true, client.id, bufnr, {
+            autotrigger = true,
+        })
+    end
 end
 
 vim.lsp.config('*', {
     on_attach = { lsp_attach },
 })
+
+-- Completion navigation keymaps
+vim.keymap.set('i', '<Tab>', function()
+    return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
+end, { expr = true })
+vim.keymap.set('i', '<S-Tab>', function()
+    return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
+end, { expr = true })
 
 -- Format markdown with :MarkdownFormat
 local markdown_format = function()

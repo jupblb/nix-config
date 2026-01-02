@@ -1,4 +1,5 @@
 set clipboard+=unnamedplus
+set completeopt=menuone,noselect,popup
 set cmdheight=0
 set colorcolumn=80
 set cursorline
