@@ -88,14 +88,6 @@
         };
         rerere              = { enabled = true; autoUpdate = true; };
         fetch               = { all = true; prune = true; };
-        gpg.ssh             = {
-          allowedSignersFile =
-            let pubkey = builtins.readFile(
-              "${config.home.homeDirectory}/.ssh/id_ed25519.pub");
-            in toString(
-              pkgs.writeText "allowed_signers"
-                ''${config.programs.git.settings.user.email} ${pubkey}'');
-        };
         help.autocorrect    = true;
         init.defaultBranch  = "main";
         merge.conflictStyle = "zdiff3";
