@@ -23,16 +23,15 @@
         fish_right_prompt = builtins.readFile ./rprompt.fish;
       };
       interactiveShellInit = builtins.readFile ./init.fish;
-      plugins              = [ {
-        name = "fish-async-prompt";
-        src  = pkgs.callPackage ./plugin/fish-async-prompt.nix {};
-      } {
-        name = "z";
-        src  = pkgs.callPackage ./plugin/z.nix {};
-      } ] ++ [ (lib.mkIf (!builtins.pathExists "/etc/nixos") {
-        name = "nix-env";
-        src  = pkgs.callPackage ./plugin/nix-env.nix {};
-      }) ];
+      plugins              = with pkgs.fishPlugins; [
+        { name = async-prompt.pname; src = async-prompt.src; }
+        { name = z.pname;            src  = z.src;           }
+      ];
+      shellInit = ''
+        set -l nix_daemon \
+          /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+        test -e $nix_daemon && source $nix_daemon
+      '';
       shellAliases         = {
         bash = "${pkgs.bashInteractive}/bin/bash";
         cat  = "${pkgs.bat}/bin/bat --style=plain --paging=never";
