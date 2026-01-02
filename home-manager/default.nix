@@ -77,7 +77,16 @@
           untrackedCache = true;
         };
         credential.helper   = [ "cache --timeout 43200" ]; # 12 hours
-        diff.algorithm      = "histogram";
+        diff                = {
+          algorithm = "histogram";
+          colorMoved = "plain";
+        };
+        rebase              = {
+          autoSquash = true;
+          autoStash  = true;
+          updateRefs = true;
+        };
+        rerere              = { enabled = true; autoUpdate = true; };
         fetch               = { all = true; prune = true; };
         gpg.ssh             = {
           allowedSignersFile =
