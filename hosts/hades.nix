@@ -51,7 +51,7 @@
   home-manager.users.jupblb = {
     home = { stateVersion = config.system.stateVersion; };
 
-    imports = [ ../home-manager/amp ../home-manager/kitty.nix ];
+    imports = [ ../home-manager/kitty.nix ];
 
     programs = {
       chromium = {

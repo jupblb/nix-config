@@ -27,11 +27,6 @@
         { name = async-prompt.pname; src = async-prompt.src; }
         { name = z.pname;            src  = z.src;           }
       ];
-      shellInit = ''
-        set -l nix_daemon \
-          /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-        test -e $nix_daemon && source $nix_daemon
-      '';
       shellAliases         = {
         bash = "${pkgs.bashInteractive}/bin/bash";
         cat  = "${pkgs.bat}/bin/bat --style=plain --paging=never";

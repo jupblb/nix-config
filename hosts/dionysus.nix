@@ -68,8 +68,6 @@
   home-manager.users.jupblb = {
     home.stateVersion = "21.11";
 
-    imports = [ ../home-manager/amp ];
-
     programs = {
       fish.functions = {
         zfs-backup-unlock =

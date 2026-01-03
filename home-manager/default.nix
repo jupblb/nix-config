@@ -1,12 +1,13 @@
 { config, lib, pkgs, ... }: {
   home = {
     packages         = with pkgs; [ fswatch ];
-    username         = "jupblb";
     sessionVariables = { PAGER = "${pkgs.less}/bin/less -R"; };
     shellAliases     = {
       root = "cd $(${pkgs.git}/bin/git rev-parse --show-toplevel)";
     };
   };
+
+  imports = [ ./amp.nix ];
 
   nix = {
     package  = lib.mkDefault pkgs.nix;
