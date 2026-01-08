@@ -418,6 +418,7 @@
     activationScripts = {
       filebrowser-root = ''
         mkdir -p /var/lib/filebrowser-root
+        ln -sfn /backup/jupblb/Pictures /var/lib/filebrowser-root/pictures
         ln -sfn /data/movies /var/lib/filebrowser-root/movies
         ln -sfn /data/shows /var/lib/filebrowser-root/shows
       '';
