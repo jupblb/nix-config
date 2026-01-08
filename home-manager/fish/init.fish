@@ -4,6 +4,8 @@ delta-view
 fish_vi_key_bindings
 
 bind -M insert \cr history-pager
+bind -M visual y 'fish_clipboard_copy; commandline -f end-selection'
+bind yy fish_clipboard_copy
 
 set -gx __fish_git_prompt_char_cleanstate ""
 set -gx __fish_git_prompt_char_stateseparator " "
