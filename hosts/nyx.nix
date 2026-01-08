@@ -11,6 +11,9 @@
     sharedModules = [ {
       home = { stateVersion = "25.05"; };
 
+      # https://github.com/nix-community/home-manager/issues/7935
+      manual = { manpages.enable = false; };
+
       imports = [
         ../home-manager
         ../home-manager/fish
