@@ -2,7 +2,7 @@
   fonts.packages = [ (pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; }) ];
 
   home-manager = {
-    sharedModules   = [ {
+    sharedModules = [ {
       home = { stateVersion = "25.05"; };
 
       imports = [
@@ -72,8 +72,10 @@
         linkApps = { enable = false; };
       };
     } ];
+
     useUserPackages = true;
-    users           = {
+
+    users = {
       michal = { config, ... }: {
         home = {
           sessionPath      = [
@@ -113,6 +115,7 @@
 
         xdg.configFile."ideavim/ideavimrc".source = ./config/ideavimrc;
       };
+
       jupblb = { services = { syncthing.enable = true; }; };
     };
   };
