@@ -1,10 +1,21 @@
 final: prev: {
+  fishPlugins = prev.fishPlugins // {
+    async-prompt = prev.fishPlugins.async-prompt.overrideAttrs(old: rec {
+      version = "1.3.0";
+      src     = final.fetchFromGitHub({
+        owner  = "acomagu";
+        repo   = "fish-async-prompt";
+        rev    = "v${version}";
+        sha256 = "sha256-HWW9191RP//48HkAHOZ7kAAAPSBKZ+BW2FfCZB36Y+g=";
+      });
+    });
+  };
   fortune     = prev.fortune.override({ withOffensive = true; });
   gtasks-md   = final.callPackage ./gtasks-md.nix {
     inherit (final.haskellPackages) pandoc-types;
   };
   vimPlugins  = prev.vimPlugins // {
-    amp-nvim          = final.vimUtils.buildVimPlugin(rec {
+    amp-nvim   = final.vimUtils.buildVimPlugin(rec {
       pname   = "amp.nvim";
       src     = final.fetchFromGitHub({
         owner  = "sourcegraph";
@@ -14,7 +25,7 @@ final: prev: {
       });
       version = "2025-12-17";
     });
-    zoekt-nvim        = final.vimUtils.buildVimPlugin(rec {
+    zoekt-nvim = final.vimUtils.buildVimPlugin(rec {
       pname   = "zoekt.nvim";
       src     = final.fetchFromGitHub({
         owner  = "jupblb";
