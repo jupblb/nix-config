@@ -29,7 +29,7 @@
     devShells =
       let mkDevShell = pkgs: pkgs.mkShell {
         buildInputs  = with pkgs; [
-          agenix.packages.${pkgs.system}.default
+          agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
           lua-language-server vim-language-server
         ];
         NVIM_LAZYDEV = "${pkgs.vimPlugins.lazydev-nvim}";
