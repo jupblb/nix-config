@@ -1,7 +1,13 @@
 { inputs, lib, pkgs, ... }: {
+  environment = {
+    systemPackages = with pkgs; [ bashInteractive git ];
+  };
+
   fonts.packages = [ (pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; }) ];
 
   home-manager = {
+    backupFileExtension = "bak";
+
     sharedModules = [ {
       home = { stateVersion = "25.05"; };
 
@@ -28,7 +34,6 @@
         kitty = {
           font        = { size = lib.mkForce 14; };
           keybindings = { "cmd+t" = "new_tab_with_cwd"; };
-          package     = pkgs.hello;
           settings    = {
             hide_window_decorations            = lib.mkForce "no";
             macos_option_as_alt                = "left";
@@ -72,8 +77,6 @@
         linkApps = { enable = false; };
       };
     } ];
-
-    useUserPackages = true;
 
     users = {
       michal = { config, ... }: {
