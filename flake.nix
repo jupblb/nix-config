@@ -45,29 +45,12 @@
 
     nixosConfigurations  = {
       hades    = nixpkgs-nixos.lib.nixosSystem({
-        modules     = [
-          ./hosts/hades.nix
-          home-manager.nixosModules.home-manager
-          {
-            nixpkgs.overlays = [
-              (_: _: { amp-cli = llm-agents.packages.x86_64-linux.amp; })
-            ];
-          }
-        ];
+        modules     = [ ./hosts/hades.nix ];
         specialArgs = { inherit inputs; };
         system      = "x86_64-linux";
       });
       dionysus = nixpkgs-nixos.lib.nixosSystem({
-        modules     = [
-          ./hosts/dionysus.nix
-          home-manager.nixosModules.home-manager
-          agenix.nixosModules.default
-          {
-            nixpkgs.overlays = [
-              (_: _: { amp-cli = llm-agents.packages.x86_64-linux.amp; })
-            ];
-          }
-        ];
+        modules     = [ ./hosts/dionysus.nix agenix.nixosModules.default ];
         specialArgs = { inherit inputs; };
         system      = "x86_64-linux";
       });

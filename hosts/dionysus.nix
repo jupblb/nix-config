@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, inputs, lib, pkgs, ... }: {
   age.secrets = {
     authelia_jwt_secret             = {
       file  = ./secret/authelia_jwt_secret.age;
@@ -68,6 +68,10 @@
   home-manager.users.jupblb = {
     home.stateVersion = "21.11";
 
+    nixpkgs.overlays = [
+      (_: _: { amp-cli = inputs.llm-agents.packages.${pkgs.system}.amp; })
+    ];
+
     programs = {
       fish.functions = {
         zfs-backup-unlock =
@@ -80,7 +84,7 @@
     };
   };
 
-  imports = [ ./default.nix ];
+  imports = [ inputs.home-manager.nixosModules.home-manager ./default.nix ];
 
   networking = {
     domain   = "kielbowi.cz";
