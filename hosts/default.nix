@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   boot = {
     initrd.availableKernelModules =
       [ "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci" ];
@@ -30,10 +30,11 @@
 
   home-manager.users.jupblb = {
     home     = {
-      file = {
+      file         = {
         ".ssh/id_ed25519".source     = "/etc/ssh/ssh_host_ed25519_key";
         ".ssh/id_ed25519.pub".source = "/etc/ssh/ssh_host_ed25519_key.pub";
       };
+      stateVersion = config.system.stateVersion;
     };
     imports  = [
       ../home-manager

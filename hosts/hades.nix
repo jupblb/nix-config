@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   boot = {
     kernelModules  = [ "kvm-amd" ];
     plymouth       = { enable = true; extraConfig = "DeviceScale=2"; };
@@ -49,8 +49,6 @@
   };
 
   home-manager.users.jupblb = {
-    home = { stateVersion = config.system.stateVersion; };
-
     imports = [ ../home-manager/kitty.nix ];
 
     nixpkgs.overlays = [

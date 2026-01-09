@@ -66,8 +66,6 @@
   };
 
   home-manager.users.jupblb = {
-    home.stateVersion = "21.11";
-
     nixpkgs.overlays = [
       (_: _: { amp-cli = inputs.llm-agents.packages.${pkgs.system}.amp; })
     ];
