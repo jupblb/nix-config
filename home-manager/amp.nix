@@ -13,16 +13,14 @@
     });
     in [ amp ];
 
-  xdg.configFile."amp/settings.json" =
-    let formatter = pkgs.formats.json {};
-    in {
-      source = formatter.generate "amp-settings.json" ({
-        "amp.dangerouslyAllowAll"          = true;
-        "amp.feed.enabled"                 = false;
-        "amp.git.commit.coauthor.enabled"  = false;
-        "amp.git.commit.ampThread.enabled" = true;
-        "amp.tools.inactivityTimeout"      = 600;
-        "amp.tools.stopTimeout"            = 600;
-      });
-    };
+  xdg.configFile = {
+    "amp/settings.json".text = builtins.toJSON({
+      "amp.dangerouslyAllowAll"          = true;
+      "amp.feed.enabled"                 = false;
+      "amp.git.commit.coauthor.enabled"  = false;
+      "amp.git.commit.ampThread.enabled" = true;
+      "amp.tools.inactivityTimeout"      = 600;
+      "amp.tools.stopTimeout"            = 600;
+    });
+  };
 }
