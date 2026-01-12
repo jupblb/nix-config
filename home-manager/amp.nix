@@ -16,7 +16,6 @@
   xdg.configFile = {
     "amp/settings.json".text = builtins.toJSON({
       "amp.dangerouslyAllowAll"          = true;
-      "amp.feed.enabled"                 = false;
       "amp.git.commit.coauthor.enabled"  = false;
       "amp.git.commit.ampThread.enabled" = true;
       "amp.tools.inactivityTimeout"      = 600;

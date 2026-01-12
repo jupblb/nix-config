@@ -1,5 +1,11 @@
 { config, lib, pkgs, ... }: {
-  home = { sessionVariables = { Z_OWNER = config.home.username; }; };
+  home = {
+    activation       = {
+      fishLocalConfig = lib.hm.dag.entryAfter [ "writeBoundary" ]
+        ''touch "${config.xdg.configHome}/fish/config.local.fish"'';
+    };
+    sessionVariables = { Z_OWNER = config.home.username; };
+  };
 
   programs = {
     eza = {
@@ -22,7 +28,10 @@
         fish_mode_prompt  = "";
         fish_right_prompt = builtins.readFile ./rprompt.fish;
       };
-      interactiveShellInit = builtins.readFile ./init.fish;
+      interactiveShellInit = ''
+        ${builtins.readFile ./init.fish}
+        source ${config.xdg.configHome}/fish/config.local.fish
+      '';
       plugins              = with pkgs.fishPlugins; [
         { name = async-prompt.pname; src = async-prompt.src; }
         { name = z.pname;            src  = z.src;           }
