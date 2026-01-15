@@ -1,4 +1,8 @@
 { inputs, lib, pkgs, ... }: {
+  determinate-nix.customSettings = {
+    trusted-users = [ "@admin" ];
+  };
+
   environment = {
     systemPackages = with pkgs; [ bashInteractive git ];
   };
@@ -30,8 +34,11 @@
 
       programs = {
         git = {
-          # Not supported by Apple default git binary
-          settings = { core.fsmonitor = lib.mkForce false; };
+          settings = {
+            # Not supported by Apple default git binary
+            core.fsmonitor = lib.mkForce false;
+            safe.directory = [ "/private/etc/nix-darwin" ];
+          };
         };
 
         kitty = {
@@ -126,7 +133,10 @@
     };
   };
 
-  imports = [ inputs.home-manager.darwinModules.home-manager ];
+  imports = [
+    inputs.determinate.darwinModules.default
+    inputs.home-manager.darwinModules.home-manager
+  ];
 
   # https://docs.determinate.systems/guides/nix-darwin
   nix = { enable = false; };
