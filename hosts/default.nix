@@ -93,53 +93,6 @@
     };
 
     pulseaudio = { enable = false; };
-
-    syncthing = {
-      enable           = true;
-      group            = "users";
-      openDefaultPorts = true;
-      settings         = {
-        devices = {
-          dionysus = {
-            autoAcceptFolders = true;
-            id                =
-              "AUAEQVM-GLWFEY7-ISXW5C6-5FSTG6O-J4D7FI2-LZC7NVM-7AQP4GT-TUBMYA6";
-          };
-          nyx      = {
-            autoAcceptFolders = true;
-            id                =
-              "7KI5OIJ-UR5RPQP-M4RUSTO-6FBSCNT-SVB42MG-STHQYN5-RPOGFXJ-T4KNVQ3";
-          };
-          hades    = {
-            autoAcceptFolders = true;
-            id                =
-              "XTWE5SD-D7HSMCA-5XSO5HO-B2WHNXM-TNPCG2O-FCHX3GJ-65P6ZGY-SYCPHQQ";
-          };
-        };
-        folders = {
-          "jupblb/Documents" = {
-            devices = [ "nyx" "dionysus" "hades" ];
-            enable  = lib.mkDefault false;
-            path    = "~/Documents";
-          };
-          "jupblb/Pictures"  = {
-            devices = [ "dionysus" ];
-            enable  = lib.mkDefault false;
-            path    = "~/Pictures";
-          };
-          "jupblb/Workspace" = {
-            devices     = [ "nyx" "dionysus" "hades" ];
-            enable      = lib.mkDefault false;
-            ignorePerms = false;
-            path        = "~/Workspace";
-          };
-        };
-        options = {
-          localAnnounceEnabled = true;
-          urAccepted           = 1;
-        };
-      };
-    };
   };
 
   system.activationScripts.bin-bash = lib.stringAfter [ "usrbinenv" ] ''

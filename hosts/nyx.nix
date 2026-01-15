@@ -122,7 +122,7 @@
         xdg.configFile."ideavim/ideavimrc".source = ./config/ideavimrc;
       };
 
-      jupblb = { services = { syncthing.enable = true; }; };
+      jupblb = {};
     };
   };
 

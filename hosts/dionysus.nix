@@ -12,12 +12,6 @@
       file = ./secret/cloudflared_credentials.age;
     };
     github_runner                   = { file = ./secret/github_runner.age; };
-    restic_gcs_credentials          = {
-      file = ./secret/restic_gcs_credentials.age;
-    };
-    restic_password                 = {
-      file = ./secret/restic_password.age;
-    };
   };
 
   boot = {
@@ -204,7 +198,6 @@
             reverse_auth_proxy(config.services.radarr.settings.server.port);
           "sonarr.kielbowi.cz"       =
             reverse_auth_proxy(config.services.sonarr.settings.server.port);
-          "syncthing.kielbowi.cz"    = reverse_auth_proxy(8384);
           "transmission.kielbowi.cz" =
             reverse_auth_proxy(config.services.transmission.settings.rpc-port);
         };
@@ -214,7 +207,7 @@
       enable  = true;
       group   = "users";
       options = {
-        calibreLibrary       = "/backup/calibre";
+        calibreLibrary       = "/data/calibre";
         enableBookConversion = true;
         enableBookUploading  = true;
       };
@@ -332,34 +325,6 @@
       user   = "sonarr";
     };
 
-    restic.backups = {
-      gcs   = {
-        environmentFile = toString(
-          pkgs.writeText "restic-gcs-env" ''
-            GOOGLE_PROJECT_ID=restic-backup-342620
-            GOOGLE_APPLICATION_CREDENTIALS=${config.age.secrets.restic_gcs_credentials.path}
-          ''
-        );
-        exclude         = [ "**/.stversions" "jupblb/Workspace" ];
-        extraBackupArgs = [ "--tag syncthing-gcs" ];
-        initialize      = true;
-        passwordFile    = config.age.secrets.restic_password.path;
-        paths           = [ "/backup" ];
-        pruneOpts       = [ "--keep-weekly 4" "--keep-monthly 3" ];
-        repository      = "gs:dionysus-backup:/";
-        timerConfig     = { OnCalendar = "weekly"; };
-      };
-      local = {
-        exclude         = [ "**/.stversions" ];
-        extraBackupArgs = [ "--tag syncthing-local" ];
-        initialize      = true;
-        passwordFile    = config.age.secrets.restic_password.path;
-        paths           = [ "/backup" ];
-        pruneOpts       = [ "--keep-daily 14" ];
-        repository      = "/data/backup";
-      };
-    };
-
     smartd = {
       autodetect    = false;
       devices       = [
@@ -378,33 +343,6 @@
     };
 
     sshguard = { enable = true; };
-
-    syncthing = {
-      settings.folders =
-        let simpleVersioning = {
-          params = {
-            cleanInterval = "3600";
-            maxAge        = toString(3600 * 24 * 30 * 3); # 3 months
-          };
-          type   = "staggered";
-        };
-        in {
-          "jupblb/Documents" = {
-            enable     = true;
-            path       = lib.mkForce("/backup/jupblb/Documents");
-            versioning = simpleVersioning;
-          };
-          "jupblb/Pictures"  = {
-            enable     = true;
-            path       = lib.mkForce("/backup/jupblb/Pictures");
-            versioning = simpleVersioning;
-          };
-          "jupblb/Workspace" = {
-            enable = true;
-            path   = lib.mkForce("/backup/jupblb/Workspace");
-          };
-        };
-    };
 
     transmission = {
       enable   = true;
@@ -439,50 +377,6 @@
     };
     stateVersion      = "22.05";
   };
-
-  systemd.services =
-    let onBackupMount = {
-      unitConfig = {
-        RequiresMountsFor         = [ "/backup" ];
-        ConditionPathIsMountPoint = "/backup";
-        After                     = [ "backup.mount" ];
-        PartOf                    = [ "backup.mount" ];
-      };
-      wantedBy   = lib.mkForce [ "backup.mount" ];
-    };
-    in {
-      calibre-web           = onBackupMount;
-      jellyfin              = {
-        serviceConfig.PrivateDevices = lib.mkForce false;
-      };
-      restic-backups-gcs    = onBackupMount;
-      restic-backups-local  = onBackupMount;
-      stignore              = onBackupMount // {
-        description   = "Update jupblb/Workspace stignore";
-        path          = with pkgs; [
-          bash diffutils inotify-tools
-          (python3.withPackages(p: with p; [ gitignore-parser ]))
-        ];
-        script        = ''
-          sh ${./config/stignore.sh}
-
-          inotifywait --format "%f" -e 'modify,moved_to,create,delete' \
-            -m -r /backup/jupblb/Workspace |
-          while read -r line; do
-            if [[ "$line" == ".gitignore" ]]; then
-              >&2 echo ".gitignore update"
-              sh ${./config/stignore.sh}
-            fi
-          done
-        '';
-        serviceConfig = {
-          ProtectSystem = "full";
-          User          = "syncthing";
-          Type          = "simple";
-        };
-      };
-      syncthing             = onBackupMount;
-    };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 

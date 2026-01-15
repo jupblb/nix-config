@@ -121,19 +121,6 @@
 
     printing = { enable = true; };
 
-    syncthing = {
-      configDir = "/home/jupblb/.config/syncthing";
-      dataDir   = "/home/jupblb/.local/share/syncthing";
-      settings  = {
-        folders = {
-          "jupblb/Documents" = { enable = true; };
-          "jupblb/Pictures"  = { enable = false; };
-          "jupblb/Workspace" = { enable = true; };
-        };
-      };
-      user      = "jupblb";
-    };
-
     xserver = { enable = true; videoDrivers = [ "nvidia" ]; };
   };
 
