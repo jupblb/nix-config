@@ -58,6 +58,7 @@
           ];
           in (builtins.concatStringsSep "," mappings) +
             " Symbols Nerd Font Mono";
+        sync_to_monitor               = "no";
         tab_bar_min_tabs              = 4;
       };
       themeFile   = "gruvbox-light-hard";
