@@ -3,6 +3,9 @@
 
   inputs = {
     agenix         = { url = "github:ryantm/agenix"; };
+    determinate    = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    };
     home-manager   = {
       url = "github:nix-community/home-manager/release-25.11";
     };
@@ -16,8 +19,8 @@
   };
 
   outputs = {
-    self, agenix, home-manager, llm-agents, nix-darwin, nixpkgs-darwin,
-    nixpkgs-nixos, ...
+    self, agenix, determinate, home-manager, llm-agents, nix-darwin,
+    nixpkgs-darwin, nixpkgs-nixos, ...
   }@inputs: {
     darwinConfigurations = {
       nyx = nix-darwin.lib.darwinSystem({
@@ -50,7 +53,7 @@
         system      = "x86_64-linux";
       });
       dionysus = nixpkgs-nixos.lib.nixosSystem({
-        modules     = [ ./hosts/dionysus.nix agenix.nixosModules.default ];
+        modules     = [ ./hosts/dionysus.nix ];
         specialArgs = { inherit inputs; };
         system      = "x86_64-linux";
       });

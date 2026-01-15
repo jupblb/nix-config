@@ -50,7 +50,10 @@
 
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
 
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
+  imports = [
+    inputs.determinate.nixosModules.default
+    inputs.home-manager.nixosModules.home-manager
+  ];
 
   networking = { nameservers = [ "1.1.1.1" "8.8.8.8" ]; };
 

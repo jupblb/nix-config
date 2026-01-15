@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, inputs, lib, pkgs, ... }: {
   age.secrets = {
     authelia_jwt_secret             = {
       file  = ./secret/authelia_jwt_secret.age;
@@ -78,7 +78,7 @@
     };
   };
 
-  imports = [ ./default.nix ];
+  imports = [ inputs.agenix.nixosModules.default ./default.nix ];
 
   networking = {
     domain   = "kielbowi.cz";
