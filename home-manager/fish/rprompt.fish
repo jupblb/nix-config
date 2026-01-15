@@ -20,6 +20,12 @@ if test $cmd_duration -gt 3000
 end
 
 if git rev-parse --is-inside-work-tree &>/dev/null
-    set -l git_root_dir (basename (git rev-parse --show-toplevel))
-    echo -n " $(set_color af3a03) $git_root_dir$(set_color normal)$(fish_git_prompt)"
+    set -l origin_url (git remote get-url origin 2>/dev/null)
+    set -l repo_name
+    if test -n "$origin_url"
+        set repo_name (basename -s .git "$origin_url")
+    else
+        set repo_name (basename (git rev-parse --show-toplevel))
+    end
+    echo -n "$(set_color af3a03) $repo_name$(set_color normal)$(fish_git_prompt)"
 end
