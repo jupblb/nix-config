@@ -164,51 +164,38 @@
       email        = "caddy@kielbowi.cz";
       enable       = true;
       virtualHosts =
-        let auth = ''
-          forward_auth http://127.0.0.1:9092 {
-              uri /api/verify?rd=https://auth.kielbowi.cz/
-              copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-          }
-        '';
+        let reverse_auth_proxy = port: {
+          extraConfig = ''
+            forward_auth http://127.0.0.1:9092 {
+                uri /api/verify?rd=https://auth.kielbowi.cz/
+                copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+            }
+
+            reverse_proxy http://127.0.0.1:${toString(port)}
+          '';
+        };
         in {
           "auth.kielbowi.cz"         = {
             extraConfig = "reverse_proxy http://127.0.0.1:9092";
           };
-          "bazarr.kielbowi.cz"       = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:6767";
-          };
-          "files.kielbowi.cz"        = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:8085";
-          };
-          "go.kielbowi.cz"           = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:4567";
-          };
-          "komga.kielbowi.cz"        = {
-            extraConfig = "reverse_proxy http://127.0.0.1:6428";
-          };
-          "linkding.kielbowi.cz"     = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:9090";
-          };
-          "prowlarr.kielbowi.cz"     = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:9696";
-          };
-          "radarr.kielbowi.cz"       = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:7878";
-          };
-          "sonarr.kielbowi.cz"       = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:8989";
-          };
-          "syncthing.kielbowi.cz"    = {
-            extraConfig = auth + ''
-              reverse_proxy http://127.0.0.1:8384 {
-                header_up Host 127.0.0.1
-                header_up X-Forwarded-Host syncthing.kielbowi.cz
-              }
-            '';
-          };
-          "transmission.kielbowi.cz" = {
-            extraConfig = auth + "reverse_proxy http://127.0.0.1:9091";
-          };
+          "bazarr.kielbowi.cz"       =
+            reverse_auth_proxy(config.services.bazarr.listenPort);
+          "files.kielbowi.cz"        =
+            reverse_auth_proxy(config.services.filebrowser.settings.port);
+          "go.kielbowi.cz"           =
+            reverse_auth_proxy(config.services.chhoto-url.settings.port);
+          "komga.kielbowi.cz"        =
+            reverse_auth_proxy(config.services.komga.settings.server.port);
+          "linkding.kielbowi.cz"     = reverse_auth_proxy(9090);
+          "prowlarr.kielbowi.cz"     =
+            reverse_auth_proxy(config.services.prowlarr.settings.server.port);
+          "radarr.kielbowi.cz"       =
+            reverse_auth_proxy(config.services.radarr.settings.server.port);
+          "sonarr.kielbowi.cz"       =
+            reverse_auth_proxy(config.services.sonarr.settings.server.port);
+          "syncthing.kielbowi.cz"    = reverse_auth_proxy(8384);
+          "transmission.kielbowi.cz" =
+            reverse_auth_proxy(config.services.transmission.settings.rpc-port);
         };
     };
 
