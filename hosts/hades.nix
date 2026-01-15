@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ pkgs, ... }: {
   boot = {
     kernelModules  = [ "kvm-amd" ];
     plymouth       = { enable = true; extraConfig = "DeviceScale=2"; };
@@ -51,10 +51,6 @@
   home-manager.users.jupblb = {
     imports = [ ../home-manager/kitty.nix ];
 
-    nixpkgs.overlays = [
-      (_: _: { amp-cli = inputs.llm-agents.packages.${pkgs.system}.amp; })
-    ];
-
     programs = {
       chromium = {
         enable = true;
@@ -75,7 +71,7 @@
     };
   };
 
-  imports = [ inputs.home-manager.nixosModules.home-manager ./default.nix ];
+  imports = [ ./default.nix ];
 
   networking = {
     hostName   = "hades";

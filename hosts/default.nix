@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, inputs, lib, pkgs, ... }: {
   boot = {
     initrd.availableKernelModules =
       [ "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci" ];
@@ -29,6 +29,10 @@
   };
 
   home-manager.users.jupblb = {
+    nixpkgs.overlays = [
+      (_: _: { amp-cli = inputs.llm-agents.packages.${pkgs.system}.amp; })
+    ];
+
     home     = {
       file         = {
         ".ssh/id_ed25519".source     = "/etc/ssh/ssh_host_ed25519_key";
@@ -45,6 +49,8 @@
   };
 
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
+
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   networking = { nameservers = [ "1.1.1.1" "8.8.8.8" ]; };
 
