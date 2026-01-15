@@ -120,6 +120,12 @@
         access_control         = {
           default_policy = "one_factor";
           rules          = [ {
+            domain    = "git.kielbowi.cz";
+            resources = [
+              "^/.*/info/refs" "^/.*/git-upload-pack" "^/.*/git-receive-pack"
+            ];
+            policy    = "bypass";
+          } {
             domain   = "linkding.kielbowi.cz";
             policy   = "one_factor"; # Config bug, can't be bypassed at home.
           } {
@@ -182,6 +188,7 @@
             reverse_auth_proxy(config.services.bazarr.listenPort);
           "files.kielbowi.cz"        =
             reverse_auth_proxy(config.services.filebrowser.settings.port);
+          "git.kielbowi.cz"          = reverse_auth_proxy(9749);
           "go.kielbowi.cz"           =
             reverse_auth_proxy(config.services.chhoto-url.settings.port);
           "komga.kielbowi.cz"        =
@@ -252,6 +259,21 @@
     };
 
     flaresolverr = { enable = true; };
+
+    gerrit = {
+      builtinPlugins = [ "download-commands" ];
+      enable         = true;
+      listenAddress  = "[::]:9749";
+      serverId       = "f1a3e728-223f-49ed-8431-b2f21a80f227";
+      settings       = {
+        auth                     = {
+          httpHeader = "Remote-User";
+          type       = "HTTP";
+        };
+        gerrit.canonicalWebUrl   = "https://git.kielbowi.cz/";
+        receive.enableSignedPush = false;
+      };
+    };
 
     github-runners =
       let
