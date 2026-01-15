@@ -120,7 +120,7 @@
         access_control         = {
           default_policy = "one_factor";
           rules          = [ {
-            domain    = "git.kielbowi.cz";
+            domain    = "gerrit.kielbowi.cz";
             resources = [
               "^/.*/info/refs" "^/.*/git-upload-pack" "^/.*/git-receive-pack"
             ];
@@ -170,15 +170,16 @@
       email        = "caddy@kielbowi.cz";
       enable       = true;
       virtualHosts =
-        let reverse_auth_proxy = port: {
-          extraConfig = ''
+        let
+          auth_proxy         = ''
             forward_auth http://127.0.0.1:9092 {
                 uri /api/verify?rd=https://auth.kielbowi.cz/
                 copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
             }
-
-            reverse_proxy http://127.0.0.1:${toString(port)}
           '';
+          reverse_auth_proxy = port: {
+            extraConfig = auth_proxy +
+              "reverse_proxy http://127.0.0.1:${toString(port)}";
         };
         in {
           "auth.kielbowi.cz"         = {
@@ -188,7 +189,14 @@
             reverse_auth_proxy(config.services.bazarr.listenPort);
           "files.kielbowi.cz"        =
             reverse_auth_proxy(config.services.filebrowser.settings.port);
-          "git.kielbowi.cz"          = reverse_auth_proxy(9749);
+          "gerrit.kielbowi.cz"       = reverse_auth_proxy(9749);
+          "git.kielbowi.cz"          = {
+            extraConfig = auth_proxy + ''
+              @notgitiles not path /plugins/gitiles/*
+              rewrite @notgitiles /plugins/gitiles{uri}
+              reverse_proxy http://127.0.0.1:9749
+            '';
+          };
           "go.kielbowi.cz"           =
             reverse_auth_proxy(config.services.chhoto-url.settings.port);
           "komga.kielbowi.cz"        =
@@ -261,17 +269,20 @@
     flaresolverr = { enable = true; };
 
     gerrit = {
-      builtinPlugins = [ "download-commands" ];
+      builtinPlugins = [ "download-commands" "gitiles" ];
       enable         = true;
       listenAddress  = "[::]:9749";
       serverId       = "f1a3e728-223f-49ed-8431-b2f21a80f227";
       settings       = {
-        auth                     = {
+        auth     = {
           httpHeader = "Remote-User";
           type       = "HTTP";
         };
-        gerrit.canonicalWebUrl   = "https://git.kielbowi.cz/";
-        receive.enableSignedPush = false;
+        download = { scheme = "http"; };
+        gerrit   = { canonicalWebUrl = "https://gerrit.kielbowi.cz"; };
+        gitweb   = { type = "gitiles"; url = "plugins/gitiles"; };
+        httpd    = { listenUrl = "proxy-https://*:9749"; };
+        receive  = { enableSignedPush = false; };
       };
     };
 
