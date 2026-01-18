@@ -4,12 +4,6 @@
   };
 
   environment = {
-    etc            = {
-      "gitconfig".text = ''
-        [safe]
-          directory = /private/etc/nix-darwin
-      '';
-    };
     systemPackages = with pkgs; [ bashInteractive git ];
   };
 
@@ -43,6 +37,7 @@
           settings = {
             # Not supported by Apple default git binary
             core.fsmonitor = lib.mkForce false;
+            safe.directory = "/private/etc/nix-darwin";
           };
         };
 
