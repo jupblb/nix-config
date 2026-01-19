@@ -8,7 +8,8 @@
         let path = with pkgs; [ gnused nodejs ];
         in ''
           wrapProgram $out/bin/amp \
-            --prefix PATH : ${pkgs.lib.makeBinPath(path)}
+            --prefix PATH : ${pkgs.lib.makeBinPath(path)} \
+            --set GIT_EDITOR=true
         '';
     });
     in [ amp ];
