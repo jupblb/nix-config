@@ -33,6 +33,22 @@
       };
 
       programs = {
+        claude-code  = {
+          enable   = true;
+          package  = inputs.llm-agents.packages.aarch64-darwin.claude-code;
+          settings = {
+            permissions = {
+              deny        = [ "Read(~/**)" ];
+              allow       = [ "Read(~/Workspace/**)" "Bash" ];
+              defaultMode = "acceptEdits";
+            };
+            sandbox = {
+              enabled                  = true;
+              autoAllowBashIfSandboxed = true;
+            };
+          };
+        };
+
         git = {
           settings = {
             # Not supported by Apple default git binary
@@ -103,22 +119,7 @@
         };
 
         programs = {
-          claude-code  = {
-            enable   = true;
-            package  = inputs.llm-agents.packages.aarch64-darwin.claude-code;
-            settings = {
-              permissions = {
-                deny        = [ "Read(~/**)" ];
-                allow       = [ "Read(~/Workspace/**)" "Bash(*)" ];
-                defaultMode = "acceptEdits";
-              };
-              sandbox = {
-                enabled                  = true;
-                autoAllowBashIfSandboxed = true;
-              };
-            };
-          };
-          git          = {
+          git = {
             ignores  = [ ".aiignore" ".junie" "index.scip" ];
             settings = {
               user.email = lib.mkForce("michal.kielbowicz@sourcegraph.com");

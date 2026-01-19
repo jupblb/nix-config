@@ -1,8 +1,9 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   home = {
     packages         = with pkgs; [ zoekt ];
     sessionVariables = {
-      NVIM_LISTEN_ADDRESS = "/tmp/nvim-\$KITTY_WINDOW_ID.socket";
+      NVIM_LISTEN_ADDRESS =
+        "/tmp/nvim-${config.home.username}-\$KITTY_WINDOW_ID.socket";
     };
   };
 
