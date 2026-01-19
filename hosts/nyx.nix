@@ -39,7 +39,7 @@
           settings = {
             permissions = {
               deny        = [ "Read(~/**)" ];
-              allow       = [ "Read(~/Workspace/**)" "Bash" ];
+              allow       = [ "Bash" "Read(~/Workspace/**)" "WebSearch" ];
               defaultMode = "acceptEdits";
             };
             sandbox = {
