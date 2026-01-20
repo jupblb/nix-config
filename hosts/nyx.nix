@@ -38,7 +38,6 @@
           package  = inputs.llm-agents.packages.aarch64-darwin.claude-code;
           settings = {
             permissions = {
-              deny        = [ "Read(~/**)" ];
               allow       = [ "Bash" "Read(~/Workspace/**)" "WebSearch" ];
               defaultMode = "acceptEdits";
             };
