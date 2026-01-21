@@ -121,7 +121,13 @@
           git = {
             ignores  = [ ".aiignore" ".junie" "index.scip" ];
             settings = {
-              user.email = lib.mkForce("michal.kielbowicz@sourcegraph.com");
+              user = {
+                email = lib.mkForce("michal.kielbowicz@sourcegraph.com");
+              };
+              url = {
+                "git@github.com:sourcegraph/".insteadOf =
+                  "https://github.com/sourcegraph/";
+              };
             };
           };
         };
