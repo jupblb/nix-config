@@ -8,7 +8,15 @@ if set -q SSH_TTY
 end
 
 # pwd
-echo -n "$(set_color 79740e)$(prompt_pwd)$(set_color normal) "
+set -l path (prompt_pwd)
+if test -n "$DIRENV_FILE"
+    set -l base (dirname "$DIRENV_FILE")
+    if string match -q "$base*" $PWD
+        set -l suffix (string replace "$base" "" $PWD)
+        set path "…"(test -n "$suffix" && echo $suffix || echo /)
+    end
+end
+echo -n "$(set_color 79740e)$path$(set_color normal) "
 
 # sign
 if test $fish_bind_mode = insert
