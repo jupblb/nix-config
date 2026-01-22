@@ -8,15 +8,12 @@ if set -q SSH_TTY
 end
 
 # pwd
-set -l path (prompt_pwd)
-if test -n "$DIRENV_FILE"
-    set -l base (dirname "$DIRENV_FILE")
-    if string match -q "$base*" $PWD
-        set -l suffix (string replace "$base" "" $PWD)
-        set path "…"(test -n "$suffix" && echo $suffix || echo /)
-    end
+if git rev-parse --show-toplevel &>/dev/null
+    set -l prefix (git rev-parse --show-prefix | string trim -r -c /)
+    echo -n "$(set_color 79740e)…/$prefix$(set_color normal) "
+else
+    echo -n "$(set_color 79740e)"(prompt_pwd)"$(set_color normal) "
 end
-echo -n "$(set_color 79740e)$path$(set_color normal) "
 
 # sign
 if test $fish_bind_mode = insert
