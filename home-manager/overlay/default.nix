@@ -12,9 +12,6 @@ final: prev: {
     });
   };
   fortune     = prev.fortune.override({ withOffensive = true; });
-  gtasks-md   = final.callPackage ./gtasks-md.nix {
-    inherit (final.haskellPackages) pandoc-types;
-  };
   vimPlugins  = prev.vimPlugins // {
     amp-nvim   = final.vimUtils.buildVimPlugin(rec {
       pname   = "amp.nvim";
