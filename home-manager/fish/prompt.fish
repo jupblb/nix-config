@@ -8,9 +8,10 @@ if set -q SSH_TTY
 end
 
 # pwd
-if set -l prefix (git rev-parse --show-prefix 2>/dev/null)
-    set prefix (string trim -r -c / $prefix)
-    echo -n "$(set_color 79740e)…/$prefix$(set_color normal) "
+if set -l git_info (git rev-parse --show-toplevel --show-prefix 2>/dev/null)
+    set -l repo (basename $git_info[1])
+    set -l path (string join -n / $repo (string trim -r -c / $git_info[2]))
+    echo -n "$(set_color 79740e)$path$(set_color normal) "
 else
     echo -n "$(set_color 79740e)"(prompt_pwd)"$(set_color normal) "
 end
