@@ -8,6 +8,7 @@ final: prev: {
         rev    = "v${version}";
         sha256 = "sha256-HWW9191RP//48HkAHOZ7kAAAPSBKZ+BW2FfCZB36Y+g=";
       });
+      # https://github.com/acomagu/fish-async-prompt/pull/95
       patches = [ ./async-prompt-transient.patch ];
     });
   };
