@@ -1,5 +1,10 @@
 #!/usr/bin/env fish
 
+# https://fishshell.com/docs/current/prompt.html#transient-prompt
+if contains -- --final-rendering $argv
+    return
+end
+
 set -l cmd_duration $CMD_DURATION
 
 # https://github.com/IlanCosman/tide/blob/main/functions/_tide_item_cmd_duration.fish

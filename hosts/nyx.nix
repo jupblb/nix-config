@@ -1,5 +1,5 @@
 { inputs, lib, pkgs, ... }: {
-  determinate-nix.customSettings = {
+  determinateNix.customSettings = {
     trusted-users = [ "@admin" ];
   };
 

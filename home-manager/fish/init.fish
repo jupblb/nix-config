@@ -14,6 +14,8 @@ set -gx __fish_git_prompt_showstashstate
 set -gx __fish_git_prompt_showupstream informative
 set -gx __fish_git_prompt_use_informative_chars 1
 
+set -g fish_transient_prompt 1
+
 set -U fish_cursor_default block
 set -U fish_cursor_insert line
 set -U fish_cursor_replace_one underscore
