@@ -1,15 +1,22 @@
 final: prev: {
   fishPlugins = prev.fishPlugins // {
     async-prompt = prev.fishPlugins.async-prompt.overrideAttrs(old: rec {
-      version = "1.3.0";
-      src     = final.fetchFromGitHub({
-        owner  = "acomagu";
-        repo   = "fish-async-prompt";
-        rev    = "v${version}";
-        sha256 = "sha256-HWW9191RP//48HkAHOZ7kAAAPSBKZ+BW2FfCZB36Y+g=";
-      });
       # https://github.com/acomagu/fish-async-prompt/pull/95
-      patches = [ ./async-prompt-transient.patch ];
+      src     = final.applyPatches({
+        src = final.fetchFromGitHub {
+          owner  = "acomagu";
+          repo   = "fish-async-prompt";
+          rev    = "v${version}";
+          sha256 = "sha256-HWW9191RP//48HkAHOZ7kAAAPSBKZ+BW2FfCZB36Y+g=";
+        };
+        patches = [
+          (final.fetchpatch {
+            url  = "https://github.com/acomagu/fish-async-prompt/pull/95.patch";
+            hash = "sha256-+IaFHqlro0XAQ8e7pVkwNHyMQ9fI95jQffL1zIytZvk=";
+          })
+        ];
+      });
+      version = "1.3.0";
     });
   };
   fortune     = prev.fortune.override({ withOffensive = true; });

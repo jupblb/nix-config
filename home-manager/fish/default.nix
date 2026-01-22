@@ -33,8 +33,8 @@
         source ${config.xdg.configHome}/fish/config.local.fish
       '';
       plugins              = with pkgs.fishPlugins; [
-        { name = async-prompt.pname; src = async-prompt; }
-        { name = z.pname;            src = z;            }
+        { name = async-prompt.pname; src = async-prompt.src; }
+        { name = z.pname;            src = z.src;            }
       ];
       shellAliases         = {
         bash = "${pkgs.bashInteractive}/bin/bash";
