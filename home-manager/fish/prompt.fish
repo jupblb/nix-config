@@ -8,24 +8,22 @@ if set -q SSH_TTY
 end
 
 # pwd
-if git rev-parse --show-toplevel &>/dev/null
-    set -l prefix (git rev-parse --show-prefix | string trim -r -c /)
+if set -l prefix (git rev-parse --show-prefix 2>/dev/null)
+    set prefix (string trim -r -c / $prefix)
     echo -n "$(set_color 79740e)…/$prefix$(set_color normal) "
 else
     echo -n "$(set_color 79740e)"(prompt_pwd)"$(set_color normal) "
 end
 
 # sign
-if test $fish_bind_mode = insert
-    echo -n "$(set_color --bold)"
-else
+if not test $fish_bind_mode = insert
     echo -n "$(set_color --dim)"
 end
 
 if test $cmd_status -gt 0
     echo -n "$(set_color --underline 9d0006)"
 else if jobs -q
-    echo -n "$(set_color b57614)"
+    echo -n "$(set_color --bold b57614)"
 else
     echo -n "$(set_color 79740e)"
 end
