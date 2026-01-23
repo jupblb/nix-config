@@ -3,7 +3,7 @@ final: prev: {
     async-prompt = prev.fishPlugins.async-prompt.overrideAttrs(old: rec {
       # https://github.com/acomagu/fish-async-prompt/pull/95
       src     = final.applyPatches({
-        src = final.fetchFromGitHub {
+        src     = final.fetchFromGitHub {
           owner  = "acomagu";
           repo   = "fish-async-prompt";
           rev    = "v${version}";
