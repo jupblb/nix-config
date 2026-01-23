@@ -34,8 +34,8 @@
               highlight_added_bg   = "#d9d87f";
               added_margin_bg      = "#f9f5d7";
               filler_bg            = "#f9f5d7";
-              hunk_margin_bg       = "#f9f5d7";
-              hunk_bg              = "#f9f5d7";
+              hunk_margin_bg       = "#ebdbb2";
+              hunk_bg              = "#ebdbb2";
             });
         in {
           prompt          = false;
