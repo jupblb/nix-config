@@ -107,6 +107,8 @@
     users = {
       michal = { config, ... }: {
         home = {
+          packages         =
+            [ inputs.llm-agents.packages.aarch64-darwin.beads ];
           sessionPath      = [
             "${config.home.homeDirectory}/.orbstack/bin"
             "/opt/homebrew/bin" "/opt/homebrew/sbin"
