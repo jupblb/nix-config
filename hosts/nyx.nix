@@ -38,7 +38,8 @@
           package  = inputs.llm-agents.packages.aarch64-darwin.claude-code;
           settings = {
             permissions = {
-              allow       = [ "Bash" "Read(~/Workspace/**)" "WebSearch" ];
+              allow       =
+                [ "Bash" "Read(~/Workspace/**)" "WebFetch" "WebSearch" ];
               defaultMode = "acceptEdits";
             };
             sandbox = {
