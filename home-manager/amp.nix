@@ -16,11 +16,12 @@
 
   xdg.configFile = {
     "amp/settings.json".text = builtins.toJSON({
-      "amp.dangerouslyAllowAll"          = true;
-      "amp.git.commit.coauthor.enabled"  = false;
-      "amp.git.commit.ampThread.enabled" = false;
-      "amp.tools.inactivityTimeout"      = 600;
-      "amp.tools.stopTimeout"            = 600;
+      "amp.dangerouslyAllowAll"                           = true;
+      "amp.experimental.cli.nativeSecretsStorage.enabled" = true;
+      "amp.git.commit.coauthor.enabled"                   = false;
+      "amp.git.commit.ampThread.enabled"                  = false;
+      "amp.tools.inactivityTimeout"                       = 600;
+      "amp.tools.stopTimeout"                             = 600;
     });
   };
 }
