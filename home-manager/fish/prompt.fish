@@ -24,7 +24,7 @@ end
 if test $cmd_status -gt 0
     echo -n "$(set_color --underline 9d0006)"
 else if jobs -q
-    echo -n "$(set_color --bold b57614)"
+    echo -n "$(set_color --bold b57614)~"
 else
     echo -n "$(set_color 79740e)"
 end
