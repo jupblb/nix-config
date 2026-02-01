@@ -83,6 +83,7 @@
   nixpkgs.config = { cudaSupport = true; };
 
   programs = {
+    gamemode  = { enable = true; };
     gamescope = { capSysNice = true; enable = true; };
     nix-ld    = { enable = true; }; # https://unix.stackexchange.com/a/522823
     steam     = {
