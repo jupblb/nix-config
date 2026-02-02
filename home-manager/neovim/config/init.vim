@@ -1,3 +1,4 @@
+set autoread
 set clipboard+=unnamedplus
 set completeopt=menuone,noselect,popup
 set cmdheight=0
