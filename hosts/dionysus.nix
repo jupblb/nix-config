@@ -258,8 +258,18 @@
     flaresolverr = { enable = true; };
 
     gerrit = {
-      builtinPlugins = [ "download-commands" "gitiles" ];
+      builtinPlugins = [ "download-commands" "gitiles" "replication" ];
       enable         = true;
+      plugins        = [
+        (pkgs.fetchurl {
+          url  =
+            "https://gerrit-ci.gerritforge.com/job/" +
+              "plugin-pull-replication-gh-bazel-stable-3.13/" +
+              "lastSuccessfulBuild/artifact/bazel-bin/plugins/" +
+              "pull-replication/pull-replication.jar";
+          hash = "sha256-asWvmKNp+XUpa6kQ2GSxzq4vH50xfXUPZRsqzkZnwzM=";
+        })
+      ];
       listenAddress  = "[::]:9749";
       serverId       = "f1a3e728-223f-49ed-8431-b2f21a80f227";
       settings       = {
@@ -268,10 +278,25 @@
           type       = "HTTP";
         };
         download = { scheme = "http"; };
-        gerrit   = { canonicalWebUrl = "https://gerrit.kielbowi.cz"; };
+        gerrit   = {
+          canonicalWebUrl = "https://gerrit.kielbowi.cz";
+          instanceId      = "dionysus";
+        };
         gitweb   = { type = "gitiles"; url = "plugins/gitiles"; };
         httpd    = { listenUrl = "proxy-https://*:9749"; };
         receive  = { enableSignedPush = false; };
+      };
+      replicationSettings = {
+        gerrit      = { autoReload = true; };
+        replication = { replicateOnStartup = true; };
+        remote      = {
+          "github-kubernetes" = {
+            url              = "https://github.com/\${name}.git";
+            fetch            = "+refs/heads/master:refs/heads/master";
+            projects         = "kubernetes/kubernetes";
+            replicationDelay = 24 * 60 * 60;
+          };
+        };
       };
     };
 
