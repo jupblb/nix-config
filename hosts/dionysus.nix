@@ -111,10 +111,14 @@
           default_policy = "one_factor";
           rules          = [ {
             domain    = "gerrit.kielbowi.cz";
+            policy    = "bypass";
             resources = [
               "^/.*/info/refs" "^/.*/git-upload-pack" "^/.*/git-receive-pack"
             ];
+          } {
+            domain    = "gerrit.kielbowi.cz";
             policy    = "bypass";
+            resources = [ "^/a/.*" ];
           } {
             domain   = "linkding.kielbowi.cz";
             policy   = "one_factor"; # Config bug, can't be bypassed at home.
@@ -123,16 +127,16 @@
             policy   = "bypass";
           } {
             domain    = "files.kielbowi.cz";
+            policy    = "bypass";
             # https://github.com/filebrowser/filebrowser/issues/1827#issuecomment-1047777732
             resources = [
               "^/api/public/dl/*" "/share/*" "/static/js/*" "/static/css/*"
               "/static/img/*" "/static/themes/*" "/static/fonts/*"
             ];
-            policy    = "bypass";
           } {
             domain    = "go.kielbowi.cz";
-            resources = [ "^/.+" ];
             policy    = "bypass";
+            resources = [ "^/.+" ];
           } ];
         };
         authentication_backend = {
