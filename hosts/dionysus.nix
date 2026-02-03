@@ -118,7 +118,7 @@
           } {
             domain    = "gerrit.kielbowi.cz";
             policy    = "bypass";
-            resources = [ "^/a/.*" ];
+            resources = [ "^/a/.*" "^/ssh_info$" ];
           } {
             domain   = "linkding.kielbowi.cz";
             policy   = "one_factor"; # Config bug, can't be bypassed at home.
