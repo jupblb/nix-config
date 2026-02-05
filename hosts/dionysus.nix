@@ -185,10 +185,16 @@
             reverse_auth_proxy(config.services.filebrowser.settings.port);
           "gerrit.kielbowi.cz"       = reverse_auth_proxy(9749);
           "git.kielbowi.cz"          = {
-            extraConfig = auth_proxy + ''
-              @notgitiles not path /plugins/gitiles/*
-              rewrite @notgitiles /plugins/gitiles{uri}
-              reverse_proxy http://127.0.0.1:9749
+            extraConfig = ''
+              route {
+                ${auth_proxy}
+                @notgitiles not path /plugins/gitiles/*
+                rewrite @notgitiles /plugins/gitiles{uri}
+                reverse_proxy http://127.0.0.1:9749 {
+                  header_down Location /plugins/gitiles/ /
+                  header_down Location /plugins/gitiles ""
+                }
+              }
             '';
           };
           "go.kielbowi.cz"           =
