@@ -297,8 +297,20 @@
           "github-kubernetes" = {
             url              = "https://github.com/\${name}.git";
             fetch            = "+refs/heads/master:refs/heads/master";
+            fetchEvery       = "24h";
             projects         = "kubernetes/kubernetes";
-            replicationDelay = 24 * 60 * 60;
+          };
+          "github-openmrs" = {
+            url              = "https://github.com/\${name}.git";
+            fetch            = "+refs/heads/master:refs/heads/master";
+            fetchEvery       = "24h";
+            projects         = "openmrs/openmrs-contrib-addonindex";
+          };
+          "github-spring" = {
+            url              = "https://github.com/\${name}.git";
+            fetch            = "+refs/heads/main:refs/heads/main";
+            fetchEvery       = "24h";
+            projects         = "spring-projects/spring-framework";
           };
         };
       };
