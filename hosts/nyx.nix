@@ -105,6 +105,7 @@
             ApplePressAndHoldEnabled = false;
             AppleTemperatureUnit     = "Celsius";
             KeyRepeat                = 2;
+            NSWindowResizeTime       = 0.001;
 
             NSAutomaticCapitalizationEnabled     = false;
             NSAutomaticDashSubstitutionEnabled   = false;
@@ -140,7 +141,7 @@
 
         programs = {
           git = {
-            ignores  = [ ".aiignore" ".junie" "index.scip" ];
+            ignores  = [ ".aiignore" ".junie" ".screenshots" "index.scip" ];
             settings = {
               user = {
                 email = lib.mkForce("michal.kielbowicz@sourcegraph.com");
