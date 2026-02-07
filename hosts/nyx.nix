@@ -93,7 +93,11 @@
             DSDontWriteUSBStores     = true;
           };
 
-          "com.apple.dock" = { autohide = true; };
+          "com.apple.dock" = {
+            autohide     = true;
+            mru-spaces   = false;
+            show-recents = false;
+          };
 
           "com.apple.finder" = { FXRemoveOldTrashItems = true; };
 
