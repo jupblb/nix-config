@@ -33,28 +33,10 @@
       };
 
       programs = {
-        claude-code  = {
-          enable     = true;
-          mcpServers = {
-            github = {
-              command = "${pkgs.github-mcp-server}/bin/github-mcp-server";
-              args    = [ "stdio" ];
-              env     = {
-                GITHUB_PERSONAL_ACCESS_TOKEN =
-                  "\${GITHUB_PERSONAL_ACCESS_TOKEN}";
-              };
-            };
-            linear = {
-              type = "http";
-              url  = "https://mcp.linear.app/mcp";
-            };
-            notion = {
-              type = "http";
-              url  = "https://mcp.notion.com/mcp";
-            };
-          };
-          package    = inputs.llm-agents.packages.aarch64-darwin.claude-code;
-          settings   = {
+        claude-code = {
+          enable    = true;
+          package   = inputs.llm-agents.packages.aarch64-darwin.claude-code;
+          settings  = {
             permissions = {
               allow       =
                 [ "Bash" "Read(~/Workspace/**)" "WebFetch" "WebSearch" ];
