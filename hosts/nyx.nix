@@ -112,7 +112,7 @@
     users = {
       michal = { config, ... }: {
         home = {
-          packages         = with pkgs; [ jre ];
+          packages         = with pkgs; [ git-spice jre ];
           sessionPath      = [
             "${config.home.homeDirectory}/.orbstack/bin"
             "/opt/homebrew/bin" "/opt/homebrew/sbin"
