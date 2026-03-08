@@ -131,7 +131,7 @@
     desktopManager = { gnome = { enable = true; }; };
     displayManager = {
       autoLogin      = { enable = true; user = "jupblb"; };
-      defaultSession = "steam";
+      # defaultSession = "steam";
       gdm            = { enable = true; };
     };
 
