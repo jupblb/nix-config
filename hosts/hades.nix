@@ -15,8 +15,10 @@
           compiz-windows-effect hide-top-bar no-overview
           removable-drive-menu
         ];
-        packages   = with pkgs;
-          [ gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
+        packages   = with pkgs; [
+          gamescope-wsi gnome-firmware nautilus solaar vcmi vlc
+          wl-clipboard
+        ];
       in extensions ++ packages;
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
@@ -102,7 +104,6 @@
           "--mangoapp"
           "--prefer-output" "HDMI-A-3"
           "--force-grab-cursor"
-          "--expose-wayland"
         ];
       };
       localNetworkGameTransfers = { openFirewall = true; };
