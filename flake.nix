@@ -9,6 +9,10 @@
     home-manager   = {
       url = "github:nix-community/home-manager/release-25.11";
     };
+    jovian-nixos   = {
+      url    = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs = { nixpkgs.follows = "nixpkgs-nixos"; };
+    };
     llm-agents     = { url = "github:numtide/llm-agents.nix"; };
     nix-darwin     = {
       url    = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
@@ -19,8 +23,8 @@
   };
 
   outputs = {
-    self, agenix, determinate, home-manager, llm-agents, nix-darwin,
-    nixpkgs-darwin, nixpkgs-nixos, ...
+    self, agenix, determinate, home-manager, jovian-nixos, llm-agents,
+    nix-darwin, nixpkgs-darwin, nixpkgs-nixos, ...
   }@inputs: {
     darwinConfigurations = {
       nyx = nix-darwin.lib.darwinSystem({

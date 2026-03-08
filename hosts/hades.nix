@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   boot = {
     kernelModules  = [ "kvm-amd" ];
     plymouth       = { enable = true; extraConfig = "DeviceScale=2"; };
@@ -74,7 +74,7 @@
     };
   };
 
-  imports = [ ./default.nix ];
+  imports = [ ./default.nix inputs.jovian-nixos.nixosModules.default ];
 
   networking = {
     hostName   = "hades";
@@ -85,16 +85,23 @@
 
   nixpkgs = { config = { cudaSupport = true; }; };
 
+  jovian = {
+    steam = {
+      autoStart      = true;
+      desktopSession = "gnome";
+      enable         = true;
+      user           = "jupblb";
+    };
+  };
+
   programs = {
     gamemode  = { enable = true; };
-    gamescope = { capSysNice = true; enable = true; };
     nix-ld    = { enable = true; }; # https://unix.stackexchange.com/a/522823
     steam     = {
       enable                    = true;
       extest                    = { enable = true; };
       gamescopeSession          = {
-        enable = true;
-        args   = [
+        args = [
           "--output-width" "3840"
           "--output-height" "2160"
           "--nested-refresh" "120"
@@ -125,9 +132,7 @@
   services = {
     desktopManager = { gnome = { enable = true; }; };
     displayManager = {
-      autoLogin      = { enable = true; user = "jupblb"; };
-      defaultSession = "steam";
-      gdm            = { enable = true; };
+      sddm = { enable = true; };
     };
 
     gnome = { core-apps.enable = false; };
