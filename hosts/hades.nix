@@ -15,10 +15,14 @@
           compiz-windows-effect hide-top-bar no-overview
           removable-drive-menu
         ];
-        packages   = with pkgs; [
-          gamescope-wsi gnome-firmware nautilus solaar vcmi vlc
-          wl-clipboard
-        ];
+        packages   =
+          let steamos-session-select =
+            pkgs.writeShellScriptBin "steamos-session-select"
+              "steam -shutdown";
+          in with pkgs; [
+            gamescope-wsi gnome-firmware nautilus solaar
+            steamos-session-select vcmi vlc wl-clipboard
+          ];
       in extensions ++ packages;
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
