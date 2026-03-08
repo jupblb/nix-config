@@ -15,14 +15,8 @@
           compiz-windows-effect hide-top-bar no-overview
           removable-drive-menu
         ];
-        packages   =
-          let steamos-session-select =
-            pkgs.writeShellScriptBin "steamos-session-select"
-              "steam -shutdown";
-          in with pkgs; [
-            gamescope-wsi gnome-firmware nautilus solaar
-            steamos-session-select vcmi vlc wl-clipboard
-          ];
+        packages   = with pkgs;
+          [ gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
       in extensions ++ packages;
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
@@ -90,27 +84,10 @@
   nixpkgs = { config = { cudaSupport = true; }; };
 
   programs = {
-    gamemode  = { enable = true; };
-    gamescope = { capSysNice = true; enable = true; };
     nix-ld    = { enable = true; }; # https://unix.stackexchange.com/a/522823
     steam     = {
       enable                    = true;
       extest                    = { enable = true; };
-      gamescopeSession          = {
-        enable = true;
-        args   = [
-          "--output-width" "3840"
-          "--output-height" "2160"
-          "--nested-refresh" "120"
-          "--hdr-enabled"
-          "--hdr-debug-force-output"
-          "--adaptive-sync"
-          "--immediate-flips"
-          "--mangoapp"
-          "--prefer-output" "HDMI-A-3"
-          "--force-grab-cursor"
-        ];
-      };
       localNetworkGameTransfers = { openFirewall = true; };
       protontricks              = { enable = true; };
       remotePlay                = { openFirewall = true; };
@@ -130,9 +107,8 @@
   services = {
     desktopManager = { gnome = { enable = true; }; };
     displayManager = {
-      autoLogin      = { enable = true; user = "jupblb"; };
-      # defaultSession = "steam";
-      gdm            = { enable = true; };
+      autoLogin = { enable = true; user = "jupblb"; };
+      gdm       = { enable = true; };
     };
 
     gnome = { core-apps.enable = false; };
