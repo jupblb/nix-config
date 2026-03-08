@@ -62,10 +62,11 @@
       mangohud = {
         enable   = true;
         settings = {
-          cpu_temp = true;
-          gpu_temp = true;
-          ram      = true;
-          vram     = true;
+          cpu_temp   = true;
+          gpu_temp   = true;
+          ram        = true;
+          toggle_hud = "F6";
+          vram       = true;
         };
       };
     };
@@ -89,6 +90,20 @@
     steam     = {
       enable                    = true;
       extest                    = { enable = true; };
+      gamescopeSession          = {
+        enable = true;
+        args   = [
+          "--output-width" "3840"
+          "--output-height" "2160"
+          "--nested-refresh" "120"
+          "--hdr-enabled"
+          "--adaptive-sync"
+          "--immediate-flips"
+          "--mangoapp"
+          "--prefer-output" "HDMI-A-3"
+          "--force-grab-cursor"
+        ];
+      };
       localNetworkGameTransfers = { openFirewall = true; };
       protontricks              = { enable = true; };
       remotePlay                = { openFirewall = true; };
@@ -108,8 +123,9 @@
   services = {
     desktopManager = { gnome = { enable = true; }; };
     displayManager = {
-      autoLogin = { enable = true; user = "jupblb"; };
-      gdm       = { enable = true; };
+      autoLogin      = { enable = true; user = "jupblb"; };
+      defaultSession = "steam";
+      gdm            = { enable = true; };
     };
 
     gnome = { core-apps.enable = false; };
