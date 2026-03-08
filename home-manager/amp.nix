@@ -17,7 +17,8 @@
   xdg.configFile = {
     "amp/settings.json".text = builtins.toJSON({
       "amp.dangerouslyAllowAll"                           = true;
-      "amp.experimental.cli.nativeSecretsStorage.enabled" = true;
+      "amp.experimental.cli.nativeSecretsStorage.enabled" =
+        pkgs.stdenv.isDarwin;
       "amp.git.commit.coauthor.enabled"                   = false;
       "amp.git.commit.ampThread.enabled"                  = false;
       "amp.tools.inactivityTimeout"                       = 600;
