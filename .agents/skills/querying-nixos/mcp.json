@@ -1,0 +1,6 @@
+{
+  "nixos": {
+    "command": "mcp-nixos",
+    "includeTools": ["nix", "nix_versions"]
+  }
+}

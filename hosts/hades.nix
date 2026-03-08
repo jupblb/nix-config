@@ -16,7 +16,7 @@
           removable-drive-menu
         ];
         packages   = with pkgs;
-          [ gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
+          [ gamescope-wsi gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
       in extensions ++ packages;
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
@@ -81,7 +81,21 @@
     firewall   = { allowedUDPPorts = [ 9 ]; };
   };
 
-  nixpkgs.config = { cudaSupport = true; };
+  nixpkgs = {
+    config   = { cudaSupport = true; };
+    overlays = [
+      (_: prev: {
+        gamescope = prev.gamescope.overrideAttrs (old: {
+          patches = (old.patches or []) ++ [
+            (prev.fetchurl {
+              url  = "https://github.com/ValveSoftware/gamescope/pull/2094.diff";
+              hash = "sha256-UHfS3EI/wjH1wglwl7Pmvm4aOo0SGMXw6sib/e5AsrA=";
+            })
+          ];
+        });
+      })
+    ];
+  };
 
   programs = {
     gamemode  = { enable = true; };
@@ -102,6 +116,7 @@
           "--mangoapp"
           "--prefer-output" "HDMI-A-3"
           "--force-grab-cursor"
+          "--expose-wayland"
         ];
       };
       localNetworkGameTransfers = { openFirewall = true; };
