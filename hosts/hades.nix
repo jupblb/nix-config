@@ -99,6 +99,7 @@
           "--output-height" "2160"
           "--nested-refresh" "120"
           "--hdr-enabled"
+          "--hdr-debug-force-output"
           "--adaptive-sync"
           "--immediate-flips"
           "--mangoapp"
