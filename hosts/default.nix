@@ -48,7 +48,10 @@
     ];
   };
 
-  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
+  i18n = {
+    defaultLocale    = "pl_PL.UTF-8";
+    supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
+  };
 
   imports = [
     inputs.determinate.nixosModules.default
@@ -80,6 +83,8 @@
 
   services = {
     fstrim = { enable = true; };
+
+    xserver = { xkb = { layout = "pl"; }; };
 
     fwupd = { enable = true; };
 

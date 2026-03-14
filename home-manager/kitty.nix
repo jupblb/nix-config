@@ -85,7 +85,7 @@
         cursor_blink_interval         = 0;
         enabled_layouts               = "splits";
         enable_audio_bell             = "no";
-        hide_window_decorations       = "yes";
+        # hide_window_decorations       = "yes";
         scrollback_pager_history_size = 4096;
         # https://sw.kovidgoyal.net/kitty/faq/#kitty-is-not-able-to-use-my-favorite-font
         symbol_map                    =

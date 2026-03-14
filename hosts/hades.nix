@@ -9,6 +9,8 @@
   };
 
   environment = {
+    plasma6.excludePackages = with pkgs.kdePackages;
+      [ plasma-browser-integration ];
     systemPackages   = with pkgs; [ solaar vcmi vlc wl-clipboard ];
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
