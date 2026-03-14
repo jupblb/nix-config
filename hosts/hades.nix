@@ -9,8 +9,6 @@
   };
 
   environment = {
-    plasma6.excludePackages = with pkgs.kdePackages;
-      [ plasma-browser-integration ];
     systemPackages   =
       let
         extensions = with pkgs.gnomeExtensions;
@@ -124,7 +122,6 @@
   services = {
     desktopManager = {
       gnome   = { enable = true; };
-      plasma6 = { enable = true; };
     };
     displayManager = {
       gdm = { enable = true; };
