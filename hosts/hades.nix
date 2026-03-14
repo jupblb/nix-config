@@ -11,7 +11,13 @@
   environment = {
     plasma6.excludePackages = with pkgs.kdePackages;
       [ plasma-browser-integration ];
-    systemPackages   = with pkgs; [ solaar vcmi vlc wl-clipboard ];
+    systemPackages   =
+      let
+        extensions = with pkgs.gnomeExtensions;
+          [ compiz-windows-effect no-overview removable-drive-menu ];
+        packages   = with pkgs;
+          [ gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
+      in extensions ++ packages;
     variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
   };
 
@@ -116,10 +122,15 @@
   };
 
   services = {
-    desktopManager = { plasma6 = { enable = true; }; };
-    displayManager = {
-      sddm = { enable = true; wayland.enable = true; };
+    desktopManager = {
+      gnome   = { enable = true; };
+      plasma6 = { enable = true; };
     };
+    displayManager = {
+      gdm = { enable = true; };
+    };
+
+    gnome = { core-apps.enable = false; };
 
     pipewire  = {
       enable = true;
