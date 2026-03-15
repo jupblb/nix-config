@@ -9,14 +9,17 @@
   };
 
   environment = {
-    systemPackages   =
+    systemPackages =
       let
         extensions = with pkgs.gnomeExtensions;
           [ compiz-windows-effect no-overview removable-drive-menu ];
         packages   = with pkgs;
           [ gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
       in extensions ++ packages;
-    variables        = { CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv"; };
+    variables      = {
+      CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
+      XCURSOR_SIZE    = "48";
+    };
   };
 
   fileSystems = {
@@ -82,6 +85,11 @@
   nixpkgs = { config = { cudaSupport = true; }; };
 
   programs = {
+    dconf     = {
+      profiles.user.databases = [
+        { settings."org/gnome/desktop/interface".cursor-theme = "Adwaita"; }
+      ];
+    };
     gamemode  = { enable = true; enableRenice = true; };
     gamescope = { capSysNice = true; enable = true; };
     nix-ld    = { enable = true; }; # https://unix.stackexchange.com/a/522823
