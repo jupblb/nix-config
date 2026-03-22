@@ -131,11 +131,14 @@
     desktopManager = {
       gnome   = { enable = true; };
     };
+
     displayManager = {
       gdm = { enable = true; };
     };
 
     gnome = { core-apps.enable = false; };
+
+    logind = { settings = { Login.IdleAction = "ignore"; }; };
 
     pipewire  = {
       enable = true;
