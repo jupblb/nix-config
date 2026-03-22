@@ -21,8 +21,8 @@
         pkgs.stdenv.isDarwin;
       "amp.git.commit.coauthor.enabled"                   = false;
       "amp.git.commit.ampThread.enabled"                  = false;
-      "amp.tools.inactivityTimeout"                       = 600;
-      "amp.tools.stopTimeout"                             = 600;
+      "amp.tools.inactivityTimeout"                       = 6000;
+      "amp.tools.stopTimeout"                             = 6000;
     });
   };
 }
