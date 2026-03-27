@@ -16,6 +16,7 @@
 
   xdg.configFile = {
     "amp/settings.json".text = builtins.toJSON({
+      "amp.agent.deepReasoningEffort"                     = "xhigh";
       "amp.dangerouslyAllowAll"                           = true;
       "amp.experimental.cli.nativeSecretsStorage.enabled" =
         pkgs.stdenv.isDarwin;
