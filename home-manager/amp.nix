@@ -6,7 +6,7 @@
         paths       = [ pkgs.amp-cli ];
         buildInputs = with pkgs; [ makeWrapper ];
         postBuild   =
-          let path = with pkgs; [ gnused nodejs ];
+          let path = with pkgs; [ gnused ];
           in ''
             wrapProgram $out/bin/amp \
               --prefix PATH : ${pkgs.lib.makeBinPath(path)} \
