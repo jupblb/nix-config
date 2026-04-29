@@ -53,6 +53,7 @@
         };
 
         git = {
+          ignores  = [ ".env" ".env.local" ];
           settings = {
             # Not supported by Apple default git binary
             core.fsmonitor = lib.mkForce false;
