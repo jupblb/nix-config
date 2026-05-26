@@ -116,7 +116,8 @@
     users = {
       michal = { config, ... }: {
         home = {
-          packages         = with pkgs; [ jre ];
+          packages         =
+            [ pkgs.jre inputs.llm-agents.packages.aarch64-darwin.pi ];
           sessionPath      = [
             "${config.home.homeDirectory}/.orbstack/bin"
             "/opt/homebrew/bin" "/opt/homebrew/sbin"
