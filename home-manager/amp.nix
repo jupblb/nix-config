@@ -9,6 +9,7 @@
           let path = with pkgs; [ gnused ];
           in ''
             wrapProgram $out/bin/amp \
+              --add-flag "--visibility=private" \
               --prefix PATH : ${pkgs.lib.makeBinPath(path)} \
               --set GIT_EDITOR true
           '';
