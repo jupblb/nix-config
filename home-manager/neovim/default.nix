@@ -14,7 +14,7 @@
       defaultEditor  = true;
       enable         = true;
       extraConfig    = builtins.readFile(./config/init.vim);
-      extraLuaConfig = builtins.readFile(./config/init.lua);
+      initLua        = builtins.readFile(./config/init.lua);
       extraPackages  = with pkgs; [
         bash-language-server curl fish-lsp marksman nil pandoc ripgrep shfmt
       ];
@@ -30,6 +30,7 @@
         } {
           config = builtins.readFile(./config/gruvbox-material.vim);
           plugin = gruvbox-material;
+          type   = "viml";
         } {
           config = builtins.readFile(./config/inc-rename.lua);
           plugin = inc-rename-nvim;
@@ -65,6 +66,7 @@
         } {
           config = builtins.readFile(./config/signify.vim);
           plugin = vim-signify;
+          type   = "viml";
         }
       ] ++
         [ mkdir-nvim vim-cool vim-gh-line vim-matchup vim-sleuth vim-surround ];

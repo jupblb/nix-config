@@ -7,15 +7,15 @@
       url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     };
     home-manager   = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
     };
     llm-agents     = { url = "github:numtide/llm-agents.nix"; };
     nix-darwin     = {
-      url    = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+      url    = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs = { nixpkgs.follows = "nixpkgs-darwin"; };
     };
-    nixpkgs-nixos  = { url = "github:NixOS/nixpkgs/nixos-25.11"; };
-    nixpkgs-darwin = { url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin"; };
+    nixpkgs-nixos  = { url = "github:NixOS/nixpkgs/nixos-26.05"; };
+    nixpkgs-darwin = { url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin"; };
   };
 
   outputs = {

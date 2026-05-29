@@ -118,22 +118,22 @@
     ssh = {
       enable              = true;
       enableDefaultConfig = false;
-      matchBlocks         = {
+      settings            = {
         "*"          = {
-          controlMaster  = "auto";
-          controlPersist = "yes";
+          ControlMaster  = "auto";
+          ControlPersist = "yes";
         };
         hades        = {
-          hostname     = "hades.kielbowi.cz";
-          proxyCommand =
+          HostName     = "hades.kielbowi.cz";
+          ProxyCommand =
             "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
-          user         = "jupblb";
+          User         = "jupblb";
         };
         dionysus     = {
-          hostname     = "dionysus.kielbowi.cz";
-          proxyCommand =
+          HostName     = "dionysus.kielbowi.cz";
+          ProxyCommand =
             "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
-          user         = "jupblb";
+          User         = "jupblb";
         };
       };
     };
