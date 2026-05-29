@@ -2,9 +2,9 @@
   home = {
     packages         = with pkgs; [ fswatch ];
     sessionVariables = {
-      CARGOHOME = "${config.xdg.dataHome}/cargo";
-      GOPATH    = "${config.xdg.dataHome}/go";
-      PAGER     = "${pkgs.less}/bin/less -R";
+      CARGO_HOME = "${config.xdg.dataHome}/cargo";
+      GOPATH     = "${config.xdg.dataHome}/go";
+      PAGER      = "${pkgs.less}/bin/less -R";
     };
     shellAliases     = {
       root = "cd $(${pkgs.git}/bin/git rev-parse --show-toplevel)";

@@ -89,11 +89,9 @@
     fwupd = { enable = true; };
 
     openssh = {
-      openFirewall = true;
-      enable       = true;
-      settings     = {
-        PasswordAuthentication = true;
-        PermitRootLogin        = "no";
+      enable   = true;
+      settings = {
+        PermitRootLogin = "no";
       };
     };
 

@@ -102,11 +102,6 @@
             NSAutomaticPeriodSubstitutionEnabled = false;
             NSAutomaticQuoteSubstitutionEnabled  = false;
             NSAutomaticSpellingCorrectionEnabled = false;
-
-            com.apple.desktopservices = {
-              DSDontWriteNetworkStores = true;
-              DSDontWriteUSBStores     = true;
-            };
           };
         };
         linkApps = { enable = false; };
