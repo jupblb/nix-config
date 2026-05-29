@@ -59,7 +59,8 @@
           config = builtins.readFile(./config/telescope.lua);
           plugin = telescope-fzf-native-nvim.overrideAttrs(old: {
             dependencies = old.dependencies ++ [
-              telescope-file-browser-nvim telescope-ui-select-nvim zoekt-nvim
+              plenary-nvim telescope-file-browser-nvim telescope-ui-select-nvim
+              zoekt-nvim
             ];
           });
           type   = "lua";
