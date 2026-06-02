@@ -111,8 +111,8 @@
     users = {
       michal = { config, ... }: {
         home = {
-          packages         =
-            [ pkgs.jre inputs.llm-agents.packages.aarch64-darwin.pi ];
+          packages         = with pkgs;
+            [ git-wt jre inputs.llm-agents.packages.aarch64-darwin.pi ];
           sessionPath      = [
             "${config.home.homeDirectory}/.orbstack/bin"
             "/opt/homebrew/bin" "/opt/homebrew/sbin"
@@ -131,9 +131,13 @@
               user = {
                 email = lib.mkForce("michal.kielbowicz@sourcegraph.com");
               };
-              url = {
+              url  = {
                 "git@github.com:sourcegraph/".insteadOf =
                   "https://github.com/sourcegraph/";
+              };
+              wt   = {
+                copy        = [ ".envrc" ".nvim.lua" ];
+                copyignored = true;
               };
             };
           };
