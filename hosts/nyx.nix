@@ -125,6 +125,11 @@
         };
 
         programs = {
+          fish = {
+            interactiveShellInit =
+              "${pkgs.git-wt}/bin/git-wt --init fish | source";
+          };
+
           git = {
             ignores  = [ ".aiignore" ".junie" ".screenshots" "index.scip" ];
             settings = {
