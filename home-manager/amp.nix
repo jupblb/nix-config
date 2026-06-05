@@ -9,7 +9,6 @@
           let path = with pkgs; [ gnused ];
           in ''
             wrapProgram $out/bin/amp \
-              --add-flag "--visibility=private" \
               --prefix PATH : ${pkgs.lib.makeBinPath(path)} \
               --set GIT_EDITOR true
           '';
@@ -20,10 +19,12 @@
     "amp/settings.json".text = builtins.toJSON({
       "amp.agent.deepReasoningEffort"    = "xhigh";
       "amp.dangerouslyAllowAll"          = true;
+      "amp.defaultVisibility"            = "private";
       "amp.git.commit.coauthor.enabled"  = false;
       "amp.git.commit.ampThread.enabled" = false;
-      "amp.tools.inactivityTimeout"      = 6000;
-      "amp.tools.stopTimeout"            = 6000;
+      "amp.terminal.theme"               = "light";
+      "amp.tools.inactivityTimeout"      = 600;
+      "amp.tools.stopTimeout"            = 600;
     });
   };
 }
