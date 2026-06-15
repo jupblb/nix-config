@@ -26,8 +26,8 @@ final: prev: {
       src     = final.fetchFromGitHub({
         owner  = "sourcegraph";
         repo   = pname;
-        rev    = "3b9ad5ef0328de1b35cc9bfa723a37db5daf9434";
-        sha256 = "sha256-f/li32jpVigbZANnnbgSArnOH4nusj0DUz7952K+Znw=";
+        rev    = "b851d97d8e8782e58343608d8de7d9eb3a88090f";
+        sha256 = "sha256-SdpKR1hfSyJ25tD7G1u4wYOHRNyeuTKbdMKG80iCUB4=";
       });
       version = "2025-12-17";
     });

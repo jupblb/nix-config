@@ -54,7 +54,7 @@
   };
 
   imports = [
-    inputs.determinate.nixosModules.default
+    # inputs.determinate.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
   ];
 

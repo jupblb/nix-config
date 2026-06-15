@@ -13,8 +13,8 @@
       let
         extensions = with pkgs.gnomeExtensions;
           [ compiz-windows-effect no-overview removable-drive-menu ];
-        packages   = with pkgs;
-          [ gnome-firmware nautilus solaar vcmi vlc wl-clipboard ];
+        packages   = with pkgs; # vcmi
+          [ gnome-firmware nautilus solaar vlc wl-clipboard ];
       in extensions ++ packages;
     variables      = {
       CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
