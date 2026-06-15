@@ -138,7 +138,7 @@
     };
 
     displayManager = {
-      gdm = { enable = true; };
+      gdm = { autoSuspend = false; enable = true; };
     };
 
     gnome = { core-apps.enable = false; };
