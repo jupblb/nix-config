@@ -16,6 +16,9 @@
     in [ amp ];
 
   xdg.configFile = {
+    "amp/plugins/amp-neovim-diagnostics.ts".source =
+      "${pkgs.vimPlugins.amp-nvim.src}/plugin/amp-neovim-diagnostics.ts";
+
     "amp/settings.json".text = builtins.toJSON({
       "amp.agent.deepReasoningEffort"    = "xhigh";
       "amp.dangerouslyAllowAll"          = true;
