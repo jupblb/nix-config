@@ -70,6 +70,7 @@
         "ctrl+shift+h"     = "move_window left";
         "ctrl+shift+l"     = "move_window right";
         "ctrl+shift+k"     = "move_window top";
+        "ctrl+`"           = "select_tab";
         "ctrl+shift+t"     = "new_tab_with_cwd";
         "ctrl+shift+enter" = "new_window_with_cwd";
         "ctrl+h"           = "neighboring_window left";
