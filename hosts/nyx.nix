@@ -4,7 +4,7 @@
   };
 
   environment = {
-    systemPackages = with pkgs; [ bashInteractive git meetingbar ];
+    systemPackages = with pkgs; [ bashInteractive git utm ];
   };
 
   fonts.packages = [ (pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; }) ];
