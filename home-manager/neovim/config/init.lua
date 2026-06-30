@@ -91,7 +91,7 @@ local markdown_format = function()
     end
 
     local cmd = 'pandoc --columns=80 --reference-links --standalone ' ..
-        '--from markdown --to markdown -'
+        '--from markdown --to gfm -'
     local output = vim.fn.systemlist(cmd, lines)
 
     if shebang then
