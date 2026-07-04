@@ -25,7 +25,6 @@
       "amp.defaultVisibility"            = "private";
       "amp.git.commit.coauthor.enabled"  = false;
       "amp.git.commit.ampThread.enabled" = false;
-      "amp.terminal.theme"               = "light";
       "amp.tools.inactivityTimeout"      = 600;
       "amp.tools.stopTimeout"            = 600;
     });

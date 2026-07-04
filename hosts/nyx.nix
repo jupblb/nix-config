@@ -1,193 +1,90 @@
 { inputs, lib, pkgs, ... }: {
-  determinateNix.customSettings = {
-    trusted-users = [ "@admin" ];
-  };
-
-  environment = {
-    systemPackages = with pkgs; [ bashInteractive git utm ];
-  };
-
-  fonts.packages = [ (pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; }) ];
-
-  home-manager = {
-    backupFileExtension = "bak";
-
-    sharedModules = [ {
-      home = {
-        packages     = with pkgs; [ uv ];
-        stateVersion = "25.05";
-      };
-
-      # https://github.com/nix-community/home-manager/issues/7935
-      manual = { manpages.enable = false; };
-
-      imports = [
-        ../home-manager
-        ../home-manager/fish
-        ../home-manager/kitty.nix
-        ../home-manager/lf
-        ../home-manager/neovim
-      ];
-
-      nixpkgs = {
-        config   = { allowUnfree = true; };
-        overlays = with inputs.llm-agents.packages.aarch64-darwin;
-          [ (_: _: { amp-cli = amp; }) ];
-      };
-
-      programs = {
-        claude-code = {
-          enable    = true;
-          package   = inputs.llm-agents.packages.aarch64-darwin.claude-code;
-          settings  = {
-            permissions = {
-              allow       =
-                [ "Bash" "Read(~/Workspace/**)" "WebFetch" "WebSearch" ];
-              defaultMode = "acceptEdits";
-            };
-            sandbox = {
-              enabled                  = true;
-              autoAllowBashIfSandboxed = true;
-            };
-          };
-        };
-
-        git = {
-          ignores  = [ ".env" ".env.local" ];
-          settings = {
-            # Not supported by Apple default git binary
-            core.fsmonitor = lib.mkForce false;
-            safe.directory = "/private/etc/nix-darwin";
-          };
-        };
-
-        kitty = {
-          font        = { size = lib.mkForce 14; };
-          keybindings = { "cmd+t" = "new_tab_with_cwd"; };
-          settings    = {
-            hide_window_decorations            = lib.mkForce "no";
-            macos_option_as_alt                = "left";
-            macos_quit_when_last_window_closed = "yes";
-          };
-        };
-      };
-
-      targets.darwin = {
-        defaults = {
-          "com.apple.desktopservices" = {
-            DSDontWriteNetworkStores = true;
-            DSDontWriteUSBStores     = true;
-          };
-
-          "com.apple.dock" = {
-            autohide     = true;
-            mru-spaces   = false;
-            show-recents = false;
-          };
-
-          "com.apple.finder" = { FXRemoveOldTrashItems = true; };
-
-          NSGlobalDomain = {
-            AppleLanguages           = [ "en" "pl" ];
-            AppleLocale              = "en_US";
-            AppleMeasurementUnits    = "Centimeters";
-            AppleMetricUnits         = true;
-            ApplePressAndHoldEnabled = false;
-            AppleTemperatureUnit     = "Celsius";
-            KeyRepeat                = 2;
-            NSWindowResizeTime       = 0.001;
-
-            NSAutomaticCapitalizationEnabled     = false;
-            NSAutomaticDashSubstitutionEnabled   = false;
-            NSAutomaticPeriodSubstitutionEnabled = false;
-            NSAutomaticQuoteSubstitutionEnabled  = false;
-            NSAutomaticSpellingCorrectionEnabled = false;
-          };
-        };
-        linkApps = { enable = false; };
-      };
-    } ];
-
-    users = {
-      michal = { config, ... }: {
-        home = {
-          packages         = with pkgs;
-            [ git-wt jre inputs.llm-agents.packages.aarch64-darwin.pi ];
-          sessionPath      = [
-            "${config.home.homeDirectory}/.orbstack/bin"
-            "/opt/homebrew/bin" "/opt/homebrew/sbin"
-          ];
-          sessionVariables = {
-            HOMEBREW_PREFIX     = "/opt/homebrew";
-            HOMEBREW_CELLAR     = "/opt/homebrew/Cellar";
-            HOMEBREW_REPOSITORY = "/opt/homebrew";
-          };
-        };
-
-        programs = {
-          fish = {
-            interactiveShellInit =
-              "${pkgs.git-wt}/bin/git-wt --init fish | source";
-          };
-
-          git = {
-            ignores  = [ ".aiignore" ".junie" ".screenshots" "index.scip" ];
-            settings = {
-              user = {
-                email = lib.mkForce("michal.kielbowicz@sourcegraph.com");
-              };
-              url  = {
-                "git@github.com:sourcegraph/".insteadOf =
-                  "https://github.com/sourcegraph/";
-              };
-              wt   = {
-                copy        = [ ".envrc" ".nvim.lua" ];
-                copyignored = true;
-              };
-            };
-          };
-        };
-
-        xdg.configFile."ideavim/ideavimrc".source = ./config/ideavimrc;
-      };
-
-      jupblb = {};
-    };
+  home = {
+    homeDirectory = "/Users/jupblb";
+    packages      =
+      let iosevka = (pkgs.iosevka-bin.override { variant = "SGr-Iosevka"; });
+      in with pkgs; [ bashInteractive iosevka utm ];
+    stateVersion  = "26.05";
+    username      = "jupblb";
   };
 
   imports = [
-    inputs.determinate.darwinModules.default
-    inputs.home-manager.darwinModules.home-manager
+    inputs.mac-app-util.homeManagerModules.default
+    ../home-manager
+    ../home-manager/fish
+    ../home-manager/kitty.nix
+    ../home-manager/lf
+    ../home-manager/neovim
   ];
 
-  # https://docs.determinate.systems/guides/nix-darwin
-  nix = { enable = false; };
+  # https://github.com/nix-community/home-manager/issues/7935
+  manual = { manpages.enable = false; };
 
-  nixpkgs = { hostPlatform = "aarch64-darwin"; };
+  nixpkgs = {
+    config   = { allowUnfree = true; };
+    overlays = with inputs.llm-agents.packages.aarch64-darwin;
+      [ (_: _: { amp-cli = amp; }) ];
+  };
 
   programs = {
-    fish = { enable = true; };
-  };
+    claude-code = {
+      enable   = true;
+      package  = inputs.llm-agents.packages.aarch64-darwin.claude-code;
+      settings = {
+        permissions = {
+          allow       =
+            [ "Bash" "Read(~/Workspace/**)" "WebFetch" "WebSearch" ];
+          defaultMode = "acceptEdits";
+        };
+        sandbox     = {
+          autoAllowBashIfSandboxed = true;
+          enabled                  = true;
+        };
+      };
+    };
 
-  security = {
-    pam.services.sudo_local = {
-      touchIdAuth = true;
-      watchIdAuth = true;
+    kitty = {
+      font        = { size = lib.mkForce 14; };
+      keybindings = { "cmd+t" = "new_tab_with_cwd"; };
+      settings    = {
+        hide_window_decorations            = lib.mkForce "no";
+        macos_option_as_alt                = "left";
+        macos_quit_when_last_window_closed = "yes";
+      };
     };
   };
 
-  system = {
-    configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
-    keyboard              = {
-      enableKeyMapping      = true;
-      remapCapsLockToEscape = true;
-    };
-    startup               = { chime = false; };
-    stateVersion          = 6;
-  };
+  targets.darwin = {
+    defaults = {
+      "com.apple.desktopservices" = {
+        DSDontWriteNetworkStores = true;
+        DSDontWriteUSBStores     = true;
+      };
 
-  users.users = {
-    jupblb = { home = "/Users/jupblb"; };
-    michal = { home = "/Users/michal"; };
+      "com.apple.dock" = {
+        autohide     = true;
+        mru-spaces   = false;
+        show-recents = false;
+      };
+
+      "com.apple.finder" = { FXRemoveOldTrashItems = true; };
+
+      NSGlobalDomain = {
+        AppleLanguages           = [ "en" "pl" ];
+        AppleLocale              = "en_US";
+        AppleMeasurementUnits    = "Centimeters";
+        AppleMetricUnits         = true;
+        ApplePressAndHoldEnabled = false;
+        AppleTemperatureUnit     = "Celsius";
+        KeyRepeat                = 2;
+        NSWindowResizeTime       = 0.001;
+
+        NSAutomaticCapitalizationEnabled     = false;
+        NSAutomaticDashSubstitutionEnabled   = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled  = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+      };
+    };
   };
 }

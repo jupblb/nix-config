@@ -1,6 +1,4 @@
 { lib, pkgs, ... }: {
-  fonts.fontconfig.enable = true;
-
   home.shellAliases = {
     icat = "kitty +kitten icat";
     ssh  = "kitty +kitten ssh";

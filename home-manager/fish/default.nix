@@ -34,6 +34,7 @@
       '';
       plugins              = with pkgs.fishPlugins; [
         { name = async-prompt.pname; src = async-prompt.src; }
+        { name = nix-env.pname;      src = nix-env.src;      }
         { name = z.pname;            src = z.src;            }
       ];
       shellAliases         = {

@@ -18,6 +18,16 @@ final: prev: {
       });
       version = "1.3.0";
     });
+    nix-env      = rec {
+      pname   = "nix-env";
+      src     = final.fetchFromGitHub {
+        owner  = "lilyball";
+        repo   = "nix-env.fish";
+        rev    = "7b65bd228429e852c8fdfa07601159130a818cfa";
+        sha256 = "sha256-RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
+      };
+      version = "2021-11-29";
+    };
   };
   fortune     = prev.fortune.override({ withOffensive = true; });
   vimPlugins  = prev.vimPlugins // {
