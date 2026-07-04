@@ -43,6 +43,8 @@
       };
     };
 
+    home-manager = { enable = true; };
+
     kitty = {
       font        = { size = lib.mkForce 14; };
       keybindings = { "cmd+t" = "new_tab_with_cwd"; };
