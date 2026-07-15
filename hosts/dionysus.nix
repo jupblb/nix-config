@@ -99,6 +99,11 @@
   services = {
     acpid.enable = true;
 
+    audiobookshelf = {
+      enable = true;
+      port   = 8032;
+    };
+
     authelia.instances.default = {
       enable   = true;
       secrets  = {
@@ -176,6 +181,9 @@
               "reverse_proxy http://127.0.0.1:${toString(port)}";
         };
         in {
+          "audiobook.kielbowi.cz"    = {
+            extraConfig = "reverse_proxy http://127.0.0.1:8032";
+          };
           "auth.kielbowi.cz"         = {
             extraConfig = "reverse_proxy http://127.0.0.1:9092";
           };
