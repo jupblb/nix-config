@@ -7,6 +7,11 @@ local width = 80 + add_width
 -- Consistent sign column width
 vim.o.signcolumn = "yes"
 
+-- Default (20) inflates the side buffers when they are entered during
+-- creation, breaking the centered width on terminals narrower than
+-- width + 2 * winwidth + 2 columns.
+vim.o.winwidth = 10
+
 no_neck_pain.setup({
     width = width,
     autocmds = {
@@ -27,6 +32,8 @@ _G.no_neck_pain_resize = function(add)
     no_neck_pain.resize(width)
 end
 
+local augroup = vim.api.nvim_create_augroup("NoNeckPainUser", { clear = true })
+
 vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern  = { "java", "kotlin", "sql" },
     callback = function(_)
@@ -41,7 +48,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 
         _G.no_neck_pain_resize(20)
     end,
-    group    = "NoNeckPainAutocmd",
+    group    = augroup,
 })
 
 -- Resize if a file with >1k lines is opened
@@ -64,5 +71,5 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
             no_neck_pain.resize(width)
         end
     end,
-    group    = "NoNeckPainAutocmd",
+    group    = augroup,
 })
