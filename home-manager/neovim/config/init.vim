@@ -12,7 +12,6 @@ set list
 set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set mouse=a
 set mousemodel=extend
-set nowrap
 set number
 set relativenumber
 set shell=bash
@@ -25,7 +24,6 @@ set tabstop=2
 set updatetime=500
 set virtualedit=all
 set winborder=rounded
-set wrap
 
 map q: <Nop>
 nnoremap Q <Nop>

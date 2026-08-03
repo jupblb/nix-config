@@ -121,6 +121,7 @@
       settings            = {
         "*"          = {
           ControlMaster  = "auto";
+          ControlPath    = "~/.ssh/master-%C";
           ControlPersist = "yes";
         };
         hades        = {
