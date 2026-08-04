@@ -18,7 +18,7 @@ final: prev: {
       });
       version = "1.3.0";
     });
-    nix-env      = rec {
+    nix-env      = {
       pname   = "nix-env";
       src     = final.fetchFromGitHub {
         owner  = "lilyball";
@@ -31,16 +31,6 @@ final: prev: {
   };
   fortune     = prev.fortune.override({ withOffensive = true; });
   vimPlugins  = prev.vimPlugins // {
-    amp-nvim   = final.vimUtils.buildVimPlugin(rec {
-      pname   = "amp.nvim";
-      src     = final.fetchFromGitHub({
-        owner  = "sourcegraph";
-        repo   = pname;
-        rev    = "b851d97d8e8782e58343608d8de7d9eb3a88090f";
-        sha256 = "sha256-SdpKR1hfSyJ25tD7G1u4wYOHRNyeuTKbdMKG80iCUB4=";
-      });
-      version = "2025-12-17";
-    });
     zoekt-nvim = final.vimUtils.buildVimPlugin(rec {
       pname   = "zoekt.nvim";
       src     = final.fetchFromGitHub({
