@@ -42,6 +42,7 @@
     };
     imports  = [
       ../home-manager
+      ../home-manager/amp.nix
       ../home-manager/fish
       ../home-manager/lf
       ../home-manager/neovim

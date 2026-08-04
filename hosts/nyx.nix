@@ -9,6 +9,7 @@
   imports = [
     inputs.mac-app-util.homeManagerModules.default
     ../home-manager
+    ../home-manager/amp.nix
     ../home-manager/apple.nix
     ../home-manager/fish
     ../home-manager/kitty.nix
