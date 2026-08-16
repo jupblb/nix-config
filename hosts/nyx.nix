@@ -24,22 +24,6 @@
   };
 
   programs = {
-    claude-code = {
-      enable   = true;
-      package  = inputs.llm-agents.packages.aarch64-darwin.claude-code;
-      settings = {
-        permissions = {
-          allow       =
-            [ "Bash" "Read(~/Workspace/**)" "WebFetch" "WebSearch" ];
-          defaultMode = "acceptEdits";
-        };
-        sandbox     = {
-          autoAllowBashIfSandboxed = true;
-          enabled                  = true;
-        };
-      };
-    };
-
     home-manager = { enable = true; };
   };
 }
