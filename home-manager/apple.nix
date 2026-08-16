@@ -14,6 +14,9 @@
         macos_quit_when_last_window_closed = "yes";
       };
     };
+
+    # https://github.com/nix-community/home-manager/pull/9272
+    man = { generateCaches = false; };
   };
 
   targets.darwin = {
