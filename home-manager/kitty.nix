@@ -1,49 +1,10 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
   home.shellAliases = {
     icat = "kitty +kitten icat";
     ssh  = "kitty +kitten ssh";
   };
 
   programs = {
-    git = {
-      settings = {
-        diff = {
-          guitool = "kitty.gui";
-          tool    = "kitty";
-        };
-        difftool =
-          let conf = pkgs.writeText "kitty-diff.conf"
-            (lib.generators.toKeyValue {
-              mkKeyValue = lib.generators.mkKeyValueDefault {} " ";
-            } {
-              pygments_style       = "gruvbox-light";
-              dark_pygments_style  = "gruvbox-dark";
-              replace_tab_by       = "\\x20\\x20";
-              foreground           = "#3c3836";
-              background           = "#f9f5d7";
-              title_fg             = "#3c3836";
-              title_bg             = "#f9f5d7";
-              margin_fg            = "#928374";
-              margin_bg            = "#f9f5d7";
-              removed_bg           = "#f9d8bc";
-              highlight_removed_bg = "#fa9f86";
-              removed_margin_bg    = "#f9f5d7";
-              added_bg             = "#eeebba";
-              highlight_added_bg   = "#d9d87f";
-              added_margin_bg      = "#f9f5d7";
-              filler_bg            = "#f9f5d7";
-              hunk_margin_bg       = "#ebdbb2";
-              hunk_bg              = "#ebdbb2";
-            });
-        in {
-          prompt          = false;
-          trustExitCode   = true;
-          "kitty".cmd     = "kitten diff --config ${conf} $LOCAL $REMOTE";
-          "kitty.gui".cmd = "kitten diff --config ${conf} $LOCAL $REMOTE";
-        };
-      };
-    };
-
     fish = {
       interactiveShellInit = ''
         set -gx __fish_git_prompt_color af3a03
