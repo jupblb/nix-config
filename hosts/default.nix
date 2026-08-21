@@ -28,25 +28,30 @@
     graphics                      = { enable = true; };
   };
 
-  home-manager.users.jupblb = {
-    nixpkgs.overlays = [
-      (_: _: { amp-cli = inputs.llm-agents.packages.${pkgs.system}.amp; })
-    ];
 
-    home     = {
-      file         = {
-        ".ssh/id_ed25519".source     = "/etc/ssh/ssh_host_ed25519_key";
-        ".ssh/id_ed25519.pub".source = "/etc/ssh/ssh_host_ed25519_key.pub";
+  home-manager = {
+    users.jupblb = {
+      nixpkgs.overlays = [
+        (_: _: { amp-cli = inputs.llm-agents.packages.${pkgs.system}.amp; })
+      ];
+
+      home     = {
+        file         = {
+          ".ssh/id_ed25519".source     = "/etc/ssh/ssh_host_ed25519_key";
+          ".ssh/id_ed25519.pub".source = "/etc/ssh/ssh_host_ed25519_key.pub";
+        };
+        stateVersion = config.system.stateVersion;
       };
-      stateVersion = config.system.stateVersion;
+      imports  = [
+        ../home-manager
+        ../home-manager/amp.nix
+        ../home-manager/fish
+        ../home-manager/lf
+        ../home-manager/neovim
+      ];
     };
-    imports  = [
-      ../home-manager
-      ../home-manager/amp.nix
-      ../home-manager/fish
-      ../home-manager/lf
-      ../home-manager/neovim
-    ];
+
+    useUserPackages = true;
   };
 
   i18n = {
