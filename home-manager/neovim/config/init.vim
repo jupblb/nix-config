@@ -8,6 +8,7 @@ set exrc
 set foldlevel=99
 set ignorecase
 set laststatus=0
+set linebreak
 set list
 set listchars=tab:→\ ,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set mouse=a
