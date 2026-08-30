@@ -90,9 +90,14 @@ local markdown_format = function()
         end
     end
 
+    -- Pandoc leaves pipe tables unaligned when they exceed --columns, so
+    -- realign them in a second pass with a large column limit;
+    -- --wrap=preserve keeps the prose wrapping from the first pass.
     local cmd = 'pandoc --columns=80 --reference-links --standalone ' ..
         '--wrap=' .. (vim.g.markdown_format_wrap or 'auto') ..
-        ' --from markdown --to gfm -'
+        ' --from markdown --to gfm -' ..
+        ' | pandoc --columns=10000 --wrap=preserve --reference-links' ..
+        ' --standalone --from gfm --to gfm -'
     local output = vim.fn.systemlist(cmd, lines)
 
     if shebang then
