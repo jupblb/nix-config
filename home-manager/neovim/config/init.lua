@@ -77,8 +77,7 @@ vim.keymap.set('i', '<S-Tab>', function()
     return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
 end, { expr = true })
 
--- Format markdown with :MarkdownFormat
-local markdown_format = function()
+local markdown_format = function(to)
     local bufnr = vim.api.nvim_get_current_buf()
     local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, true)
 
@@ -90,14 +89,9 @@ local markdown_format = function()
         end
     end
 
-    -- Pandoc leaves pipe tables unaligned when they exceed --columns, so
-    -- realign them in a second pass with a large column limit;
-    -- --wrap=preserve keeps the prose wrapping from the first pass.
     local cmd = 'pandoc --columns=80 --reference-links --standalone ' ..
         '--wrap=' .. (vim.g.markdown_format_wrap or 'auto') ..
-        ' --from markdown --to gfm -' ..
-        ' | pandoc --columns=10000 --wrap=preserve --reference-links' ..
-        ' --standalone --from gfm --to gfm -'
+        ' --from markdown --to ' .. to .. ' -'
     local output = vim.fn.systemlist(cmd, lines)
 
     if shebang then
@@ -108,4 +102,13 @@ local markdown_format = function()
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, output)
 end
 
-vim.api.nvim_create_user_command('MarkdownFormat', markdown_format, {})
+vim.api.nvim_create_user_command('MarkdownFormat',
+    function() markdown_format('gfm') end, {})
+vim.api.nvim_create_user_command('MarkdownFormatPandoc',
+    function()
+        -- Disabling the other table styles makes pandoc always emit grid
+        -- tables, which wrap cell contents to fit --columns; disabling
+        -- smart keeps typographic quotes and dashes intact.
+        markdown_format('markdown-simple_tables-multiline_tables' ..
+            '-pipe_tables-smart')
+    end, {})
