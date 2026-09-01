@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }: {
   home = {
     homeDirectory = "/Users/jupblb";
-    packages      = with pkgs; [ bashInteractive utm ];
+    packages      = with pkgs; [ bashInteractive gh utm ];
     stateVersion  = "26.05";
     username      = "jupblb";
   };
