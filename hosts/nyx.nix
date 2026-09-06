@@ -11,6 +11,7 @@
     ../home-manager
     ../home-manager/amp.nix
     ../home-manager/apple.nix
+    ../home-manager/codex.nix
     ../home-manager/fish
     ../home-manager/kitty.nix
     ../home-manager/lf
