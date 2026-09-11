@@ -33,6 +33,7 @@
     users.jupblb = {
       nixpkgs.overlays = [
         (_: _: { amp-cli = inputs.llm-agents.packages.${pkgs.system}.amp; })
+        (_: _: { codex = inputs.llm-agents.packages.${pkgs.system}.codex; })
       ];
 
       home     = {
