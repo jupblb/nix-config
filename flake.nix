@@ -7,9 +7,13 @@
       url = "github:nix-community/home-manager/release-26.05";
     };
     llm-agents     = { url = "github:numtide/llm-agents.nix"; };
-    mac-app-util   = { url = "github:hraban/mac-app-util"; };
+    mac-app-util   = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     nixpkgs-nixos  = { url = "github:NixOS/nixpkgs/nixos-26.05"; };
     nixpkgs-darwin = { url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin"; };
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
 
   outputs = {
