@@ -12,6 +12,7 @@
         hide_window_decorations            = lib.mkForce "no";
         macos_option_as_alt                = "left";
         macos_quit_when_last_window_closed = "yes";
+        macos_traditional_fullscreen       = "yes";
       };
     };
 
