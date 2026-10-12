@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   home.packages =
     let
       amp = pkgs.symlinkJoin({
@@ -9,7 +9,8 @@
           let path = with pkgs; [ gnused ];
           in ''
             wrapProgram $out/bin/amp \
-              --prefix PATH : ${pkgs.lib.makeBinPath(path)}
+              --prefix PATH : ${pkgs.lib.makeBinPath(path)} \
+              --prefix PATH : ${config.xdg.dataHome}/amp/bin
           '';
       });
     in [ amp ];
