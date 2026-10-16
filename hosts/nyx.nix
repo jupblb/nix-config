@@ -21,10 +21,12 @@
   nixpkgs = {
     config   = { allowUnfree = true; };
     overlays = with inputs.llm-agents.packages.aarch64-darwin;
-      [ (_: _: { amp-cli = amp; }) ];
+      [ (_: _: { amp-cli = amp; claude-code = claude-code; }) ];
   };
 
   programs = {
     home-manager = { enable = true; };
+
+    claude-code = { enable = true; };
   };
 }
