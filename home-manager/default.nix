@@ -60,10 +60,7 @@
 
     git = {
       enable   = true;
-      ignores  = [
-        ".actrc" ".bazelrc.local" ".direnv" ".envrc" ".nvim.lua" ".zoekt"
-        "PROMPT*.md"
-      ];
+      ignores  = [ ".actrc" ".bazelrc.local" ".envrc" ".nvim.lua" ".zoekt" ];
       # https://blog.gitbutler.com/how-git-core-devs-configure-git/
       # https://github.blog/engineering/improve-git-monorepo-performance-with-a-file-system-monitor/
       settings = {
