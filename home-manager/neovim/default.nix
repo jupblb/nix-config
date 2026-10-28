@@ -15,9 +15,8 @@
       enable         = true;
       extraConfig    = builtins.readFile(./config/init.vim);
       initLua        = builtins.readFile(./config/init.lua);
-      extraPackages  = with pkgs; [
-        bash-language-server curl fish-lsp marksman nil pandoc ripgrep shfmt
-      ];
+      extraPackages  = with pkgs;
+        [ bash-language-server curl fish-lsp pandoc ripgrep shfmt ];
       plugins        = with pkgs.vimPlugins; [
         {
           config = builtins.readFile(./config/fidget.lua);
