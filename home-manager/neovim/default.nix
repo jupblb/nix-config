@@ -3,7 +3,7 @@
     packages         = with pkgs; [ zoekt ];
     sessionVariables = {
       NVIM_LISTEN_ADDRESS =
-        "/tmp/nvim-${config.home.username}-\$KITTY_WINDOW_ID\$REX_BLOCK.socket";
+        "/tmp/nvim-${config.home.username}-\$KITTY_WINDOW_ID\${REX_BLOCK#block:}.socket";
     };
   };
 
